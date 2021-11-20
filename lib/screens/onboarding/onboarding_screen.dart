@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
+import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 
 class OnBoardingScreen extends StatefulWidget {
@@ -10,7 +11,6 @@ class OnBoardingScreen extends StatefulWidget {
 }
 
 class _OnBoardingScreenState extends State<OnBoardingScreen> {
-
   int pageIndex = 0;
   final pageController = PageController(initialPage: 0);
 
@@ -73,9 +73,29 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   _bottomTitleAndText(
                       text: StringConstants.onboardingText_3,
                       title: StringConstants.onboarding_3),
-                  _bottomTitleAndText(
-                      text: StringConstants.onboardingText_4,
-                      title: StringConstants.onboarding_4),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Flexible(
+                        child: _bottomTitleAndText(
+                            text: StringConstants.onboardingText_4,
+                            title: StringConstants.onboarding_4),
+                      ),
+                      InkWell(
+                        onTap: (){
+                          Navigator.pushNamed(context, RouteConstants.getStartedScreen);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 25, right: 15),
+                          child: Icon(
+                            Icons.arrow_forward_ios,
+                            color: ColorConstants.primary,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                 ],
               ),
             ),

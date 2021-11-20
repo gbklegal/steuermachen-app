@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/screens/onboarding/onboarding_screen.dart';
 
 void main() {
@@ -13,8 +14,17 @@ class MyApp extends StatelessWidget {
       title: 'Steuermachen',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+          primarySwatch: ColorConstants.kPrimaryColor,
+          textTheme:  TextTheme(
+            headline1: const TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
+            headline6: const TextStyle(fontSize: 36.0, fontWeight: FontWeight.bold, fontStyle: FontStyle.normal),
+            bodyText1: const TextStyle(fontSize: 16.0),
+            bodyText2: const TextStyle(fontSize: 14.0),
+            button: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: ColorConstants.white),
+          ),
+          buttonTheme: ButtonThemeData(
+            buttonColor: ColorConstants.primary,
+          )),
       home: const OnBoardingScreen(),
     );
   }

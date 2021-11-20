@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 
@@ -11,7 +10,6 @@ class OnBoardingScreen extends StatefulWidget {
 }
 
 class _OnBoardingScreenState extends State<OnBoardingScreen> {
-  //First, Initialize the page index and Page Controller
 
   int pageIndex = 0;
   final pageController = PageController(initialPage: 0);
@@ -57,7 +55,6 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               ),
             ),
             Flexible(
-              // Using Flexible to overcome the screen overflow problem
               child: PageView(
                 controller: pageController,
                 scrollDirection: Axis.horizontal,

@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
+import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 
 class GetStartedScreen extends StatelessWidget {
@@ -69,7 +70,9 @@ class GetStartedScreen extends StatelessWidget {
               text: StringConstants.signIn,
               style: Theme.of(context).textTheme.bodyText1?.copyWith(
                   color: ColorConstants.primary, fontWeight: FontWeight.w700),
-              recognizer: TapGestureRecognizer()..onTap = () {})
+              recognizer: TapGestureRecognizer()..onTap = () {
+                Navigator.pushNamed(context, RouteConstants.signInScreen);
+              })
         ],
       ),
     );

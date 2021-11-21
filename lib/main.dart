@@ -25,6 +25,7 @@ class MyApp extends StatelessWidget {
   ThemeData appTheme() {
     return ThemeData(
       primarySwatch: ColorConstants.kPrimaryColor,
+      scaffoldBackgroundColor: ColorConstants.body,
       textTheme: const TextTheme(
         headline1: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
         headline6: TextStyle(

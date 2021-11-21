@@ -1,4 +1,5 @@
 class StringConstants {
+  static const String appName = "steuermachen";
   static const String onboarding_1 = "Average tax refund for taxpayers";
   static const String onboardingText_1 = "€ 1047";
   static const String onboarding_2 = "Saved nerves and more free time";
@@ -15,4 +16,8 @@ class StringConstants {
   static const String signIn = "Sign in";
   static const String calculateYourPrice = "Calculate your Price";
   static const String getStartedText_1 = "Find your Tax\nreturn expert\nnow";
+  static const String signInTermsAndCondition_1 = "You are completely safe.";
+  static const String signInTermsAndCondition_2 = "Read our Terms & Conditions.";
+    static const String appleSignIn = "Sign in with Apple";
+    static const String googleSignIn = "Sign in with Google";
 }

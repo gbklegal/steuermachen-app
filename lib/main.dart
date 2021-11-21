@@ -24,31 +24,42 @@ class MyApp extends StatelessWidget {
 
   ThemeData appTheme() {
     return ThemeData(
-        primarySwatch: ColorConstants.kPrimaryColor,
-        textTheme: TextTheme(
-          headline1:
-              const TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
-          headline6: const TextStyle(
-              fontSize: 36.0,
-              fontWeight: FontWeight.bold,
-              fontStyle: FontStyle.normal),
-          bodyText1: const TextStyle(fontSize: 16.0),
-          bodyText2: const TextStyle(fontSize: 14.0),
-          button: TextStyle(
-              fontSize: 16.0,
-              fontWeight: FontWeight.bold,
-              color: ColorConstants.white),
+      primarySwatch: ColorConstants.kPrimaryColor,
+      textTheme: const TextTheme(
+        headline1: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
+        headline6: TextStyle(
+            fontSize: 36.0,
+            fontFamily: 'helvetica',
+            fontWeight: FontWeight.bold,
+            fontStyle: FontStyle.normal),
+        bodyText1: TextStyle(
+            fontSize: 16.0,
+            fontFamily: 'helvetica',
+            color: ColorConstants.black),
+        bodyText2: TextStyle(
+          fontSize: 14.0,
+          fontFamily: 'helvetica',
         ),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: TextButton.styleFrom(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            elevation: 0.8,
-            backgroundColor: ColorConstants.primary,
-            // minimumSize: Size(MediaQuery.of(context).size.width, 48),
+        button: TextStyle(
+            fontSize: 16.0,
+            fontWeight: FontWeight.bold,
+            color: ColorConstants.white),
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: TextButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
           ),
-        ));
+          elevation: 0.8,
+          backgroundColor: ColorConstants.primary,
+          textStyle: const TextStyle(
+              fontSize: 18.0,
+              fontFamily: 'helvetica',
+              fontWeight: FontWeight.w700,
+              fontStyle: FontStyle.normal),
+        ),
+      ),
+    );
   }
 }
 

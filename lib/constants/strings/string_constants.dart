@@ -1,13 +1,18 @@
-class StringConstants{
-  static String onboarding_1 = "Average tax refund for taxpayers";
-  static String onboardingText_1 = "€ 1047";
-  static String onboarding_2 = "Saved nerves and more free time";
-  static String onboardingText_2 = "100 %";
-  static String onboarding_3 = "Every 5th tax assessment is incorrect";
-  static String onboardingText_3 = "5";
-  static String onboarding_4 = "Every third taxpayer thinks it's not worth it";
-  static String onboardingText_4 = "3";
-  static String skip = "Skip";
-  static String deutsch = "Deutsch";
-  static String english = "English";
+class StringConstants {
+  static const String onboarding_1 = "Average tax refund for taxpayers";
+  static const String onboardingText_1 = "€ 1047";
+  static const String onboarding_2 = "Saved nerves and more free time";
+  static const String onboardingText_2 = "100 %";
+  static const String onboarding_3 = "Every 5th tax assessment is incorrect";
+  static const String onboardingText_3 = "5";
+  static const String onboarding_4 = "Every third taxpayer thinks it's not worth it";
+  static const String onboardingText_4 = "3";
+  static const String skip = "Skip";
+  static const String deutsch = "Deutsch";
+  static const String english = "English";
+  static const String getStarted = "Get Started";
+  static const String alreadyRegistered = "Already registered?";
+  static const String signIn = "Sign in";
+  static const String calculateYourPrice = "Calculate your Price";
+  static const String getStartedText_1 = "Find your Tax\nreturn expert\nnow";
 }

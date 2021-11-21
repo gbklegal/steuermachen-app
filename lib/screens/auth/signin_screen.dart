@@ -17,18 +17,34 @@ class SignInScreen extends StatelessWidget {
           child: Column(
             children: [
               const SizedBox(height: 35),
-              Expanded(child: _logo(context)),
+              _logo(context),
+              const Expanded(child: SizedBox(height: 35)),
               _signin(context),
+              const SizedBox(height: 35),
+              TextFormField(
+                decoration: const InputDecoration(
+                  label: Text(StringConstants.email),
+                   fillColor: ColorConstants.white
+                ),
+              ),
+              const SizedBox(height: 20),
+              TextFormField(
+                decoration: const InputDecoration(
+                  label: Text(StringConstants.password),
+                  fillColor: ColorConstants.white
+                ),
+              ),
+              const SizedBox(height: 25),
               _singInButton(context, StringConstants.signIn, () {}),
               const SizedBox(height: 22),
               _signInOptions(
                   context, AssetConstants.icApple, StringConstants.appleSignIn),
               const SizedBox(height: 22),
-              _signInOptions(
-                  context, AssetConstants.icGoogle, StringConstants.googleSignIn,
+              _signInOptions(context, AssetConstants.icGoogle,
+                  StringConstants.googleSignIn,
                   textColor: Colors.blueAccent),
-              const SizedBox(height: 22),
-              Expanded(child: _richText(context))
+              const Expanded(child: SizedBox(height: 22)),
+              _richText(context)
             ],
           ),
         ),
@@ -53,7 +69,10 @@ class SignInScreen extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SvgPicture.asset(assetName, height: 24,),
+          SvgPicture.asset(
+            assetName,
+            height: 24,
+          ),
           const SizedBox(width: 22),
           Text(
             btnText,

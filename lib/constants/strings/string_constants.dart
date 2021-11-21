@@ -6,7 +6,8 @@ class StringConstants {
   static const String onboardingText_2 = "100 %";
   static const String onboarding_3 = "Every 5th tax assessment is incorrect";
   static const String onboardingText_3 = "5";
-  static const String onboarding_4 = "Every third taxpayer thinks it's not worth it";
+  static const String onboarding_4 =
+      "Every third taxpayer thinks it's not worth it";
   static const String onboardingText_4 = "3";
   static const String skip = "Skip";
   static const String deutsch = "Deutsch";
@@ -17,7 +18,10 @@ class StringConstants {
   static const String calculateYourPrice = "Calculate your Price";
   static const String getStartedText_1 = "Find your Tax\nreturn expert\nnow";
   static const String signInTermsAndCondition_1 = "You are completely safe.";
-  static const String signInTermsAndCondition_2 = "Read our Terms & Conditions.";
-    static const String appleSignIn = "Sign in with Apple";
-    static const String googleSignIn = "Sign in with Google";
+  static const String signInTermsAndCondition_2 =
+      "Read our Terms & Conditions.";
+  static const String appleSignIn = "Sign in with Apple";
+  static const String googleSignIn = "Sign in with Google";
+  static const String email = "Email";
+  static const String password = "Password";
 }

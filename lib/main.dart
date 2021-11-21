@@ -26,40 +26,69 @@ class MyApp extends StatelessWidget {
     return ThemeData(
       primarySwatch: ColorConstants.kPrimaryColor,
       scaffoldBackgroundColor: ColorConstants.body,
-      textTheme: const TextTheme(
-        headline1: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
-        headline6: TextStyle(
-            fontSize: 36.0,
-            fontFamily: 'helvetica',
-            fontWeight: FontWeight.bold,
-            fontStyle: FontStyle.normal),
-        bodyText1: TextStyle(
-            fontSize: 16.0,
-            fontFamily: 'helvetica',
-            color: ColorConstants.black),
-        bodyText2: TextStyle(
-          fontSize: 14.0,
+      textTheme: _textTheme(),
+      elevatedButtonTheme: _elevatedBtnTheme(),
+      inputDecorationTheme: _inputDecorationTheme(),
+    );
+  }
+
+  InputDecorationTheme _inputDecorationTheme() {
+    return InputDecorationTheme(
+        labelStyle: TextStyle(
+          fontSize: 20.0,
           fontFamily: 'helvetica',
+          fontStyle: FontStyle.normal,
+          color: ColorConstants.black.withOpacity(0.4),
         ),
-        button: TextStyle(
-            fontSize: 16.0,
-            fontWeight: FontWeight.bold,
-            color: ColorConstants.white),
-      ),
-      elevatedButtonTheme: ElevatedButtonThemeData(
-        style: TextButton.styleFrom(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          elevation: 0.8,
-          backgroundColor: ColorConstants.primary,
-          textStyle: const TextStyle(
-              fontSize: 18.0,
-              fontFamily: 'helvetica',
-              fontWeight: FontWeight.w700,
-              fontStyle: FontStyle.normal),
+        border: InputBorder.none,
+        filled: true,
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(5.0),
+          borderSide: const BorderSide(color: ColorConstants.formFieldBackground),
         ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(5.0),
+          borderSide: const BorderSide(color: ColorConstants.formFieldBackground),
+        ),
+        fillColor: ColorConstants.formFieldBackground
+        );
+  }
+
+  ElevatedButtonThemeData _elevatedBtnTheme() {
+    return ElevatedButtonThemeData(
+      style: TextButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        elevation: 0.8,
+        backgroundColor: ColorConstants.primary,
+        textStyle: const TextStyle(
+            fontSize: 18.0,
+            fontFamily: 'helvetica',
+            fontWeight: FontWeight.w700,
+            fontStyle: FontStyle.normal),
       ),
+    );
+  }
+
+  TextTheme _textTheme() {
+    return const TextTheme(
+      headline1: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
+      headline6: TextStyle(
+          fontSize: 36.0,
+          fontFamily: 'helvetica',
+          fontWeight: FontWeight.bold,
+          fontStyle: FontStyle.normal),
+      bodyText1: TextStyle(
+          fontSize: 16.0, fontFamily: 'helvetica', color: ColorConstants.black),
+      bodyText2: TextStyle(
+        fontSize: 14.0,
+        fontFamily: 'helvetica',
+      ),
+      button: TextStyle(
+          fontSize: 16.0,
+          fontWeight: FontWeight.bold,
+          color: ColorConstants.white),
     );
   }
 }

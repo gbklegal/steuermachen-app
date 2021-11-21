@@ -38,7 +38,7 @@ class SignInScreen extends StatelessWidget {
               ),
               const SizedBox(height: 25),
             ButtonAuthComponent(
-                  btnText: StringConstants.signUp, onPressed: () {}),
+                  btnText: StringConstants.signIn, onPressed: () {}),
               const ChoiceTextAuthComponent(text: StringConstants.orSigninWith),
               SignInOptionsAuthComponent(
                   assetName: AssetConstants.icApple,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
+import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/screens/auth/auth_components/button_auth_component.dart';
 import 'package:steuermachen/screens/auth/auth_components/choice_auth_component.dart';
@@ -30,7 +31,9 @@ class SignupScreen extends StatelessWidget {
               ),
               const SizedBox(height: 25),
               ButtonAuthComponent(
-                  btnText: StringConstants.signUp, onPressed: () {}),
+                  btnText: StringConstants.signUp, onPressed: () {
+                    Navigator.pushNamed(context, RouteConstants.verifyAccountScreen);
+                  }),
               const ChoiceTextAuthComponent(text: StringConstants.orSigninWith),
               SignInOptionsAuthComponent(
                   assetName: AssetConstants.icApple,

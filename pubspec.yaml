@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   google_fonts: ^2.1.0
   flutter_svg: ^0.23.0+1
+  pin_code_fields: ^7.3.0
   
 dev_dependencies:
   flutter_test:
@@ -63,6 +64,7 @@ flutter:
   assets:
     - assets/logo.png
     - assets/file-artwork.png
+    - assets/verify-account.png
     - assets/icons/
   #   - images/a_dot_ham.jpeg
 

@@ -30,4 +30,5 @@ class StringConstants {
   static const String signupNow = "Signup now";
   static const String didntReceiveCode = "Didn’t recieve a code?";
   static const String resend = "Resend";
+  static const String verifyYourAccount = "Verify your account";
 }

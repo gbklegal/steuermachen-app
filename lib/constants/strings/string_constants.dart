@@ -15,6 +15,7 @@ class StringConstants {
   static const String getStarted = "Get Started";
   static const String alreadyRegistered = "Already registered?";
   static const String signIn = "Sign in";
+  static const String signUp = "Sign up";
   static const String calculateYourPrice = "Calculate your Price";
   static const String getStartedText_1 = "Find your Tax\nreturn expert\nnow";
   static const String signInTermsAndCondition_1 = "You are completely safe.";
@@ -24,4 +25,7 @@ class StringConstants {
   static const String googleSignIn = "Sign in with Google";
   static const String email = "Email";
   static const String password = "Password";
+  static const String orSigninWith = "or sign in with";
+  static const String dontHaveAnAccount = "Don't have an account?";
+  static const String signupNow = "Signup now";
 }

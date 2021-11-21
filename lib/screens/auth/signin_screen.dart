@@ -1,9 +1,14 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
+import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
+import 'package:steuermachen/screens/auth/auth_components/choice_auth_component.dart';
+import 'package:steuermachen/screens/auth/auth_components/logo_auth_component.dart';
+import 'package:steuermachen/screens/auth/auth_components/signin_options__auth_component.dart';
+import 'package:steuermachen/screens/auth/auth_components/terms_and_condition_richtext__auth_component.dart';
+import 'package:steuermachen/screens/auth/auth_components/title_text_auth_component.dart';
 
 class SignInScreen extends StatelessWidget {
   const SignInScreen({Key? key}) : super(key: key);
@@ -17,97 +22,52 @@ class SignInScreen extends StatelessWidget {
           child: Column(
             children: [
               const SizedBox(height: 35),
-              _logo(context),
+              const LogoAuthComponent(),
               const Expanded(child: SizedBox(height: 35)),
-              _signin(context),
+              const TitleTextAuthComponent(title: StringConstants.signIn),
               const SizedBox(height: 35),
               TextFormField(
                 decoration: const InputDecoration(
                   label: Text(StringConstants.email),
-                   fillColor: ColorConstants.white
                 ),
               ),
               const SizedBox(height: 20),
               TextFormField(
                 decoration: const InputDecoration(
                   label: Text(StringConstants.password),
-                  fillColor: ColorConstants.white
                 ),
               ),
               const SizedBox(height: 25),
               _singInButton(context, StringConstants.signIn, () {}),
+              const ChoiceTextAuthComponent(text: StringConstants.orSigninWith),
+              SignInOptionsAuthComponent(
+                  assetName: AssetConstants.icApple,
+                  btnText: StringConstants.appleSignIn),
               const SizedBox(height: 22),
-              _signInOptions(
-                  context, AssetConstants.icApple, StringConstants.appleSignIn),
-              const SizedBox(height: 22),
-              _signInOptions(context, AssetConstants.icGoogle,
-                  StringConstants.googleSignIn,
+              SignInOptionsAuthComponent(
+                  assetName: AssetConstants.icGoogle,
+                  btnText: StringConstants.googleSignIn,
                   textColor: Colors.blueAccent),
+              const SizedBox(height: 22),
+              TermsAndConditionRichTextAuthComponent(
+                textSpan1: StringConstants.dontHaveAnAccount,
+                textSpan2: StringConstants.signupNow,
+                onTap: () {
+                  Navigator.pushNamed(context, RouteConstants.signupScreen);
+                },
+              ),
               const Expanded(child: SizedBox(height: 22)),
-              _richText(context)
+              TermsAndConditionRichTextAuthComponent(
+                textSpan1: StringConstants.signInTermsAndCondition_1 + "\n",
+                textSpan2: StringConstants.signInTermsAndCondition_2,
+                onTap: () {
+                  // Navigator.pushNamed(context, RouteConstants.signupScreen);
+                },
+              ),
             ],
           ),
         ),
       ),
-    );
-  }
-
-  Container _signInOptions(
-      BuildContext context, String assetName, String btnText,
-      {Color? textColor}) {
-    return Container(
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: ColorConstants.white,
-          boxShadow: [
-            BoxShadow(
-                color: ColorConstants.black.withOpacity(0.15),
-                offset: const Offset(0, 1),
-                blurRadius: 2)
-          ]),
-      padding: const EdgeInsets.all(21),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SvgPicture.asset(
-            assetName,
-            height: 24,
-          ),
-          const SizedBox(width: 22),
-          Text(
-            btnText,
-            textAlign: TextAlign.start,
-            style: Theme.of(context).textTheme.headline6!.copyWith(
-                fontWeight: FontWeight.w700, fontSize: 24, color: textColor),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Row _logo(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Image.asset(AssetConstants.logo),
-        Text(
-          StringConstants.appName,
-          textAlign: TextAlign.start,
-          style: Theme.of(context).textTheme.headline6!.copyWith(
-              fontWeight: FontWeight.w700, letterSpacing: 3, fontSize: 24),
-        ),
-      ],
-    );
-  }
-
-  Text _signin(BuildContext context) {
-    return Text(
-      StringConstants.signIn,
-      textAlign: TextAlign.start,
-      style: Theme.of(context)
-          .textTheme
-          .headline6
-          ?.copyWith(fontWeight: FontWeight.w700, letterSpacing: -0.3),
     );
   }
 
@@ -127,21 +87,22 @@ class SignInScreen extends StatelessWidget {
     );
   }
 
-  RichText _richText(BuildContext context) {
+  RichText _richText(BuildContext context, String textSpan1, String textSpan2,
+      void Function()? onTap) {
     return RichText(
       textAlign: TextAlign.center,
       text: TextSpan(
-        text: StringConstants.signInTermsAndCondition_1 + "\n",
+        text: textSpan1,
         style: Theme.of(context)
             .textTheme
             .bodyText1
             ?.copyWith(fontSize: 15, height: 1.2),
         children: <TextSpan>[
           TextSpan(
-              text: StringConstants.signInTermsAndCondition_2,
+              text: textSpan2,
               style: Theme.of(context).textTheme.bodyText1?.copyWith(
                   color: ColorConstants.primary, fontWeight: FontWeight.w700),
-              recognizer: TapGestureRecognizer()..onTap = () {})
+              recognizer: TapGestureRecognizer()..onTap = onTap)
         ],
       ),
     );

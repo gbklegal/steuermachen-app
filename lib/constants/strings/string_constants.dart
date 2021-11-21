@@ -28,4 +28,6 @@ class StringConstants {
   static const String orSigninWith = "or sign in with";
   static const String dontHaveAnAccount = "Don't have an account?";
   static const String signupNow = "Signup now";
+  static const String didntReceiveCode = "Didn’t recieve a code?";
+  static const String resend = "Resend";
 }

@@ -28,8 +28,9 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               padding: const EdgeInsets.only(top: 56, left: 12, right: 12),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                // ignore: prefer_const_literals_to_create_immutables
                 children: [
-                  Text(
+                  const Text(
                     StringConstants.skip,
                     textAlign: TextAlign.center,
                     style: TextStyle(
@@ -86,8 +87,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                         onTap: (){
                           Navigator.pushNamed(context, RouteConstants.getStartedScreen);
                         },
-                        child: Padding(
-                          padding: const EdgeInsets.only(bottom: 25, right: 15),
+                        child: const Padding(
+                          padding:  EdgeInsets.only(bottom: 25, right: 15),
                           child: Icon(
                             Icons.arrow_forward_ios,
                             color: ColorConstants.primary,
@@ -132,7 +133,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
           Text(
             text,
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
                 color: ColorConstants.green,
                 fontWeight: FontWeight.bold,
                 fontStyle: FontStyle.normal,
@@ -144,7 +145,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             child: Text(
               title,
               textAlign: TextAlign.start,
-              style: TextStyle(
+              style: const TextStyle(
                   color: ColorConstants.white,
                   fontWeight: FontWeight.bold,
                   fontStyle: FontStyle.normal,

@@ -28,4 +28,11 @@ class StringConstants {
   static const String orSigninWith = "or sign in with";
   static const String dontHaveAnAccount = "Don't have an account?";
   static const String signupNow = "Signup now";
+  // Have tax done online
+  static const String student = "Student";
+  static const String married = "Married";
+  static const String divorced = "Divorced";
+  static const String widowed = "Widowed";
+  static const String step = "Step";
+  static const String areSingle = "Are you Single or Married?";
 }

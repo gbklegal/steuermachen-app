@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
+import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/screens/auth/auth_components/choice_auth_component.dart';
 import 'package:steuermachen/screens/auth/auth_components/logo_auth_component.dart';
@@ -23,14 +24,16 @@ class SignupScreen extends StatelessWidget {
               const SizedBox(height: 35),
               const LogoAuthComponent(),
               const Expanded(child: SizedBox(height: 35)),
-              const TitleTextAuthComponent(title:   StringConstants.signUp),
+              const TitleTextAuthComponent(title: StringConstants.signUp),
               const SizedBox(height: 35),
               TextFormField(
                 decoration:
                     const InputDecoration(label: Text(StringConstants.email)),
               ),
               const SizedBox(height: 25),
-              _singInButton(context, StringConstants.signUp, () {}),
+              _signInButton(context, StringConstants.signUp, () {
+                Navigator.pushNamed(context, RouteConstants.maritalStatusScreen);
+              }),
               const ChoiceTextAuthComponent(text: StringConstants.orSigninWith),
               SignInOptionsAuthComponent(
                   assetName: AssetConstants.icApple,
@@ -55,7 +58,7 @@ class SignupScreen extends StatelessWidget {
     );
   }
 
-  ElevatedButton _singInButton(
+  ElevatedButton _signInButton(
       BuildContext context, String btnText, void Function()? onPressed) {
     return ElevatedButton(
       style: ElevatedButtonTheme.of(context).style?.copyWith(

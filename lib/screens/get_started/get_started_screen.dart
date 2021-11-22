@@ -21,7 +21,10 @@ class GetStartedScreen extends StatelessWidget {
               Image.asset(AssetConstants.fileArtWork),
               _button(context, StringConstants.calculateYourPrice, () {}),
               const SizedBox(height: 20),
-              _button(context, StringConstants.getStarted, () {}),
+              _button(context, StringConstants.getStarted, () {
+                Navigator.pushNamed(
+                    context, RouteConstants.maritalStatusScreen);
+              }),
               const SizedBox(height: 22),
               Expanded(child: _richText(context))
             ],
@@ -70,9 +73,10 @@ class GetStartedScreen extends StatelessWidget {
               text: StringConstants.signIn,
               style: Theme.of(context).textTheme.bodyText1?.copyWith(
                   color: ColorConstants.primary, fontWeight: FontWeight.w700),
-              recognizer: TapGestureRecognizer()..onTap = () {
-                Navigator.pushNamed(context, RouteConstants.signInScreen);
-              })
+              recognizer: TapGestureRecognizer()
+                ..onTap = () {
+                  Navigator.pushNamed(context, RouteConstants.signInScreen);
+                })
         ],
       ),
     );

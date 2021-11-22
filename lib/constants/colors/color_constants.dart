@@ -8,8 +8,9 @@ class ColorConstants {
   static const Color black = Color(0xff000000);
   static const Color white = Color(0xffffffff);
   static const Color green = Color(0xff14EA69);
+  static const Color toxicGreen = Color(0xff66db3b);
   static MaterialColor kPrimaryColor = const MaterialColor(
-    0xffFF6138,
+    0xffFF6138, 
     <int, Color>{
       50: primary,
       100: primary,

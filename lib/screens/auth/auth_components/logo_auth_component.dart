@@ -7,15 +7,17 @@ class LogoAuthComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   return Row(
+    return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Image.asset(AssetConstants.logo),
         Text(
           StringConstants.appName,
           textAlign: TextAlign.start,
-          style: Theme.of(context).textTheme.headline6!.copyWith(
-              fontWeight: FontWeight.w700, letterSpacing: 3, fontSize: 24),
+          style: Theme.of(context)
+              .textTheme
+              .headline6!
+              .copyWith(fontWeight: FontWeight.w700, fontSize: 24),
         ),
       ],
     );

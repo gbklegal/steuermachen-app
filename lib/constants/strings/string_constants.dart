@@ -35,4 +35,7 @@ class StringConstants {
   static const String widowed = "Widowed";
   static const String step = "Step";
   static const String areSingle = "Are you Single or Married?";
+  static const String didntReceiveCode = "Didn’t recieve a code?";
+  static const String resend = "Resend";
+  static const String verifyYourAccount = "Verify your account";
 }

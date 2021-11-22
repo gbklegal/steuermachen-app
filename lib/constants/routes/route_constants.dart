@@ -5,4 +5,5 @@ class RouteConstants {
   static const String signInScreen = "SignInScreen";
   static const String signupScreen = "SignupScreen";
   static const String maritalStatusScreen = "MaritalStatusScreen";
+  static const String verifyAccountScreen = "verifyAccountScreen";
 }

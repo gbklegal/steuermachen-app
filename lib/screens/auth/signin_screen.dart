@@ -1,13 +1,12 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
-import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
+import 'package:steuermachen/screens/auth/auth_components/button_auth_component.dart';
 import 'package:steuermachen/screens/auth/auth_components/choice_auth_component.dart';
 import 'package:steuermachen/screens/auth/auth_components/logo_auth_component.dart';
 import 'package:steuermachen/screens/auth/auth_components/signin_options__auth_component.dart';
-import 'package:steuermachen/screens/auth/auth_components/terms_and_condition_richtext__auth_component.dart';
+import 'package:steuermachen/screens/auth/auth_components/richtext__auth_component.dart';
 import 'package:steuermachen/screens/auth/auth_components/title_text_auth_component.dart';
 
 class SignInScreen extends StatelessWidget {
@@ -38,7 +37,8 @@ class SignInScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 25),
-              _singInButton(context, StringConstants.signIn, () {}),
+            ButtonAuthComponent(
+                  btnText: StringConstants.signIn, onPressed: () {}),
               const ChoiceTextAuthComponent(text: StringConstants.orSigninWith),
               SignInOptionsAuthComponent(
                   assetName: AssetConstants.icApple,
@@ -49,7 +49,7 @@ class SignInScreen extends StatelessWidget {
                   btnText: StringConstants.googleSignIn,
                   textColor: Colors.blueAccent),
               const SizedBox(height: 22),
-              TermsAndConditionRichTextAuthComponent(
+              RichTextAuthComponent(
                 textSpan1: StringConstants.dontHaveAnAccount,
                 textSpan2: StringConstants.signupNow,
                 onTap: () {
@@ -57,7 +57,7 @@ class SignInScreen extends StatelessWidget {
                 },
               ),
               const Expanded(child: SizedBox(height: 22)),
-              TermsAndConditionRichTextAuthComponent(
+              RichTextAuthComponent(
                 textSpan1: StringConstants.signInTermsAndCondition_1 + "\n",
                 textSpan2: StringConstants.signInTermsAndCondition_2,
                 onTap: () {
@@ -83,27 +83,6 @@ class SignInScreen extends StatelessWidget {
       child: Text(
         btnText,
         style: const TextStyle(fontSize: 24),
-      ),
-    );
-  }
-
-  RichText _richText(BuildContext context, String textSpan1, String textSpan2,
-      void Function()? onTap) {
-    return RichText(
-      textAlign: TextAlign.center,
-      text: TextSpan(
-        text: textSpan1,
-        style: Theme.of(context)
-            .textTheme
-            .bodyText1
-            ?.copyWith(fontSize: 15, height: 1.2),
-        children: <TextSpan>[
-          TextSpan(
-              text: textSpan2,
-              style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                  color: ColorConstants.primary, fontWeight: FontWeight.w700),
-              recognizer: TapGestureRecognizer()..onTap = onTap)
-        ],
       ),
     );
   }

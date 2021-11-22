@@ -2,8 +2,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 
-class TermsAndConditionRichTextAuthComponent extends StatelessWidget {
-  const TermsAndConditionRichTextAuthComponent(
+class RichTextAuthComponent extends StatelessWidget {
+  const RichTextAuthComponent(
       {Key? key, required this.textSpan1, required this.textSpan2, this.onTap})
       : super(key: key);
   final String textSpan1, textSpan2;

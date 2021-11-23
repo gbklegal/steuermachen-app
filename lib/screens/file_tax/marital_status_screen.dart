@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:steuermachen/components/app_bar/appbar_file_tax_component.dart';
+import 'package:steuermachen/components/button_component.dart';
+import 'package:steuermachen/components/text_component.dart';
 import 'package:steuermachen/components/text_progress_bar_component.dart';
+import 'package:steuermachen/constants/app_constants.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
+import 'package:steuermachen/constants/style/font_styles_constants.dart';
 import 'package:steuermachen/screens/file_tax/marital_status_model.dart';
 
 class MaritalStatusScreen extends StatefulWidget {
@@ -47,34 +52,45 @@ class _MaritalStatusScreenState extends State<MaritalStatusScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(StringConstants.areSingle),
+      appBar: const PreferredSize(
+        preferredSize: Size.fromHeight(AppConstants.toolbarSize),
+        child: AppBarComponent(
+          StringConstants.areSingle,
+        ),
       ),
       body: Column(
         // mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 16, right: 16),
+          const Padding(
+            padding: EdgeInsets.only(left: 16, right: 16),
             child: TextProgressBarComponent(
               title: "${StringConstants.step} 1/5",
-              progress: 1,
+              progress: 0.2,
             ),
           ),
-          Align(
-            alignment: Alignment.center,
-            child: GridView.builder(
-                shrinkWrap: true,
-                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: 200,
-                    childAspectRatio: 3 / 2,
-                    crossAxisSpacing: 4,
-                    mainAxisSpacing: 4),
-                itemCount: 4,
-                itemBuilder: (BuildContext ctx, index) {
-                  return _itemMaritalStatus(index);
-                }),
+          Expanded(
+            child: Center(
+              child: GridView.builder(
+                  shrinkWrap: true,
+                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent: 200,
+                      childAspectRatio: 3 / 2,
+                      crossAxisSpacing: 4,
+                      mainAxisSpacing: 4),
+                  itemCount: 4,
+                  itemBuilder: (BuildContext ctx, index) {
+                    return _itemMaritalStatus(index);
+                  }),
+            ),
           ),
         ],
+      ),
+      bottomNavigationBar: const Padding(
+        padding: EdgeInsets.all(8.0),
+        child: ButtonComponent(
+          buttonText: StringConstants.next,
+        ),
       ),
     );
   }
@@ -103,7 +119,10 @@ class _MaritalStatusScreenState extends State<MaritalStatusScreen> {
         const SizedBox(
           height: 8,
         ),
-        Text(maritalStatusModelList[index].title!)
+        TextComponent(
+          maritalStatusModelList[index].title!,
+          style: FontStyles.fontRegular(fontSize: 20),
+        )
       ],
     );
   }
@@ -119,7 +138,7 @@ class _MaritalStatusScreenState extends State<MaritalStatusScreen> {
         borderRadius: BorderRadius.circular(4),
         color: ColorConstants.green,
         boxShadow: [
-          BoxShadow(
+           const BoxShadow(
               color: Color(0x3f000000),
               offset: Offset(0, 4),
               blurRadius: 4,

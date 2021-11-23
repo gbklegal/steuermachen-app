@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:steuermachen/components/text_component.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
+import 'package:steuermachen/constants/style/font_styles_constants.dart';
 
 class TextProgressBarComponent extends StatelessWidget {
   final String title;
@@ -13,13 +15,14 @@ class TextProgressBarComponent extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(title),
+        TextComponent(title, style: FontStyles.fontRegular(fontSize: 16)),
         const SizedBox(height: 10),
         LinearProgressIndicator(
-          value: progress,
-          valueColor: AlwaysStoppedAnimation<Color>(
+          // value: progress,
+          valueColor: const AlwaysStoppedAnimation<Color>(
             ColorConstants.toxicGreen,
           ),
+          value: progress,
           backgroundColor: ColorConstants.mediumGrey,
         ),
       ],

@@ -8,11 +8,13 @@ class AppBarComponent extends StatelessWidget with PreferredSizeWidget {
   final Function()? overrideBackPressed;
   final String? text;
   final String? imageTitle;
+  final Color backgroundColor;
   const AppBarComponent(
     this.text, {
     Key? key,
     this.overrideBackPressed,
     this.imageTitle,
+    this.backgroundColor = ColorConstants.white,
   }) : super(key: key);
 
   @override
@@ -20,7 +22,7 @@ class AppBarComponent extends StatelessWidget with PreferredSizeWidget {
     return PreferredSize(
       preferredSize: const Size.fromHeight(AppConstants.toolbarSize),
       child: AppBar(
-        backgroundColor: ColorConstants.white,
+        backgroundColor: backgroundColor,
         title: _title(),
         // iconTheme: ,
         titleSpacing: -5,
@@ -49,7 +51,10 @@ class AppBarComponent extends StatelessWidget with PreferredSizeWidget {
       return Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Image.asset(imageTitle!, height: 28,),
+          Image.asset(
+            imageTitle!,
+            height: 28,
+          ),
           const SizedBox(width: 10),
           Text(
             text ?? "",

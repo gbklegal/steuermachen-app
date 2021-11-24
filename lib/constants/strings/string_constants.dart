@@ -39,4 +39,6 @@ class StringConstants {
   static const String resend = "Resend";
   static const String verifyYourAccount = "Verify your account";
   static const String next = "Next";
+  static const String document = "Document";
+  static const String useCamera = "Use Camera";
 }

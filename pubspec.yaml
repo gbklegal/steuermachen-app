@@ -64,8 +64,10 @@ flutter:
   assets:
     - assets/logo.png
     - assets/file-artwork.png
+    - assets/top-right-round-circle.svg
     - assets/
     - assets/verify-account.png
+    - assets/submit-document.png
     - assets/icons/
   #   - images/a_dot_ham.jpeg
 

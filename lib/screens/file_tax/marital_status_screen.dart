@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:steuermachen/components/app_bar/appbar_file_tax_component.dart';
+import 'package:steuermachen/components/app_bar/appbar_component.dart';
 import 'package:steuermachen/components/button_component.dart';
 import 'package:steuermachen/components/text_component.dart';
 import 'package:steuermachen/components/text_progress_bar_component.dart';
@@ -8,7 +8,7 @@ import 'package:steuermachen/constants/app_constants.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
-import 'package:steuermachen/constants/style/font_styles_constants.dart';
+import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:steuermachen/screens/file_tax/marital_status_model.dart';
 
 class MaritalStatusScreen extends StatefulWidget {
@@ -52,11 +52,8 @@ class _MaritalStatusScreenState extends State<MaritalStatusScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const PreferredSize(
-        preferredSize: Size.fromHeight(AppConstants.toolbarSize),
-        child: AppBarComponent(
-          StringConstants.areSingle,
-        ),
+      appBar: const AppBarComponent(
+        StringConstants.areSingle,
       ),
       body: Column(
         // mainAxisAlignment: MainAxisAlignment.center,

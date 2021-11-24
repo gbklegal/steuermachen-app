@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:steuermachen/constants/app_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
-import 'package:steuermachen/constants/style/font_styles_constants.dart';
+import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 
-class AppBarComponent extends StatelessWidget {
+class AppBarComponent extends StatelessWidget with PreferredSizeWidget {
   final Function()? overrideBackPressed;
   final String? text;
-
+  final String? imageTitle;
   const AppBarComponent(
     this.text, {
     Key? key,
     this.overrideBackPressed,
+    this.imageTitle,
   }) : super(key: key);
 
   @override
@@ -20,10 +21,7 @@ class AppBarComponent extends StatelessWidget {
       preferredSize: const Size.fromHeight(AppConstants.toolbarSize),
       child: AppBar(
         backgroundColor: ColorConstants.white,
-        title: Text(
-          text ?? "",
-          style: FontStyles.fontRegular(fontSize: 16),
-        ),
+        title: _title(),
         // iconTheme: ,
         titleSpacing: -5,
         elevation: 0,
@@ -45,4 +43,27 @@ class AppBarComponent extends StatelessWidget {
       ),
     );
   }
+
+  Widget _title() {
+    if (imageTitle != null) {
+      return Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Image.asset(imageTitle!, height: 28,),
+          const SizedBox(width: 10),
+          Text(
+            text ?? "",
+            style: FontStyles.boldFont(fontSize: 24),
+          )
+        ],
+      );
+    }
+    return Text(
+      text ?? "",
+      style: FontStyles.fontRegular(fontSize: 16),
+    );
+  }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(AppConstants.toolbarSize);
 }

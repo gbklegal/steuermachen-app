@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:steuermachen/components/text_component.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
-import 'package:steuermachen/constants/style/font_styles_constants.dart';
+import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 
 class TextProgressBarComponent extends StatelessWidget {
   final String title;

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/screens/auth/signin_screen.dart';
 import 'package:steuermachen/screens/auth/signup_screen.dart';
+import 'package:steuermachen/screens/document/select_document_for_upload_screen.dart';
 import 'package:steuermachen/screens/file_tax/marital_status_screen.dart';
 import 'package:steuermachen/screens/auth/verify_account_screen.dart';
 import 'package:steuermachen/screens/get_started/get_started_screen.dart';
@@ -30,6 +31,10 @@ onGenerateRoutes(RouteSettings settings) {
     case RouteConstants.verifyAccountScreen:
       return MaterialPageRoute(
         builder: (_) => const VerifyAccountScreen(),
+      );
+    case RouteConstants.selectDocumentForScreen:
+      return MaterialPageRoute(
+        builder: (_) => const SelectDocumentForScreen(),
       );
     default:
       return MaterialPageRoute(

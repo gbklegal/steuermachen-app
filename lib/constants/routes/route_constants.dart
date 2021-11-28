@@ -7,4 +7,5 @@ class RouteConstants {
   static const String maritalStatusScreen = "MaritalStatusScreen";
   static const String verifyAccountScreen = "VerifyAccountScreen";
   static const String selectDocumentForScreen = "SelectDocumentForScreen";
+  static const String selectYearScreen = "YearScreen";
 }

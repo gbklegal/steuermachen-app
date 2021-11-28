@@ -36,6 +36,7 @@ class AppBarComponent extends StatelessWidget with PreferredSizeWidget {
             /*  overrideBackPressed == null
                 ? Get.back()
                 : overrideBackPressed!(); */
+            Navigator.pop(context);
           },
         ),
         centerTitle: true,

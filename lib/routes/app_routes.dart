@@ -3,8 +3,9 @@ import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/screens/auth/signin_screen.dart';
 import 'package:steuermachen/screens/auth/signup_screen.dart';
 import 'package:steuermachen/screens/document/select_document_for_upload_screen.dart';
-import 'package:steuermachen/screens/file_tax/marital_status_screen.dart';
+import 'package:steuermachen/screens/file_tax/tax_file_marital_status_screen.dart';
 import 'package:steuermachen/screens/auth/verify_account_screen.dart';
+import 'package:steuermachen/screens/file_tax/tax_file_year_screen.dart';
 import 'package:steuermachen/screens/get_started/get_started_screen.dart';
 import 'package:steuermachen/screens/onboarding/onboarding_screen.dart';
 
@@ -27,7 +28,7 @@ onGenerateRoutes(RouteSettings settings) {
         builder: (_) => const SignupScreen(),
       );
     case RouteConstants.maritalStatusScreen:
-      return MaterialPageRoute(builder: (_) => const MaritalStatusScreen());
+      return MaterialPageRoute(builder: (context) => const MaritalStatusScreen());
     case RouteConstants.verifyAccountScreen:
       return MaterialPageRoute(
         builder: (_) => const VerifyAccountScreen(),
@@ -35,6 +36,10 @@ onGenerateRoutes(RouteSettings settings) {
     case RouteConstants.selectDocumentForScreen:
       return MaterialPageRoute(
         builder: (_) => const SelectDocumentForScreen(),
+      );
+    case RouteConstants.selectYearScreen:
+      return MaterialPageRoute(
+        builder: (_) => const TaxFileYearScreen(),
       );
     default:
       return MaterialPageRoute(

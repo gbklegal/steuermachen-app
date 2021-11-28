@@ -45,7 +45,7 @@ class _TaxFileYearScreenState extends State<TaxFileYearScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const AppBarComponent(
-        StringConstants.curStatus,
+        StringConstants.selectYear,
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -68,7 +68,7 @@ class _TaxFileYearScreenState extends State<TaxFileYearScreen> {
         child: ButtonComponent(
           buttonText: StringConstants.next,
           onPressed: () {
-            Navigator.pushNamed(context, RouteConstants.selectYearScreen);
+            Navigator.pushNamed(context, RouteConstants.currentIncomeScreen);
           },
         ),
       ),

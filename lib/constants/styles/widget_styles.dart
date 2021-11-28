@@ -9,6 +9,6 @@ class WidgetStyles {
       );
   static Text textNoData() => Text(
         'Loading',
-        style: FontStyles.boldFont(color: ColorConstants.white),
+        style: FontStyles.fontBold(color: ColorConstants.white),
       );
 }

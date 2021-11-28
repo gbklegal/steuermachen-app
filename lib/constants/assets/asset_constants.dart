@@ -10,4 +10,7 @@ class AssetConstants{
   static String broken = "assets/icons/broken.svg";
   static String weddingRings = "assets/icons/wedding-rings.svg";
   static String topRightRoundCircle = "assets/top-right-round-circle.svg";
+  static String uploadDoc = "assets/icons/upload_doc.svg";
+  static String removePic = "assets/icons/remove-pic.svg";
+  static String sampleImg = "assets/sample-img.jpg";
 }

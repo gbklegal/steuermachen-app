@@ -59,7 +59,7 @@ class AppBarComponent extends StatelessWidget with PreferredSizeWidget {
           const SizedBox(width: 10),
           Text(
             text ?? "",
-            style: FontStyles.boldFont(fontSize: 24),
+            style: FontStyles.fontBold(fontSize: 24),
           )
         ],
       );

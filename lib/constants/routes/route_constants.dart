@@ -8,4 +8,7 @@ class RouteConstants {
   static const String verifyAccountScreen = "VerifyAccountScreen";
   static const String selectDocumentForScreen = "SelectDocumentForScreen";
   static const String selectYearScreen = "YearScreen";
+  static const String currentIncomeScreen = "currentIncomScreen";
+  static const String fileTaxInfoScreen = "fileTaxInfo";
+  static const String fileTaxUploadDocScreen = "fileTaxUploadDocScreen";
 }

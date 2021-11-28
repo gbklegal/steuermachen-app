@@ -57,7 +57,7 @@ class SelectDocumentForScreen extends StatelessWidget {
                           padding: const EdgeInsets.only(left: 40),
                           child: Text(
                             StringConstants.document,
-                            style: FontStyles.boldFont(fontSize: 24),
+                            style: FontStyles.fontBold(fontSize: 24),
                           ),
                         ),
                       ),

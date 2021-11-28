@@ -8,14 +8,14 @@ import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/screens/file_tax/marital_status_model.dart';
 
-class MaritalStatusScreen extends StatefulWidget {
-  const MaritalStatusScreen({Key? key}) : super(key: key);
+class TaxFileMaritalStatusScreen extends StatefulWidget {
+  const TaxFileMaritalStatusScreen({Key? key}) : super(key: key);
 
   @override
-  _MaritalStatusScreenState createState() => _MaritalStatusScreenState();
+  _TaxFileMaritalStatusScreenState createState() => _TaxFileMaritalStatusScreenState();
 }
 
-class _MaritalStatusScreenState extends State<MaritalStatusScreen> {
+class _TaxFileMaritalStatusScreenState extends State<TaxFileMaritalStatusScreen> {
   late List<MaritalStatusModel> maritalStatusModelList  = [];
 
   @override

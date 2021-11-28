@@ -3,7 +3,7 @@ import 'package:steuermachen/constants/colors/color_constants.dart';
 
 class FontStyles {
   //light
-  static TextStyle boldFont({
+  static TextStyle fontBold({
     Color color = ColorConstants.black,
     double letterSpacing = 0.0,
     double fontSize = 22.0,

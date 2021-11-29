@@ -5,6 +5,7 @@ class ColorConstants {
   static const Color body = Color(0xffffffff);
   static const Color formFieldBackground = Color(0xffF1F6FC);
   static const Color mediumGrey = Color(0xffDEDEDE);
+  static const Color greyBottomBar = Color(0x84787878);
   static const Color black = Color(0xff000000);
   static const Color white = Color(0xffffffff);
   static const Color green = Color(0xff14EA69);
@@ -12,6 +13,7 @@ class ColorConstants {
   static const Color paleGrey = Color(0xffe5e5ea);
   static const Color charcoalGrey = Color(0x993c3c43);
   static const Color blackSix = Color(0x0f000000);
+  static const Color duckEggBlue = Color(0xfff1f6fc);
   static MaterialColor kPrimaryColor = const MaterialColor(
     0xffFF6138, 
     <int, Color>{

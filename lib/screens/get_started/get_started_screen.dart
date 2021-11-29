@@ -26,7 +26,7 @@ class GetStartedScreen extends StatelessWidget {
               const SizedBox(height: 20),
               _button(context, StringConstants.getStarted, () {
                 Navigator.pushNamed(
-                    context, RouteConstants.maritalStatusScreen);
+                    context, RouteConstants.bottomNavBarScreen);
               }),
               const SizedBox(height: 22),
               Expanded(child: _richText(context))

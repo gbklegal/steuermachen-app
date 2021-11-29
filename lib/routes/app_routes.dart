@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/screens/auth/signin_screen.dart';
 import 'package:steuermachen/screens/auth/signup_screen.dart';
+import 'package:steuermachen/screens/bottom_nav_bar/bottom_nav_bar_screen.dart';
 import 'package:steuermachen/screens/document/select_document_for_upload_screen.dart';
 import 'package:steuermachen/screens/file_tax/file_tax_info_screen.dart';
 import 'package:steuermachen/screens/file_tax/file_tax_final_submission_screen.dart';
@@ -60,6 +61,10 @@ onGenerateRoutes(RouteSettings settings) {
     case RouteConstants.fileTaxFinalSubmissionScreen:
       return MaterialPageRoute(
         builder: (_) =>  const FileTaxFinalSubmissionScreen(),
+      );
+    case RouteConstants.bottomNavBarScreen:
+      return MaterialPageRoute(
+        builder: (_) =>  const BottomNavBarScreen(),
       );
     default:
       return MaterialPageRoute(

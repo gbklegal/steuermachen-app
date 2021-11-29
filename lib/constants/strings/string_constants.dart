@@ -79,4 +79,18 @@ class StringConstants {
       "IMPORTANT: You will receive an email with all the information on how to proceed.";
   static const String goHome = "Go to Home";
   static const String orderNew = "Order New";
+  // Bottom Bar
+  static const String home = "Home";
+  static const String calc = "Calculator";
+  static const String more = "More";
+  // More
+  static const String onlineShop = "Online shop";
+  static const String doc= "Documents";
+  static const String faq = "FAQ";
+  static const String  howDoesWork = "Wie funktioniert's?";
+  static const String sustain = "sustainability";
+  static const String taxTip= "Tax Tips";
+  static const String  support= "Support";
+  static const String logout = "Log out";
+  // static const String  = "";
 }

@@ -3,6 +3,7 @@ import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/screens/auth/signin_screen.dart';
 import 'package:steuermachen/screens/auth/signup_screen.dart';
 import 'package:steuermachen/screens/bottom_nav_bar/bottom_nav_bar_screen.dart';
+import 'package:steuermachen/screens/contact_us/contact_us_options_screen.dart';
 import 'package:steuermachen/screens/document/select_document_for_upload_screen.dart';
 import 'package:steuermachen/screens/file_tax/file_tax_info_screen.dart';
 import 'package:steuermachen/screens/file_tax/file_tax_final_submission_screen.dart';
@@ -65,6 +66,10 @@ onGenerateRoutes(RouteSettings settings) {
     case RouteConstants.bottomNavBarScreen:
       return MaterialPageRoute(
         builder: (_) =>  const BottomNavBarScreen(),
+      );
+    case RouteConstants.contactUsOptionScreen:
+      return MaterialPageRoute(
+        builder: (_) =>  const ContactUsOptionScreen(),
       );
     default:
       return MaterialPageRoute(

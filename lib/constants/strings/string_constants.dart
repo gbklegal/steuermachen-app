@@ -24,6 +24,7 @@ class StringConstants {
   static const String appleSignIn = "Sign in with Apple";
   static const String googleSignIn = "Sign in with Google";
   static const String email = "Email";
+  static const String emailUs = "Email us";
   static const String password = "Password";
   static const String orSigninWith = "or sign in with";
   static const String dontHaveAnAccount = "Don't have an account?";
@@ -85,12 +86,18 @@ class StringConstants {
   static const String more = "More";
   // More
   static const String onlineShop = "Online shop";
-  static const String doc= "Documents";
+  static const String doc = "Documents";
   static const String faq = "FAQ";
-  static const String  howDoesWork = "Wie funktioniert's?";
+  static const String howDoesWork = "Wie funktioniert's?";
   static const String sustain = "sustainability";
-  static const String taxTip= "Tax Tips";
-  static const String  support= "Support";
+  static const String taxTip = "Tax Tips";
+  static const String support = "Support";
   static const String logout = "Log out";
+  static const String howCanWeHelpYou = "How can we help you?";
+  static const String getInTouchWithUs = "Get in touch with us";
+  static const String contactUs = "Contact us";
+  static const String callUs = "Call us";
+  static const String orUseOur = "Or use our";
+  static const String form = "form";
   // static const String  = "Upload";
 }

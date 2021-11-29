@@ -13,4 +13,5 @@ class RouteConstants {
   static const String fileTaxUploadDocScreen = "fileTaxUploadDocScreen";
   static const String fileTaxFinalSubmissionScreen = "fileTaxFinalSubmissionScreen";
   static const String bottomNavBarScreen = "bottomNavBarScreen";
+  static const String contactUsOptionScreen = "ContactUsOptionScreen";
 }

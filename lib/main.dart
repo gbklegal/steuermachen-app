@@ -44,14 +44,15 @@ class MyApp extends StatelessWidget {
         filled: true,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(5.0),
-          borderSide: const BorderSide(color: ColorConstants.formFieldBackground),
+          borderSide:
+              const BorderSide(color: ColorConstants.formFieldBackground),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(5.0),
-          borderSide: const BorderSide(color: ColorConstants.formFieldBackground),
+          borderSide:
+              const BorderSide(color: ColorConstants.formFieldBackground),
         ),
-        fillColor: ColorConstants.formFieldBackground
-        );
+        fillColor: ColorConstants.formFieldBackground);
   }
 
   ElevatedButtonThemeData _elevatedBtnTheme() {

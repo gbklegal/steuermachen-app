@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 
 class FontStyles {
@@ -8,9 +9,8 @@ class FontStyles {
     double letterSpacing = 0.0,
     double fontSize = 22.0,
   }) =>
-      TextStyle(
+       GoogleFonts.raleway(
           color: color,
-          fontFamily: 'helvetica',
           fontWeight: FontWeight.w700,
           fontStyle: FontStyle.normal,
           letterSpacing: letterSpacing,
@@ -25,10 +25,9 @@ class FontStyles {
           double lineSpacing = 1.5,
           FontWeight fontWeight = FontWeight.w500,
           bool underLine = false}) =>
-      TextStyle(
+       GoogleFonts.raleway(
           fontSize: fontSize,
           color: color,
-          fontFamily: 'helvetica',
           fontWeight: bold ? FontWeight.bold : fontWeight,
           fontStyle: FontStyle.normal,
           height: lineSpacing, //line height 200% of actual height
@@ -49,12 +48,11 @@ class FontStyles {
           bool bold = false,
           bool underLine = false,
           double? height}) =>
-      TextStyle(
+      GoogleFonts.raleway(
           color: color,
           fontWeight: bold ? FontWeight.w500 : FontWeight.w400,
           fontStyle: FontStyle.normal,
           letterSpacing: letterSpacing,
-          fontFamily: 'helvetica',
           decoration:
               underLine ? TextDecoration.underline : TextDecoration.none,
           height: height,

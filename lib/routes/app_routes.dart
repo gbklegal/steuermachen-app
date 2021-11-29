@@ -4,6 +4,7 @@ import 'package:steuermachen/screens/auth/signin_screen.dart';
 import 'package:steuermachen/screens/auth/signup_screen.dart';
 import 'package:steuermachen/screens/document/select_document_for_upload_screen.dart';
 import 'package:steuermachen/screens/file_tax/file_tax_info_screen.dart';
+import 'package:steuermachen/screens/file_tax/file_tax_final_submission_screen.dart';
 import 'package:steuermachen/screens/file_tax/file_tax_upload_document_screen.dart';
 import 'package:steuermachen/screens/file_tax/tax_file_current_income_screen.dart';
 import 'package:steuermachen/screens/file_tax/tax_file_marital_status_screen.dart';
@@ -55,6 +56,10 @@ onGenerateRoutes(RouteSettings settings) {
     case RouteConstants.fileTaxUploadDocScreen:
       return MaterialPageRoute(
         builder: (_) =>  const FileTaxUploadDocumentScreen(),
+      );
+    case RouteConstants.fileTaxFinalSubmissionScreen:
+      return MaterialPageRoute(
+        builder: (_) =>  const FileTaxFinalSubmissionScreen(),
       );
     default:
       return MaterialPageRoute(

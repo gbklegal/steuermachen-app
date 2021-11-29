@@ -52,7 +52,7 @@ class _FileTaxUploadDocumentScreenState
         child: ButtonComponent(
           buttonText: StringConstants.next,
           onPressed: () {
-            Navigator.pushNamed(context, RouteConstants.fileTaxInfoScreen);
+            Navigator.pushNamed(context, RouteConstants.fileTaxFinalSubmissionScreen);
           },
         ),
       ),

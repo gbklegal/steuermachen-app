@@ -70,7 +70,7 @@ class StringConstants {
   static const String initAdvice = "Initial tax advice";
   static const String ifNeedInit =
       "If you only need an initial consultation, then use our taxEASY service.";
-  static const String toTaxRe = "TO Tax Reasy";
+  static const String toTaxRe = "To Tax Reasy";
   static const String or = "OR";
   static const String orderNow = "Order Now";
   //Tax File Submit Dialog

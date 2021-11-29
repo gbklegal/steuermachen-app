@@ -1,3 +1,4 @@
+import 'package:fdottedline/fdottedline.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
@@ -68,35 +69,62 @@ class SelectDocumentForScreen extends StatelessWidget {
                     const SizedBox(
                       height: 60,
                     ),
-                    Flexible(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 24),
-                        child: Column(
-                          children: [
-                            ElevatedButton(
-                              style: ElevatedButtonTheme.of(context)
-                                  .style
-                                  ?.copyWith(
-                                    minimumSize: MaterialStateProperty.all(
-                                      Size(MediaQuery.of(context).size.width, 70),
-                                    ),
-                                  ),
-                              onPressed: () {},
-                              child: const Text(
-                                StringConstants.useCamera,
-                                style: TextStyle(fontSize: 22, fontWeight: FontWeight.normal),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    )
+                    _useCameraBtn(context),
+                    _uploadBtn(context),
                   ],
                 ),
               ),
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Padding _useCameraBtn(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24),
+      child: Column(
+        children: [
+          ElevatedButton(
+            style: ElevatedButtonTheme.of(context).style?.copyWith(
+                  minimumSize: MaterialStateProperty.all(
+                    Size(MediaQuery.of(context).size.width, 70),
+                  ),
+                ),
+            onPressed: () {},
+            child: const Text(
+              StringConstants.useCamera,
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.normal),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Padding _uploadBtn(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 15),
+      child: FDottedLine(
+        dottedLength: 3,
+        corner: const FDottedLineCorner(
+            leftBottomCorner: 10,
+            leftTopCorner: 10,
+            rightTopCorner: 10,
+            rightBottomCorner: 10),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 24),
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width,
+            child: const Center(
+              child: Text(
+                StringConstants.upload,
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.normal),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }

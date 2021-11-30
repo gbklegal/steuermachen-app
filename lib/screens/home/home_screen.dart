@@ -35,27 +35,60 @@ class HomeScreen extends StatelessWidget {
                 ),
                 Image.asset(AssetConstants.homeLaptop),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  padding: const EdgeInsets.only(left: 45, right: 30),
                   child: Text(
                     StringConstants.howWouldYouLikeToMoveForwardWithUs,
-                    textAlign: TextAlign.center,
+                    textAlign: TextAlign.left,
                     style: Theme.of(context)
                         .textTheme
                         .headline5!
                         .copyWith(fontWeight: FontWeight.w700, fontSize: 28),
                   ),
                 ),
-                Text(
-                  "Select catogorie suitable to you",
-                  textAlign: TextAlign.left,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline5!
-                      .copyWith(fontWeight: FontWeight.w400, fontSize: 20),
+                const SizedBox(height: 20),
+                Padding(
+                  padding: const EdgeInsets.only(right: 15, bottom: 20),
+                  child: Text(
+                    "Select catogorie suitable to you",
+                    textAlign: TextAlign.left,
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline5!
+                        .copyWith(fontWeight: FontWeight.w400, fontSize: 20),
+                  ),
                 ),
               ],
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+            child: Container(
+                color: ColorConstants.toxicGreen,
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          SvgPicture.asset(AssetConstants.icDocument),
+                          const SizedBox(width: 15),
+                          Text(
+                            "Have Tax done online",
+                            textAlign: TextAlign.left,
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline5!
+                                .copyWith(
+                                    fontWeight: FontWeight.w400, fontSize: 20),
+                          ),
+                        ],
+                      ),
+                      SvgPicture.asset(AssetConstants.icExclamation),
+                    ],
+                  ),
+                )),
+          )
         ],
       ),
     );

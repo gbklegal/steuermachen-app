@@ -12,6 +12,8 @@ class AssetConstants {
   static String topRightRoundCircle = "assets/top-right-round-circle.svg";
   static String uploadDoc = "assets/icons/upload_doc.svg";
   static String removePic = "assets/icons/remove-pic.svg";
+  static String icBin = "assets/icons/bin-icon.svg";
+  static String icPdf = "assets/icons/pdf.png";
   static String sampleImg = "assets/sample-img.jpg";
   static String contactUs = "assets/contact-us.png";
   static String email = "assets/email.png";

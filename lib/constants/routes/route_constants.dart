@@ -15,4 +15,5 @@ class RouteConstants {
   static const String bottomNavBarScreen = "bottomNavBarScreen";
   static const String contactUsOptionScreen = "ContactUsOptionScreen";
   static const String uploadedDocumentScreen = "UploadedDocumentScreen";
+  static const String faqScreen = "FaqScreen";
 }

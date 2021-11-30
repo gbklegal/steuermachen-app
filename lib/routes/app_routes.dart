@@ -6,6 +6,7 @@ import 'package:steuermachen/screens/bottom_nav_bar/bottom_nav_bar_screen.dart';
 import 'package:steuermachen/screens/contact_us/contact_us_options_screen.dart';
 import 'package:steuermachen/screens/document/select_document_for_upload_screen.dart';
 import 'package:steuermachen/screens/document/uploaded_document_screen.dart';
+import 'package:steuermachen/screens/faq/faq_screen.dart';
 import 'package:steuermachen/screens/file_tax/file_tax_info_screen.dart';
 import 'package:steuermachen/screens/file_tax/file_tax_final_submission_screen.dart';
 import 'package:steuermachen/screens/file_tax/file_tax_upload_document_screen.dart';
@@ -35,7 +36,8 @@ onGenerateRoutes(RouteSettings settings) {
         builder: (_) => const SignupScreen(),
       );
     case RouteConstants.maritalStatusScreen:
-      return MaterialPageRoute(builder: (context) => const TaxFileMaritalStatusScreen());
+      return MaterialPageRoute(
+          builder: (context) => const TaxFileMaritalStatusScreen());
     case RouteConstants.verifyAccountScreen:
       return MaterialPageRoute(
         builder: (_) => const VerifyAccountScreen(),
@@ -54,27 +56,31 @@ onGenerateRoutes(RouteSettings settings) {
       );
     case RouteConstants.fileTaxInfoScreen:
       return MaterialPageRoute(
-        builder: (_) =>  FileTaxInfoScreen(),
+        builder: (_) => FileTaxInfoScreen(),
       );
     case RouteConstants.fileTaxUploadDocScreen:
       return MaterialPageRoute(
-        builder: (_) =>  const FileTaxUploadDocumentScreen(),
+        builder: (_) => const FileTaxUploadDocumentScreen(),
       );
     case RouteConstants.fileTaxFinalSubmissionScreen:
       return MaterialPageRoute(
-        builder: (_) =>  const FileTaxFinalSubmissionScreen(),
+        builder: (_) => const FileTaxFinalSubmissionScreen(),
       );
     case RouteConstants.bottomNavBarScreen:
       return MaterialPageRoute(
-        builder: (_) =>  const BottomNavBarScreen(),
+        builder: (_) => const BottomNavBarScreen(),
       );
     case RouteConstants.contactUsOptionScreen:
       return MaterialPageRoute(
-        builder: (_) =>  const ContactUsOptionScreen(),
+        builder: (_) => const ContactUsOptionScreen(),
       );
     case RouteConstants.uploadedDocumentScreen:
       return MaterialPageRoute(
-        builder: (_) =>  const UploadedDocumentScreen(),
+        builder: (_) => const UploadedDocumentScreen(),
+      );
+    case RouteConstants.faqScreen:
+      return MaterialPageRoute(
+        builder: (_) => const FaqScreen(),
       );
     default:
       return MaterialPageRoute(

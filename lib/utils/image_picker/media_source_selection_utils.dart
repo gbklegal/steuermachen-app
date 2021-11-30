@@ -65,7 +65,7 @@ class _MediaSourceSelectionWidgetState
 
   var pickedImage;
   Future getImage(BuildContext context) async {
-    pickedImage = await _picker.getImage(
+    pickedImage = await _picker.pickImage(
         source: ImageSource.gallery,
         preferredCameraDevice: CameraDevice.front,
         imageQuality: 70,

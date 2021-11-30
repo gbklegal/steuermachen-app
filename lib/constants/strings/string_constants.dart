@@ -99,5 +99,9 @@ class StringConstants {
   static const String callUs = "Call us";
   static const String orUseOur = "Or use our";
   static const String form = "form";
-  // static const String  = "Upload";
+  static const String gallery  = "Gallery";
+  static const String camera  = "Camera";
+  static const String chooseOption  = "Choose option";
+  static const String cancel  = "Cancel";
+  static const String submit  = "Submit";
 }

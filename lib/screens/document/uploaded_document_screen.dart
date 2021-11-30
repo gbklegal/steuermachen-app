@@ -9,8 +9,8 @@ import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 
-class SelectDocumentForScreen extends StatelessWidget {
-  const SelectDocumentForScreen({Key? key}) : super(key: key);
+class UploadedDocumentScreen extends StatelessWidget {
+  const UploadedDocumentScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -52,21 +52,17 @@ class SelectDocumentForScreen extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    const SizedBox(
-                      height: 40,
-                    ),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 40),
-                        child: Text(
-                          StringConstants.document,
-                          style: FontStyles.fontBold(fontSize: 24),
+                    Flexible(
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 40),
+                          child: Text(
+                            StringConstants.document,
+                            style: FontStyles.fontBold(fontSize: 24),
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 40,
                     ),
                     Flexible(
                       child: Image.asset(AssetConstants.submitDocument),
@@ -98,8 +94,7 @@ class SelectDocumentForScreen extends StatelessWidget {
                   ),
                 ),
             onPressed: () {
-              Navigator.pushNamed(
-                  context, RouteConstants.uploadedDocumentScreen);
+             
             },
             child: const Text(
               StringConstants.useCamera,

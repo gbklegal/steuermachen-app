@@ -95,6 +95,7 @@ class StringConstants {
   static const String logout = "Log out";
   static const String howCanWeHelpYou = "How can we help you?";
   static const String getInTouchWithUs = "Get in touch with us";
+  static const String howWouldYouLikeToMoveForwardWithUs = "How would you like to move forward with us?";
   static const String contactUs = "Contact us";
   static const String callUs = "Call us";
   static const String orUseOur = "Or use our";

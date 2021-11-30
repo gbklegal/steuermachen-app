@@ -3,8 +3,8 @@ import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:steuermachen/screens/bottom_nav_bar/calculator_screen.dart';
-import 'package:steuermachen/screens/bottom_nav_bar/home_screen.dart';
 import 'package:steuermachen/screens/bottom_nav_bar/more_screen.dart';
+import 'package:steuermachen/screens/home/home_screen.dart';
 
 class BottomNavBarScreen extends StatefulWidget {
   const BottomNavBarScreen({Key? key}) : super(key: key);
@@ -15,7 +15,7 @@ class BottomNavBarScreen extends StatefulWidget {
 
 class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
   int _currentIndex = 0;
-  static List<Widget> _widgetOptions = <Widget>[
+  static List<Widget> _widgetOptions = const <Widget>[
     HomeScreen(),
     CalculatorScreen(),
     MoreScreen(),
@@ -40,7 +40,7 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
             _currentIndex = value;
           });
         },
-        items: [
+        items: const [
           BottomNavigationBarItem(
             label: StringConstants.home,
             icon: Icon(Icons.favorite),

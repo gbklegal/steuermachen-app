@@ -9,6 +9,7 @@ class AssetConstants {
   static String widowed = "assets/icons/widowed.svg";
   static String broken = "assets/icons/broken.svg";
   static String weddingRings = "assets/icons/wedding-rings.svg";
+  static String icNotification = "assets/icons/notification-icon.svg";
   static String topRightRoundCircle = "assets/top-right-round-circle.svg";
   static String uploadDoc = "assets/icons/upload_doc.svg";
   static String removePic = "assets/icons/remove-pic.svg";
@@ -18,4 +19,5 @@ class AssetConstants {
   static String contactUs = "assets/contact-us.png";
   static String email = "assets/email.png";
   static String phoneCall = "assets/phone-call.png";
+  static String homeLaptop = "assets/home-laptop.png";
 }

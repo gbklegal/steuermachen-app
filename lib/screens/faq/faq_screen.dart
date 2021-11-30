@@ -31,18 +31,43 @@ class FaqScreen extends StatelessWidget {
       },
     ];
     return AppBarWithSideCornerCircleAndRoundBody(
-      body: Column(
-        children: [
-          Stack(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Column(
+            children: [
+              for (var i = 0; i < content.length; i++)
+                _faqSteps(context, (i + 1).toString(), content[i]["title"]!,
+                    content[i]["content"]!,
+                    showTopLine: i != 0),
+              const SizedBox(height: 50)
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Column _faqSteps(
+      BuildContext context, String index, String title, String content,
+      {bool showTopLine = true}) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 15, bottom: 2),
+          child: Stack(
             clipBehavior: Clip.none,
             alignment: Alignment.bottomCenter,
             children: [
               Positioned(
                 bottom: 50,
-                child: Container(
-                  height: 22,
-                  width: 1,
-                  color: ColorConstants.green,
+                child: Visibility(
+                  visible: showTopLine,
+                  child: Container(
+                    height: 26,
+                    width: 1,
+                    color: ColorConstants.green,
+                  ),
                 ),
               ),
               Container(
@@ -52,7 +77,7 @@ class FaqScreen extends StatelessWidget {
                 ),
                 padding: const EdgeInsets.all(18),
                 child: Text(
-                  "1",
+                  index,
                   style: Theme.of(context)
                       .textTheme
                       .bodyText1!
@@ -69,27 +94,27 @@ class FaqScreen extends StatelessWidget {
               ),
             ],
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 12, bottom: 10),
-            child: Text(
-              "asasd",
-              textAlign: TextAlign.center,
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyText1!
-                  .copyWith(fontWeight: FontWeight.w700),
-            ),
-          ),
-          Text(
-            "Fill out the order form, select the desired tax year for which you would like to have the income tax return drawn up and simply send the form.",
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 12, bottom: 10),
+          child: Text(
+            title,
             textAlign: TextAlign.center,
             style: Theme.of(context)
                 .textTheme
                 .bodyText1!
-                .copyWith(fontWeight: FontWeight.w400, fontSize: 14),
+                .copyWith(fontWeight: FontWeight.w700),
           ),
-        ],
-      ),
+        ),
+        Text(
+          content,
+          textAlign: TextAlign.center,
+          style: Theme.of(context)
+              .textTheme
+              .bodyText1!
+              .copyWith(fontWeight: FontWeight.w400, fontSize: 14),
+        ),
+      ],
     );
   }
 }

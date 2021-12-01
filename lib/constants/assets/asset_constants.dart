@@ -23,5 +23,6 @@ class AssetConstants {
   static String contactUs = "assets/contact-us.png";
   static String email = "assets/email.png";
   static String phoneCall = "assets/phone-call.png";
+  static String tax = "assets/tax.png";
   static String homeLaptop = "assets/home-laptop.png";
 }

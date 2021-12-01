@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
-import 'package:steuermachen/screens/bottom_nav_bar/calculator_screen.dart';
 import 'package:steuermachen/screens/bottom_nav_bar/more_screen.dart';
+import 'package:steuermachen/screens/calculator/calculator_screen.dart';
 import 'package:steuermachen/screens/home/home_screen.dart';
 
 class BottomNavBarScreen extends StatefulWidget {

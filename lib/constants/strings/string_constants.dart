@@ -105,4 +105,5 @@ class StringConstants {
   static const String chooseOption  = "Choose option";
   static const String cancel  = "Cancel";
   static const String submit  = "Submit";
+  static const String whatIsYourAnnualIncomeGoal  = "What is your gross annual income?";
 }

@@ -10,6 +10,24 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<Map<String, dynamic>> content = [
+      {
+        "leadingAsset": AssetConstants.icDocument,
+        "title": "Have done tax online",
+        "action": () {}
+      },
+      {
+        "leadingAsset": AssetConstants.icLegalAction,
+        "title": "Legal Action",
+        "action": () {}
+      },
+      {
+        "leadingAsset": AssetConstants.icPersons,
+        "title": "Intial Tax Advice",
+        "action": () {}
+      },
+    ];
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: const AppBarComponent(
@@ -60,37 +78,81 @@ class HomeScreen extends StatelessWidget {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-            child: Container(
-                color: ColorConstants.toxicGreen,
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          SvgPicture.asset(AssetConstants.icDocument),
-                          const SizedBox(width: 15),
-                          Text(
-                            "Have Tax done online",
-                            textAlign: TextAlign.left,
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline5!
-                                .copyWith(
-                                    fontWeight: FontWeight.w400, fontSize: 20),
-                          ),
-                        ],
-                      ),
-                      SvgPicture.asset(AssetConstants.icExclamation),
-                    ],
-                  ),
-                )),
+          const SizedBox(height: 15),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  for (var i = 0; i < content.length; i++)
+                    _HomeCards(
+                      leadingAsset: content[i]["leadingAsset"],
+                      title: content[i]["title"],
+                    )
+                ],
+              ),
+            ),
           )
         ],
       ),
+    );
+  }
+}
+
+class _HomeCards extends StatelessWidget {
+  const _HomeCards({
+    Key? key,
+    required this.leadingAsset,
+    required this.title,
+  }) : super(key: key);
+  final String leadingAsset;
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+      child: Container(
+          decoration: BoxDecoration(
+              color: ColorConstants.formFieldBackground,
+              boxShadow: [
+                BoxShadow(
+                  color: ColorConstants.black.withOpacity(0.3),
+                  offset: const Offset(0, 2),
+                  spreadRadius: 1,
+                  blurRadius: 2,
+                )
+              ]),
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    SvgPicture.asset(leadingAsset),
+                    const SizedBox(width: 15),
+                    Column(
+                      children: [
+                        Text(
+                          title,
+                          textAlign: TextAlign.left,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline5!
+                              .copyWith(
+                                  fontWeight: FontWeight.w400, fontSize: 20),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                SvgPicture.asset(
+                  AssetConstants.icExclamation,
+                  color: ColorConstants.charcoalGrey,
+                ),
+              ],
+            ),
+          )),
     );
   }
 }

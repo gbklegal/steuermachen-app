@@ -18,6 +18,8 @@ class AssetConstants {
   static String icExclamation = "assets/icons/exclamation-icon.svg";
   static String icLegalAction = "assets/icons/legal-action-icon.svg";
   static String icPersons = "assets/icons/persons-icon.svg";
+  static String icForward = "assets/icons/forward-icon.svg";
+  static String icDown = "assets/icons/down-icon.svg";
   static String icPdf = "assets/icons/pdf.png";
   static String sampleImg = "assets/sample-img.jpg";
   static String contactUs = "assets/contact-us.png";

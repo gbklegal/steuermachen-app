@@ -23,7 +23,24 @@ class CodegenLoader extends AssetLoader{
   "onboardingThree": "Jeder 5. Steuerbescheid ist falsch",
   "onboardingThreeText": "5",
   "onboardingFour": "Jeder dritte Steuerzahler denkt, es lohnt sich nicht",
-  "onboardingFourText": "3"
+  "onboardingFourText": "3",
+  "frequentlyAskedQuestion": "Häufig gestellte Fragen",
+  "faqItem1": "Wie kann ich über steuermachen.de ein Finanzamt beauftragen?",
+  "faqItem2": "Wie viel kostet die Erstellung einer Steuererklärung?",
+  "faqItem3": "Wie kann ich bei steuermachen.de bezahlen? - Zahlungsmittel",
+  "faqItem4": "Wer sind die Kunden von steuermachen.de?",
+  "faqItem5": "Erstellung Ihrer Steuererklärung durch einen persönlichen Berater",
+  "faqItem6": "Allgemein",
+  "faqItem7": "Steuertipps",
+  "more": "Mehr",
+  "profile": "Profil",
+  "document": "Unterlagen",
+  "faq": "FAQ",
+  "howItWorks": "Wie funktioniert es?",
+  "sustainability": "Nachhaltigkeit",
+  "taxTips": "Steuertipps",
+  "support": "Unterstützung",
+  "logout": "Ausloggen"
 };
 static const Map<String,dynamic> en = {
   "appName": "make tax",
@@ -34,7 +51,24 @@ static const Map<String,dynamic> en = {
   "onboardingThree": "Every 5th tax assessment is incorrect",
   "onboardingThreeText": "5",
   "onboardingFour": "Every third taxpayer thinks it's not worth it",
-  "onboardingFourText": "3"
+  "onboardingFourText": "3",
+  "frequentlyAskedQuestion": "Frequently Asked Questions",
+  "faqItem1": "How can I commission a tax office via steuermachen.de?",
+  "faqItem2": "How much does it cost to prepare a tax return?",
+  "faqItem3": "How can I pay at steuermachen.de? - means of payment",
+  "faqItem4": "Who are the customers of steuermachen.de?",
+  "faqItem5": "Preparation of your tax return by a personal advisor",
+  "faqItem6": "General",
+  "faqItem7": "Tax Tips",
+  "more": "More",
+  "profile": "Profile",
+  "document": "Documents",
+  "faq": "FAQ",
+  "howItWorks": "How does it work?",
+  "sustainability": "Sustainability",
+  "taxTips": "Tax Tips",
+  "support": "Support",
+  "logout": "Logout"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"de": de, "en": en};
 }

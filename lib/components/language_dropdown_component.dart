@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:steuermachen/constants/assets/asset_constants.dart';
+import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/providers/language_provider.dart';
 
 class LanguageDropdownComponent extends StatefulWidget {
@@ -16,19 +19,18 @@ class _LanguageDropdownComponentState extends State<LanguageDropdownComponent> {
     return Consumer<LanguageProvider>(builder: (context, consumer, child) {
       return DropdownButton<String>(
         value: consumer.value,
-        icon: const Icon(Icons.arrow_downward),
-        iconSize: 24,
-        elevation: 16,
-        style: const TextStyle(color: Colors.deepPurple),
-        underline: Container(
-          height: 2,
-          color: Colors.deepPurpleAccent,
+        icon: SvgPicture.asset(
+          AssetConstants.icDown,
+          height: 10,
         ),
+        iconSize: 18,
+        style: const TextStyle(color: ColorConstants.toxicGreen, fontSize: 18),
+        underline: const SizedBox(),
         onChanged: (String? newValue) {
           consumer.changeLanguage(newValue!, context);
         },
         items:
-            <String>['en', 'de'].map<DropdownMenuItem<String>>((String value) {
+            <String>['English', 'Deutsch'].map<DropdownMenuItem<String>>((String value) {
           return DropdownMenuItem<String>(
             value: value,
             child: Text(value),

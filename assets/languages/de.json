@@ -7,5 +7,23 @@
     "onboardingThree" : "Jeder 5. Steuerbescheid ist falsch",
     "onboardingThreeText" : "5",
     "onboardingFour" : "Jeder dritte Steuerzahler denkt, es lohnt sich nicht",
-    "onboardingFourText" : "3"
+    "onboardingFourText" : "3",
+    "frequentlyAskedQuestion" : "Häufig gestellte Fragen",
+    "faqItem1" : "Wie kann ich über steuermachen.de ein Finanzamt beauftragen?",
+    "faqItem2" : "Wie viel kostet die Erstellung einer Steuererklärung?",
+    "faqItem3" : "Wie kann ich bei steuermachen.de bezahlen? - Zahlungsmittel",
+    "faqItem4" : "Wer sind die Kunden von steuermachen.de?",
+    "faqItem5" : "Erstellung Ihrer Steuererklärung durch einen persönlichen Berater",
+    "faqItem6" : "Allgemein",
+    "faqItem7" : "Steuertipps",
+    "more" : "Mehr",
+    "profile" : "Profil",
+    "document" : "Unterlagen",
+    "faq" : "FAQ",
+    "howItWorks" : "Wie funktioniert es?",
+    "sustainability" : "Nachhaltigkeit",
+    "taxTips" : "Steuertipps",
+    "support" : "Unterstützung",
+    "logout" : "Ausloggen"
+
 }

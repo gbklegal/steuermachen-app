@@ -1,12 +1,17 @@
 import 'dart:math';
 
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
+import 'package:steuermachen/components/language_dropdown_component.dart';
 import 'package:steuermachen/components/text_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
+import 'package:steuermachen/languages/locale_keys.g.dart';
+import 'package:steuermachen/providers/language_provider.dart';
 
 class MoreScreen extends StatefulWidget {
   const MoreScreen({Key? key}) : super(key: key);
@@ -24,50 +29,50 @@ class _MoreScreenState extends State<MoreScreen> {
       MoreOptions(
         leadingIcon: AssetConstants.icProfile,
         routeName: RouteConstants.currentIncomeScreen,
-        title: StringConstants.profile,
-        trailingIcon: AssetConstants.removePic,
+        title: LocaleKeys.profile,
+        trailingIcon: AssetConstants.icForward,
       ),
       MoreOptions(
         leadingIcon: AssetConstants.icMoreDocument,
         routeName: RouteConstants.currentIncomeScreen,
-        title: StringConstants.document,
-        trailingIcon: AssetConstants.removePic,
+        title: LocaleKeys.document,
+        trailingIcon: AssetConstants.icForward,
       ),
       MoreOptions(
         leadingIcon: AssetConstants.icFaq,
-        routeName: RouteConstants.currentIncomeScreen,
-        title: StringConstants.faq,
-        trailingIcon: AssetConstants.removePic,
+        routeName: RouteConstants.faqScreen,
+        title: LocaleKeys.faq,
+        trailingIcon: AssetConstants.icForward,
       ),
       MoreOptions(
         leadingIcon: AssetConstants.icEye,
         routeName: RouteConstants.howItWorksScreen,
-        title: StringConstants.howDoesWork,
-        trailingIcon: AssetConstants.removePic,
+        title: LocaleKeys.howItWorks,
+        trailingIcon: AssetConstants.icForward,
       ),
       MoreOptions(
         leadingIcon: AssetConstants.icSustain,
         routeName: RouteConstants.currentIncomeScreen,
-        title: StringConstants.sustain,
-        trailingIcon: AssetConstants.removePic,
+        title: LocaleKeys.sustainability,
+        trailingIcon: AssetConstants.icForward,
       ),
       MoreOptions(
         leadingIcon: AssetConstants.icFaxTips,
         routeName: RouteConstants.currentIncomeScreen,
-        title: StringConstants.taxTip,
-        trailingIcon: AssetConstants.removePic,
-    ),
+        title: LocaleKeys.taxTips,
+        trailingIcon: AssetConstants.icForward,
+      ),
       MoreOptions(
         leadingIcon: AssetConstants.icSupport,
         routeName: RouteConstants.contactUsOptionScreen,
-        title: StringConstants.support,
-        trailingIcon: AssetConstants.removePic,
+        title: LocaleKeys.support,
+        trailingIcon: AssetConstants.icForward,
       ),
       MoreOptions(
         leadingIcon: AssetConstants.icLogout,
         routeName: RouteConstants.currentIncomeScreen,
-        title: StringConstants.logout,
-        trailingIcon: AssetConstants.removePic,
+        title: LocaleKeys.logout,
+        trailingIcon: AssetConstants.icForward,
       ),
     ];
   }
@@ -78,8 +83,14 @@ class _MoreScreenState extends State<MoreScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const Padding(
+            padding: EdgeInsets.only(right: 8),
+            child: Align(
+                alignment: Alignment.topRight,
+                child: LanguageDropdownComponent()),
+          ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -95,6 +106,7 @@ class _MoreScreenState extends State<MoreScreen> {
               ],
             ),
           ),
+          const SizedBox(height: 25),
           Expanded(
             child: ListView.builder(
                 shrinkWrap: false,
@@ -111,19 +123,25 @@ class _MoreScreenState extends State<MoreScreen> {
                         onTap: () {
                           Navigator.pushNamed(context, moreOptions.routeName);
                         },
-                        child: ListTile(
-                          leading: Image.asset(moreOptions.leadingIcon),
-                          title: TextComponent(
-                            moreOptions.title,
-                            style: FontStyles.fontRegular(fontSize: 20),
-                          ),
-                          trailing: SvgPicture.asset(moreOptions.trailingIcon),
-                        ),
+                        child: Consumer<LanguageProvider>(
+                            builder: (context, consumer, child) {
+                          return ListTile(
+                            leading: Image.asset(moreOptions.leadingIcon),
+                            title: TextComponent(
+                              moreOptions.title.tr(),
+                              style: FontStyles.fontRegular(fontSize: 20),
+                            ),
+                            trailing:
+                                SvgPicture.asset(moreOptions.trailingIcon),
+                          );
+                        }),
                       ),
                       const Divider(
                         height: 1,
                         thickness: 0.8,
                       ),
+                      if (index == 0) const SizedBox(height: 35),
+                      if (index == 5) const SizedBox(height: 50),
                     ],
                   );
                 },

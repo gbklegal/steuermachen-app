@@ -6,6 +6,7 @@ import 'package:steuermachen/screens/bottom_nav_bar/bottom_nav_bar_screen.dart';
 import 'package:steuermachen/screens/contact_us/contact_us_options_screen.dart';
 import 'package:steuermachen/screens/document/select_document_for_upload_screen.dart';
 import 'package:steuermachen/screens/document/uploaded_document_screen.dart';
+import 'package:steuermachen/screens/faq/faq_screen.dart';
 import 'package:steuermachen/screens/file_tax/file_tax_info_screen.dart';
 import 'package:steuermachen/screens/file_tax/file_tax_final_submission_screen.dart';
 import 'package:steuermachen/screens/file_tax/file_tax_upload_document_screen.dart';
@@ -81,6 +82,10 @@ onGenerateRoutes(RouteSettings settings) {
     case RouteConstants.howItWorksScreen:
       return MaterialPageRoute(
         builder: (_) => const HowItWorksScreen(),
+      );
+    case RouteConstants.faqScreen:
+      return MaterialPageRoute(
+        builder: (_) => const FaqScreen(),
       );
     default:
       return MaterialPageRoute(

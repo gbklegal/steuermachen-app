@@ -2,11 +2,15 @@ import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/cupertino.dart';
 
 class LanguageProvider extends ChangeNotifier {
-  String value = 'en';
+  String value = 'English';
 
   changeLanguage(String newValue, BuildContext context) {
     value = newValue;
-    context.setLocale(Locale(newValue));
+    if (newValue == "Deutsch") {
+      context.setLocale(const Locale('de'));
+    } else {
+      context.setLocale(const Locale('en'));
+    }
     notifyListeners();
   }
 }

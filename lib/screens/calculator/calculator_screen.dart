@@ -114,7 +114,7 @@ class CalculatorScreen extends StatelessWidget {
                           ),
                       onPressed: () {},
                       child: const Text(
-                        StringConstants.orderNew,
+                        StringConstants.orderNow,
                         style: TextStyle(
                             fontSize: 20, fontWeight: FontWeight.w500),
                       ),

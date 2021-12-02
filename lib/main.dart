@@ -1,24 +1,54 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
+import 'package:steuermachen/constants/strings/string_constants.dart';
+import 'package:steuermachen/languages/codegen_loader.g.dart';
+import 'package:steuermachen/languages/locale_keys.g.dart';
+import 'package:steuermachen/providers/language_provider.dart';
 import 'package:steuermachen/routes/app_routes.dart';
 import 'package:steuermachen/screens/onboarding/onboarding_screen.dart';
 
-void main() {
-  runApp(const MyApp());
+// flutter pub run easy_localization:generate -S "assets/languages" -O "lib/languages"
+// flutter pub run easy_localization:generate -S "assets/languages" -O "lib/languages" -o "locale_keys.g.dart" -f keys
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
+
+  runApp(
+    EasyLocalization(
+      supportedLocales: const [
+        Locale('en'),
+        Locale('de'),
+      ],
+      path: 'assets/languages',
+      fallbackLocale: const Locale('en'),
+      assetLoader: const CodegenLoader(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Steuermachen',
-      debugShowCheckedModeBanner: false,
-      theme: appTheme(),
-      onGenerateRoute: (settings) {
-        return onGenerateRoutes(settings);
-      },
-      home: const OnBoardingScreen(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => LanguageProvider())
+      ],
+      child: MaterialApp(
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context.supportedLocales,
+        locale: context.locale,
+        title: LocaleKeys.appName,
+        debugShowCheckedModeBanner: false,
+        theme: appTheme(),
+        onGenerateRoute: (settings) {
+          return onGenerateRoutes(settings);
+        },
+        home: const OnBoardingScreen(),
+      ),
     );
   }
 

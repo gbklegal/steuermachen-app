@@ -85,26 +85,29 @@ class StringConstants {
   static const String calc = "Calculator";
   static const String more = "More";
   // More
+  static const String myAccount = "My Account";
   static const String profile = "Profile";
   static const String onlineShop = "Online shop";
   static const String doc = "Documents";
   static const String faq = "FAQ";
-  static const String howDoesWork = "Wie funktioniert's?";
+  static const String howDoesWork = "How does it works?";
   static const String sustain = "sustainability";
   static const String taxTip = "Tax Tips";
   static const String support = "Support";
   static const String logout = "Log out";
   static const String howCanWeHelpYou = "How can we help you?";
   static const String getInTouchWithUs = "Get in touch with us";
-  static const String howWouldYouLikeToMoveForwardWithUs = "How would you like to move forward with us?";
+  static const String howWouldYouLikeToMoveForwardWithUs =
+      "How would you like to move forward with us?";
   static const String contactUs = "Contact us";
   static const String callUs = "Call us";
   static const String orUseOur = "Or use our";
   static const String form = "form";
-  static const String gallery  = "Gallery";
-  static const String camera  = "Camera";
-  static const String chooseOption  = "Choose option";
-  static const String cancel  = "Cancel";
-  static const String submit  = "Submit";
-  static const String whatIsYourAnnualIncomeGoal  = "What is your gross annual income?";
+  static const String gallery = "Gallery";
+  static const String camera = "Camera";
+  static const String chooseOption = "Choose option";
+  static const String cancel = "Cancel";
+  static const String submit = "Submit";
+  static const String whatIsYourAnnualIncomeGoal =
+      "What is your gross annual income?";
 }

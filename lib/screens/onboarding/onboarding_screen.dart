@@ -1,7 +1,12 @@
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
+import 'package:steuermachen/components/language_dropdown_component.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
+import 'package:steuermachen/languages/locale_keys.g.dart';
+import 'package:steuermachen/providers/language_provider.dart';
+import 'package:provider/provider.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({Key? key}) : super(key: key);
@@ -39,19 +44,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                         letterSpacing: 1,
                         fontSize: 18),
                   ),
-                  // DropdownButton<String>(
-                  //   underline: const SizedBox(),
-                  //   onChanged: (val){},
-                  //   value: null,
-                  //   items: const [
-                  //     DropdownMenuItem(
-                  //       child: Text("English"),
-                  //     ),
-                  //     DropdownMenuItem(
-                  //       child: Text("Deutsch"),
-                  //     ),
-                  //   ],
-                  // )
+                  const LanguageDropdownComponent(),
                 ],
               ),
             ),
@@ -66,29 +59,30 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 },
                 children: [
                   _bottomTitleAndText(
-                      text: StringConstants.onboardingText_1,
-                      title: StringConstants.onboarding_1),
+                      text: LocaleKeys.onboardingOneText.tr(),
+                      title: LocaleKeys.onboardingOne.tr()),
                   _bottomTitleAndText(
-                      text: StringConstants.onboardingText_2,
-                      title: StringConstants.onboarding_2),
+                      text: LocaleKeys.onboardingTwoText.tr(),
+                      title: LocaleKeys.onboardingTwo.tr()),
                   _bottomTitleAndText(
-                      text: StringConstants.onboardingText_3,
-                      title: StringConstants.onboarding_3),
+                      text: LocaleKeys.onboardingThreeText.tr(),
+                      title: LocaleKeys.onboardingThree.tr()),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Flexible(
                         child: _bottomTitleAndText(
-                            text: StringConstants.onboardingText_4,
-                            title: StringConstants.onboarding_4),
+                            text: LocaleKeys.onboardingFourText.tr(),
+                            title: LocaleKeys.onboardingFour.tr()),
                       ),
                       InkWell(
-                        onTap: (){
-                          Navigator.pushNamed(context, RouteConstants.getStartedScreen);
+                        onTap: () {
+                          Navigator.pushNamed(
+                              context, RouteConstants.getStartedScreen);
                         },
                         child: const Padding(
-                          padding:  EdgeInsets.only(bottom: 25, right: 15),
+                          padding: EdgeInsets.only(bottom: 25, right: 15),
                           child: Icon(
                             Icons.arrow_forward_ios,
                             color: ColorConstants.primary,

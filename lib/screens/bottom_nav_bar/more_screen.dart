@@ -22,7 +22,7 @@ class _MoreScreenState extends State<MoreScreen> {
     super.initState();
     moreOptionsList = [
       MoreOptions(
-        leadingIcon: AssetConstants.removePic,
+        leadingIcon: AssetConstants.icProfile,
         routeName: RouteConstants.currentIncomeScreen,
         title: StringConstants.profile,
         trailingIcon: AssetConstants.removePic,
@@ -34,37 +34,37 @@ class _MoreScreenState extends State<MoreScreen> {
         trailingIcon: AssetConstants.removePic,
       ),
       MoreOptions(
-        leadingIcon: AssetConstants.removePic,
+        leadingIcon: AssetConstants.icFaq,
         routeName: RouteConstants.currentIncomeScreen,
         title: StringConstants.faq,
         trailingIcon: AssetConstants.removePic,
       ),
       MoreOptions(
-        leadingIcon: AssetConstants.removePic,
+        leadingIcon: AssetConstants.icEye,
         routeName: RouteConstants.currentIncomeScreen,
         title: StringConstants.howDoesWork,
         trailingIcon: AssetConstants.removePic,
       ),
       MoreOptions(
-        leadingIcon: AssetConstants.removePic,
+        leadingIcon: AssetConstants.icSustain,
         routeName: RouteConstants.currentIncomeScreen,
         title: StringConstants.sustain,
         trailingIcon: AssetConstants.removePic,
       ),
       MoreOptions(
-        leadingIcon: AssetConstants.removePic,
+        leadingIcon: AssetConstants.icFaxTips,
         routeName: RouteConstants.currentIncomeScreen,
         title: StringConstants.taxTip,
         trailingIcon: AssetConstants.removePic,
       ),
       MoreOptions(
-        leadingIcon: AssetConstants.removePic,
+        leadingIcon: AssetConstants.icSupport,
         routeName: RouteConstants.currentIncomeScreen,
         title: StringConstants.support,
         trailingIcon: AssetConstants.removePic,
       ),
       MoreOptions(
-        leadingIcon: AssetConstants.removePic,
+        leadingIcon: AssetConstants.icLogout,
         routeName: RouteConstants.currentIncomeScreen,
         title: StringConstants.logout,
         trailingIcon: AssetConstants.removePic,
@@ -74,36 +74,59 @@ class _MoreScreenState extends State<MoreScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-        shrinkWrap: false,
-        physics: const NeverScrollableScrollPhysics(),
-        itemBuilder: (context, index) {
-          MoreOptions moreOptions = moreOptionsList[index];
-          return ListTile(
-            leading: SvgPicture.asset(moreOptions.leadingIcon),
-            title: TextComponent(
-              moreOptions.title,
-              style: FontStyles.fontRegular(fontSize: 20),
+    return SafeArea(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextComponent(
+                  StringConstants.myAccount,
+                  style: FontStyles.fontBold(fontSize: 20),
+                ),
+                const SizedBox(height: 8),
+                TextComponent(
+                  "osama.asif20@gmail.com",
+                  style: FontStyles.fontRegular(fontSize: 20),
+                ),
+              ],
             ),
-            trailing: SvgPicture.asset(moreOptions.trailingIcon),
-          );
-        },
-        separatorBuilder: (context, index) {
-          if (index == 1) {
-            return Padding(
-              padding: const EdgeInsets.only(top: 8, bottom: 8),
-              child: Divider(),
-            );
-          } else if (index == 6) {
-            return Padding(
-              padding: const EdgeInsets.only(top: 8, bottom: 8),
-              child: Divider(),
-            );
-          } else {
-            return Divider();
-          }
-        },
-        itemCount: 8);
+          ),
+          Expanded(
+            child: ListView.builder(
+                shrinkWrap: false,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  MoreOptions moreOptions = moreOptionsList[index];
+                  return Column(
+                    children: [
+                      const Divider(
+                        height: 1,
+                        thickness: 0.8,
+                      ),
+                      ListTile(
+                        leading: Image.asset(moreOptions.leadingIcon),
+                        title: TextComponent(
+                          moreOptions.title,
+                          style: FontStyles.fontRegular(fontSize: 20),
+                        ),
+                        trailing: SvgPicture.asset(moreOptions.trailingIcon),
+                      ),
+                      const Divider(
+                        height: 1,
+                        thickness: 0.8,
+                      ),
+                    ],
+                  );
+                },
+                itemCount: 8),
+          ),
+        ],
+      ),
+    );
   }
 }
 

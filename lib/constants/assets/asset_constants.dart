@@ -27,11 +27,12 @@ class AssetConstants {
   static String homeLaptop = "assets/home-laptop.png";
 
   //More
-  static String icMoreDocument = "assets/icons/more/document-icon.svg";
-  static String icLogout = "assets/icons/more/logout-icon.svg";
-  static String icSupport = "assets/icons/more/support-icon.svg";
-  static String icSustain = "assets/icons/more/sustain-icon.svg";
-  static String icEye = "assets/icons/more/eye-icon.svg";
-  static String icProfile = "assets/icons/more/profile-icon.svg";
-  static String icFaxTips = "assets/icons/more/faxtips-icon.svg";
+  static String icMoreDocument = "assets/icons/more/document-icon.png";
+  static String icLogout = "assets/icons/more/logout-icon.png";
+  static String icSupport = "assets/icons/more/support-icon.png";
+  static String icSustain = "assets/icons/more/sustain-icon.png";
+  static String icEye = "assets/icons/more/eye-icon.png";
+  static String icProfile = "assets/icons/more/profile-icon.png";
+  static String icFaxTips = "assets/icons/more/faxtips-icon.png";
+  static String icFaq = "assets/icons/more/faq-icon.png";
 }

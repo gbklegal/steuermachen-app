@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
+import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 
 class CalculatorScreen extends StatelessWidget {
@@ -36,11 +37,69 @@ class CalculatorScreen extends StatelessWidget {
                   .copyWith(fontWeight: FontWeight.w700, fontSize: 28),
             ),
           ),
-          TextFormField(
-            decoration: const InputDecoration(
-              label: Text(StringConstants.email),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: TextFormField(
+              decoration: InputDecoration(
+                labelStyle: TextStyle(
+                  fontSize: 16.0,
+                  fontFamily: 'helvetica',
+                  fontStyle: FontStyle.normal,
+                  color: ColorConstants.black.withOpacity(0.4),
+                ),
+                label: const Text(StringConstants.annualIncom),
+                filled: false,
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5.0),
+                  borderSide: BorderSide(
+                    color: ColorConstants.black.withOpacity(0.5),
+                  ),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5.0),
+                  borderSide: BorderSide(
+                    color: ColorConstants.black.withOpacity(0.5),
+                  ),
+                ),
+              ),
             ),
           ),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Padding(
+              padding: const EdgeInsets.only(
+                  left: 15, top: 15, right: 15, bottom: 15),
+              child: Text(
+                StringConstants.estimatedPrice,
+                textAlign: TextAlign.left,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyText1!
+                    .copyWith(fontWeight: FontWeight.w500, fontSize: 18),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.green),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(18.0),
+                child: Center(
+                    child: Text(
+                  "122euros",
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline6!
+                      .copyWith(fontWeight: FontWeight.w500, fontSize: 25),
+                )),
+              ),
+            ),
+          )
         ],
       ),
     );

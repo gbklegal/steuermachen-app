@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:steuermachen/components/text_component.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
@@ -10,7 +9,7 @@ class TaxOptionGridComponent extends StatefulWidget {
   final List<MaritalStatusModel> maritalStatusModelList;
   //UI little bit change on below flag
   final bool showYears;
-  TaxOptionGridComponent(
+  const TaxOptionGridComponent(
       {Key? key, required this.maritalStatusModelList, this.showYears = false})
       : super(key: key);
 
@@ -92,7 +91,7 @@ class _TaxOptionGridComponentState extends State<TaxOptionGridComponent> {
               style: FontStyles.fontMedium(fontSize: 24),
             ),
           )
-        : SvgPicture.asset(
+        : Image.asset(
             maritalStatusModel.image!,
           );
   }
@@ -107,8 +106,8 @@ class _TaxOptionGridComponentState extends State<TaxOptionGridComponent> {
     return BoxDecoration(
         borderRadius: BorderRadius.circular(4),
         color: ColorConstants.green,
-        boxShadow: [
-          const BoxShadow(
+        boxShadow: const [
+          BoxShadow(
               color: Color(0x3f000000),
               offset: Offset(0, 4),
               blurRadius: 4,

@@ -25,94 +25,96 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
       body: Container(
         color: ColorConstants.black.withOpacity(0.4),
         height: MediaQuery.of(context).size.height,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 56, left: 12, right: 12),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                // ignore: prefer_const_literals_to_create_immutables
-                children: [
-                  const Text(
-                    StringConstants.skip,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: ColorConstants.white,
-                        fontStyle: FontStyle.normal,
-                        letterSpacing: 1,
-                        fontSize: 18),
-                  ),
-                  const LanguageDropdownComponent(),
-                ],
-              ),
-            ),
-            Flexible(
-              child: PageView(
-                controller: pageController,
-                scrollDirection: Axis.horizontal,
-                onPageChanged: (index) {
-                  setState(() {
-                    pageIndex = index;
-                  });
-                },
-                children: [
-                  _bottomTitleAndText(
-                      text: LocaleKeys.onboardingOneText.tr(),
-                      title: LocaleKeys.onboardingOne.tr()),
-                  _bottomTitleAndText(
-                      text: LocaleKeys.onboardingTwoText.tr(),
-                      title: LocaleKeys.onboardingTwo.tr()),
-                  _bottomTitleAndText(
-                      text: LocaleKeys.onboardingThreeText.tr(),
-                      title: LocaleKeys.onboardingThree.tr()),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Flexible(
-                        child: _bottomTitleAndText(
-                            text: LocaleKeys.onboardingFourText.tr(),
-                            title: LocaleKeys.onboardingFour.tr()),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(
-                              context, RouteConstants.getStartedScreen);
-                        },
-                        child: const Padding(
-                          padding: EdgeInsets.only(bottom: 25, right: 15),
-                          child: Icon(
-                            Icons.arrow_forward_ios,
-                            color: ColorConstants.primary,
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 30),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  for (int i = 0; i < 4; i++)
-                    Padding(
-                      padding: const EdgeInsets.all(6.0),
-                      child: _indicatorDotsWidget(
-                        color: pageIndex == i
-                            ? ColorConstants.primary
-                            : ColorConstants.mediumGrey,
-                      ),
+        child: Consumer<LanguageProvider>(builder: (context, consumer, child) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 56, left: 12, right: 12),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  // ignore: prefer_const_literals_to_create_immutables
+                  children: [
+                    const Text(
+                      StringConstants.skip,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: ColorConstants.white,
+                          fontStyle: FontStyle.normal,
+                          letterSpacing: 1,
+                          fontSize: 18),
                     ),
-                ],
+                    const LanguageDropdownComponent(),
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
+              Flexible(
+                child: PageView(
+                  controller: pageController,
+                  scrollDirection: Axis.horizontal,
+                  onPageChanged: (index) {
+                    setState(() {
+                      pageIndex = index;
+                    });
+                  },
+                  children: [
+                    _bottomTitleAndText(
+                        text: LocaleKeys.onboardingOneText.tr(),
+                        title: LocaleKeys.onboardingOne.tr()),
+                    _bottomTitleAndText(
+                        text: LocaleKeys.onboardingTwoText.tr(),
+                        title: LocaleKeys.onboardingTwo.tr()),
+                    _bottomTitleAndText(
+                        text: LocaleKeys.onboardingThreeText.tr(),
+                        title: LocaleKeys.onboardingThree.tr()),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Flexible(
+                          child: _bottomTitleAndText(
+                              text: LocaleKeys.onboardingFourText.tr(),
+                              title: LocaleKeys.onboardingFour.tr()),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.pushNamed(
+                                context, RouteConstants.getStartedScreen);
+                          },
+                          child: const Padding(
+                            padding: EdgeInsets.only(bottom: 25, right: 15),
+                            child: Icon(
+                              Icons.arrow_forward_ios,
+                              color: ColorConstants.primary,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 30),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    for (int i = 0; i < 4; i++)
+                      Padding(
+                        padding: const EdgeInsets.all(6.0),
+                        child: _indicatorDotsWidget(
+                          color: pageIndex == i
+                              ? ColorConstants.primary
+                              : ColorConstants.mediumGrey,
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            ],
+          );
+        }),
       ),
     );
   }

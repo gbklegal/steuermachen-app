@@ -35,4 +35,10 @@ class AssetConstants {
   static String icProfile = "assets/icons/more/profile-icon.png";
   static String icFaxTips = "assets/icons/more/faxtips-icon.png";
   static String icFaq = "assets/icons/more/faq-icon.png";
+
+  //Process
+  static String icBroken = "assets/icons/process/broken.png";
+  static String icStickman = "assets/icons/process/stickman.png";
+  static String icWeddingRings = "assets/icons/process/wedding-rings.png";
+  static String icWidowed = "assets/icons/process/widowed.png";
 }

@@ -43,7 +43,8 @@ class StringConstants {
   static const String annualIncom = "Your gross annual income *";
   static const String estimatedPrice = "Your estimated price (including VAT)";
   static const String promoCode = "Promo Code";
-  static const String applyNow = "Apply Now";
+  static const String applyNow = "Apply now";
+  static const String chatWithUs = "Chat with us";
   // Select Year
   static const String didntReceiveCode = "Didn’t recieve a code?";
   static const String resend = "Resend";

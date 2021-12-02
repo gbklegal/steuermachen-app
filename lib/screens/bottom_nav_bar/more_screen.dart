@@ -41,7 +41,7 @@ class _MoreScreenState extends State<MoreScreen> {
       ),
       MoreOptions(
         leadingIcon: AssetConstants.icEye,
-        routeName: RouteConstants.currentIncomeScreen,
+        routeName: RouteConstants.howItWorksScreen,
         title: StringConstants.howDoesWork,
         trailingIcon: AssetConstants.removePic,
       ),
@@ -56,10 +56,10 @@ class _MoreScreenState extends State<MoreScreen> {
         routeName: RouteConstants.currentIncomeScreen,
         title: StringConstants.taxTip,
         trailingIcon: AssetConstants.removePic,
-      ),
+    ),
       MoreOptions(
         leadingIcon: AssetConstants.icSupport,
-        routeName: RouteConstants.currentIncomeScreen,
+        routeName: RouteConstants.contactUsOptionScreen,
         title: StringConstants.support,
         trailingIcon: AssetConstants.removePic,
       ),
@@ -107,13 +107,18 @@ class _MoreScreenState extends State<MoreScreen> {
                         height: 1,
                         thickness: 0.8,
                       ),
-                      ListTile(
-                        leading: Image.asset(moreOptions.leadingIcon),
-                        title: TextComponent(
-                          moreOptions.title,
-                          style: FontStyles.fontRegular(fontSize: 20),
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(context, moreOptions.routeName);
+                        },
+                        child: ListTile(
+                          leading: Image.asset(moreOptions.leadingIcon),
+                          title: TextComponent(
+                            moreOptions.title,
+                            style: FontStyles.fontRegular(fontSize: 20),
+                          ),
+                          trailing: SvgPicture.asset(moreOptions.trailingIcon),
                         ),
-                        trailing: SvgPicture.asset(moreOptions.trailingIcon),
                       ),
                       const Divider(
                         height: 1,

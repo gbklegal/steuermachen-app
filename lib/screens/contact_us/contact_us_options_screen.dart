@@ -94,37 +94,31 @@ class _ContactUsOptionScreenState extends State<ContactUsOptionScreen> {
                     const SizedBox(
                       height: 23,
                     ),
-                    RichText(
-                      text: TextSpan(
-                        text: StringConstants.orUseOur + " ",
+                    Text(
+                        "${StringConstants.orUseOur} ${StringConstants.contactUs} ${StringConstants.form}",
                         style: Theme.of(context)
                             .textTheme
                             .bodyText1
-                            ?.copyWith(fontSize: 15),
-                        children: <TextSpan>[
-                          TextSpan(
-                              text: StringConstants.contactUs,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyText1
-                                  ?.copyWith(
-                                      color: ColorConstants.primary,
-                                      fontWeight: FontWeight.w700),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  Navigator.pushNamed(
-                                      context, RouteConstants.signInScreen);
-                                }),
-                          TextSpan(
-                            text: " " + StringConstants.form,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyText1
-                                ?.copyWith(fontSize: 15),
-                          )
-                        ],
+                            ?.copyWith(fontSize: 15)),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 55, vertical: 15),
+                      child: ElevatedButton(
+                        style: ElevatedButtonTheme.of(context).style?.copyWith(
+                              minimumSize: MaterialStateProperty.all(
+                                Size(MediaQuery.of(context).size.width, 55),
+                              ),
+                              backgroundColor: MaterialStateProperty.all(
+                                  ColorConstants.toxicGreen),
+                            ),
+                        onPressed: () {},
+                        child: const Text(
+                          StringConstants.chatWithUs,
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.w400),
+                        ),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),

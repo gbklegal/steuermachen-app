@@ -111,7 +111,7 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
                   ),
                 ),
             onPressed: () {
-              Navigator.pushNamed(context, RouteConstants.faqScreen);
+              Navigator.pushNamed(context, RouteConstants.howItWorksScreen);
             },
             child: const Text(
               StringConstants.useCamera,

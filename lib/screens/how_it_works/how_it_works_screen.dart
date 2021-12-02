@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:steuermachen/components/app_bar/appbar_with_side_corner_circle_and_body.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
+import 'package:steuermachen/constants/strings/string_constants.dart';
 
-class FaqScreen extends StatelessWidget {
-  const FaqScreen({Key? key}) : super(key: key);
+class HowItWorksScreen extends StatelessWidget {
+  const HowItWorksScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +41,23 @@ class FaqScreen extends StatelessWidget {
                 _faqSteps(context, (i + 1).toString(), content[i]["title"]!,
                     content[i]["content"]!,
                     showTopLine: i != 0),
-              const SizedBox(height: 50)
+              const SizedBox(height: 50),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                child: ElevatedButton(
+                  style: ElevatedButtonTheme.of(context).style?.copyWith(
+                        minimumSize: MaterialStateProperty.all(
+                          Size(MediaQuery.of(context).size.width, 70),
+                        ),
+                      ),
+                  onPressed: () {},
+                  child: const Text(
+                    StringConstants.applyNow,
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                  ),
+                ),
+              ),
             ],
           ),
         ),

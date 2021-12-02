@@ -12,34 +12,36 @@ class TaxFileMaritalStatusScreen extends StatefulWidget {
   const TaxFileMaritalStatusScreen({Key? key}) : super(key: key);
 
   @override
-  _TaxFileMaritalStatusScreenState createState() => _TaxFileMaritalStatusScreenState();
+  _TaxFileMaritalStatusScreenState createState() =>
+      _TaxFileMaritalStatusScreenState();
 }
 
-class _TaxFileMaritalStatusScreenState extends State<TaxFileMaritalStatusScreen> {
-  late List<MaritalStatusModel> maritalStatusModelList  = [];
+class _TaxFileMaritalStatusScreenState
+    extends State<TaxFileMaritalStatusScreen> {
+  late List<MaritalStatusModel> maritalStatusModelList = [];
 
   @override
   void initState() {
     maritalStatusModelList.add(MaritalStatusModel(
-      image: AssetConstants.icGoogle,
+      image: AssetConstants.icStickman,
       isSelected: true,
       title: StringConstants.student,
     ));
 
     maritalStatusModelList.add(MaritalStatusModel(
-      image: AssetConstants.icGoogle,
+      image: AssetConstants.icWeddingRings,
       isSelected: false,
       title: StringConstants.married,
     ));
 
     maritalStatusModelList.add(MaritalStatusModel(
-      image: AssetConstants.icGoogle,
+      image: AssetConstants.icBroken,
       isSelected: false,
       title: StringConstants.divorced,
     ));
 
     maritalStatusModelList.add(MaritalStatusModel(
-      image: AssetConstants.icGoogle,
+      image: AssetConstants.icWidowed,
       isSelected: false,
       title: StringConstants.widowed,
     ));

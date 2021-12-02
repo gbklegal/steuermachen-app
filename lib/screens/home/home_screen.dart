@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
+import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -14,7 +15,7 @@ class HomeScreen extends StatelessWidget {
       {
         "leadingAsset": AssetConstants.icDocument,
         "title": "Have done tax online",
-        "action": () {}
+        "action": RouteConstants.maritalStatusScreen
       },
       {
         "leadingAsset": AssetConstants.icLegalAction,
@@ -84,9 +85,14 @@ class HomeScreen extends StatelessWidget {
               child: Column(
                 children: [
                   for (var i = 0; i < content.length; i++)
-                    _HomeCards(
-                      leadingAsset: content[i]["leadingAsset"],
-                      title: content[i]["title"],
+                    InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(context, content[i]["action"]);
+                      },
+                      child: _HomeCards(
+                        leadingAsset: content[i]["leadingAsset"],
+                        title: content[i]["title"],
+                      ),
                     )
                 ],
               ),

@@ -25,4 +25,13 @@ class AssetConstants {
   static String phoneCall = "assets/phone-call.png";
   static String tax = "assets/tax.png";
   static String homeLaptop = "assets/home-laptop.png";
+
+  //More
+  static String icMoreDocument = "assets/icons/more/document-icon.svg";
+  static String icLogout = "assets/icons/more/logout-icon.svg";
+  static String icSupport = "assets/icons/more/support-icon.svg";
+  static String icSustain = "assets/icons/more/sustain-icon.svg";
+  static String icEye = "assets/icons/more/eye-icon.svg";
+  static String icProfile = "assets/icons/more/profile-icon.svg";
+  static String icFaxTips = "assets/icons/more/faxtips-icon.svg";
 }

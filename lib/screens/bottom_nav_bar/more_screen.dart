@@ -24,11 +24,11 @@ class _MoreScreenState extends State<MoreScreen> {
       MoreOptions(
         leadingIcon: AssetConstants.removePic,
         routeName: RouteConstants.currentIncomeScreen,
-        title: StringConstants.onlineShop,
+        title: StringConstants.profile,
         trailingIcon: AssetConstants.removePic,
       ),
       MoreOptions(
-        leadingIcon: AssetConstants.removePic,
+        leadingIcon: AssetConstants.icMoreDocument,
         routeName: RouteConstants.currentIncomeScreen,
         title: StringConstants.document,
         trailingIcon: AssetConstants.removePic,

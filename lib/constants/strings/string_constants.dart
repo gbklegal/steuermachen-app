@@ -85,6 +85,7 @@ class StringConstants {
   static const String calc = "Calculator";
   static const String more = "More";
   // More
+  static const String profile = "Profile";
   static const String onlineShop = "Online shop";
   static const String doc = "Documents";
   static const String faq = "FAQ";

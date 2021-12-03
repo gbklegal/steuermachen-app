@@ -7,6 +7,7 @@ import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
+import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 class TaxFileCurrentIncomeScreen extends StatefulWidget {
   const TaxFileCurrentIncomeScreen({Key? key}) : super(key: key);
@@ -18,6 +19,9 @@ class TaxFileCurrentIncomeScreen extends StatefulWidget {
 
 class _TaxFileCurrentIncomeScreenState
     extends State<TaxFileCurrentIncomeScreen> {
+  RangeLabels labels = const RangeLabels('1', "100");
+  RangeValues values = const RangeValues(1, 100);
+  SfRangeValues _values = SfRangeValues(40.0, 80.0);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,28 +48,74 @@ class _TaxFileCurrentIncomeScreenState
               const SizedBox(
                 height: 12,
               ),
-              TextFormField(
-                decoration: const InputDecoration(
-                  hintText: StringConstants.annualIncom,
+              SfRangeSlider(
+                min: 0.0,
+                max: 100.0,
+                values: _values,
+                interval: 20,
+                showTicks: false,
+                showLabels: true,
+                enableTooltip: true,
+                minorTicksPerInterval: 1,
+                onChanged: (SfRangeValues values) {
+                  setState(() {
+                    _values = values;
+                  });
+                },
+              ),
+
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 25, bottom: 15),
+                  child: Text(
+                    StringConstants.estimatedPrice,
+                    textAlign: TextAlign.left,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText1!
+                        .copyWith(fontWeight: FontWeight.w600, fontSize: 18),
+                  ),
                 ),
               ),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.green),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(13.0),
+                  child: Center(
+                      child: Text(
+                    "122euros",
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline6!
+                        .copyWith(fontWeight: FontWeight.w500, fontSize: 20),
+                  )),
+                ),
+              ),
+              // RangeSlider(
+              //     divisions: 10,
+              //     activeColor: ColorConstants.primary,
+              //     inactiveColor: ColorConstants.primary,
+              //     min: 1,
+              //     max: 100,
+              //     values: values,
+              //     labels: labels,
+              //     onChanged: (value) {
+              //       print("START: ${value.start}, End: ${value.end}");
+              //       setState(() {
+              //         values = value;
+              //         labels = RangeLabels(
+              //             "${value.start.toInt().toString()}\$",
+              //             "${value.start.toInt().toString()}\$");
+              //       });
+              //     }),
+
               const SizedBox(
-                height: 12,
-              ),
-              TextComponent(
-                StringConstants.estimatedPrice,
-                style: FontStyles.fontMedium(fontSize: 18),
-              ),
-              const SizedBox(
-                height: 12,
-              ),
-              TextFormField(
-                decoration: const InputDecoration(
-                    // label: Text(StringConstants.email),
-                    hintText: StringConstants.email),
-              ),
-              const SizedBox(
-                height: 48,
+                height: 24,
               ),
               TextComponent(
                 StringConstants.promoCode,
@@ -75,8 +125,21 @@ class _TaxFileCurrentIncomeScreenState
                 height: 12,
               ),
               TextFormField(
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   hintText: "",
+                  filled: false,
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                    borderSide: const BorderSide(
+                      color: ColorConstants.green,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                    borderSide: const BorderSide(
+                      color: ColorConstants.green,
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(height: 12),
@@ -92,9 +155,12 @@ class _TaxFileCurrentIncomeScreenState
         ),
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 15),
         child: ButtonComponent(
-          buttonText: StringConstants.next,
+          buttonText: StringConstants.next.toUpperCase(),
+          textStyle:
+              FontStyles.fontRegular(color: ColorConstants.white, fontSize: 18),
+          btnHeight: 60,
           onPressed: () {
             Navigator.pushNamed(context, RouteConstants.fileTaxInfoScreen);
           },

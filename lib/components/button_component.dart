@@ -26,18 +26,15 @@ class ButtonComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      
       style: ElevatedButtonTheme.of(context).style?.copyWith(
             minimumSize: MaterialStateProperty.all(
-              Size(MediaQuery.of(context).size.width, 48),
+              Size(MediaQuery.of(context).size.width, btnHeight),
             ),
-            backgroundColor: color!=null ? MaterialStateProperty.all<Color>(color!):
-            MaterialStateProperty.all<Color>(ColorConstants.primary)
-            ,
-            
-            
+            backgroundColor: color != null
+                ? MaterialStateProperty.all<Color>(color!)
+                : MaterialStateProperty.all<Color>(ColorConstants.primary),
           ),
-      child: Text(  
+      child: Text(
         buttonText,
         // text: buttonText,
         // ignore: prefer_if_null_operators

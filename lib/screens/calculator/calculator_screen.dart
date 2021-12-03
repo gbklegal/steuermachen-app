@@ -14,8 +14,8 @@ class CalculatorScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar:  AppBarComponent(
-          LocaleKeys.appName.tr(),
+      appBar: AppBarComponent(
+        LocaleKeys.appName.tr(),
         imageTitle: AssetConstants.logo,
         backgroundColor: Colors.transparent,
         showBackButton: false,

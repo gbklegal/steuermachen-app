@@ -18,4 +18,5 @@ class RouteConstants {
   static const String howItWorksScreen = "howItWorksScreen";
   static const String faqScreen = "FaqScreen";
   static const String contactUsFormScreen = "contactUsFormScreen";
+  static const String sustainabilityScreen = "SustainabilityScreen";
 }

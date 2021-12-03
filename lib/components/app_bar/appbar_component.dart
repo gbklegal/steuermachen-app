@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 import 'package:steuermachen/constants/app_constants.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
+import 'package:steuermachen/providers/language_provider.dart';
 
 class AppBarComponent extends StatelessWidget with PreferredSizeWidget {
   final Function()? overrideBackPressed;
@@ -67,25 +69,29 @@ class AppBarComponent extends StatelessWidget with PreferredSizeWidget {
 
   Widget _title() {
     if (imageTitle != null) {
-      return Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Image.asset(
-            imageTitle!,
-            height: 28,
-          ),
-          const SizedBox(width: 10),
-          Text(
-            text ?? "",
-            style: FontStyles.fontBold(fontSize: 24),
-          )
-        ],
-      );
+      return Consumer<LanguageProvider>(builder: (context, consumer, child) {
+        return Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.asset(
+              imageTitle!,
+              height: 28,
+            ),
+            const SizedBox(width: 10),
+            Text(
+              text ?? "",
+              style: FontStyles.fontBold(fontSize: 24),
+            )
+          ],
+        );
+      });
     }
-    return Text(
-      text ?? "",
-      style: FontStyles.fontRegular(fontSize: 16),
-    );
+    return Consumer<LanguageProvider>(builder: (context, consumer, child) {
+      return Text(
+        text ?? "",
+        style: FontStyles.fontRegular(fontSize: 16),
+      );
+    });
   }
 
   @override

@@ -1,9 +1,10 @@
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
-import 'package:steuermachen/constants/strings/string_constants.dart';
+import 'package:steuermachen/languages/locale_keys.g.dart';
 
 class AppBarWithSideCornerCircleAndRoundBody extends StatelessWidget {
   const AppBarWithSideCornerCircleAndRoundBody({
@@ -15,8 +16,8 @@ class AppBarWithSideCornerCircleAndRoundBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: const AppBarComponent(
-        StringConstants.appName,
+      appBar: AppBarComponent(
+        LocaleKeys.appName.tr(),
         imageTitle: AssetConstants.logo,
         backgroundColor: Colors.transparent,
       ),
@@ -27,7 +28,7 @@ class AppBarWithSideCornerCircleAndRoundBody extends StatelessWidget {
             child: SvgPicture.asset(AssetConstants.topRightRoundCircle),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 110),
+            padding: const EdgeInsets.only(top: 85),
             child: Container(
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
@@ -40,8 +41,8 @@ class AppBarWithSideCornerCircleAndRoundBody extends StatelessWidget {
                   ),
                 ],
                 borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(35),
-                  topRight: Radius.circular(35),
+                  topLeft: Radius.circular(50),
+                  topRight: Radius.circular(50),
                 ),
               ),
               child: ClipRRect(

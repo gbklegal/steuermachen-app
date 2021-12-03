@@ -1,3 +1,4 @@
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:fdottedline/fdottedline.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -7,6 +8,7 @@ import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
+import 'package:steuermachen/languages/locale_keys.g.dart';
 
 class UploadedDocumentScreen extends StatelessWidget {
   const UploadedDocumentScreen({Key? key}) : super(key: key);
@@ -15,8 +17,8 @@ class UploadedDocumentScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: const AppBarComponent(
-        StringConstants.appName,
+      appBar: AppBarComponent(
+        LocaleKeys.appName.tr(),
         imageTitle: AssetConstants.logo,
         backgroundColor: Colors.transparent,
       ),
@@ -92,9 +94,7 @@ class UploadedDocumentScreen extends StatelessWidget {
                     Size(MediaQuery.of(context).size.width, 70),
                   ),
                 ),
-            onPressed: () {
-             
-            },
+            onPressed: () {},
             child: const Text(
               StringConstants.useCamera,
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.normal),

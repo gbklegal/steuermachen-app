@@ -27,6 +27,7 @@ class AssetConstants {
   static String phoneCall = "assets/phone-call.png";
   static String tax = "assets/tax.png";
   static String homeLaptop = "assets/home-laptop.png";
+  static String sustain = "assets/sustain.png";
 
   //More
   static String icMoreDocument = "assets/icons/more/document-icon.png";

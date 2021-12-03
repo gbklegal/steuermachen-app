@@ -1,9 +1,11 @@
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
+import 'package:steuermachen/languages/locale_keys.g.dart';
 
 class CalculatorScreen extends StatelessWidget {
   const CalculatorScreen({Key? key}) : super(key: key);
@@ -12,8 +14,8 @@ class CalculatorScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: const AppBarComponent(
-        StringConstants.appName,
+      appBar:  AppBarComponent(
+          LocaleKeys.appName.tr(),
         imageTitle: AssetConstants.logo,
         backgroundColor: Colors.transparent,
         showBackButton: false,

@@ -52,7 +52,7 @@ class _MoreScreenState extends State<MoreScreen> {
       ),
       MoreOptions(
         leadingIcon: AssetConstants.icSustain,
-        routeName: RouteConstants.currentIncomeScreen,
+        routeName: RouteConstants.sustainabilityScreen,
         title: LocaleKeys.sustainability,
         trailingIcon: AssetConstants.icForward,
       ),

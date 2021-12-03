@@ -18,6 +18,7 @@ import 'package:steuermachen/screens/file_tax/tax_file_year_screen.dart';
 import 'package:steuermachen/screens/get_started/get_started_screen.dart';
 import 'package:steuermachen/screens/how_it_works/how_it_works_screen.dart';
 import 'package:steuermachen/screens/onboarding/onboarding_screen.dart';
+import 'package:steuermachen/screens/sustainability/sustainability_screen.dart';
 
 onGenerateRoutes(RouteSettings settings) {
   switch (settings.name) {
@@ -91,6 +92,10 @@ onGenerateRoutes(RouteSettings settings) {
     case RouteConstants.contactUsFormScreen:
       return MaterialPageRoute(
         builder: (_) => const ContactUsFormScreen(),
+      );
+    case RouteConstants.sustainabilityScreen:
+      return MaterialPageRoute(
+        builder: (_) => const SustainabilityScreen(),
       );
     default:
       return MaterialPageRoute(

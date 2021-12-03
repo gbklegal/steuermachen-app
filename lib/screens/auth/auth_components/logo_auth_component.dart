@@ -1,6 +1,8 @@
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
+import 'package:steuermachen/languages/locale_keys.g.dart';
 
 class LogoAuthComponent extends StatelessWidget {
   const LogoAuthComponent({Key? key}) : super(key: key);
@@ -12,7 +14,7 @@ class LogoAuthComponent extends StatelessWidget {
       children: [
         Image.asset(AssetConstants.logo),
         Text(
-          StringConstants.appName,
+          LocaleKeys.appName.tr(),
           textAlign: TextAlign.start,
           style: Theme.of(context)
               .textTheme

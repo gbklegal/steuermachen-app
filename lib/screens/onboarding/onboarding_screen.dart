@@ -50,11 +50,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 50,
-              ),
               Flexible(
-                flex: 2,
                 child: PageView(
                   controller: pageController,
                   scrollDirection: Axis.horizontal,
@@ -92,7 +88,10 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                                 context, RouteConstants.getStartedScreen);
                           },
                           child: const Padding(
-                            padding: EdgeInsets.only(bottom: 25, right: 15),
+                            padding: EdgeInsets.only(
+                              bottom: 70,
+                              right: 15,
+                            ),
                             child: Icon(
                               Icons.arrow_forward_ios,
                               color: ColorConstants.primary,
@@ -137,8 +136,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          const SizedBox(),
           Flexible(
-            flex: 2,
             child: Image.asset(assetName, height: 256, width: 256),
           ),
           Column(
@@ -156,7 +155,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                     fontSize: 48),
               ),
               Container(
-                padding: const EdgeInsets.only(top: 10, right: 50),
+                padding: const EdgeInsets.only(top: 10, right: 50, bottom: 50),
                 child: Text(
                   title,
                   textAlign: TextAlign.start,

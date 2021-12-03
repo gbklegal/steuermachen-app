@@ -8,6 +8,7 @@ class AssetConstants {
   static String verifyAccount = "assets/verify-account.png";
   static String submitDocument = "assets/submit-document.png";
   static String icApple = "assets/icons/apple-icon.svg";
+  static String icCross = "assets/icons/cross-icon.svg";
   static String icGoogle = "assets/icons/google-icon.svg";
   static String stickMan = "assets/icons/stickman.svg";
   static String widowed = "assets/icons/widowed.svg";

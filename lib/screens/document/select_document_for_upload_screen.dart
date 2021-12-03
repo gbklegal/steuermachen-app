@@ -56,58 +56,86 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
         Align(
           alignment: Alignment.centerLeft,
           child: Padding(
-            padding: const EdgeInsets.only(left: 40),
+            padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Text(
-              StringConstants.document,
-              style: FontStyles.fontBold(fontSize: 24),
+              StringConstants.selectDocument,
+              style: FontStyles.fontMedium(
+                  lineSpacing: 1.1, fontSize: 24, fontWeight: FontWeight.w600),
             ),
           ),
         ),
         Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Container(
-            decoration: BoxDecoration(
-              color: ColorConstants.formFieldBackground,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: ListTile(
-              leading: Image.asset(AssetConstants.icPdf),
-              title: Text(
-                "Annual tax slip 2020",
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyText1!
-                    .copyWith(fontSize: 18),
-              ),
-              subtitle: const Text("Yesterday"),
-              trailing: SvgPicture.asset(AssetConstants.icBin),
+          padding: const EdgeInsets.symmetric(vertical: 30),
+          child: Row(
+            children: [
+              Expanded(child: _useCameraBtn(context)),
+              Expanded(child: _uploadBtn(context)),
+            ],
+          ),
+        ),
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 15, right: 15, bottom: 15),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  StringConstants.documentOverview,
+                  style: FontStyles.fontMedium(
+                      fontSize: 24, fontWeight: FontWeight.w600),
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
+                const Padding(
+                  padding: EdgeInsets.only(top: 5.0),
+                  child: Icon(
+                    Icons.file_upload_outlined,
+                    color: ColorConstants.primary,
+                    size: 22,
+                  ),
+                )
+              ],
             ),
           ),
         ),
-        const SizedBox(
-          height: 40,
-        ),
-        Flexible(
-          child: Image.asset(AssetConstants.submitDocument),
-        ),
-        const SizedBox(
-          height: 60,
-        ),
-        _useCameraBtn(context),
-        _uploadBtn(context),
+        _selectedDocumentListTile(context),
       ],
+    );
+  }
+
+  Padding _selectedDocumentListTile(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      child: Container(
+        decoration: BoxDecoration(
+          color: ColorConstants.formFieldBackground,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: ListTile(
+          leading: Image.asset(AssetConstants.icPdf),
+          title: Text(
+            "Annual tax slip 2020",
+            style:
+                Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 18),
+          ),
+          subtitle: const Text("Yesterday"),
+          trailing: SvgPicture.asset(AssetConstants.icCross),
+        ),
+      ),
     );
   }
 
   Padding _useCameraBtn(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
+      padding: const EdgeInsets.only(left: 15, right: 5),
       child: Column(
         children: [
           ElevatedButton(
             style: ElevatedButtonTheme.of(context).style?.copyWith(
                   minimumSize: MaterialStateProperty.all(
-                    Size(MediaQuery.of(context).size.width, 70),
+                    Size(MediaQuery.of(context).size.width, 58),
                   ),
                 ),
             onPressed: () {
@@ -115,7 +143,7 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
             },
             child: const Text(
               StringConstants.useCamera,
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.normal),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
             ),
           )
         ],
@@ -125,7 +153,7 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
 
   Padding _uploadBtn(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 15),
+      padding: const EdgeInsets.only(left: 5, right: 15),
       child: InkWell(
         onTap: _openCameraGallerySelectionDialog,
         child: FDottedLine(
@@ -136,13 +164,13 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
               rightTopCorner: 10,
               rightBottomCorner: 10),
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 24),
+            padding: const EdgeInsets.symmetric(vertical: 15),
             child: SizedBox(
               width: MediaQuery.of(context).size.width,
               child: const Center(
                 child: Text(
-                  StringConstants.upload,
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.normal),
+                  StringConstants.select,
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.normal),
                 ),
               ),
             ),

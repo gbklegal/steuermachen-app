@@ -37,6 +37,7 @@ class StringConstants {
   static const String step = "Step";
   static const String areSingle = "Are you Single or Married?";
   static const String selectYear = "Select year";
+  static const String select = "Select";
   // Current Income
   static const String curStatus = "What is your current status";
   static const String grossAnnualIncome = "What is your gross annual income?";
@@ -51,6 +52,8 @@ class StringConstants {
   static const String verifyYourAccount = "Verify your account";
   static const String next = "Next";
   static const String document = "Document";
+  static const String selectDocument = "Select document you want to upload";
+  static const String documentOverview = "Documents Overview";
   static const String useCamera = "Use Camera";
   // Fill information
   static const String fillInfo = "Fill out your information";

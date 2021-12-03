@@ -1,6 +1,7 @@
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:steuermachen/components/language_dropdown_component.dart';
+import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
@@ -23,11 +24,11 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: ColorConstants.black.withOpacity(0.4),
+        color: ColorConstants.white,
         height: MediaQuery.of(context).size.height,
         child: Consumer<LanguageProvider>(builder: (context, consumer, child) {
           return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
@@ -40,7 +41,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                       StringConstants.skip,
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                          color: ColorConstants.white,
+                          color: ColorConstants.black,
                           fontStyle: FontStyle.normal,
                           letterSpacing: 1,
                           fontSize: 18),
@@ -49,7 +50,11 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   ],
                 ),
               ),
+              const SizedBox(
+                height: 50,
+              ),
               Flexible(
+                flex: 2,
                 child: PageView(
                   controller: pageController,
                   scrollDirection: Axis.horizontal,
@@ -61,13 +66,16 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   children: [
                     _bottomTitleAndText(
                         text: LocaleKeys.onboardingOneText.tr(),
-                        title: LocaleKeys.onboardingOne.tr()),
+                        title: LocaleKeys.onboardingOne.tr(),
+                        assetName: AssetConstants.onboard1),
                     _bottomTitleAndText(
                         text: LocaleKeys.onboardingTwoText.tr(),
-                        title: LocaleKeys.onboardingTwo.tr()),
+                        title: LocaleKeys.onboardingTwo.tr(),
+                        assetName: AssetConstants.onboard2),
                     _bottomTitleAndText(
                         text: LocaleKeys.onboardingThreeText.tr(),
-                        title: LocaleKeys.onboardingThree.tr()),
+                        title: LocaleKeys.onboardingThree.tr(),
+                        assetName: AssetConstants.onboard3),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.end,
@@ -75,7 +83,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                         Flexible(
                           child: _bottomTitleAndText(
                               text: LocaleKeys.onboardingFourText.tr(),
-                              title: LocaleKeys.onboardingFour.tr()),
+                              title: LocaleKeys.onboardingFour.tr(),
+                              assetName: AssetConstants.onboard4),
                         ),
                         InkWell(
                           onTap: () {
@@ -119,34 +128,46 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     );
   }
 
-  Padding _bottomTitleAndText({required String title, required String text}) {
+  Padding _bottomTitleAndText(
+      {required String title,
+      required String text,
+      required String assetName}) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            text,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-                color: ColorConstants.green,
-                fontWeight: FontWeight.bold,
-                fontStyle: FontStyle.normal,
-                letterSpacing: 1,
-                fontSize: 48),
+          Flexible(
+            flex: 2,
+            child: Image.asset(assetName, height: 256, width: 256),
           ),
-          Container(
-            padding: const EdgeInsets.only(top: 10, right: 50),
-            child: Text(
-              title,
-              textAlign: TextAlign.start,
-              style: const TextStyle(
-                  color: ColorConstants.white,
-                  fontWeight: FontWeight.bold,
-                  fontStyle: FontStyle.normal,
-                  fontSize: 24),
-            ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                text,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                    color: ColorConstants.green,
+                    fontWeight: FontWeight.bold,
+                    fontStyle: FontStyle.normal,
+                    letterSpacing: 1,
+                    fontSize: 48),
+              ),
+              Container(
+                padding: const EdgeInsets.only(top: 10, right: 50),
+                child: Text(
+                  title,
+                  textAlign: TextAlign.start,
+                  style: const TextStyle(
+                      color: ColorConstants.black,
+                      fontWeight: FontWeight.bold,
+                      fontStyle: FontStyle.normal,
+                      fontSize: 24),
+                ),
+              ),
+            ],
           ),
         ],
       ),

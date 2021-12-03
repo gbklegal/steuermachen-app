@@ -71,6 +71,7 @@ flutter:
   assets:
     - assets/languages/
     - assets/logo.png
+    - assets/icons/onboarding/
     - assets/file-artwork.png
     - assets/top-right-round-circle.svg
     - assets/sustain.png

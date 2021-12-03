@@ -1,5 +1,9 @@
 class AssetConstants {
   static const String logo = "assets/logo.png";
+  static const String onboard1 = "assets/icons/onboarding/onboard-1.png";
+  static const String onboard2 = "assets/icons/onboarding/onboard-2.png";
+  static const String onboard3 = "assets/icons/onboarding/onboard-3.png";
+  static const String onboard4 = "assets/icons/onboarding/onboard-4.png";
   static String fileArtWork = "assets/file-artwork.png";
   static String verifyAccount = "assets/verify-account.png";
   static String submitDocument = "assets/submit-document.png";

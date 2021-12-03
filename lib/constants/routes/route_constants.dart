@@ -17,4 +17,5 @@ class RouteConstants {
   static const String uploadedDocumentScreen = "UploadedDocumentScreen";
   static const String howItWorksScreen = "howItWorksScreen";
   static const String faqScreen = "FaqScreen";
+  static const String contactUsFormScreen = "contactUsFormScreen";
 }

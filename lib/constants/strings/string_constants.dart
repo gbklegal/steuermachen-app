@@ -62,6 +62,7 @@ class StringConstants {
   static const String postcode = "Postcode";
   static const String place = "Place";
   static const String phoneNo = "Phone No";
+  static const String message = "Message";
   // File tax upload document
   static const String uplaodYourDocuments = "Upload your documents";
   static const String upload = "Upload";
@@ -98,6 +99,7 @@ class StringConstants {
   static const String logout = "Log out";
   static const String howCanWeHelpYou = "How can we help you?";
   static const String getInTouchWithUs = "Get in touch with us";
+  static const String getInTouch = "Get in touch";
   static const String howWouldYouLikeToMoveForwardWithUs =
       "How would you like to move forward with us?";
   static const String contactUs = "Contact us";
@@ -109,6 +111,8 @@ class StringConstants {
   static const String chooseOption = "Choose option";
   static const String cancel = "Cancel";
   static const String submit = "Submit";
+  static const String subject = "Subject";
+  static const String send = "Send";
   static const String whatIsYourAnnualIncomeGoal =
       "What is your gross annual income?";
 }

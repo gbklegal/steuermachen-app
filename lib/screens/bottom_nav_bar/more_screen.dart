@@ -57,8 +57,8 @@ class _MoreScreenState extends State<MoreScreen> {
         trailingIcon: AssetConstants.icForward,
       ),
       MoreOptions(
-        leadingIcon: AssetConstants.icFaxTips,
-        routeName: RouteConstants.currentIncomeScreen,
+        leadingIcon: AssetConstants.icTaxTips,
+        routeName: RouteConstants.taxTipsScreen,
         title: LocaleKeys.taxTips,
         trailingIcon: AssetConstants.icForward,
       ),

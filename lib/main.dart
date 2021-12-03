@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
@@ -103,69 +104,22 @@ class MyApp extends StatelessWidget {
   }
 
   TextTheme _textTheme() {
-    return const TextTheme(
-      headline1: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
-      headline6: TextStyle(
+    return TextTheme(
+      headline1:
+          GoogleFonts.raleway(fontSize: 72.0, fontWeight: FontWeight.bold),
+      headline6: GoogleFonts.raleway(
           fontSize: 36.0,
-          fontFamily: 'helvetica',
           fontWeight: FontWeight.bold,
           fontStyle: FontStyle.normal),
-      bodyText1: TextStyle(
-          fontSize: 16.0, fontFamily: 'helvetica', color: ColorConstants.black),
-      bodyText2: TextStyle(
+      bodyText1:
+          GoogleFonts.raleway(fontSize: 16.0, color: ColorConstants.black),
+      bodyText2: GoogleFonts.raleway(
         fontSize: 14.0,
-        fontFamily: 'helvetica',
       ),
-      button: TextStyle(
+      button: GoogleFonts.raleway(
           fontSize: 16.0,
           fontWeight: FontWeight.bold,
           color: ColorConstants.white),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
     );
   }
 }

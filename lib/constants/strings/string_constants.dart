@@ -113,6 +113,7 @@ class StringConstants {
   static const String submit = "Submit";
   static const String subject = "Subject";
   static const String send = "Send";
+  static const String featuredArticle = "Featured Article";
   static const String whatIsYourAnnualIncomeGoal =
       "What is your gross annual income?";
 }

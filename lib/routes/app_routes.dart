@@ -19,6 +19,8 @@ import 'package:steuermachen/screens/get_started/get_started_screen.dart';
 import 'package:steuermachen/screens/how_it_works/how_it_works_screen.dart';
 import 'package:steuermachen/screens/onboarding/onboarding_screen.dart';
 import 'package:steuermachen/screens/sustainability/sustainability_screen.dart';
+import 'package:steuermachen/screens/tax_tips/tax_tips_detail_screen.dart';
+import 'package:steuermachen/screens/tax_tips/tax_tips_screen.dart';
 
 onGenerateRoutes(RouteSettings settings) {
   switch (settings.name) {
@@ -96,6 +98,14 @@ onGenerateRoutes(RouteSettings settings) {
     case RouteConstants.sustainabilityScreen:
       return MaterialPageRoute(
         builder: (_) => const SustainabilityScreen(),
+      );
+    case RouteConstants.taxTipsScreen:
+      return MaterialPageRoute(
+        builder: (_) => const TaxTipsScreen(),
+      );
+    case RouteConstants.taxTipsDetailScreen:
+      return MaterialPageRoute(
+        builder: (_) => const TaxTipsDetailScreen(),
       );
     default:
       return MaterialPageRoute(

@@ -36,7 +36,7 @@ class AssetConstants {
   static String icSustain = "assets/icons/more/sustain-icon.png";
   static String icEye = "assets/icons/more/eye-icon.png";
   static String icProfile = "assets/icons/more/profile-icon.png";
-  static String icFaxTips = "assets/icons/more/faxtips-icon.png";
+  static String icTaxTips = "assets/icons/more/faxtips-icon.png";
   static String icFaq = "assets/icons/more/faq-icon.png";
 
   //Process

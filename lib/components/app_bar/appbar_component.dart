@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:steuermachen/constants/app_constants.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
+import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:steuermachen/providers/language_provider.dart';
 
@@ -37,17 +38,22 @@ class AppBarComponent extends StatelessWidget with PreferredSizeWidget {
         elevation: 0,
         leading: Visibility(
           visible: showBackButton!,
-          child: IconButton(
-            icon: const Icon(
-              Icons.arrow_back_ios_new_rounded,
-              color: ColorConstants.black,
-            ),
-            onPressed: () {
-              /*  overrideBackPressed == null
-                  ? Get.back()
-                  : overrideBackPressed!(); */
-              Navigator.pop(context);
-            },
+          child: Row(
+            children: [
+              IconButton(
+                icon: const Icon(
+                  Icons.arrow_back_ios_new_rounded,
+                  color: ColorConstants.black,
+                ),
+                onPressed: () {
+                  /*  overrideBackPressed == null
+                      ? Get.back()
+                      : overrideBackPressed!(); */
+                  Navigator.pop(context);
+                },
+              ),
+              // const Text(StringConstants.back)
+            ],
           ),
         ),
         centerTitle: true,
@@ -89,7 +95,7 @@ class AppBarComponent extends StatelessWidget with PreferredSizeWidget {
     return Consumer<LanguageProvider>(builder: (context, consumer, child) {
       return Text(
         text ?? "",
-        style: FontStyles.fontRegular(fontSize: 16),
+        style: FontStyles.fontMedium(fontSize: 16, fontWeight: FontWeight.w600),
       );
     });
   }

@@ -116,6 +116,11 @@ class StringConstants {
   static const String submit = "Submit";
   static const String subject = "Subject";
   static const String send = "Send";
+  static const String back = "back";
+  static const String signHere = "Sign here";
+  static const String powerOfAttorney = "Power of attorney";
+  static const String discPowerOfAttorney = "Discriminate the power of attorney.";
+  static const String digitalSignature = "Sign this power of attorney with  your signature - simply digital";
   static const String featuredArticle = "Featured Article";
   static const String whatIsYourAnnualIncomeGoal =
       "What is your gross annual income?";

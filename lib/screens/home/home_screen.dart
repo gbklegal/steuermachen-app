@@ -22,7 +22,7 @@ class HomeScreen extends StatelessWidget {
       {
         "leadingAsset": AssetConstants.icLegalAction,
         "title": "Legal Action",
-        "action": () {}
+        "action": RouteConstants.legalAction2Screen
       },
       {
         "leadingAsset": AssetConstants.icPersons,

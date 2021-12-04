@@ -50,4 +50,9 @@ class AssetConstants {
   static String icStickman = "assets/icons/process/stickman.png";
   static String icWeddingRings = "assets/icons/process/wedding-rings.png";
   static String icWidowed = "assets/icons/process/widowed.png";
+
+  //home
+  static String icHome = "assets/icons/home/home-icon.svg";
+  static String icCal = "assets/icons/home/cal-icon.svg";
+  static String icMore = "assets/icons/home/more-icon.svg";
 }

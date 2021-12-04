@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:steuermachen/components/custom_icon_component.dart';
+import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
@@ -40,18 +43,18 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
             _currentIndex = value;
           });
         },
-        items: const [
+        items: [
           BottomNavigationBarItem(
             label: StringConstants.home,
-            icon: Icon(Icons.favorite),
+            icon: CustomIcon(AssetConstants.icHome),
           ),
           BottomNavigationBarItem(
             label: StringConstants.calc,
-            icon: Icon(Icons.music_note),
+            icon: CustomIcon(AssetConstants.icCal),
           ),
           BottomNavigationBarItem(
             label: StringConstants.more,
-            icon: Icon(Icons.library_books),
+            icon: CustomIcon(AssetConstants.icMore),
           ),
         ],
       ),

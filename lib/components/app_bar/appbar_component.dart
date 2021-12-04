@@ -16,6 +16,7 @@ class AppBarComponent extends StatelessWidget with PreferredSizeWidget {
   final Color backgroundColor;
   final bool? showBackButton;
   final bool? showNotificationIcon;
+  final bool? showBottomLine;
   const AppBarComponent(
     this.text, {
     Key? key,
@@ -23,52 +24,64 @@ class AppBarComponent extends StatelessWidget with PreferredSizeWidget {
     this.imageTitle,
     this.backgroundColor = ColorConstants.white,
     this.showBackButton = true,
-    this.showNotificationIcon = false,
+    this.showNotificationIcon = true,
+    this.showBottomLine = true,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return PreferredSize(
       preferredSize: const Size.fromHeight(AppConstants.toolbarSize),
-      child: AppBar(
-        backgroundColor: backgroundColor,
-        title: _title(),
-        // iconTheme: ,
-        titleSpacing: -5,
-        elevation: 0,
-        leading: Visibility(
-          visible: showBackButton!,
-          child: Row(
-            children: [
-              IconButton(
-                icon: const Icon(
-                  Icons.arrow_back_ios_new_rounded,
-                  color: ColorConstants.black,
-                ),
-                onPressed: () {
-                  /*  overrideBackPressed == null
-                      ? Get.back()
-                      : overrideBackPressed!(); */
-                  Navigator.pop(context);
-                },
-              ),
-              // const Text(StringConstants.back)
-            ],
-          ),
-        ),
-        centerTitle: true,
-        systemOverlayStyle: const SystemUiOverlayStyle(
-            statusBarColor: Colors.transparent,
-            statusBarIconBrightness: Brightness.dark),
-        actions: [
-          Visibility(
-            visible: showNotificationIcon!,
-            child: Padding(
-              padding: const EdgeInsets.only(right: 15, top: 5),
-              child: SvgPicture.asset(AssetConstants.icNotification),
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border(
+            bottom: BorderSide(
+              width: showBottomLine! ? 2 : 0,
+              color: ColorConstants.greyBottomBar
+                  .withOpacity(showBottomLine! ? 0.2 : 0),
             ),
           ),
-        ],
+        ),
+        child: AppBar(
+          backgroundColor: backgroundColor,
+          title: _title(),
+          // iconTheme: ,
+          titleSpacing: -5,
+          elevation: 0,
+          leading: Visibility(
+            visible: showBackButton!,
+            child: Row(
+              children: [
+                IconButton(
+                  icon: const Icon(
+                    Icons.arrow_back_ios_new_rounded,
+                    color: ColorConstants.black,
+                  ),
+                  onPressed: () {
+                    /*  overrideBackPressed == null
+                        ? Get.back()
+                        : overrideBackPressed!(); */
+                    Navigator.pop(context);
+                  },
+                ),
+                // const Text(StringConstants.back)
+              ],
+            ),
+          ),
+          centerTitle: true,
+          systemOverlayStyle: const SystemUiOverlayStyle(
+              statusBarColor: Colors.transparent,
+              statusBarIconBrightness: Brightness.dark),
+          actions: [
+            Visibility(
+              visible: showNotificationIcon!,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 15, top: 5),
+                child: SvgPicture.asset(AssetConstants.icNotification),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

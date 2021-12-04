@@ -33,6 +33,7 @@ class AssetConstants {
   static String tax = "assets/tax.png";
   static String homeLaptop = "assets/home-laptop.png";
   static String sustain = "assets/sustain.png";
+  static String taxAdvice = "assets/tax-advice.png";
 
   //More
   static String icMoreDocument = "assets/icons/more/document-icon.png";

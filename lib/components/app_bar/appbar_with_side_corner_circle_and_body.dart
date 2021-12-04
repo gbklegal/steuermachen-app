@@ -20,6 +20,7 @@ class AppBarWithSideCornerCircleAndRoundBody extends StatelessWidget {
         LocaleKeys.appName.tr(),
         imageTitle: AssetConstants.logo,
         backgroundColor: Colors.transparent,
+        showBottomLine: false,
       ),
       body: Stack(
         children: [

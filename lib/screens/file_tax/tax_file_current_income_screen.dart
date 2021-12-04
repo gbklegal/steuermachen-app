@@ -30,7 +30,7 @@ class _TaxFileCurrentIncomeScreenState
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(left: 16, right: 16, top: 38),
+          padding: const EdgeInsets.only(left: 16, right: 16, top: 25),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

@@ -22,4 +22,5 @@ class RouteConstants {
   static const String taxTipsScreen = "TaxTipsScreen";
   static const String taxTipsDetailScreen = "TaxTipsDetailScreen";
   static const String legalAction2Screen = "LegalAction2Screen";
+  static const String taxAdviceScreen = "TaxAdviceScreen";
 }

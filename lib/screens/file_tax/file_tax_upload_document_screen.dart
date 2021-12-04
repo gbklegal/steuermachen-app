@@ -27,7 +27,7 @@ class _FileTaxUploadDocumentScreenState
         StringConstants.uplaodYourDocuments,
       ),
       body: Padding(
-        padding: const EdgeInsets.only(left: 16, right: 16),
+        padding: const EdgeInsets.only(left: 16, right: 16, top: 25),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -52,7 +52,8 @@ class _FileTaxUploadDocumentScreenState
         child: ButtonComponent(
           buttonText: StringConstants.next,
           onPressed: () {
-            Navigator.pushNamed(context, RouteConstants.fileTaxFinalSubmissionScreen);
+            Navigator.pushNamed(
+                context, RouteConstants.fileTaxFinalSubmissionScreen);
           },
         ),
       ),

@@ -58,7 +58,7 @@ class _TaxFileMaritalStatusScreenState
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           const Padding(
-            padding: EdgeInsets.only(left: 16, right: 16),
+            padding: EdgeInsets.only(left: 16, right: 16, top: 25),
             child: TextProgressBarComponent(
               title: "${StringConstants.step} 1/5",
               progress: 0.2,

@@ -46,6 +46,9 @@ class StringConstants {
   static const String promoCode = "Promo Code";
   static const String applyNow = "Apply now";
   static const String chatWithUs = "Chat with us";
+  static const String pricing = "Pricing";
+  static const String chooseTheRightPrice = "Choose the right price";
+
   // Select Year
   static const String didntReceiveCode = "Didn’t recieve a code?";
   static const String resend = "Resend";
@@ -117,11 +120,18 @@ class StringConstants {
   static const String subject = "Subject";
   static const String send = "Send";
   static const String back = "back";
+  static const String applyNowForAfee = "Apply now for a fee";
   static const String signHere = "Sign here";
+  static const String initialTaxAdvice = "Initial tax advice";
   static const String powerOfAttorney = "Power of attorney";
-  static const String discPowerOfAttorney = "Discriminate the power of attorney.";
-  static const String digitalSignature = "Sign this power of attorney with  your signature - simply digital";
+  static const String discPowerOfAttorney =
+      "Discriminate the power of attorney.";
+  static const String digitalSignature =
+      "Sign this power of attorney with  your signature - simply digital";
   static const String featuredArticle = "Featured Article";
   static const String whatIsYourAnnualIncomeGoal =
       "What is your gross annual income?";
+  static const String taxEasyNow =
+      "Inexpensive initial consultation - order taxEASY now!";
+  static const String onlyForInitialTax = "only for initial tax advice";
 }

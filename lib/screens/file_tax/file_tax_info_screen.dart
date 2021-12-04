@@ -23,7 +23,7 @@ class _FileTaxInfoScreenState extends State<FileTaxInfoScreen> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+          padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 25),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[

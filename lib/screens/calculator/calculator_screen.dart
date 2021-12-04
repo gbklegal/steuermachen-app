@@ -19,6 +19,7 @@ class CalculatorScreen extends StatelessWidget {
         imageTitle: AssetConstants.logo,
         backgroundColor: Colors.transparent,
         showBackButton: false,
+        showBottomLine: false,
       ),
       body: Column(
         children: [

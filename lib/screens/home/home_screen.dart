@@ -27,7 +27,7 @@ class HomeScreen extends StatelessWidget {
       {
         "leadingAsset": AssetConstants.icPersons,
         "title": "Intial Tax Advice",
-        "action": () {}
+        "action": RouteConstants.taxAdviceScreen
       },
     ];
 
@@ -39,6 +39,7 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         showBackButton: false,
         showNotificationIcon: true,
+        showBottomLine: false,
       ),
       body: Column(
         children: [

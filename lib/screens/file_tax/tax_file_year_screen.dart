@@ -51,7 +51,7 @@ class _TaxFileYearScreenState extends State<TaxFileYearScreen> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           const Padding(
-            padding: EdgeInsets.only(left: 16, right: 16),
+            padding: EdgeInsets.only(left: 16, right: 16, top: 25),
             child: TextProgressBarComponent(
               title: "${StringConstants.step} 2/5",
               progress: 0.4,

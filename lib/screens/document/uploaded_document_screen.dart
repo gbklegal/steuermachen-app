@@ -17,8 +17,9 @@ class UploadedDocumentScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBarComponent(
-        LocaleKeys.appName.tr(),
+      appBar: const AppBarComponent(
+        StringConstants.appName,
+        // LocaleKeys.appName.tr(),
         imageTitle: AssetConstants.logo,
         backgroundColor: Colors.transparent,
       ),

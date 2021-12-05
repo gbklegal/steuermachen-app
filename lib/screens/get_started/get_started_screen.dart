@@ -20,8 +20,7 @@ class GetStartedScreen extends StatelessWidget {
               Expanded(child: _topTitle(context)),
               Image.asset(AssetConstants.fileArtWork),
               _button(context, StringConstants.calculateYourPrice, () {
-                Navigator.pushNamed(
-                    context, RouteConstants.selectDocumentForScreen);
+                Navigator.pushNamed(context, RouteConstants.calculatorScreen);
               }),
               const SizedBox(height: 20),
               _button(context, StringConstants.getStarted, () {

@@ -14,7 +14,8 @@ class LogoAuthComponent extends StatelessWidget {
       children: [
         Image.asset(AssetConstants.logo),
         Text(
-          LocaleKeys.appName.tr(),
+          StringConstants.appName,
+          // LocaleKeys.appName.tr(),
           textAlign: TextAlign.start,
           style: Theme.of(context)
               .textTheme

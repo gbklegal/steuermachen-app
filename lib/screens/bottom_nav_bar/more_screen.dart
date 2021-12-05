@@ -34,7 +34,7 @@ class _MoreScreenState extends State<MoreScreen> {
       ),
       MoreOptions(
         leadingIcon: AssetConstants.icMoreDocument,
-        routeName: RouteConstants.currentIncomeScreen,
+        routeName: RouteConstants.selectDocumentForScreen,
         title: LocaleKeys.document,
         trailingIcon: AssetConstants.icForward,
       ),

@@ -29,6 +29,10 @@ class StringConstants {
   static const String orSigninWith = "or sign in with";
   static const String dontHaveAnAccount = "Don't have an account?";
   static const String signupNow = "Signup now";
+  static const String street = "Street";
+  static const String postalCode = "Postal code";
+  static const String cityTown = "City/Town";
+  static const String selectCountry = "Select Country";
   // Have tax done online
   static const String student = "Student";
   static const String married = "Married";
@@ -119,6 +123,7 @@ class StringConstants {
   static const String submit = "Submit";
   static const String subject = "Subject";
   static const String send = "Send";
+  static const String save = "Save";
   static const String back = "back";
   static const String applyNowForAfee = "Apply now for a fee";
   static const String signHere = "Sign here";

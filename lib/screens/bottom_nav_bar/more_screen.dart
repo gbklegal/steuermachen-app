@@ -28,7 +28,7 @@ class _MoreScreenState extends State<MoreScreen> {
     moreOptionsList = [
       MoreOptions(
         leadingIcon: AssetConstants.icProfile,
-        routeName: RouteConstants.currentIncomeScreen,
+        routeName: RouteConstants.profileScreen,
         title: LocaleKeys.profile,
         trailingIcon: AssetConstants.icForward,
       ),

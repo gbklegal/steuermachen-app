@@ -9,9 +9,10 @@ import 'package:steuermachen/languages/locale_keys.g.dart';
 class AppBarWithSideCornerCircleAndRoundBody extends StatelessWidget {
   const AppBarWithSideCornerCircleAndRoundBody({
     Key? key,
-    required this.body,
+    required this.body, this.showNotificationIcon =true,
   }) : super(key: key);
   final Widget body;
+  final bool? showNotificationIcon;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,6 +22,7 @@ class AppBarWithSideCornerCircleAndRoundBody extends StatelessWidget {
         imageTitle: AssetConstants.logo,
         backgroundColor: Colors.transparent,
         showBottomLine: false,
+        showNotificationIcon: showNotificationIcon,
       ),
       body: Stack(
         children: [

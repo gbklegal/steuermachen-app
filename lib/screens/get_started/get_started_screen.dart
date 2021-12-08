@@ -24,7 +24,7 @@ class GetStartedScreen extends StatelessWidget {
               }),
               const SizedBox(height: 20),
               _button(context, StringConstants.getStarted, () {
-                Navigator.pushNamed(context, RouteConstants.bottomNavBarScreen);
+                Navigator.pushNamed(context, RouteConstants.signupScreen);
               }),
               const SizedBox(height: 22),
               Expanded(child: _richText(context))
@@ -67,7 +67,7 @@ class GetStartedScreen extends StatelessWidget {
   RichText _richText(BuildContext context) {
     return RichText(
       text: TextSpan(
-        text: StringConstants.alreadyRegistered,
+        text: StringConstants.alreadyRegistered + " ",
         style: Theme.of(context).textTheme.bodyText1?.copyWith(fontSize: 15),
         children: <TextSpan>[
           TextSpan(

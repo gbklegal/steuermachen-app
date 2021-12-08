@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:steuermachen/components/app_bar/appbar_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
@@ -15,56 +16,71 @@ class SignInScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Column(
-            children: [
-              const SizedBox(height: 35),
-              const LogoAuthComponent(),
-              const Expanded(child: SizedBox(height: 35)),
-              const TitleTextAuthComponent(title: StringConstants.signIn),
-              const SizedBox(height: 35),
-              TextFormField(
-                decoration: const InputDecoration(
-                  label: Text(StringConstants.email),
+      appBar: const AppBarComponent(
+        StringConstants.appName,
+        imageTitle: AssetConstants.logo,
+        backgroundColor: Colors.transparent,
+        showBackButton: false,
+        showBottomLine: false,
+        showNotificationIcon: false,
+      ),
+      body: SingleChildScrollView(
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              children: [
+                const SizedBox(height: 10),
+                const TitleTextAuthComponent(title: StringConstants.signIn),
+                const SizedBox(height: 35),
+                TextFormField(
+                  decoration: const InputDecoration(
+                    label: Text(StringConstants.email),
+                  ),
                 ),
-              ),
-              const SizedBox(height: 20),
-              TextFormField(
-                decoration: const InputDecoration(
-                  label: Text(StringConstants.password),
+                const SizedBox(height: 20),
+                TextFormField(
+                  decoration: const InputDecoration(
+                    label: Text(StringConstants.password),
+                  ),
                 ),
-              ),
-              const SizedBox(height: 25),
-            ButtonAuthComponent(
-                  btnText: StringConstants.signIn, onPressed: () {}),
-              const ChoiceTextAuthComponent(text: StringConstants.orSigninWith),
-              SignInOptionsAuthComponent(
-                  assetName: AssetConstants.icApple,
-                  btnText: StringConstants.appleSignIn),
-              const SizedBox(height: 22),
-              SignInOptionsAuthComponent(
-                  assetName: AssetConstants.icGoogle,
-                  btnText: StringConstants.googleSignIn,
-                  textColor: Colors.blueAccent),
-              const SizedBox(height: 22),
-              RichTextAuthComponent(
-                textSpan1: StringConstants.dontHaveAnAccount,
-                textSpan2: StringConstants.signupNow,
-                onTap: () {
-                  Navigator.pushNamed(context, RouteConstants.signupScreen);
-                },
-              ),
-              const Expanded(child: SizedBox(height: 22)),
-              RichTextAuthComponent(
-                textSpan1: StringConstants.signInTermsAndCondition_1 + "\n",
-                textSpan2: StringConstants.signInTermsAndCondition_2,
-                onTap: () {
-                  // Navigator.pushNamed(context, RouteConstants.signupScreen);
-                },
-              ),
-            ],
+                const SizedBox(height: 25),
+                ButtonAuthComponent(
+                    btnText: StringConstants.signIn,
+                    onPressed: () {
+                      Navigator.pushNamed(
+                          context, RouteConstants.bottomNavBarScreen);
+                    }),
+                const ChoiceTextAuthComponent(
+                    text: StringConstants.orSigninWith),
+                SignInOptionsAuthComponent(
+                    assetName: AssetConstants.icApple,
+                    btnText: StringConstants.appleSignIn),
+                const SizedBox(height: 22),
+                SignInOptionsAuthComponent(
+                    assetName: AssetConstants.icGoogle,
+                    btnText: StringConstants.googleSignIn,
+                    textColor: Colors.blueAccent),
+                const SizedBox(height: 22),
+                RichTextAuthComponent(
+                  textSpan1: StringConstants.dontHaveAnAccount,
+                  textSpan2: StringConstants.signupNow,
+                  onTap: () {
+                    Navigator.pushNamed(context, RouteConstants.signupScreen);
+                  },
+                ),
+                const SizedBox(height: 22),
+                RichTextAuthComponent(
+                  textSpan1: StringConstants.signInTermsAndCondition_1 + "\n",
+                  textSpan2: StringConstants.signInTermsAndCondition_2,
+                  onTap: () {
+                    // Navigator.pushNamed(context, RouteConstants.signupScreen);
+                  },
+                ),
+                const SizedBox(height: 22),
+              ],
+            ),
           ),
         ),
       ),

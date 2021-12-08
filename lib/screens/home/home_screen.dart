@@ -22,7 +22,7 @@ class HomeScreen extends StatelessWidget {
       {
         "leadingAsset": AssetConstants.icLegalAction,
         "title": "Legal Action",
-        "action": RouteConstants.legalAction2Screen
+        "action": RouteConstants.selectDocumentForScreen
       },
       {
         "leadingAsset": AssetConstants.icPersons,
@@ -56,7 +56,7 @@ class HomeScreen extends StatelessWidget {
                   alignment: Alignment.topRight,
                   child: SvgPicture.asset(AssetConstants.topRightRoundCircle),
                 ),
-                Image.asset(AssetConstants.homeLaptop),
+                Image.asset(AssetConstants.tax),
                 Padding(
                   padding: const EdgeInsets.only(left: 45, right: 30),
                   child: Text(

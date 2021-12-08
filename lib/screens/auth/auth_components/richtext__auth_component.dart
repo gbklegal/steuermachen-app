@@ -13,7 +13,7 @@ class RichTextAuthComponent extends StatelessWidget {
     return RichText(
       textAlign: TextAlign.center,
       text: TextSpan(
-        text: textSpan1,
+        text: textSpan1 + " ",
         style: Theme.of(context)
             .textTheme
             .bodyText1

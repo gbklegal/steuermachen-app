@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:steuermachen/components/app_bar/appbar_with_side_corner_circle_and_body.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
+import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 
 class HowItWorksScreen extends StatelessWidget {
@@ -51,7 +52,10 @@ class HowItWorksScreen extends StatelessWidget {
                           Size(MediaQuery.of(context).size.width, 70),
                         ),
                       ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamedAndRemoveUntil(context,
+                        RouteConstants.bottomNavBarScreen, (val) => false);
+                  },
                   child: const Text(
                     StringConstants.applyNow,
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
@@ -81,7 +85,7 @@ class HowItWorksScreen extends StatelessWidget {
                 child: Visibility(
                   visible: showTopLine,
                   child: Container(
-                    height: 26,
+                    height: 30,
                     width: 1,
                     color: ColorConstants.green,
                   ),
@@ -93,18 +97,21 @@ class HowItWorksScreen extends StatelessWidget {
                   color: ColorConstants.green,
                 ),
                 padding: const EdgeInsets.all(18),
-                child: Text(
-                  index,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText1!
-                      .copyWith(color: ColorConstants.white, fontSize: 24),
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 4),
+                  child: Text(
+                    index,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText1!
+                        .copyWith(color: ColorConstants.white, fontSize: 24),
+                  ),
                 ),
               ),
               Positioned(
                 top: 50,
                 child: Container(
-                  height: 26,
+                  height: 32,
                   width: 1,
                   color: ColorConstants.green,
                 ),

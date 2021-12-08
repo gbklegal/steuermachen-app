@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
+import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 
@@ -117,7 +118,10 @@ class CalculatorScreen extends StatelessWidget {
                               Size(MediaQuery.of(context).size.width, 70),
                             ),
                           ),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamedAndRemoveUntil(context,
+                            RouteConstants.bottomNavBarScreen, (val) => false);
+                      },
                       child: const Text(
                         StringConstants.orderNow,
                         style: TextStyle(

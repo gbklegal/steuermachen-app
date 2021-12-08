@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:steuermachen/components/app_bar/appbar_with_side_corner_circle_and_body.dart';
+import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/screens/tax_tips/tax_tips_top_component.dart';
 
@@ -51,7 +52,10 @@ The left-wing parliamentary group leader Dietmar Bartsch criticized such an incr
                   Size(MediaQuery.of(context).size.width, 70),
                 ),
               ),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamedAndRemoveUntil(
+                context, RouteConstants.bottomNavBarScreen, (val) => false);
+          },
           child: const Text(
             StringConstants.applyNow,
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),

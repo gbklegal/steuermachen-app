@@ -51,6 +51,11 @@ class AssetConstants {
   static String icWeddingRings = "assets/icons/process/wedding-rings.png";
   static String icWidowed = "assets/icons/process/widowed.png";
 
+  //Sustain
+  static String sustain1 = "assets/icons/sustain/1.png";
+  static String sustain2 = "assets/icons/sustain/2.png";
+  static String sustain3 = "assets/icons/sustain/3.png";
+
   //home
   static String icHome = "assets/icons/home/home-icon.svg";
   static String icCal = "assets/icons/home/cal-icon.svg";

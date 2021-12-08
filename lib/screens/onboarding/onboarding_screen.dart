@@ -37,14 +37,20 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   // ignore: prefer_const_literals_to_create_immutables
                   children: [
-                    const Text(
-                      StringConstants.skip,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: ColorConstants.black,
-                          fontStyle: FontStyle.normal,
-                          letterSpacing: 1,
-                          fontSize: 18),
+                    InkWell(
+                      onTap: () {
+                        Navigator.pushNamedAndRemoveUntil(context,
+                            RouteConstants.getStartedScreen, (val) => false);
+                      },
+                      child: const Text(
+                        StringConstants.skip,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: ColorConstants.black,
+                            fontStyle: FontStyle.normal,
+                            letterSpacing: 1,
+                            fontSize: 18),
+                      ),
                     ),
                     const LanguageDropdownComponent(),
                   ],

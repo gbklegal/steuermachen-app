@@ -31,8 +31,10 @@ class SignupScreen extends StatelessWidget {
               ),
               const SizedBox(height: 25),
               ButtonAuthComponent(
-                  btnText: StringConstants.signUp, onPressed: () {
-                    Navigator.pushNamed(context, RouteConstants.verifyAccountScreen);
+                  btnText: StringConstants.signUp,
+                  onPressed: () {
+                    Navigator.pushNamed(
+                        context, RouteConstants.verifyAccountScreen);
                   }),
               const ChoiceTextAuthComponent(text: StringConstants.orSigninWith),
               SignInOptionsAuthComponent(
@@ -43,6 +45,14 @@ class SignupScreen extends StatelessWidget {
                   assetName: AssetConstants.icGoogle,
                   btnText: StringConstants.googleSignIn,
                   textColor: Colors.blueAccent),
+              const SizedBox(height: 22),
+              RichTextAuthComponent(
+                textSpan1: StringConstants.alreadyRegistered + " ",
+                textSpan2: StringConstants.signIn,
+                onTap: () {
+                  // Navigator.pushNamed(context, RouteConstants.signupScreen);
+                },
+              ),
               const Expanded(child: SizedBox(height: 22)),
               RichTextAuthComponent(
                 textSpan1: StringConstants.signInTermsAndCondition_1 + "\n",
@@ -51,6 +61,7 @@ class SignupScreen extends StatelessWidget {
                   // Navigator.pushNamed(context, RouteConstants.signupScreen);
                 },
               ),
+              const SizedBox(height: 50),
             ],
           ),
         ),
@@ -58,4 +69,3 @@ class SignupScreen extends StatelessWidget {
     );
   }
 }
-

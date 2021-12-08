@@ -1,12 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:steuermachen/components/app_bar/appbar_with_side_corner_circle_and_body.dart';
 import 'package:steuermachen/components/button_component.dart';
+import 'package:steuermachen/components/dialogs/completed_dialog_component.dart';
 import 'package:steuermachen/components/text_component.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 
-class ContactUsFormScreen extends StatelessWidget {
+class ContactUsFormScreen extends StatefulWidget {
   const ContactUsFormScreen({Key? key}) : super(key: key);
+
+  @override
+  State<ContactUsFormScreen> createState() => _ContactUsFormScreenState();
+}
+
+class _ContactUsFormScreenState extends State<ContactUsFormScreen> {
+  _dialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return const CompletedDialogComponent(
+          showBackBtn: true,
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -116,10 +133,14 @@ class ContactUsFormScreen extends StatelessWidget {
                 const SizedBox(
                   height: 4,
                 ),
-                TextFormField(
-                  decoration: InputDecoration(
-                    hintText: StringConstants.message,
-                    hintStyle: FontStyles.fontRegular(fontSize: 14),
+                SizedBox(
+                  height: 5 * 24.0,
+                  child: TextFormField(
+                    maxLines: 5,
+                    decoration: InputDecoration(
+                        hintText: StringConstants.message,
+                        hintStyle: FontStyles.fontRegular(fontSize: 14),
+                        isDense: true),
                   ),
                 ),
                 const SizedBox(
@@ -136,7 +157,7 @@ class ContactUsFormScreen extends StatelessWidget {
           btnHeight: 75,
           buttonText: StringConstants.send,
           onPressed: () {
-            // Navigator.pushNamed(context, RouteConstants.fileTaxUploadDocScreen);
+            _dialog();
           },
         ),
       ),

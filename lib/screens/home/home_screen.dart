@@ -91,7 +91,15 @@ class HomeScreen extends StatelessWidget {
                   for (var i = 0; i < content.length; i++)
                     InkWell(
                       onTap: () {
-                        Navigator.pushNamed(context, content[i]["action"]);
+                        if (i == 1) {
+                          Navigator.pushNamed(context, content[i]["action"],
+                              arguments: {
+                                "showNextBtn": true,
+                                "nextRoute": RouteConstants.legalAction2Screen
+                              });
+                        } else {
+                          Navigator.pushNamed(context, content[i]["action"]);
+                        }
                       },
                       child: _HomeCards(
                         leadingAsset: content[i]["leadingAsset"],

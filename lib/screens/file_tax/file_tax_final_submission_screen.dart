@@ -8,9 +8,16 @@ import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 
-class FileTaxFinalSubmissionScreen extends StatelessWidget {
+class FileTaxFinalSubmissionScreen extends StatefulWidget {
   const FileTaxFinalSubmissionScreen({Key? key}) : super(key: key);
 
+  @override
+  State<FileTaxFinalSubmissionScreen> createState() =>
+      _FileTaxFinalSubmissionScreenState();
+}
+
+class _FileTaxFinalSubmissionScreenState
+    extends State<FileTaxFinalSubmissionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,10 +52,12 @@ class FileTaxFinalSubmissionScreen extends StatelessWidget {
               height: 26,
             ),
             ButtonComponent(
-              buttonText: StringConstants.toTaxRe,
+              buttonText: StringConstants.toTaxRe.toUpperCase(),
+              textStyle: FontStyles.fontRegular(
+                  color: ColorConstants.white, fontSize: 18),
+              btnHeight: 65,
               onPressed: () {
-                Navigator.pushNamed(
-                    context, RouteConstants.fileTaxFinalSubmissionScreen);
+                Navigator.pushNamed(context, RouteConstants.taxAdviceScreen);
               },
             ),
             const SizedBox(
@@ -65,11 +74,16 @@ class FileTaxFinalSubmissionScreen extends StatelessWidget {
               height: 30,
             ),
             ButtonComponent(
-              buttonText: StringConstants.orderNow,
+              btnHeight: 65,
+              buttonText: StringConstants.orderNow.toUpperCase(),
+              textStyle: FontStyles.fontRegular(
+                color: ColorConstants.white,
+                fontSize: 18,
+              ),
               color: ColorConstants.toxicGreen,
               onPressed: () {
                 Navigator.pushNamed(
-                    context, RouteConstants.fileTaxFinalSubmissionScreen);
+                    context, RouteConstants.fileTaxDoneOrderScreen);
               },
             ),
           ],

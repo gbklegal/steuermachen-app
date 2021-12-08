@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
+import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 
 class TaxAdviceScreen extends StatelessWidget {
@@ -72,7 +73,7 @@ class TaxAdviceScreen extends StatelessWidget {
                 ),
               ),
           onPressed: () {
-            
+            Navigator.pushNamed(context, RouteConstants.taxAdviceFormScreen);
           },
           child: const Text(
             StringConstants.applyNowForAfee,

@@ -53,8 +53,8 @@ class AppBarWithSideCornerCircleAndRoundBody extends StatelessWidget {
               ),
               child: ClipRRect(
                 borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(35),
-                  topRight: Radius.circular(35),
+                  topLeft: Radius.circular(50),
+                  topRight: Radius.circular(50),
                 ),
                 child: body,
               ),

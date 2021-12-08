@@ -51,6 +51,7 @@ class StringConstants {
   static const String applyNow = "Apply now";
   static const String chatWithUs = "Chat with us";
   static const String pricing = "Pricing";
+  static const String done = "Done!";
   static const String chooseTheRightPrice = "Choose the right price";
 
   // Select Year
@@ -58,11 +59,13 @@ class StringConstants {
   static const String resend = "Resend";
   static const String verifyYourAccount = "Verify your account";
   static const String next = "Next";
+  static const String goToHome = "Go to home";
   static const String document = "Document";
   static const String selectDocument = "Select document you want to upload";
   static const String documentOverview = "Documents Overview";
   static const String useCamera = "Use Camera";
   // Fill information
+  static const String initInfo = "Information for initial tax advice";
   static const String fillInfo = "Fill out your information";
   static const String surName = "Surname";
   static const String enterTitle = "Enter Title";
@@ -73,6 +76,8 @@ class StringConstants {
   static const String place = "Place";
   static const String phoneNo = "Phone No";
   static const String message = "Message";
+  static const String disscussFreeInitial =
+      "What do you want to discuss in the free initial";
   // File tax upload document
   static const String uplaodYourDocuments = "Upload your documents";
   static const String upload = "Upload";
@@ -83,7 +88,7 @@ class StringConstants {
   static const String initAdvice = "Initial tax advice";
   static const String ifNeedInit =
       "If you only need an initial consultation, then use our taxEASY service.";
-  static const String toTaxRe = "To Tax Reasy";
+  static const String toTaxRe = "To Tax Easy";
   static const String or = "OR";
   static const String orderNow = "Order Now";
   //Tax File Submit Dialog
@@ -125,6 +130,11 @@ class StringConstants {
   static const String send = "Send";
   static const String save = "Save";
   static const String back = "back";
+  static const String thankYou = "Thank you!";
+  static const String thankYouForOrder = "Thank you for your order";
+  static const String impRecEmail =
+      "IMPORTANT: You will receive an email with all the information on how to proceed.";
+  static const String weWillBeInTouchShortly = "We’ll be in touch shortly";
   static const String applyNowForAfee = "Apply now for a fee";
   static const String signHere = "Sign here";
   static const String initialTaxAdvice = "Initial tax advice";

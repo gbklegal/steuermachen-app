@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
+import 'package:steuermachen/components/button_component.dart';
+import 'package:steuermachen/components/dialogs/completed_dialog_component.dart';
+import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
+import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:signature/signature.dart';
 
@@ -23,6 +27,15 @@ class _LegalAction2ScreenState extends State<LegalAction2Screen> {
   void initState() {
     super.initState();
     _controller.addListener(() => print('Value changed'));
+  }
+
+  _dialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return const CompletedDialogComponent();
+      },
+    );
   }
 
   @override
@@ -80,7 +93,9 @@ class _LegalAction2ScreenState extends State<LegalAction2Screen> {
                   Size(MediaQuery.of(context).size.width, 70),
                 ),
               ),
-          onPressed: () {},
+          onPressed: () {
+            _dialog();
+          },
           child: const Text(
             StringConstants.send,
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),

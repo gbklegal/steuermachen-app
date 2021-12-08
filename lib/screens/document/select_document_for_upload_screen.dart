@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:steuermachen/components/app_bar/appbar_with_side_corner_circle_and_body.dart';
+import 'package:steuermachen/components/button_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
@@ -11,8 +12,12 @@ import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:steuermachen/utils/image_picker/media_source_selection_utils.dart';
 
 class SelectDocumentForScreen extends StatefulWidget {
-  const SelectDocumentForScreen({Key? key}) : super(key: key);
+  const SelectDocumentForScreen(
+      {Key? key, this.showNextBtn = false, this.onNextBtnRoute})
+      : super(key: key);
 
+  final bool? showNextBtn;
+  final String? onNextBtnRoute;
   @override
   State<SelectDocumentForScreen> createState() =>
       _SelectDocumentForScreenState();
@@ -41,8 +46,25 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return AppBarWithSideCornerCircleAndRoundBody(
-      body: _mainBody(context),
+    return Scaffold(
+      body: AppBarWithSideCornerCircleAndRoundBody(
+        body: _mainBody(context),
+      ),
+      bottomNavigationBar: Visibility(
+        visible: widget.showNextBtn!,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+          child: ButtonComponent(
+            btnHeight: 65,
+            buttonText: StringConstants.next.toUpperCase(),
+            textStyle: FontStyles.fontRegular(
+                color: ColorConstants.white, fontSize: 18),
+            onPressed: () {
+              Navigator.pushNamed(context, widget.onNextBtnRoute!);
+            },
+          ),
+        ),
+      ),
     );
   }
 

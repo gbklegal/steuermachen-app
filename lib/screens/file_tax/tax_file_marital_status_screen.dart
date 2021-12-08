@@ -4,8 +4,10 @@ import 'package:steuermachen/components/button_component.dart';
 import 'package:steuermachen/components/tax_option_grid_component.dart';
 import 'package:steuermachen/components/text_progress_bar_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
+import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
+import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:steuermachen/screens/file_tax/marital_status_model.dart';
 
 class TaxFileMaritalStatusScreen extends StatefulWidget {
@@ -86,9 +88,12 @@ class _TaxFileMaritalStatusScreenState
         ],
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 25),
         child: ButtonComponent(
-          buttonText: StringConstants.next,
+          btnHeight: 60,
+          buttonText: StringConstants.next.toUpperCase(),
+          textStyle:
+              FontStyles.fontRegular(color: ColorConstants.white, fontSize: 18),
           onPressed: () {
             Navigator.pushNamed(context, RouteConstants.selectYearScreen);
           },

@@ -9,6 +9,7 @@ import 'package:steuermachen/screens/contact_us/contact_us_options_screen.dart';
 import 'package:steuermachen/screens/document/select_document_for_upload_screen.dart';
 import 'package:steuermachen/screens/document/uploaded_document_screen.dart';
 import 'package:steuermachen/screens/faq/faq_screen.dart';
+import 'package:steuermachen/screens/file_tax/file_tax_done_order_screen.dart';
 import 'package:steuermachen/screens/file_tax/file_tax_info_screen.dart';
 import 'package:steuermachen/screens/file_tax/file_tax_final_submission_screen.dart';
 import 'package:steuermachen/screens/file_tax/file_tax_upload_document_screen.dart';
@@ -22,6 +23,7 @@ import 'package:steuermachen/screens/legal_action/legal_action2_screen.dart';
 import 'package:steuermachen/screens/onboarding/onboarding_screen.dart';
 import 'package:steuermachen/screens/profile/profile_screen.dart';
 import 'package:steuermachen/screens/sustainability/sustainability_screen.dart';
+import 'package:steuermachen/screens/tax_advice/tax_advice_form_screen.dart';
 import 'package:steuermachen/screens/tax_advice/tax_advice_screen.dart';
 import 'package:steuermachen/screens/tax_tips/tax_tips_detail_screen.dart';
 import 'package:steuermachen/screens/tax_tips/tax_tips_screen.dart';
@@ -52,6 +54,15 @@ onGenerateRoutes(RouteSettings settings) {
         builder: (_) => const VerifyAccountScreen(),
       );
     case RouteConstants.selectDocumentForScreen:
+      if (settings.arguments != null) {
+        Map obj = settings.arguments as Map;
+        return MaterialPageRoute(
+          builder: (_) => SelectDocumentForScreen(
+            showNextBtn: obj["showNextBtn"],
+            onNextBtnRoute: obj["nextRoute"],
+          ),
+        );
+      }
       return MaterialPageRoute(
         builder: (_) => const SelectDocumentForScreen(),
       );
@@ -74,6 +85,10 @@ onGenerateRoutes(RouteSettings settings) {
     case RouteConstants.fileTaxFinalSubmissionScreen:
       return MaterialPageRoute(
         builder: (_) => const FileTaxFinalSubmissionScreen(),
+      );
+    case RouteConstants.fileTaxDoneOrderScreen:
+      return MaterialPageRoute(
+        builder: (_) => const FileTaxDoneOrderScreen(),
       );
     case RouteConstants.bottomNavBarScreen:
       return MaterialPageRoute(
@@ -118,6 +133,10 @@ onGenerateRoutes(RouteSettings settings) {
     case RouteConstants.taxAdviceScreen:
       return MaterialPageRoute(
         builder: (_) => const TaxAdviceScreen(),
+      );
+    case RouteConstants.taxAdviceFormScreen:
+      return MaterialPageRoute(
+        builder: (_) => const TaxAdviceFormScreen(),
       );
     case RouteConstants.profileScreen:
       return MaterialPageRoute(

@@ -32,17 +32,22 @@ class _TaxOptionGridComponentState extends State<TaxOptionGridComponent> {
     _size = MediaQuery.of(context).size;
     return Expanded(
       child: Center(
-        child: GridView.builder(
-            shrinkWrap: true,
-            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 200,
-                childAspectRatio: ((_size.width / 2.5) / (_size.height / 5)),
-                crossAxisSpacing: 16,
-                mainAxisSpacing: 12),
-            itemCount: 4,
-            itemBuilder: (BuildContext ctx, index) {
-              return _itemMaritalStatus(index);
-            }),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 50),
+          child: GridView.builder(
+              shrinkWrap: true,
+              padding: EdgeInsets.zero,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: ((_size.width / 2.5) / (_size.height / 5)),
+                  crossAxisSpacing: 0,
+                  mainAxisExtent: 180,
+                  mainAxisSpacing: 0),
+              itemCount: 4,
+              itemBuilder: (BuildContext ctx, index) {
+                return _itemMaritalStatus(index);
+              }),
+        ),
       ),
     );
   }

@@ -1,5 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
@@ -11,6 +13,7 @@ import 'package:steuermachen/providers/language_provider.dart';
 import 'package:steuermachen/routes/app_routes.dart';
 import 'package:steuermachen/screens/onboarding/onboarding_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:steuermachen/screens/splash_screen.dart';
 
 // flutter pub run easy_localization:generate -S "assets/languages" -O "lib/languages"
 // flutter pub run easy_localization:generate -S "assets/languages" -O "lib/languages" -o "locale_keys.g.dart" -f keys
@@ -18,6 +21,8 @@ late FirebaseAuth auth;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
+  await Firebase.initializeApp();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   auth = FirebaseAuth.instance;
   runApp(
     EasyLocalization(
@@ -49,7 +54,7 @@ class MyApp extends StatelessWidget {
         onGenerateRoute: (settings) {
           return onGenerateRoutes(settings);
         },
-        home: const OnBoardingScreen(),
+        home: const SplashScreen(),
       ),
     );
   }

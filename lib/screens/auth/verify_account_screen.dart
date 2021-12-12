@@ -5,7 +5,7 @@ import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
-import 'package:steuermachen/screens/auth/auth_components/logo_auth_component.dart';
+import 'package:steuermachen/components/logo_component.dart';
 import 'package:steuermachen/screens/auth/auth_components/richtext__auth_component.dart';
 import 'package:steuermachen/screens/auth/auth_components/title_text_auth_component.dart';
 

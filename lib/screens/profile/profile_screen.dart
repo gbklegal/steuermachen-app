@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:steuermachen/components/app_bar/appbar_with_side_corner_circle_and_body.dart';
 import 'package:steuermachen/components/button_component.dart';
 import 'package:steuermachen/components/text_component.dart';
+import 'package:steuermachen/constants/app_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 
@@ -124,9 +125,9 @@ class ProfileScreen extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+        padding: AppConstants.bottomBtnPadding,
         child: ButtonComponent(
-          btnHeight: 75,
+          btnHeight: 56,
           buttonText: StringConstants.save,
           onPressed: () {
             // Navigator.pushNamed(context, RouteConstants.fileTaxUploadDocScreen);

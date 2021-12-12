@@ -15,6 +15,10 @@ class AuthProvider extends ChangeNotifier {
     return InputValidationUtil.validateEmail(value);
   }
 
+  String? validateEmptyField(String? value) {
+    return InputValidationUtil.validateFieldEmpty(value);
+  }
+
   initializeGoogleSignIn() {
     _googleSignIn = GoogleSignIn(
       scopes: [
@@ -25,30 +29,26 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<UserCredential> signInWithGoogle() async {
-    // Trigger the authentication flow
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-
-    // Obtain the auth details from the request
     final GoogleSignInAuthentication? googleAuth =
         await googleUser?.authentication;
-
-    // Create a new credential
     final credential = GoogleAuthProvider.credential(
       accessToken: googleAuth?.accessToken,
       idToken: googleAuth?.idToken,
     );
-
-    // Once signed in, return the UserCredential
     return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 
   Future<CommonResponseWrapper> registerWithEmailAndPassword(
       String email, String password) async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance
+      await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
+      await sendVerificationEmail();
       return CommonResponseWrapper(
-          status: true, message: "Account registered successfully");
+          status: true,
+          message:
+              "Account registered successfully\nCheck your mail for the verification link");
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         return CommonResponseWrapper(
@@ -63,5 +63,53 @@ class AuthProvider extends ChangeNotifier {
     } catch (e) {
       return CommonResponseWrapper(status: false, message: e.toString());
     }
+  }
+
+  Future<CommonResponseWrapper> signInWithEmailAndPassword(
+      String email, String password) async {
+    try {
+      UserCredential _user = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+      if (!_user.user!.emailVerified) {
+        await sendVerificationEmail();
+        return CommonResponseWrapper(
+            status: false, message: 'Please verify your email');
+      }
+      return CommonResponseWrapper(status: true, message: 'Sigin successfully');
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        print('No user found for that email.');
+        return CommonResponseWrapper(
+            status: false, message: 'No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        print('Wrong password provided for that user.');
+        return CommonResponseWrapper(
+            status: false, message: 'Wrong password provided for that user.');
+      }
+      return CommonResponseWrapper(
+          status: false, message: 'Something went wrong');
+    }
+  }
+
+  sendVerificationEmail() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null && !user.emailVerified) {
+      await user.sendEmailVerification();
+    }
+  }
+
+  bool checkUserInPreference()  {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      return false;
+    } else if (!user.emailVerified) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  signout() async {
+    await FirebaseAuth.instance.signOut();
   }
 }

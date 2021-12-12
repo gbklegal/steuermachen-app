@@ -1,17 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
+import 'package:steuermachen/components/popup_loader_component.dart';
+import 'package:steuermachen/components/toast_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
+import 'package:steuermachen/providers/auth_provider.dart';
 import 'package:steuermachen/screens/auth/auth_components/button_auth_component.dart';
 import 'package:steuermachen/screens/auth/auth_components/choice_auth_component.dart';
-import 'package:steuermachen/screens/auth/auth_components/logo_auth_component.dart';
 import 'package:steuermachen/screens/auth/auth_components/signin_options__auth_component.dart';
 import 'package:steuermachen/screens/auth/auth_components/richtext__auth_component.dart';
 import 'package:steuermachen/screens/auth/auth_components/title_text_auth_component.dart';
+import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 
-class SignInScreen extends StatelessWidget {
+class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
+
+  @override
+  State<SignInScreen> createState() => _SignInScreenState();
+}
+
+class _SignInScreenState extends State<SignInScreen> {
+  final TextEditingController _emailController =
+      TextEditingController(text: "osama.asif20@gmail.com");
+  final TextEditingController _passwordController =
+      TextEditingController(text: "12345678");
+  final GlobalKey<FormState> _signupFormKey = GlobalKey<FormState>();
+  late AuthProvider authProvider;
+  @override
+  void initState() {
+    authProvider = Provider.of<AuthProvider>(context, listen: false);
+    authProvider.initializeGoogleSignIn();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,23 +56,22 @@ class SignInScreen extends StatelessWidget {
                 const SizedBox(height: 10),
                 const TitleTextAuthComponent(title: StringConstants.signIn),
                 const SizedBox(height: 35),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    label: Text(StringConstants.email),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    label: Text(StringConstants.password),
-                  ),
-                ),
+                _authFields(),
                 const SizedBox(height: 25),
                 ButtonAuthComponent(
                     btnText: StringConstants.signIn,
-                    onPressed: () {
-                      Navigator.pushNamed(
-                          context, RouteConstants.bottomNavBarScreen);
+                    onPressed: () async {
+                      if (_signupFormKey.currentState!.validate()) {
+                        PopupLoader.showLoadingDialog(context);
+                        CommonResponseWrapper res =
+                            await authProvider.signInWithEmailAndPassword(
+                                _emailController.text,
+                                _passwordController.text);
+                        ToastComponent.showToast(res.message!, long: true);
+                        PopupLoader.hideLoadingDialog(context);
+                        Navigator.pushNamedAndRemoveUntil(context,
+                            RouteConstants.bottomNavBarScreen, (val) => false);
+                      }
                     }),
                 const ChoiceTextAuthComponent(
                     text: StringConstants.orSigninWith),
@@ -87,18 +108,28 @@ class SignInScreen extends StatelessWidget {
     );
   }
 
-  ElevatedButton _singInButton(
-      BuildContext context, String btnText, void Function()? onPressed) {
-    return ElevatedButton(
-      style: ElevatedButtonTheme.of(context).style?.copyWith(
-            minimumSize: MaterialStateProperty.all(
-              Size(MediaQuery.of(context).size.width, 70),
+  Form _authFields() {
+    return Form(
+      key: _signupFormKey,
+      child: Column(
+        children: [
+          TextFormField(
+            controller: _emailController,
+            decoration: const InputDecoration(
+              label: Text(StringConstants.email),
             ),
+            validator: authProvider.validateEmail,
           ),
-      onPressed: onPressed,
-      child: Text(
-        btnText,
-        style: const TextStyle(fontSize: 24),
+          const SizedBox(height: 20),
+          TextFormField(
+            controller: _passwordController,
+            decoration: const InputDecoration(
+              label: Text(StringConstants.password),
+            ),
+            obscureText: true,
+            validator: authProvider.validateEmptyField,
+          ),
+        ],
       ),
     );
   }

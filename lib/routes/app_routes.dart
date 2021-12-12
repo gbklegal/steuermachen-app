@@ -22,6 +22,7 @@ import 'package:steuermachen/screens/how_it_works/how_it_works_screen.dart';
 import 'package:steuermachen/screens/legal_action/legal_action2_screen.dart';
 import 'package:steuermachen/screens/onboarding/onboarding_screen.dart';
 import 'package:steuermachen/screens/profile/profile_screen.dart';
+import 'package:steuermachen/screens/splash_screen.dart';
 import 'package:steuermachen/screens/sustainability/sustainability_screen.dart';
 import 'package:steuermachen/screens/tax_advice/tax_advice_form_screen.dart';
 import 'package:steuermachen/screens/tax_advice/tax_advice_screen.dart';
@@ -30,6 +31,10 @@ import 'package:steuermachen/screens/tax_tips/tax_tips_screen.dart';
 
 onGenerateRoutes(RouteSettings settings) {
   switch (settings.name) {
+    case RouteConstants.splashScreen:
+      return MaterialPageRoute(
+        builder: (_) => const SplashScreen(),
+      );
     case RouteConstants.onboardingScreen:
       return MaterialPageRoute(
         builder: (_) => const OnBoardingScreen(),

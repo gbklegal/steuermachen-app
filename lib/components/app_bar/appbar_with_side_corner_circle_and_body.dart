@@ -34,7 +34,7 @@ class AppBarWithSideCornerCircleAndRoundBody extends StatelessWidget {
             child: SvgPicture.asset(AssetConstants.topRightRoundCircle),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 85),
+            padding: const EdgeInsets.only(top: 110),
             child: Container(
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(

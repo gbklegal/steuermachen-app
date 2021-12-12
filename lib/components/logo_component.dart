@@ -4,8 +4,8 @@ import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 
-class LogoAuthComponent extends StatelessWidget {
-  const LogoAuthComponent({Key? key}) : super(key: key);
+class LogoComponent extends StatelessWidget {
+  const LogoComponent({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,6 +13,9 @@ class LogoAuthComponent extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Image.asset(AssetConstants.logo),
+        const SizedBox(
+          width: 8,
+        ),
         Text(
           StringConstants.appName,
           // LocaleKeys.appName.tr(),

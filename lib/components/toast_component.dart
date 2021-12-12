@@ -2,10 +2,10 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 
 class ToastComponent {
-  static void showToast(String message) {
+  static void showToast(String message, {bool long = false}) {
     Fluttertoast.showToast(
         msg: message,
-        toastLength: Toast.LENGTH_SHORT,
+        toastLength: long ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIosWeb: 1,
         backgroundColor: ColorConstants.black.withOpacity(0.8),

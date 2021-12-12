@@ -10,13 +10,15 @@ import 'package:steuermachen/providers/initialize_provider.dart';
 import 'package:steuermachen/providers/language_provider.dart';
 import 'package:steuermachen/routes/app_routes.dart';
 import 'package:steuermachen/screens/onboarding/onboarding_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 // flutter pub run easy_localization:generate -S "assets/languages" -O "lib/languages"
 // flutter pub run easy_localization:generate -S "assets/languages" -O "lib/languages" -o "locale_keys.g.dart" -f keys
+late FirebaseAuth auth;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
-
+  auth = FirebaseAuth.instance;
   runApp(
     EasyLocalization(
       supportedLocales: const [

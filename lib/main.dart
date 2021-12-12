@@ -6,6 +6,7 @@ import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/languages/codegen_loader.g.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
+import 'package:steuermachen/providers/initialize_provider.dart';
 import 'package:steuermachen/providers/language_provider.dart';
 import 'package:steuermachen/routes/app_routes.dart';
 import 'package:steuermachen/screens/onboarding/onboarding_screen.dart';
@@ -35,9 +36,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => LanguageProvider())
-      ],
+      providers: providerList(context),
       child: MaterialApp(
         localizationsDelegates: context.localizationDelegates,
         supportedLocales: context.supportedLocales,

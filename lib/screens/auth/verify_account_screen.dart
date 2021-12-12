@@ -15,7 +15,7 @@ class VerifyAccountScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarComponent(
+      appBar: const AppBarComponent( 
         StringConstants.appName,
         // LocaleKeys.appName.tr(),
         imageTitle: AssetConstants.logo,
@@ -33,11 +33,16 @@ class VerifyAccountScreen extends StatelessWidget {
               child: Column(
                 children: [
                   Image.asset(AssetConstants.verifyAccount),
-                  const TitleTextAuthComponent(
-                      title: StringConstants.verifyYourAccount),
+                  Text(
+                    StringConstants.verifyYourAccount,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.headline6?.copyWith(
+                        fontWeight: FontWeight.w700, letterSpacing: -0.3),
+                  ),
                   const SizedBox(height: 35),
                   const Text(
                     "We have sent you an code via email",
+                    textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 20),
                   ),
                   const SizedBox(height: 30),

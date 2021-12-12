@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:steuermachen/components/toast_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
@@ -10,6 +11,8 @@ import 'package:steuermachen/screens/auth/auth_components/richtext__auth_compone
 import 'package:steuermachen/screens/auth/auth_components/signin_options__auth_component.dart';
 import 'package:steuermachen/screens/auth/auth_components/title_text_auth_component.dart';
 import 'package:provider/provider.dart';
+import 'package:steuermachen/utils/input_validation_util.dart';
+import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({Key? key}) : super(key: key);
@@ -20,6 +23,9 @@ class SignupScreen extends StatefulWidget {
 
 class _SignupScreenState extends State<SignupScreen> {
   late AuthProvider authProvider;
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final GlobalKey<FormState> _signupFormKey = GlobalKey<FormState>();
   @override
   void initState() {
     authProvider = Provider.of<AuthProvider>(context, listen: false);
@@ -40,16 +46,19 @@ class _SignupScreenState extends State<SignupScreen> {
               const Expanded(child: SizedBox(height: 35)),
               const TitleTextAuthComponent(title: StringConstants.signUp),
               const SizedBox(height: 35),
-              TextFormField(
-                decoration:
-                    const InputDecoration(label: Text(StringConstants.email)),
-              ),
+              _authFields(),
               const SizedBox(height: 25),
               ButtonAuthComponent(
                   btnText: StringConstants.signUp,
-                  onPressed: () {
-                    Navigator.pushNamed(
-                        context, RouteConstants.verifyAccountScreen);
+                  onPressed: () async {
+                    if (_signupFormKey.currentState!.validate()) {
+                      CommonResponseWrapper res =
+                          await authProvider.registerWithEmailAndPassword(
+                              _emailController.text, _passwordController.text);
+                      // ToastComponent.showToast(res.message!);
+                      // Navigator.pushNamed(
+                      //     context, RouteConstants.verifyAccountScreen);
+                    }
                   }),
               const ChoiceTextAuthComponent(text: StringConstants.orSigninWith),
               SignInOptionsAuthComponent(
@@ -70,7 +79,8 @@ class _SignupScreenState extends State<SignupScreen> {
                 textSpan1: StringConstants.alreadyRegistered + " ",
                 textSpan2: StringConstants.signIn,
                 onTap: () {
-                  // Navigator.pushNamed(context, RouteConstants.signupScreen);
+                  Navigator.pushReplacementNamed(
+                      context, RouteConstants.signInScreen);
                 },
               ),
               const Expanded(child: SizedBox(height: 22)),
@@ -87,5 +97,32 @@ class _SignupScreenState extends State<SignupScreen> {
         ),
       ),
     );
+  }
+
+  Consumer _authFields() {
+    return Consumer<AuthProvider>(builder: (context, consumer, child) {
+      return Form(
+        key: _signupFormKey,
+        child: Column(
+          children: [
+            TextFormField(
+              controller: _emailController,
+              decoration:
+                  const InputDecoration(label: Text(StringConstants.email)),
+              validator: consumer.validateEmail,
+            ),
+            const SizedBox(height: 15),
+            TextFormField(
+              controller: _passwordController,
+              decoration: const InputDecoration(
+                label: Text(StringConstants.password),
+              ),
+              obscureText: true,
+              validator: consumer.validatePassword,
+            ),
+          ],
+        ),
+      );
+    });
   }
 }

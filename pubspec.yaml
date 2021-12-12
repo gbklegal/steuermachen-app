@@ -46,6 +46,8 @@ dependencies:
   syncfusion_flutter_sliders: ^19.3.56
   google_sign_in: ^5.0.5
   firebase_auth: ^3.1.1
+  email_validator: ^2.0.1
+  fluttertoast: ^8.0.8
   fdottedline:
     path: ./fdottedline
   

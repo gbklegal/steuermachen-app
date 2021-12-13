@@ -18,60 +18,63 @@ class TaxTipsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppBarWithSideCornerCircleAndRoundBody(
       body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            FutureBuilder<DocumentSnapshot>(
-                future:
-                    firestore.collection("featured_article").doc("content").get(),
-                builder: (context, AsyncSnapshot snapshot) {
-                  if (snapshot.hasData) {
-                    Map<String, dynamic> x =
-                        snapshot.data.data() as Map<String, dynamic>;
-                    TaxTipsContentWrapper res =
-                        TaxTipsContentWrapper.fromJson(x);
-                    return Column(
-                      children: [
-                        if (context.locale == const Locale('en'))
-                          for (var i = 0; i < res.en!.length; i++)
-                            if (i == 0)
-                               TaxTipTopComponent(
-                                title: res.en![i].title,
-                                subtitle: res.en![i].subtitle,
-                                publishedDate: res.en![i].publishedDate.toString(),
-                                articleBy: res.en![i].articleBy,
-                                image: res.en![i].image,
-                                readTime: res.en![i].readTime,
-                              )
-                            else
-                              InkWell(
-                                onTap: () {
-                                  Navigator.pushNamed(context,
-                                      RouteConstants.taxTipsDetailScreen);
-                                },
-                                child: const _ListItems(),
-                              )
-                        else
-                          for (var i = 0; i < res.du!.length; i++)
-                            if (i == 0)
-                              const TaxTipTopComponent()
-                            else
-                              InkWell(
-                                onTap: () {
-                                  Navigator.pushNamed(context,
-                                      RouteConstants.taxTipsDetailScreen);
-                                },
-                                child: const _ListItems(),
-                              )
-                      ],
-                    );
-                  } else if (snapshot.hasError) {
-                    return const ErrorComponent();
-                  } else {
-                    return const LoadingComponent();
-                  }
-                }),
-          ],
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              FutureBuilder<DocumentSnapshot>(
+                  future:
+                      firestore.collection("featured_article").doc("content").get(),
+                  builder: (context, AsyncSnapshot snapshot) {
+                    if (snapshot.hasData) {
+                      Map<String, dynamic> x =
+                          snapshot.data.data() as Map<String, dynamic>;
+                      TaxTipsContentWrapper res =
+                          TaxTipsContentWrapper.fromJson(x);
+                      return Column(
+                        children: [
+                          if (context.locale == const Locale('en'))
+                            for (var i = 0; i < res.en!.length; i++)
+                              if (i == 0)
+                                 TaxTipTopComponent(
+                                  title: res.en![i].title,
+                                  subtitle: res.en![i].subtitle,
+                                  publishedDate: res.en![i].publishedDate.toString(),
+                                  articleBy: res.en![i].articleBy,
+                                  image: res.en![i].image,
+                                  readTime: res.en![i].readTime,
+                                )
+                              else
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.pushNamed(context,
+                                        RouteConstants.taxTipsDetailScreen);
+                                  },
+                                  child: const _ListItems(),
+                                )
+                          else
+                            for (var i = 0; i < res.du!.length; i++)
+                              if (i == 0)
+                                const TaxTipTopComponent()
+                              else
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.pushNamed(context,
+                                        RouteConstants.taxTipsDetailScreen);
+                                  },
+                                  child: const _ListItems(),
+                                )
+                        ],
+                      );
+                    } else if (snapshot.hasError) {
+                      return const ErrorComponent();
+                    } else {
+                      return const LoadingComponent();
+                    }
+                  }),
+            ],
+          ),
         ),
       ),
     );

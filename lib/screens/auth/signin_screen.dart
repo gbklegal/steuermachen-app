@@ -12,6 +12,7 @@ import 'package:steuermachen/screens/auth/auth_components/choice_auth_component.
 import 'package:steuermachen/screens/auth/auth_components/signin_options__auth_component.dart';
 import 'package:steuermachen/screens/auth/auth_components/richtext__auth_component.dart';
 import 'package:steuermachen/screens/auth/auth_components/title_text_auth_component.dart';
+import 'package:steuermachen/utils/input_validation_util.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -21,7 +22,7 @@ class SignInScreen extends StatefulWidget {
   State<SignInScreen> createState() => _SignInScreenState();
 }
 
-class _SignInScreenState extends State<SignInScreen> {
+class _SignInScreenState extends State<SignInScreen> with InputValidationUtil {
   final TextEditingController _emailController =
       TextEditingController(text: "osama.asif20@gmail.com");
   final TextEditingController _passwordController =
@@ -118,7 +119,7 @@ class _SignInScreenState extends State<SignInScreen> {
             decoration: const InputDecoration(
               label: Text(StringConstants.email),
             ),
-            validator: authProvider.validateEmail,
+            validator: validateEmail,
           ),
           const SizedBox(height: 20),
           TextFormField(
@@ -127,7 +128,7 @@ class _SignInScreenState extends State<SignInScreen> {
               label: Text(StringConstants.password),
             ),
             obscureText: true,
-            validator: authProvider.validateEmptyField,
+            validator: validateFieldEmpty,
           ),
         ],
       ),

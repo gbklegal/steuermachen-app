@@ -1,23 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:steuermachen/utils/input_validation_util.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 
 class AuthProvider extends ChangeNotifier {
   late GoogleSignIn _googleSignIn;
-
-  String? validatePassword(String? value) {
-    return InputValidationUtil.validatePassword(value);
-  }
-
-  String? validateEmail(String? value) {
-    return InputValidationUtil.validateEmail(value);
-  }
-
-  String? validateEmptyField(String? value) {
-    return InputValidationUtil.validateFieldEmpty(value);
-  }
 
   initializeGoogleSignIn() {
     _googleSignIn = GoogleSignIn(

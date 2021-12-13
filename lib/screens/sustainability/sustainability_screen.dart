@@ -7,6 +7,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:steuermachen/components/app_bar/appbar_with_side_corner_circle_and_body.dart';
+import 'package:steuermachen/components/error_component.dart';
+import 'package:steuermachen/components/loading_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/main.dart';
@@ -19,12 +21,12 @@ class SustainabilityScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppBarWithSideCornerCircleAndRoundBody(
       body: SingleChildScrollView(
-        child: FutureBuilder<dynamic>(
+        child: FutureBuilder<DocumentSnapshot>(
             future: firestore.collection("sustainability").doc("content").get(),
             builder: (context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
-                var data = snapshot.data as DocumentSnapshot;
-                Map<String, dynamic> x = data.data() as Map<String, dynamic>;
+                Map<String, dynamic> x =
+                    snapshot.data.data() as Map<String, dynamic>;
                 SustainabilityContentWrapper res =
                     SustainabilityContentWrapper.fromJson(x);
                 return Column(
@@ -43,15 +45,10 @@ class SustainabilityScreen extends StatelessWidget {
                             '${res.du![i].text}', getAsset(i)),
                   ],
                 );
+              } else if (snapshot.hasError) {
+                return const ErrorComponent();
               } else {
-                return const Center(
-                  child: SpinKitWave(
-                    color: ColorConstants.primary,
-                    size: 40,
-                    itemCount: 6,
-                    duration: Duration(milliseconds: 700),
-                  ),
-                );
+                return const LoadingComponent();
               }
             }),
       ),

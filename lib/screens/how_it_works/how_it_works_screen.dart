@@ -1,68 +1,80 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:steuermachen/components/app_bar/appbar_with_side_corner_circle_and_body.dart';
+import 'package:steuermachen/components/error_component.dart';
+import 'package:steuermachen/components/loading_component.dart';
+import 'package:steuermachen/constants/app_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
+import 'package:steuermachen/main.dart';
+import 'package:steuermachen/wrappers/how_it_works_wrapper.dart';
 
 class HowItWorksScreen extends StatelessWidget {
   const HowItWorksScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    List<Map<String, String>> content = [
-      {
-        "title": "Apply for the desired tax return",
-        "content":
-            "Fill out the order form, select the desired tax year for which you would like to have the income tax return drawn up and simply send the form."
-      },
-      {
-        "title": "Prepare and send documents",
-        "content":
-            "Fill out the order form, select the desired tax year for which you want to have the income tax return made and simply submit the form."
-      },
-      {
-        "title":
-            "Your personal tax office offers the solution for your tax return",
-        "content":
-            "Fill out the order form, select the desired tax year for which you want to have the income tax return made and simply submit the form."
-      },
-      {
-        "title": "Done: you get yours audited tax assessment",
-        "content":
-            "Fill out the order form, select the desired tax year for which you want to have the income tax return made and simply submit the form."
-      },
-    ];
     return AppBarWithSideCornerCircleAndRoundBody(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Column(
-            children: [
-              for (var i = 0; i < content.length; i++)
-                _faqSteps(context, (i + 1).toString(), content[i]["title"]!,
-                    content[i]["content"]!,
-                    showTopLine: i != 0),
-              const SizedBox(height: 50),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-                child: ElevatedButton(
-                  style: ElevatedButtonTheme.of(context).style?.copyWith(
-                        minimumSize: MaterialStateProperty.all(
-                          Size(MediaQuery.of(context).size.width, 70),
-                        ),
-                      ),
-                  onPressed: () {
-                    Navigator.pushNamedAndRemoveUntil(context,
-                        RouteConstants.bottomNavBarScreen, (val) => false);
-                  },
-                  child: const Text(
-                    StringConstants.applyNow,
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+      body: Scaffold(
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              children: [
+                FutureBuilder<DocumentSnapshot>(
+                    future: firestore
+                        .collection("how_it_works")
+                        .doc("content")
+                        .get(),
+                    builder: (context, AsyncSnapshot snapshot) {
+                      if (snapshot.hasData) {
+                        Map<String, dynamic> x =
+                            snapshot.data.data() as Map<String, dynamic>;
+                        HowItWorksContentWrapper res =
+                            HowItWorksContentWrapper.fromJson(x);
+                        return Column(
+                          children: [
+                            if (context.locale == const Locale('en'))
+                              for (var i = 0; i < res.en!.length; i++)
+                                _faqSteps(context, (i + 1).toString(),
+                                    res.en![i].title!, res.en![i].text!,
+                                    showTopLine: i != 0)
+                            else
+                              for (var i = 0; i < res.du!.length; i++)
+                                _faqSteps(context, (i + 1).toString(),
+                                    res.du![i].title!, res.du![i].text!,
+                                    showTopLine: i != 0)
+                          ],
+                        );
+                      } else if (snapshot.hasError) {
+                        return const ErrorComponent();
+                      } else {
+                        return const LoadingComponent();
+                      }
+                    }),
+                const SizedBox(height: 50),
+              ],
+            ),
+          ),
+        ),
+        bottomNavigationBar: Padding(
+          padding: AppConstants.bottomBtnPadding,
+          child: ElevatedButton(
+            style: ElevatedButtonTheme.of(context).style?.copyWith(
+                  minimumSize: MaterialStateProperty.all(
+                    Size(MediaQuery.of(context).size.width, 56),
                   ),
                 ),
-              ),
-            ],
+            onPressed: () {
+              Navigator.pushNamedAndRemoveUntil(
+                  context, RouteConstants.bottomNavBarScreen, (val) => false);
+            },
+            child: const Text(
+              StringConstants.applyNow,
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+            ),
           ),
         ),
       ),

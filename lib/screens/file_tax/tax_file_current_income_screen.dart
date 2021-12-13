@@ -3,6 +3,7 @@ import 'package:steuermachen/components/app_bar/appbar_component.dart';
 import 'package:steuermachen/components/button_component.dart';
 import 'package:steuermachen/components/text_component.dart';
 import 'package:steuermachen/components/text_progress_bar_component.dart';
+import 'package:steuermachen/constants/app_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
@@ -155,12 +156,12 @@ class _TaxFileCurrentIncomeScreenState
         ),
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 15),
+         padding: AppConstants.bottomBtnPadding,
         child: ButtonComponent(
           buttonText: StringConstants.next.toUpperCase(),
           textStyle:
               FontStyles.fontRegular(color: ColorConstants.white, fontSize: 18),
-          btnHeight: 60,
+          btnHeight: 56,
           onPressed: () {
             Navigator.pushNamed(context, RouteConstants.fileTaxInfoScreen);
           },

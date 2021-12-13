@@ -1,13 +1,11 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:steuermachen/components/app_bar/appbar_component.dart';
 import 'package:steuermachen/components/app_bar/appbar_with_side_corner_circle_and_body.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
-import 'package:steuermachen/constants/styles/font_styles_constants.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ContactUsOptionScreen extends StatefulWidget {
   const ContactUsOptionScreen({Key? key}) : super(key: key);
@@ -17,6 +15,19 @@ class ContactUsOptionScreen extends StatefulWidget {
 }
 
 class _ContactUsOptionScreenState extends State<ContactUsOptionScreen> {
+  final Uri emailLaunchUri = Uri(
+    scheme: 'mailto',
+    path: 'smith@example.com',
+  );
+
+  Future<void> _makePhoneCall(String phoneNumber) async {
+    final Uri launchUri = Uri(
+      scheme: 'tel',
+      path: phoneNumber,
+    );
+    await launch(launchUri.toString());
+  }
+
   @override
   Widget build(BuildContext context) {
     return AppBarWithSideCornerCircleAndRoundBody(body: _mainBody(context));
@@ -47,13 +58,23 @@ class _ContactUsOptionScreenState extends State<ContactUsOptionScreen> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _emailAndCallUs(
-                context, AssetConstants.email, StringConstants.emailUs),
+            InkWell(
+              onTap: () async {
+                await launch(emailLaunchUri.toString());
+              },
+              child: _emailAndCallUs(
+                  context, AssetConstants.email, StringConstants.emailUs),
+            ),
             const SizedBox(
               width: 40,
             ),
-            _emailAndCallUs(
-                context, AssetConstants.phoneCall, StringConstants.callUs),
+            InkWell(
+              onTap: () async {
+                await _makePhoneCall("03092783699");
+              },
+              child: _emailAndCallUs(
+                  context, AssetConstants.phoneCall, StringConstants.callUs),
+            ),
           ],
         ),
         const SizedBox(
@@ -89,6 +110,7 @@ class _ContactUsOptionScreenState extends State<ContactUsOptionScreen> {
   Container _emailAndCallUs(
       BuildContext context, String assetName, String btnName) {
     return Container(
+      width: 130,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: const Color(0xffF1F6FC),

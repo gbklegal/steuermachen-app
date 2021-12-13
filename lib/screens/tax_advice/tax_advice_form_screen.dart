@@ -4,6 +4,7 @@ import 'package:steuermachen/components/app_bar/appbar_with_side_corner_circle_a
 import 'package:steuermachen/components/button_component.dart';
 import 'package:steuermachen/components/dialogs/completed_dialog_component.dart';
 import 'package:steuermachen/components/text_component.dart';
+import 'package:steuermachen/constants/app_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 
@@ -152,9 +153,9 @@ class _TaxAdviceFormScreenState extends State<TaxAdviceFormScreen> {
         ),
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+        padding: AppConstants.bottomBtnPadding,
         child: ButtonComponent(
-          btnHeight: 75,
+          btnHeight: 56,
           buttonText: StringConstants.send,
           onPressed: () {
             _dialog();

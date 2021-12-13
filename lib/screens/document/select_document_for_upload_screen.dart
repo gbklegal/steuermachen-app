@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:steuermachen/components/app_bar/appbar_with_side_corner_circle_and_body.dart';
 import 'package:steuermachen/components/button_component.dart';
+import 'package:steuermachen/constants/app_constants.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
@@ -53,9 +54,9 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
       bottomNavigationBar: Visibility(
         visible: widget.showNextBtn!,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+          padding: AppConstants.bottomBtnPadding,
           child: ButtonComponent(
-            btnHeight: 65,
+            btnHeight: 56,
             buttonText: StringConstants.next.toUpperCase(),
             textStyle: FontStyles.fontRegular(
                 color: ColorConstants.white, fontSize: 18),

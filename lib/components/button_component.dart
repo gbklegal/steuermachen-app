@@ -17,7 +17,7 @@ class ButtonComponent extends StatelessWidget {
       this.buttonText = '',
       this.border = 0.0,
       this.textStyle,
-      this.btnHeight = 48,
+      this.btnHeight = 56,
       this.isDisabled = false,
       this.disabledColor = ColorConstants.mediumGrey,
       this.elevation = 0,

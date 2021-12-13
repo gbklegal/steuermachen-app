@@ -55,7 +55,7 @@ class _FileTaxFinalSubmissionScreenState
               buttonText: StringConstants.toTaxRe.toUpperCase(),
               textStyle: FontStyles.fontRegular(
                   color: ColorConstants.white, fontSize: 18),
-              btnHeight: 65,
+              btnHeight: 56,
               onPressed: () {
                 Navigator.pushNamed(context, RouteConstants.taxAdviceScreen);
               },
@@ -74,7 +74,7 @@ class _FileTaxFinalSubmissionScreenState
               height: 30,
             ),
             ButtonComponent(
-              btnHeight: 65,
+              btnHeight: 56,
               buttonText: StringConstants.orderNow.toUpperCase(),
               textStyle: FontStyles.fontRegular(
                 color: ColorConstants.white,

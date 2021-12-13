@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -18,10 +19,17 @@ import 'package:steuermachen/screens/splash_screen.dart';
 // flutter pub run easy_localization:generate -S "assets/languages" -O "lib/languages"
 // flutter pub run easy_localization:generate -S "assets/languages" -O "lib/languages" -o "locale_keys.g.dart" -f keys
 late FirebaseAuth auth;
+late FirebaseFirestore firestore;
+initializeFirestore() {
+  FirebaseApp secondaryApp = Firebase.app();
+  firestore = FirebaseFirestore.instanceFor(app: secondaryApp);
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   await Firebase.initializeApp();
+  initializeFirestore();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   auth = FirebaseAuth.instance;
   runApp(

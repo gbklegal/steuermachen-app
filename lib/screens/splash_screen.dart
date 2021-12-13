@@ -16,6 +16,11 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
+    checkUserInPreference();
+    super.initState();
+  }
+
+  void checkUserInPreference() {
     AuthProvider authProvider =
         Provider.of<AuthProvider>(context, listen: false);
     bool status = authProvider.checkUserInPreference();
@@ -28,8 +33,6 @@ class _SplashScreenState extends State<SplashScreen> {
             context, RouteConstants.onboardingScreen, (val) => false);
       }
     });
-
-    super.initState();
   }
 
   @override

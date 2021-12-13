@@ -3,6 +3,7 @@ import 'package:steuermachen/components/app_bar/appbar_component.dart';
 import 'package:steuermachen/components/button_component.dart';
 import 'package:steuermachen/components/tax_option_grid_component.dart';
 import 'package:steuermachen/components/text_progress_bar_component.dart';
+import 'package:steuermachen/constants/app_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
@@ -66,9 +67,9 @@ class _TaxFileYearScreenState extends State<TaxFileYearScreen> {
         ],
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 25),
+        padding: AppConstants.bottomBtnPadding,
         child: ButtonComponent(
-          btnHeight: 60,
+          btnHeight: 56,
           buttonText: StringConstants.next.toUpperCase(),
           textStyle:
               FontStyles.fontRegular(color: ColorConstants.white, fontSize: 18),

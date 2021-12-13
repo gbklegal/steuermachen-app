@@ -67,7 +67,7 @@ class FileTaxDoneOrderScreen extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.only(right: 4, top: 10),
                             child: ButtonComponent(
-                              btnHeight: 60,
+                              btnHeight: 56,
                               buttonText: StringConstants.goToHome,
                               textStyle: const TextStyle(
                                   fontSize: 16,
@@ -86,7 +86,7 @@ class FileTaxDoneOrderScreen extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.only(left: 4, top: 10),
                             child: ButtonComponent(
-                              btnHeight: 60,
+                              btnHeight: 56,
                               buttonText: StringConstants.orderNew,
                               textStyle: const TextStyle(
                                   fontSize: 16,

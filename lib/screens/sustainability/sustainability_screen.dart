@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:ui';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -18,37 +20,27 @@ class SustainabilityScreen extends StatelessWidget {
     return AppBarWithSideCornerCircleAndRoundBody(
       body: SingleChildScrollView(
         child: FutureBuilder<dynamic>(
-            future: firestore.collection("sustainability").get(),
+            future: firestore.collection("sustainability").doc("content").get(),
             builder: (context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
-                Map<String, dynamic> data = snapshot.data;
+                var data = snapshot.data as DocumentSnapshot;
+                Map<String, dynamic> x = data.data() as Map<String, dynamic>;
                 SustainabilityContentWrapper res =
-                    SustainabilityContentWrapper.fromJson(data);
-                print(res);
+                    SustainabilityContentWrapper.fromJson(x);
                 return Column(
                   children: [
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 25),
                       child: Image.asset(AssetConstants.sustain),
                     ),
-                    _richText(
-                        context,
-                        ColorConstants.formFieldBackground,
-                        '"TaxGreen - making taxes paperless"',
-                        "is the campaign of  steuermachen.de, which includes the plan and concrete measures of steuermachen.de to protect our earth. We are committed to digitization and thus to a more sustainable future. With the development of a new tax app, we want to make a concrete contribution to more sustainability in the business sector. With the use of the app from steuermachen.de you not only enjoy more comfort, but also protect the environment by using less paper. In cooperation with Treedom, we give away trees to our customers and plant our own company forest together with you. Treedom is committed to providing long-term support to smallholders around the world. By having a tree planted, you, as a customer, are helping to reduce CO2 emissions and protect the environment.",
-                        AssetConstants.sustain1),
-                    _richText(
-                        context,
-                        ColorConstants.primary.withOpacity(0.1),
-                        'How does that go?\n',
-                        "First of all, choose a tree that you would like to plant. Small farmers in the respective country then take care of your tree and care for it from an early age. With geolocation you can track it at any time and have the opportunity to watch it grow. If your tree bears fruit, these are harvested by the small farmers. They offer them an alternative source of income and at the same time secure their food base. Over the years, your tree will get bigger and bigger, bind more and more CO2 and contribute to the preservation of biodiversity.",
-                        AssetConstants.sustain2),
-                    _richText(
-                        context,
-                        ColorConstants.green.withOpacity(0.12),
-                        'We say Thankyou !\n',
-                        "We would like to thank you for using the tax app. As a user and part of our community, by using steuermachen.de you are making a significant contribution to social and ecological commitment. Without you it would be impossible. Together with you, we let our small company forest grow steadily and thus protect our earth. We say thank you for that!",
-                        AssetConstants.sustain3)
+                    if (context.locale == const Locale('en'))
+                      for (var i = 0; i < res.en!.length; i++)
+                        _richText(context, getColor(i), '${res.en![i].title}',
+                            '${res.en![i].text}', getAsset(i))
+                    else
+                      for (var i = 0; i < res.du!.length; i++)
+                        _richText(context, getColor(i), '${res.du![i].title}',
+                            '${res.du![i].text}', getAsset(i)),
                   ],
                 );
               } else {
@@ -100,5 +92,27 @@ class SustainabilityScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Color getColor(int i) {
+    if (i == 0) {
+      return ColorConstants.formFieldBackground;
+    } else if (i == 1) {
+      return ColorConstants.primary.withOpacity(0.1);
+    } else if (i == 2) {
+      return ColorConstants.green.withOpacity(0.12);
+    }
+    return ColorConstants.formFieldBackground;
+  }
+
+  String getAsset(int i) {
+    if (i == 0) {
+      return AssetConstants.sustain1;
+    } else if (i == 1) {
+      return AssetConstants.sustain2;
+    } else if (i == 2) {
+      return AssetConstants.sustain3;
+    }
+    return AssetConstants.sustain1;
   }
 }

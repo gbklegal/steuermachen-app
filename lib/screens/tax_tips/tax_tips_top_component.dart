@@ -2,8 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 
 class TaxTipTopComponent extends StatelessWidget {
-  const TaxTipTopComponent({Key? key}) : super(key: key);
-
+  const TaxTipTopComponent(
+      {Key? key,
+      this.title,
+      this.subtitle,
+      this.articleBy,
+      this.publishedDate,
+      this.readTime,
+      this.image})
+      : super(key: key);
+  final String? title, subtitle, articleBy, publishedDate, readTime, image;
   @override
   Widget build(BuildContext context) {
     return Column(

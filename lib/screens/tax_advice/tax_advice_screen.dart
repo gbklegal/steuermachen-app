@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
 import 'package:steuermachen/components/error_component.dart';
 import 'package:steuermachen/components/loading_component.dart';
+import 'package:steuermachen/constants/app_constants.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
@@ -63,8 +64,7 @@ class TaxAdviceScreen extends StatelessWidget {
                   ),
                 ),
                 bottomNavigationBar: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                  padding: AppConstants.bottomBtnPadding,
                   child: ElevatedButton(
                     style: ElevatedButtonTheme.of(context).style?.copyWith(
                           minimumSize: MaterialStateProperty.all(

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:steuermachen/main.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 
-class ContactUsProvider extends ChangeNotifier {
+class FormsProvider extends ChangeNotifier {
   Future<CommonResponseWrapper> submitContactUsForm(
       ContactUsFormDataCollector formData) async {
     try {
@@ -11,6 +11,22 @@ class ContactUsProvider extends ChangeNotifier {
       await firestore
           .collection("forms_data")
           .doc("contact_us")
+          .collection("${user?.uid}")
+          .add(formData.toJson());
+      return CommonResponseWrapper(
+          status: true, message: "Form submitted successfully");
+    } catch (e) {
+      return CommonResponseWrapper(
+          status: true, message: "Something went wrong");
+    }
+  }
+  Future<CommonResponseWrapper> submitInitialAviceForm(
+      ContactUsFormDataCollector formData) async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      await firestore
+          .collection("forms_data")
+          .doc("initial_advice")
           .collection("${user?.uid}")
           .add(formData.toJson());
       return CommonResponseWrapper(

@@ -9,7 +9,7 @@ import 'package:steuermachen/components/toast_component.dart';
 import 'package:steuermachen/constants/app_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
-import 'package:steuermachen/providers/contact_us_provider.dart';
+import 'package:steuermachen/providers/forms_provider.dart';
 import 'package:steuermachen/utils/input_validation_util.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 
@@ -36,11 +36,11 @@ class _ContactUsFormScreenState extends State<ContactUsFormScreen>
       TextEditingController(text: "testing message");
   final GlobalKey<FormState> _contactFormKey = GlobalKey<FormState>();
 
-  late ContactUsProvider _contactUsProvider;
+  late FormsProvider _formsProvider;
   @override
   void initState() {
     super.initState();
-    _contactUsProvider = Provider.of<ContactUsProvider>(context, listen: false);
+    _formsProvider = Provider.of<FormsProvider>(context, listen: false);
   }
 
   _dialog() {
@@ -162,7 +162,7 @@ class _ContactUsFormScreenState extends State<ContactUsFormScreen>
           onPressed: () async {
             if (_contactFormKey.currentState!.validate()) {
               PopupLoader.showLoadingDialog(context);
-              CommonResponseWrapper res = await _contactUsProvider
+              CommonResponseWrapper res = await _formsProvider
                   .submitContactUsForm(ContactUsFormDataCollector(
                       _surNameController.text,
                       _firstNameController.text,

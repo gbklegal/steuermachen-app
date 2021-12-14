@@ -3,12 +3,15 @@ import 'package:provider/provider.dart';
 import 'package:steuermachen/components/app_bar/appbar_with_side_corner_circle_and_body.dart';
 import 'package:steuermachen/components/button_component.dart';
 import 'package:steuermachen/components/dialogs/completed_dialog_component.dart';
+import 'package:steuermachen/components/popup_loader_component.dart';
 import 'package:steuermachen/components/text_component.dart';
+import 'package:steuermachen/components/toast_component.dart';
 import 'package:steuermachen/constants/app_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:steuermachen/providers/contact_us_provider.dart';
 import 'package:steuermachen/utils/input_validation_util.dart';
+import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 
 class ContactUsFormScreen extends StatefulWidget {
   const ContactUsFormScreen({Key? key}) : super(key: key);
@@ -28,7 +31,7 @@ class _ContactUsFormScreenState extends State<ContactUsFormScreen>
   final TextEditingController _subjectController =
       TextEditingController(text: "testing subject");
   final TextEditingController _phoneNoController =
-      TextEditingController(text: "testing subject");
+      TextEditingController(text: "03092783699");
   final TextEditingController _messageController =
       TextEditingController(text: "testing message");
   final GlobalKey<FormState> _contactFormKey = GlobalKey<FormState>();
@@ -156,8 +159,24 @@ class _ContactUsFormScreenState extends State<ContactUsFormScreen>
         child: ButtonComponent(
           btnHeight: 56,
           buttonText: StringConstants.send,
-          onPressed: () {
-            _dialog();
+          onPressed: () async {
+            if (_contactFormKey.currentState!.validate()) {
+              PopupLoader.showLoadingDialog(context);
+              CommonResponseWrapper res = await _contactUsProvider
+                  .submitContactUsForm(ContactUsFormDataCollector(
+                      _surNameController.text,
+                      _firstNameController.text,
+                      _emailController.text,
+                      _subjectController.text,
+                      _phoneNoController.text,
+                      _messageController.text));
+              PopupLoader.hideLoadingDialog(context);
+              if (res.status!) {
+                _dialog();
+              } else {
+                ToastComponent.showToast(res.message!, long: true);
+              }
+            }
           },
         ),
       ),

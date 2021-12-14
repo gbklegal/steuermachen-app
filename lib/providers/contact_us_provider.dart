@@ -1,9 +1,39 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:steuermachen/utils/input_validation_util.dart';
+import 'package:steuermachen/main.dart';
+import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 
-class ContactUsProvider extends ChangeNotifier with InputValidationUtil {
-  String? validateEmptyField(String? value) {
-    return validateEmail(value);
+class ContactUsProvider extends ChangeNotifier {
+  Future<CommonResponseWrapper> submitContactUsForm(
+      ContactUsFormDataCollector formData) async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      await firestore
+          .collection("forms_data")
+          .doc("contact_us")
+          .collection("${user?.uid}")
+          .add(formData.toJson());
+      return CommonResponseWrapper(
+          status: true, message: "Form submitted successfully");
+    } catch (e) {
+      return CommonResponseWrapper(
+          status: true, message: "Something went wrong");
+    }
   }
+}
 
+class ContactUsFormDataCollector {
+  final String? surname, firstName, email, subject, phoneNo, message;
+
+  ContactUsFormDataCollector(this.surname, this.firstName, this.email,
+      this.subject, this.phoneNo, this.message);
+
+  Map<String, dynamic> toJson() => {
+        "surname": surname,
+        "firstName": firstName,
+        "email": email,
+        "subject": subject,
+        "phoneNo": phoneNo,
+        "message": message,
+      };
 }

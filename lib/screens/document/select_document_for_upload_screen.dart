@@ -161,7 +161,11 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
                   ),
                 ),
             onPressed: () {
-              Navigator.pushNamed(context, RouteConstants.howItWorksScreen);
+              MediaSourceSelectionWidget(onImagePath: (String imagePath) async {
+                setState(() {
+                  selectImageList.add(imagePath);
+                });
+              }).getImageCamera(context);
             },
             child: const Text(
               StringConstants.useCamera,
@@ -177,7 +181,9 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
     return Padding(
       padding: const EdgeInsets.only(left: 5, right: 15),
       child: InkWell(
-        onTap: _openCameraGallerySelectionDialog,
+        onTap: () {
+          MediaSourceSelectionWidget().getImage(context);
+        },
         child: FDottedLine(
           dottedLength: 3,
           corner: const FDottedLineCorner(

@@ -29,38 +29,46 @@ class TaxAdviceScreen extends StatelessWidget {
                 appBar: const AppBarComponent(
                   StringConstants.initialTaxAdvice,
                 ),
-                body: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 25),
-                      Text(
-                        StringConstants.pricing,
-                        style: Theme.of(context).textTheme.headline6!.copyWith(
-                            fontSize: 24, fontWeight: FontWeight.w600),
-                      ),
-                      const SizedBox(height: 5),
-                      Text(
-                        StringConstants.chooseTheRightPrice,
-                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                            fontSize: 16, fontWeight: FontWeight.w400),
-                      ),
-                      const SizedBox(height: 15),
-                      if (context.locale == const Locale('en'))
-                        _adviceCard(context, res.en!.title!, res.en!.subtitle!,
-                            res.en!.price!)
-                      else
-                        _adviceCard(context, res.du!.title!, res.du!.subtitle!,
-                            res.du!.price!),
-                      const SizedBox(height: 25),
-                      if (context.locale == const Locale('en'))
-                        for (var i = 0; i < res.en!.advicePoints!.length; i++)
-                          _advicePoints(context, res.en!.advicePoints![i])
-                      else
-                        for (var i = 0; i < res.du!.advicePoints!.length; i++)
-                          _advicePoints(context, res.du!.advicePoints![i])
-                    ],
+                body: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 25),
+                        Text(
+                          StringConstants.pricing,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline6!
+                              .copyWith(
+                                  fontSize: 24, fontWeight: FontWeight.w600),
+                        ),
+                        const SizedBox(height: 5),
+                        Text(
+                          StringConstants.chooseTheRightPrice,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText1!
+                              .copyWith(
+                                  fontSize: 16, fontWeight: FontWeight.w400),
+                        ),
+                        const SizedBox(height: 15),
+                        if (context.locale == const Locale('en'))
+                          _adviceCard(context, res.en!.title!,
+                              res.en!.subtitle!, res.en!.price!)
+                        else
+                          _adviceCard(context, res.du!.title!,
+                              res.du!.subtitle!, res.du!.price!),
+                        const SizedBox(height: 25),
+                        if (context.locale == const Locale('en'))
+                          for (var i = 0; i < res.en!.advicePoints!.length; i++)
+                            _advicePoints(context, res.en!.advicePoints![i])
+                        else
+                          for (var i = 0; i < res.du!.advicePoints!.length; i++)
+                            _advicePoints(context, res.du!.advicePoints![i])
+                      ],
+                    ),
                   ),
                 ),
                 bottomNavigationBar: Padding(

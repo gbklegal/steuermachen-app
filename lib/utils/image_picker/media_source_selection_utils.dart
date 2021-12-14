@@ -5,14 +5,21 @@ import 'dart:io';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/utils/image_picker/image_preview_util.dart';
 
-class MediaSourceSelectionWidget extends StatelessWidget {
+class MediaSourceSelectionWidget extends StatefulWidget {
   final GestureTapCallback? onTapGallery, onTapCamera;
   final Function(String)? onImagePath;
 
-  MediaSourceSelectionWidget(
+  const MediaSourceSelectionWidget(
       {Key? key, this.onTapGallery, this.onTapCamera, this.onImagePath})
       : super(key: key);
 
+  @override
+  _MediaSourceSelectionWidgetState createState() =>
+      _MediaSourceSelectionWidgetState();
+}
+
+class _MediaSourceSelectionWidgetState
+    extends State<MediaSourceSelectionWidget> {
   List<PickedFile> prescription = <PickedFile>[];
   final ImagePicker _picker = ImagePicker();
   late PickedFile profileImage;
@@ -24,37 +31,36 @@ class MediaSourceSelectionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SizedBox();
-    // return AlertDialog(
-    //   title: const Text(StringConstants.chooseOption),
-    //   content: SingleChildScrollView(
-    //     child: ListBody(
-    //       children: <Widget>[
-    //         InkWell(
-    //           enableFeedback: true,
-    //           child: const ListTile(
-    //             leading: Icon(Icons.photo),
-    //             title: Text(StringConstants.gallery),
-    //           ),
-    //           onTap: () {
-    //             getImage(context);
-    //           },
-    //         ),
-    //         const Padding(padding: EdgeInsets.all(8.0)),
-    //         InkWell(
-    //           enableFeedback: true,
-    //           child: const ListTile(
-    //             leading: Icon(Icons.camera),
-    //             title: Text(StringConstants.camera),
-    //           ),
-    //           onTap: () {
-    //             getImageCamera(context);
-    //           },
-    //         ),
-    //       ],
-    //     ),
-    //   ),
-    // );
+    return AlertDialog(
+      title: const Text(StringConstants.chooseOption),
+      content: SingleChildScrollView(
+        child: ListBody(
+          children: <Widget>[
+            InkWell(
+              enableFeedback: true,
+              child: const ListTile(
+                leading: Icon(Icons.photo),
+                title: Text(StringConstants.gallery),
+              ),
+              onTap: () {
+                getImage(context);
+              },
+            ),
+            const Padding(padding: EdgeInsets.all(8.0)),
+            InkWell(
+              enableFeedback: true,
+              child: const ListTile(
+                leading: Icon(Icons.camera),
+                title: Text(StringConstants.camera),
+              ),
+              onTap: () {
+                getImageCamera(context);
+              },
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   var pickedImage;
@@ -64,7 +70,8 @@ class MediaSourceSelectionWidget extends StatelessWidget {
         preferredCameraDevice: CameraDevice.front,
         imageQuality: 70,
         maxHeight: 600,
-        maxWidth: 600);
+        maxWidth: 600
+        );
     if (pickedImage != null) {
       imagePath = pickedImage.path;
       showCustomImageView(context, false);
@@ -95,9 +102,9 @@ class MediaSourceSelectionWidget extends StatelessWidget {
           //   _cropImage(pickedImage.path);
           // },
           onImagePath: (imagePath) {
-            onImagePath!(imagePath);
+            widget.onImagePath!(imagePath);
             Navigator.pop(context);
-            // Navigator.pop(context);
+            Navigator.pop(context);
           },
           onButtonCancel: () {
             Navigator.pop(context);

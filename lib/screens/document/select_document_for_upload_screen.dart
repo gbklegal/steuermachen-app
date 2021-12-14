@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:fdottedline/fdottedline.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:photo_view/photo_view.dart';
 import 'package:steuermachen/components/app_bar/appbar_with_side_corner_circle_and_body.dart';
 import 'package:steuermachen/components/button_component.dart';
 import 'package:steuermachen/constants/app_constants.dart';
@@ -10,7 +13,9 @@ import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
+import 'package:path/path.dart' as path;
 import 'package:steuermachen/utils/image_picker/media_source_selection_utils.dart';
+import 'package:steuermachen/utils/utils.dart';
 
 class SelectDocumentForScreen extends StatefulWidget {
   const SelectDocumentForScreen(
@@ -75,6 +80,27 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
         const SizedBox(
           height: 40,
         ),
+        _documentSelection(context),
+        const _DocumentOverview(),
+        Expanded(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                if (selectImageList.isNotEmpty)
+                  for (var i = 0; i < selectImageList.length; i++)
+                    _selectedDocumentListTile(selectImageList[i],
+                        Utils.getTimeAgo(DateTime.now()), i),
+              ],
+            ),
+          ),
+        )
+      ],
+    );
+  }
+
+  Column _documentSelection(BuildContext context) {
+    return Column(
+      children: [
         Align(
           alignment: Alignment.centerLeft,
           child: Padding(
@@ -95,55 +121,68 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
             ],
           ),
         ),
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 15, right: 15, bottom: 15),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  StringConstants.documentOverview,
-                  style: FontStyles.fontMedium(
-                      fontSize: 24, fontWeight: FontWeight.w600),
-                ),
-                const SizedBox(
-                  width: 5,
-                ),
-                const Padding(
-                  padding: EdgeInsets.only(top: 5.0),
-                  child: Icon(
-                    Icons.file_upload_outlined,
-                    color: ColorConstants.primary,
-                    size: 22,
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
-        _selectedDocumentListTile(context),
       ],
     );
   }
 
-  Padding _selectedDocumentListTile(BuildContext context) {
+  Padding _selectedDocumentListTile(String fileName, String time, int index,
+      {bool isImage = true}) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
       child: Container(
         decoration: BoxDecoration(
           color: ColorConstants.formFieldBackground,
           borderRadius: BorderRadius.circular(10),
         ),
         child: ListTile(
-          leading: Image.asset(AssetConstants.icPdf),
+          leading: isImage
+              ? _imagePreview(fileName)
+              : Image.asset(AssetConstants.icPdf),
           title: Text(
-            "Annual tax slip 2020",
+            path.basename(File(fileName).path),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style:
                 Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 18),
           ),
-          subtitle: const Text("Yesterday"),
-          trailing: SvgPicture.asset(AssetConstants.icCross),
+          subtitle: Text(time.toString()),
+          trailing: InkWell(
+              onTap: () {
+                setState(() {
+                  if (isImage) {
+                    selectImageList.removeAt(index);
+                  }
+                });
+              },
+              child: SvgPicture.asset(AssetConstants.icCross)),
+        ),
+      ),
+    );
+  }
+
+  InkWell _imagePreview(String imagePath) {
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PhotoView(
+              imageProvider: FileImage(File(imagePath)),
+            ),
+          ),
+        );
+      },
+      child: Container(
+        height: 32,
+        width: 32,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5),
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            image: FileImage(
+              File(imagePath),
+            ),
+          ),
         ),
       ),
     );
@@ -161,11 +200,7 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
                   ),
                 ),
             onPressed: () {
-              MediaSourceSelectionWidget(onImagePath: (String imagePath) async {
-                setState(() {
-                  selectImageList.add(imagePath);
-                });
-              }).getImageCamera(context);
+              _openCameraGallerySelectionDialog();
             },
             child: const Text(
               StringConstants.useCamera,
@@ -182,7 +217,7 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
       padding: const EdgeInsets.only(left: 5, right: 15),
       child: InkWell(
         onTap: () {
-          MediaSourceSelectionWidget().getImage(context);
+          // MediaSourceSelectionWidget().getImage(context);
         },
         child: FDottedLine(
           dottedLength: 3,
@@ -203,6 +238,43 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
               ),
             ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class _DocumentOverview extends StatelessWidget {
+  const _DocumentOverview({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Padding(
+        padding: const EdgeInsets.only(left: 15, right: 15, bottom: 15),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              StringConstants.documentOverview,
+              style: FontStyles.fontMedium(
+                  fontSize: 24, fontWeight: FontWeight.w600),
+            ),
+            const SizedBox(
+              width: 5,
+            ),
+            const Padding(
+              padding: EdgeInsets.only(top: 5.0),
+              child: Icon(
+                Icons.file_upload_outlined,
+                color: ColorConstants.primary,
+                size: 22,
+              ),
+            )
+          ],
         ),
       ),
     );

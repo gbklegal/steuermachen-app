@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
-import 'package:steuermachen/components/button_component.dart';
 import 'package:steuermachen/components/dialogs/completed_dialog_component.dart';
-import 'package:steuermachen/constants/assets/asset_constants.dart';
+import 'package:steuermachen/constants/app_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
-import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:signature/signature.dart';
 
@@ -18,7 +16,7 @@ class LegalAction2Screen extends StatefulWidget {
 class _LegalAction2ScreenState extends State<LegalAction2Screen> {
   final SignatureController _controller = SignatureController(
     penStrokeWidth: 1,
-    penColor: Colors.red,
+    penColor: ColorConstants.primary,
     exportBackgroundColor: Colors.blue,
     onDrawStart: () => print('onDrawStart called!'),
     onDrawEnd: () => print('onDrawEnd called!'),
@@ -86,7 +84,7 @@ class _LegalAction2ScreenState extends State<LegalAction2Screen> {
         ),
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+        padding: AppConstants.bottomBtnPadding,
         child: ElevatedButton(
           style: ElevatedButtonTheme.of(context).style?.copyWith(
                 minimumSize: MaterialStateProperty.all(

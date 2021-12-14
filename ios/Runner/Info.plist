@@ -43,6 +43,10 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Steuermachen would like to access your camera for uploading images to the app</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Steuermachen would like to access your photo gallery for uploading images to the app</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

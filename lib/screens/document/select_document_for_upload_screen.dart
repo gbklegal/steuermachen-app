@@ -6,15 +6,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:photo_view/photo_view.dart';
+import 'package:provider/provider.dart';
 import 'package:steuermachen/components/app_bar/appbar_with_side_corner_circle_and_body.dart';
 import 'package:steuermachen/components/button_component.dart';
 import 'package:steuermachen/constants/app_constants.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
-import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:path/path.dart' as path;
+import 'package:steuermachen/providers/legal_advice_provider.dart';
 import 'package:steuermachen/utils/image_picker/media_source_selection_utils.dart';
 import 'package:steuermachen/utils/utils.dart';
 
@@ -32,6 +33,7 @@ class SelectDocumentForScreen extends StatefulWidget {
 
 class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
   late List<String> selectImageList = [];
+  late List<String> selectPDFList = [];
   _openCameraGallerySelectionDialog() {
     showDialog(
       context: context,
@@ -52,9 +54,15 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
   }
 
   _pickFile() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['pdf'],
+    );
     if (result != null) {
-      File file = File(result.files.single.path!);
+      setState(() {
+        selectPDFList.add(result.files.single.path!);
+        // File file = File();
+      });
     } else {
       // User canceled the picker
     }
@@ -76,6 +84,10 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
             textStyle: FontStyles.fontRegular(
                 color: ColorConstants.white, fontSize: 18),
             onPressed: () {
+              LegalAdviceProvider _provider =
+                  Provider.of<LegalAdviceProvider>(context, listen: false);
+              _provider
+                  .setFilesForUpload([...selectPDFList, ...selectImageList]);
               Navigator.pushNamed(context, widget.onNextBtnRoute!);
             },
           ),
@@ -100,6 +112,11 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
                   for (var i = 0; i < selectImageList.length; i++)
                     _selectedDocumentListTile(selectImageList[i],
                         Utils.getTimeAgo(DateTime.now()), i),
+                if (selectPDFList.isNotEmpty)
+                  for (var i = 0; i < selectPDFList.length; i++)
+                    _selectedDocumentListTile(
+                        selectPDFList[i], Utils.getTimeAgo(DateTime.now()), i,
+                        isImage: false),
               ],
             ),
           ),
@@ -161,6 +178,8 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
                 setState(() {
                   if (isImage) {
                     selectImageList.removeAt(index);
+                  } else {
+                    selectPDFList.removeAt(index);
                   }
                 });
               },

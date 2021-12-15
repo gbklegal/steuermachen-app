@@ -1,10 +1,15 @@
+import 'dart:io';
+import 'dart:typed_data';
+import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
 import 'package:steuermachen/components/dialogs/completed_dialog_component.dart';
 import 'package:steuermachen/constants/app_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:signature/signature.dart';
+import 'package:steuermachen/providers/legal_advice_provider.dart';
 
 class LegalAction2Screen extends StatefulWidget {
   const LegalAction2Screen({Key? key}) : super(key: key);
@@ -15,9 +20,9 @@ class LegalAction2Screen extends StatefulWidget {
 
 class _LegalAction2ScreenState extends State<LegalAction2Screen> {
   final SignatureController _controller = SignatureController(
-    penStrokeWidth: 1,
-    penColor: ColorConstants.primary,
-    exportBackgroundColor: Colors.blue,
+    penStrokeWidth: 2,
+    penColor: ColorConstants.black,
+    exportBackgroundColor: Colors.white,
     onDrawStart: () => print('onDrawStart called!'),
     onDrawEnd: () => print('onDrawEnd called!'),
   );
@@ -91,7 +96,13 @@ class _LegalAction2ScreenState extends State<LegalAction2Screen> {
                   Size(MediaQuery.of(context).size.width, 70),
                 ),
               ),
-          onPressed: () {
+          onPressed: () async {
+            var pngBytes = await _controller.toPngBytes();
+            String sign = await _createTempPath(pngBytes!);
+            LegalAdviceProvider _provider =
+                Provider.of<LegalAdviceProvider>(context, listen: false);
+            _provider.setSignaturePath(sign);
+            await _provider.uploadFiles();
             _dialog();
           },
           child: const Text(
@@ -101,5 +112,13 @@ class _LegalAction2ScreenState extends State<LegalAction2Screen> {
         ),
       ),
     );
+  }
+
+  Future<String> _createTempPath(Uint8List image) async {
+    Uint8List imageInUnit8List = image; // store unit8List image here ;
+    var tempDir = await getTemporaryDirectory();
+    File file = await File('${tempDir.path}/signature.png').create();
+    file.writeAsBytesSync(imageInUnit8List);
+    return '${tempDir.path}/signature.png';
   }
 }

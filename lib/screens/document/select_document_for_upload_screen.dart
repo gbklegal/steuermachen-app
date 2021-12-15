@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:fdottedline/fdottedline.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
@@ -48,6 +49,15 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
         );
       },
     );
+  }
+
+  _pickFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    if (result != null) {
+      File file = File(result.files.single.path!);
+    } else {
+      // User canceled the picker
+    }
   }
 
   @override
@@ -216,8 +226,8 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
     return Padding(
       padding: const EdgeInsets.only(left: 5, right: 15),
       child: InkWell(
-        onTap: () {
-          // MediaSourceSelectionWidget().getImage(context);
+        onTap: () async {
+          await _pickFile();
         },
         child: FDottedLine(
           dottedLength: 3,

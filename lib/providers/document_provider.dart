@@ -10,7 +10,6 @@ import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 import 'package:steuermachen/wrappers/documents_wrapper.dart';
 
 class DocumentsProvider extends ChangeNotifier {
-  List<DocumentsWrapper> documents = [];
   List<String> _selectedFiles = [];
   late String _signaturePath;
   setFilesForUpload(List<String> files) {
@@ -63,13 +62,14 @@ class DocumentsProvider extends ChangeNotifier {
     return url;
   }
 
-  getDocuments() async {
+  Future<List<DocumentsWrapper>> getDocuments() async {
     User? user = FirebaseAuth.instance.currentUser;
     QuerySnapshot data = await firestore
         .collection("user_documents")
         .doc(user!.uid)
         .collection("path")
         .get();
+    List<DocumentsWrapper> documents = [];
     for (var ele in data.docs) {
       DocumentSnapshot _docs = ele;
       Map<String, dynamic> mapDocsUrl = ele.data() as Map<String, dynamic>;
@@ -82,8 +82,9 @@ class DocumentsProvider extends ChangeNotifier {
           key: ele.id,
           url: urls);
       documents.add(x);
-      print(urls);
     }
+    notifyListeners();
+    return documents;
   }
 
   _clearFields() {

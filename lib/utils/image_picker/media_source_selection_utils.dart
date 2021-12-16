@@ -42,8 +42,8 @@ class _MediaSourceSelectionWidgetState
                 leading: Icon(Icons.photo),
                 title: Text(StringConstants.gallery),
               ),
-              onTap: () {
-                getImage(context);
+              onTap: () async {
+                await getImage(context);
               },
             ),
             const Padding(padding: EdgeInsets.all(8.0)),
@@ -53,8 +53,8 @@ class _MediaSourceSelectionWidgetState
                 leading: Icon(Icons.camera),
                 title: Text(StringConstants.camera),
               ),
-              onTap: () {
-                getImageCamera(context);
+              onTap: () async{
+                await getImageCamera(context);
               },
             ),
           ],
@@ -70,8 +70,7 @@ class _MediaSourceSelectionWidgetState
         preferredCameraDevice: CameraDevice.front,
         imageQuality: 70,
         maxHeight: 600,
-        maxWidth: 600
-        );
+        maxWidth: 600);
     if (pickedImage != null) {
       imagePath = pickedImage.path;
       showCustomImageView(context, false);

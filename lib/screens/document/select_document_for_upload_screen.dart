@@ -23,6 +23,7 @@ import 'package:steuermachen/main.dart';
 import 'package:steuermachen/providers/document_provider.dart';
 import 'package:steuermachen/utils/image_picker/media_source_selection_utils.dart';
 import 'package:steuermachen/utils/utils.dart';
+import 'package:steuermachen/wrappers/documents_wrapper.dart';
 
 class SelectDocumentForScreen extends StatefulWidget {
   const SelectDocumentForScreen(
@@ -40,6 +41,16 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
   late List<String> selectImageList = [];
   late List<String> selectPDFList = [];
   User? user = FirebaseAuth.instance.currentUser;
+  late DocumentsProvider _provider;
+  List<DocumentsWrapper> documents = [];
+  @override
+  void initState() {
+    super.initState();
+    _provider = Provider.of<DocumentsProvider>(context, listen: false);
+
+    _provider.getDocuments().then((value) => documents = value);
+  }
+
   _openCameraGallerySelectionDialog() {
     showDialog(
       context: context,
@@ -90,8 +101,6 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
             textStyle: FontStyles.fontRegular(
                 color: ColorConstants.white, fontSize: 18),
             onPressed: () {
-              DocumentsProvider _provider =
-                  Provider.of<DocumentsProvider>(context, listen: false);
               _provider
                   .setFilesForUpload([...selectPDFList, ...selectImageList]);
               Navigator.pushNamed(context, widget.onNextBtnRoute!);
@@ -116,22 +125,15 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
               children: [
                 Consumer<DocumentsProvider>(
                     builder: (context, consumer, child) {
-                  consumer.getDocuments();
                   return Column(
                     children: [
-                      for (var i = 0; i < consumer.documents.length; i++)
-                       for (var x = 0; x < consumer.documents[i].url.length; x++)
-                        _selectedDocumentListTile(consumer.documents[i].url[x],
-                            Utils.getTimeAgo(DateTime.now()), i)
+                      for (var i = 0; i < documents.length; i++)
+                        for (var x = 0; x < documents[i].url.length; x++)
+                          _selectedDocumentListTile(documents[i].url[x],
+                              Utils.getTimeAgo(DateTime.now()), i,
+                              isImage: false, isUrl: true)
                     ],
                   );
-                  // _selectedDocumentListTile(selectImageList[i],
-                  // Utils.getTimeAgo(DateTime.now()), i);
-                  // } else if (snapshot.hasError) {
-                  //   return const ErrorComponent();
-                  // } else {
-                  //   return const LoadingComponent();
-                  // }
                 }),
                 if (selectImageList.isNotEmpty)
                   for (var i = 0; i < selectImageList.length; i++)
@@ -178,7 +180,7 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
   }
 
   Padding _selectedDocumentListTile(String fileName, String time, int index,
-      {bool isImage = true}) {
+      {bool isImage = true, bool isUrl = false}) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
       child: Container(
@@ -187,9 +189,7 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
           borderRadius: BorderRadius.circular(10),
         ),
         child: ListTile(
-          leading: isImage
-              ? _imagePreview(fileName)
-              : Image.asset(AssetConstants.icPdf),
+          leading: _showImage(isImage, isUrl, fileName),
           title: Text(
             path.basename(File(fileName).path),
             maxLines: 1,
@@ -214,14 +214,27 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
     );
   }
 
-  InkWell _imagePreview(String imagePath) {
+  Widget _showImage(bool isImage, bool isUrl, String fileName) {
+    if (fileName.contains(".pdf")) {
+      return Image.asset(AssetConstants.icPdf);
+    }
+    if (isImage) {
+      return _imagePreview(fileName);
+    } else if (isUrl) {
+      return _imagePreview(fileName, isUrl: isUrl);
+    } else {
+      return Image.asset(AssetConstants.icPdf);
+    }
+  }
+
+  InkWell _imagePreview(String imagePath, {bool isUrl = false}) {
     return InkWell(
       onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => PhotoView(
-              imageProvider: FileImage(File(imagePath)),
+              imageProvider: _getImageProvider(imagePath, isUrl: isUrl),
             ),
           ),
         );
@@ -232,14 +245,25 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
           image: DecorationImage(
-            fit: BoxFit.cover,
-            image: FileImage(
-              File(imagePath),
-            ),
-          ),
+              fit: BoxFit.cover,
+              image: _getImageProvider(imagePath, isUrl: isUrl)
+              // FileImage(
+              //   File(imagePath),
+              // ),
+              ),
         ),
       ),
     );
+  }
+
+  _getImageProvider(String imagePath, {bool isUrl = false}) {
+    if (isUrl) {
+      return NetworkImage(imagePath);
+    } else {
+      return FileImage(
+        File(imagePath),
+      );
+    }
   }
 
   Padding _useCameraBtn(BuildContext context) {

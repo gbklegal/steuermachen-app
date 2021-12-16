@@ -7,8 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:steuermachen/constants/strings/error_messages_constants.dart';
 import 'package:steuermachen/main.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
+import 'package:steuermachen/wrappers/documents_wrapper.dart';
 
 class DocumentsProvider extends ChangeNotifier {
+  List<DocumentsWrapper> documents = [];
   List<String> _selectedFiles = [];
   late String _signaturePath;
   setFilesForUpload(List<String> files) {
@@ -29,15 +31,11 @@ class DocumentsProvider extends ChangeNotifier {
         }
       }
       User? user = FirebaseAuth.instance.currentUser;
-      Map<String, dynamic> urlMap = {};
-      for (var i = 0; i < _url.length; i++) {
-        urlMap["$i"] = _url[i];
-      }
       await firestore
           .collection("user_documents")
           .doc("${user?.uid}")
           .collection("path")
-          .add(urlMap);
+          .add({"url": _url});
       if (_signaturePath.isNotEmpty && _signaturePath != "") {
         String digiSignatureUrl =
             await _uploadToFirebaseStorage(_signaturePath);
@@ -72,10 +70,20 @@ class DocumentsProvider extends ChangeNotifier {
         .doc(user!.uid)
         .collection("path")
         .get();
-    data.docs.forEach((ele) {
+    for (var ele in data.docs) {
       DocumentSnapshot _docs = ele;
-      print(_docs.data());
-    });
+      Map<String, dynamic> mapDocsUrl = ele.data() as Map<String, dynamic>;
+      List<String> urls = [];
+      for (var item in mapDocsUrl["url"]) {
+        urls.add(item);
+      }
+      DocumentsWrapper x = DocumentsWrapper(
+          path: "user_documents/${user.uid}/path/${ele.id}",
+          key: ele.id,
+          url: urls);
+      documents.add(x);
+      print(urls);
+    }
   }
 
   _clearFields() {

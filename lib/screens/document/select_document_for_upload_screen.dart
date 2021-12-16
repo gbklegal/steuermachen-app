@@ -116,16 +116,23 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
               children: [
                 Consumer<DocumentsProvider>(
                     builder: (context, consumer, child) {
-                      consumer.getDocuments();
-                        return const SizedBox();
-                        // _selectedDocumentListTile(selectImageList[i],
-                        // Utils.getTimeAgo(DateTime.now()), i);
-                      // } else if (snapshot.hasError) {
-                      //   return const ErrorComponent();
-                      // } else {
-                      //   return const LoadingComponent();
-                      // }
-                    }),
+                  consumer.getDocuments();
+                  return Column(
+                    children: [
+                      for (var i = 0; i < consumer.documents.length; i++)
+                       for (var x = 0; x < consumer.documents[i].url.length; x++)
+                        _selectedDocumentListTile(consumer.documents[i].url[x],
+                            Utils.getTimeAgo(DateTime.now()), i)
+                    ],
+                  );
+                  // _selectedDocumentListTile(selectImageList[i],
+                  // Utils.getTimeAgo(DateTime.now()), i);
+                  // } else if (snapshot.hasError) {
+                  //   return const ErrorComponent();
+                  // } else {
+                  //   return const LoadingComponent();
+                  // }
+                }),
                 if (selectImageList.isNotEmpty)
                   for (var i = 0; i < selectImageList.length; i++)
                     _selectedDocumentListTile(selectImageList[i],

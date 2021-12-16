@@ -8,7 +8,7 @@ import 'package:steuermachen/constants/strings/error_messages_constants.dart';
 import 'package:steuermachen/main.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 
-class LegalAdviceProvider extends ChangeNotifier {
+class DocumentsProvider extends ChangeNotifier {
   List<String> _selectedFiles = [];
   late String _signaturePath;
   setFilesForUpload(List<String> files) {
@@ -29,18 +29,25 @@ class LegalAdviceProvider extends ChangeNotifier {
         }
       }
       User? user = FirebaseAuth.instance.currentUser;
+      Map<String, dynamic> urlMap = {};
+      for (var i = 0; i < _url.length; i++) {
+        urlMap["$i"] = _url[i];
+      }
       await firestore
           .collection("user_documents")
           .doc("${user?.uid}")
-          .set({"document_path": _url}, SetOptions(merge: true));
+          .collection("path")
+          .add(urlMap);
       if (_signaturePath.isNotEmpty && _signaturePath != "") {
         String digiSignatureUrl =
             await _uploadToFirebaseStorage(_signaturePath);
-        await firestore.collection("legal_advice").doc("${user?.uid}").set({
-          "signature_path": [digiSignatureUrl]
-        }, SetOptions(merge: true, mergeFields: ["signature_path"]));
+        await firestore
+            .collection("legal_advice")
+            .doc("${user?.uid}")
+            .collection("path")
+            .add({"signature_path": digiSignatureUrl});
       }
-      // _clearFields();
+      _clearFields();
       return CommonResponseWrapper(
           status: true, message: "Legal advice submitted");
     } catch (e) {
@@ -56,6 +63,19 @@ class LegalAdviceProvider extends ChangeNotifier {
     var uploadedFile = await snapshot.child(fileName).putFile(file);
     String url = await uploadedFile.ref.getDownloadURL();
     return url;
+  }
+
+  getDocuments() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    QuerySnapshot data = await firestore
+        .collection("user_documents")
+        .doc(user!.uid)
+        .collection("path")
+        .get();
+    data.docs.forEach((ele) {
+      DocumentSnapshot _docs = ele;
+      print(_docs.data());
+    });
   }
 
   _clearFields() {

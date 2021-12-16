@@ -2,7 +2,7 @@ import 'package:provider/provider.dart';
 import 'package:steuermachen/providers/auth_provider.dart';
 import 'package:steuermachen/providers/forms_provider.dart';
 import 'package:steuermachen/providers/language_provider.dart';
-import 'package:steuermachen/providers/legal_advice_provider.dart';
+import 'package:steuermachen/providers/document_provider.dart';
 
 providerList(context) {
   return [
@@ -16,7 +16,7 @@ providerList(context) {
       create: (context) => FormsProvider(),
     ),
     ChangeNotifierProvider(
-      create: (context) => LegalAdviceProvider(),
+      create: (context) => DocumentsProvider(),
     ),
   ];
 }

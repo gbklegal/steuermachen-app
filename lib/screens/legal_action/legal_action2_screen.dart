@@ -9,7 +9,7 @@ import 'package:steuermachen/constants/app_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:signature/signature.dart';
-import 'package:steuermachen/providers/legal_advice_provider.dart';
+import 'package:steuermachen/providers/document_provider.dart';
 
 class LegalAction2Screen extends StatefulWidget {
   const LegalAction2Screen({Key? key}) : super(key: key);
@@ -35,6 +35,7 @@ class _LegalAction2ScreenState extends State<LegalAction2Screen> {
   _dialog() {
     showDialog(
       context: context,
+      barrierDismissible: false,
       builder: (BuildContext context) {
         return const CompletedDialogComponent();
       },
@@ -99,8 +100,8 @@ class _LegalAction2ScreenState extends State<LegalAction2Screen> {
           onPressed: () async {
             var pngBytes = await _controller.toPngBytes();
             String sign = await _createTempPath(pngBytes!);
-            LegalAdviceProvider _provider =
-                Provider.of<LegalAdviceProvider>(context, listen: false);
+            DocumentsProvider _provider =
+                Provider.of<DocumentsProvider>(context, listen: false);
             _provider.setSignaturePath(sign);
             await _provider.uploadFiles();
             _dialog();

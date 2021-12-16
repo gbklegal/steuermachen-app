@@ -1,7 +1,9 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fdottedline/fdottedline.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
@@ -9,13 +11,16 @@ import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/components/app_bar/appbar_with_side_corner_circle_and_body.dart';
 import 'package:steuermachen/components/button_component.dart';
+import 'package:steuermachen/components/error_component.dart';
+import 'package:steuermachen/components/loading_component.dart';
 import 'package:steuermachen/constants/app_constants.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:path/path.dart' as path;
-import 'package:steuermachen/providers/legal_advice_provider.dart';
+import 'package:steuermachen/main.dart';
+import 'package:steuermachen/providers/document_provider.dart';
 import 'package:steuermachen/utils/image_picker/media_source_selection_utils.dart';
 import 'package:steuermachen/utils/utils.dart';
 
@@ -34,6 +39,7 @@ class SelectDocumentForScreen extends StatefulWidget {
 class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
   late List<String> selectImageList = [];
   late List<String> selectPDFList = [];
+  User? user = FirebaseAuth.instance.currentUser;
   _openCameraGallerySelectionDialog() {
     showDialog(
       context: context,
@@ -84,8 +90,8 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
             textStyle: FontStyles.fontRegular(
                 color: ColorConstants.white, fontSize: 18),
             onPressed: () {
-              LegalAdviceProvider _provider =
-                  Provider.of<LegalAdviceProvider>(context, listen: false);
+              DocumentsProvider _provider =
+                  Provider.of<DocumentsProvider>(context, listen: false);
               _provider
                   .setFilesForUpload([...selectPDFList, ...selectImageList]);
               Navigator.pushNamed(context, widget.onNextBtnRoute!);
@@ -108,6 +114,18 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: [
+                Consumer<DocumentsProvider>(
+                    builder: (context, consumer, child) {
+                      consumer.getDocuments();
+                        return const SizedBox();
+                        // _selectedDocumentListTile(selectImageList[i],
+                        // Utils.getTimeAgo(DateTime.now()), i);
+                      // } else if (snapshot.hasError) {
+                      //   return const ErrorComponent();
+                      // } else {
+                      //   return const LoadingComponent();
+                      // }
+                    }),
                 if (selectImageList.isNotEmpty)
                   for (var i = 0; i < selectImageList.length; i++)
                     _selectedDocumentListTile(selectImageList[i],

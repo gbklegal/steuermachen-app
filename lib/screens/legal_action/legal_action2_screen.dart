@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
 import 'package:steuermachen/components/dialogs/completed_dialog_component.dart';
+import 'package:steuermachen/components/popup_loader_component.dart';
 import 'package:steuermachen/constants/app_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
@@ -98,12 +99,14 @@ class _LegalAction2ScreenState extends State<LegalAction2Screen> {
                 ),
               ),
           onPressed: () async {
+            PopupLoader.showLoadingDialog(context);
             var pngBytes = await _controller.toPngBytes();
             String sign = await _createTempPath(pngBytes!);
             DocumentsProvider _provider =
                 Provider.of<DocumentsProvider>(context, listen: false);
             _provider.setSignaturePath(sign);
             await _provider.uploadFiles();
+            PopupLoader.hideLoadingDialog(context);
             _dialog();
           },
           child: const Text(

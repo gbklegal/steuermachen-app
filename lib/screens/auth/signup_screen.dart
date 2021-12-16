@@ -22,10 +22,10 @@ class SignupScreen extends StatefulWidget {
   State<SignupScreen> createState() => _SignupScreenState();
 }
 
-class _SignupScreenState extends State<SignupScreen>  with InputValidationUtil{
+class _SignupScreenState extends State<SignupScreen> with InputValidationUtil {
   late AuthProvider authProvider;
   final TextEditingController _emailController =
-      TextEditingController(text: "osama.asif20@gmail.com");
+      TextEditingController(text: "mirza.jaun@hotmail.com");
   final TextEditingController _passwordController =
       TextEditingController(text: "12345678");
   final GlobalKey<FormState> _signupFormKey = GlobalKey<FormState>();

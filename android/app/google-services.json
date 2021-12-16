@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "257707946117-ssnc82ngkra6gsekva6rsvue64gu5ph8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.steuermachen.steuermachen",
+            "certificate_hash": "f1aa4574cdce5c91946d288a5a882e1b429505c9"
+          }
+        },
+        {
           "client_id": "257707946117-f1g3bjeaijcc6b1i333gbud7o42r24kv.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,6 +37,13 @@
             {
               "client_id": "257707946117-f1g3bjeaijcc6b1i333gbud7o42r24kv.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "257707946117-dmvki6i2c7r4176hg0goos5pk9cpc5fr.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.app.steuermachen.steuermachen"
+              }
             }
           ]
         }

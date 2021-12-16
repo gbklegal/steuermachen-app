@@ -13,6 +13,7 @@ import 'package:steuermachen/components/app_bar/appbar_with_side_corner_circle_a
 import 'package:steuermachen/components/button_component.dart';
 import 'package:steuermachen/components/error_component.dart';
 import 'package:steuermachen/components/loading_component.dart';
+import 'package:steuermachen/components/popup_loader_component.dart';
 import 'package:steuermachen/constants/app_constants.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
@@ -131,7 +132,7 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
                         for (var x = 0; x < documents[i].url.length; x++)
                           _selectedDocumentListTile(documents[i].url[x],
                               Utils.getTimeAgo(DateTime.now()), i,
-                              isImage: false, isUrl: true)
+                              isImage: false, isUrl: true, doc: documents[i])
                     ],
                   );
                 }),
@@ -179,8 +180,14 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
     );
   }
 
-  Padding _selectedDocumentListTile(String fileName, String time, int index,
-      {bool isImage = true, bool isUrl = false}) {
+  Padding _selectedDocumentListTile(
+    String fileName,
+    String time,
+    int index, {
+    DocumentsWrapper? doc,
+    bool isImage = true,
+    bool isUrl = false,
+  }) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
       child: Container(
@@ -199,14 +206,25 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
           ),
           subtitle: Text(time.toString()),
           trailing: InkWell(
-              onTap: () {
-                setState(() {
-                  if (isImage) {
-                    selectImageList.removeAt(index);
-                  } else {
-                    selectPDFList.removeAt(index);
-                  }
-                });
+              onTap: () async {
+                if (isUrl) {
+                  PopupLoader.showLoadingDialog(context);
+                  await _provider.deleteDocuments(doc!, fileName);
+                  var x = await _provider.getDocuments();
+                  setState(() {
+                    documents = [];
+                    documents = x;
+                  });
+                  PopupLoader.hideLoadingDialog(context);
+                } else {
+                  setState(() {
+                    if (isImage) {
+                      selectImageList.removeAt(index);
+                    } else {
+                      selectPDFList.removeAt(index);
+                    }
+                  });
+                }
               },
               child: SvgPicture.asset(AssetConstants.icCross)),
         ),

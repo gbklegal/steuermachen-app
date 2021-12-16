@@ -24,7 +24,7 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<SignInScreen> with InputValidationUtil {
   final TextEditingController _emailController =
-      TextEditingController(text: "osama.asif20@gmail.com");
+      TextEditingController(text: "mirza.jaun@hotmail.com");
   final TextEditingController _passwordController =
       TextEditingController(text: "12345678");
   final GlobalKey<FormState> _signupFormKey = GlobalKey<FormState>();
@@ -69,9 +69,14 @@ class _SignInScreenState extends State<SignInScreen> with InputValidationUtil {
                                 _emailController.text,
                                 _passwordController.text);
                         ToastComponent.showToast(res.message!, long: true);
+
                         PopupLoader.hideLoadingDialog(context);
-                        Navigator.pushNamedAndRemoveUntil(context,
-                            RouteConstants.bottomNavBarScreen, (val) => false);
+                        if (res.status!) {
+                          Navigator.pushNamedAndRemoveUntil(
+                              context,
+                              RouteConstants.bottomNavBarScreen,
+                              (val) => false);
+                        }
                       }
                     }),
                 const ChoiceTextAuthComponent(

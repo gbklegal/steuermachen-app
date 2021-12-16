@@ -71,7 +71,6 @@ class DocumentsProvider extends ChangeNotifier {
         .get();
     List<DocumentsWrapper> documents = [];
     for (var ele in data.docs) {
-      DocumentSnapshot _docs = ele;
       Map<String, dynamic> mapDocsUrl = ele.data() as Map<String, dynamic>;
       List<String> urls = [];
       for (var item in mapDocsUrl["url"]) {
@@ -85,6 +84,19 @@ class DocumentsProvider extends ChangeNotifier {
     }
     notifyListeners();
     return documents;
+  }
+
+  deleteDocuments(DocumentsWrapper _document, String url) async {
+    try {
+      _document.url.remove(url);
+      User? user = FirebaseAuth.instance.currentUser;
+      await FirebaseStorage.instance.refFromURL(url).delete();
+      await firestore
+          .doc("user_documents/${user?.uid}/path/${_document.key}")
+          .set({"url": _document.url});
+    } catch (e) {
+      print(e);
+    }
   }
 
   _clearFields() {

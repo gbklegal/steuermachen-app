@@ -49,7 +49,7 @@ class StringConstants {
   static const String estimatedPrice = "Your estimated price (including VAT)";
   static const String promoCode = "Promo Code";
   static const String applyNow = "Apply now";
-  static const String chatWithUs = "Chat with us";
+  static const String contactForm = "Contact form";
   static const String pricing = "Pricing";
   static const String done = "Done!";
   static const String chooseTheRightPrice = "Choose the right price";

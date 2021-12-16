@@ -1,10 +1,12 @@
 import 'dart:math';
 
 import 'package:easy_localization/src/public_ext.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/components/language_dropdown_component.dart';
+import 'package:steuermachen/components/popup_loader_component.dart';
 import 'package:steuermachen/components/text_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
@@ -22,6 +24,7 @@ class MoreScreen extends StatefulWidget {
 
 class _MoreScreenState extends State<MoreScreen> {
   List<MoreOptions> moreOptionsList = [];
+  User? user = FirebaseAuth.instance.currentUser;
   @override
   void initState() {
     super.initState();
@@ -70,7 +73,7 @@ class _MoreScreenState extends State<MoreScreen> {
       ),
       MoreOptions(
         leadingIcon: AssetConstants.icLogout,
-        routeName: RouteConstants.currentIncomeScreen,
+        routeName: RouteConstants.splashScreen,
         title: LocaleKeys.logout,
         trailingIcon: AssetConstants.icForward,
       ),
@@ -100,7 +103,7 @@ class _MoreScreenState extends State<MoreScreen> {
                 ),
                 const SizedBox(height: 8),
                 TextComponent(
-                  "osama.asif20@gmail.com",
+                  user!.email!,
                   style: FontStyles.fontRegular(fontSize: 20),
                 ),
               ],
@@ -120,8 +123,17 @@ class _MoreScreenState extends State<MoreScreen> {
                         thickness: 0.8,
                       ),
                       InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(context, moreOptions.routeName);
+                        onTap: () async {
+                          if (moreOptions.routeName ==
+                              RouteConstants.splashScreen) {
+                            PopupLoader.showLoadingDialog(context);
+                            await FirebaseAuth.instance.signOut();
+                            PopupLoader.hideLoadingDialog(context);
+                            Navigator.pushNamedAndRemoveUntil(context,
+                                RouteConstants.splashScreen, (val) => false);
+                          } else {
+                            Navigator.pushNamed(context, moreOptions.routeName);
+                          }
                         },
                         child: Consumer<LanguageProvider>(
                             builder: (context, consumer, child) {

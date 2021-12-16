@@ -98,7 +98,7 @@ class _ContactUsOptionScreenState extends State<ContactUsOptionScreen> {
               Navigator.pushNamed(context, RouteConstants.contactUsFormScreen);
             },
             child: const Text(
-              StringConstants.chatWithUs,
+              StringConstants.contactForm,
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
             ),
           ),

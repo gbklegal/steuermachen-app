@@ -24,8 +24,10 @@ class TaxTipsScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               FutureBuilder<DocumentSnapshot>(
-                  future:
-                      firestore.collection("featured_article").doc("content").get(),
+                  future: firestore
+                      .collection("featured_article")
+                      .doc("content")
+                      .get(),
                   builder: (context, AsyncSnapshot snapshot) {
                     if (snapshot.hasData) {
                       Map<String, dynamic> x =
@@ -37,13 +39,20 @@ class TaxTipsScreen extends StatelessWidget {
                           if (context.locale == const Locale('en'))
                             for (var i = 0; i < res.en!.length; i++)
                               if (i == 0)
-                                 TaxTipTopComponent(
-                                  title: res.en![i].title,
-                                  subtitle: res.en![i].subtitle,
-                                  publishedDate: res.en![i].publishedDate.toString(),
-                                  articleBy: res.en![i].articleBy,
-                                  image: res.en![i].image,
-                                  readTime: res.en![i].readTime,
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.pushNamed(context,
+                                        RouteConstants.taxTipsDetailScreen);
+                                  },
+                                  child: TaxTipTopComponent(
+                                    title: res.en![i].title,
+                                    subtitle: res.en![i].subtitle,
+                                    publishedDate:
+                                        res.en![i].publishedDate.toString(),
+                                    articleBy: res.en![i].articleBy,
+                                    image: res.en![i].image,
+                                    readTime: res.en![i].readTime,
+                                  ),
                                 )
                               else
                                 InkWell(

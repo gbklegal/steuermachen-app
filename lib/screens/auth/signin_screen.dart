@@ -85,10 +85,24 @@ class _SignInScreenState extends State<SignInScreen> with InputValidationUtil {
                     assetName: AssetConstants.icApple,
                     btnText: StringConstants.appleSignIn),
                 const SizedBox(height: 22),
-                SignInOptionsAuthComponent(
-                    assetName: AssetConstants.icGoogle,
-                    btnText: StringConstants.googleSignIn,
-                    textColor: Colors.blueAccent),
+                InkWell(
+                  onTap: () async {
+                    PopupLoader.showLoadingDialog(context);
+                    CommonResponseWrapper res =
+                        await authProvider.signInWithGoogle();
+                    ToastComponent.showToast(res.message!, long: true);
+
+                    PopupLoader.hideLoadingDialog(context);
+                    if (res.status!) {
+                      Navigator.pushNamedAndRemoveUntil(context,
+                          RouteConstants.bottomNavBarScreen, (val) => false);
+                    }
+                  },
+                  child: SignInOptionsAuthComponent(
+                      assetName: AssetConstants.icGoogle,
+                      btnText: StringConstants.googleSignIn,
+                      textColor: Colors.blueAccent),
+                ),
                 const SizedBox(height: 22),
                 RichTextAuthComponent(
                   textSpan1: StringConstants.dontHaveAnAccount,

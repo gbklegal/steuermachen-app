@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:steuermachen/constants/strings/error_messages_constants.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 
 class AuthProvider extends ChangeNotifier {
@@ -15,15 +16,57 @@ class AuthProvider extends ChangeNotifier {
     );
   }
 
-  Future<UserCredential> signInWithGoogle() async {
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-    final GoogleSignInAuthentication? googleAuth =
-        await googleUser?.authentication;
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth?.accessToken,
-      idToken: googleAuth?.idToken,
-    );
-    return await FirebaseAuth.instance.signInWithCredential(credential);
+  // Future<UserCredential> signInWithGoogle() async {
+  //   final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+  //   final GoogleSignInAuthentication? googleAuth =
+  //       await googleUser?.authentication;
+  //   final credential = GoogleAuthProvider.credential(
+  //     accessToken: googleAuth?.accessToken,
+  //     idToken: googleAuth?.idToken,
+  //   );
+  //   return await FirebaseAuth.instance.signInWithCredential(credential);
+  // }
+
+  Future<CommonResponseWrapper> signInWithGoogle() async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User? user;
+
+    final GoogleSignIn googleSignIn = GoogleSignIn();
+
+    final GoogleSignInAccount? googleSignInAccount =
+        await googleSignIn.signIn();
+
+    if (googleSignInAccount != null) {
+      final GoogleSignInAuthentication googleSignInAuthentication =
+          await googleSignInAccount.authentication;
+
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleSignInAuthentication.accessToken,
+        idToken: googleSignInAuthentication.idToken,
+      );
+
+      try {
+        final UserCredential userCredential =
+            await auth.signInWithCredential(credential);
+
+        user = userCredential.user;
+        return CommonResponseWrapper(
+            status: true, message: "Signin successfully");
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'account-exists-with-different-credential') {
+          return CommonResponseWrapper(status: true, message: e.code);
+        } else if (e.code == 'invalid-credential') {
+          return CommonResponseWrapper(status: true, message: e.code);
+        }
+      } catch (e) {
+        return CommonResponseWrapper(
+            status: true, message: ErrorMessagesConstants.somethingWentWrong);
+      }
+    }
+
+    return CommonResponseWrapper(
+        status: true, message: ErrorMessagesConstants.somethingWentWrong);
+    ;
   }
 
   Future<CommonResponseWrapper> registerWithEmailAndPassword(
@@ -85,7 +128,7 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  bool checkUserInPreference()  {
+  bool checkUserInPreference() {
     User? user = FirebaseAuth.instance.currentUser;
     if (user == null) {
       return false;

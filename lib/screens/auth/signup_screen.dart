@@ -82,7 +82,16 @@ class _SignupScreenState extends State<SignupScreen> with InputValidationUtil {
                 const SizedBox(height: 22),
                 InkWell(
                   onTap: () async {
-                    await authProvider.signInWithGoogle();
+                    PopupLoader.showLoadingDialog(context);
+                    CommonResponseWrapper res =
+                        await authProvider.signInWithGoogle();
+                    ToastComponent.showToast(res.message!, long: true);
+
+                    PopupLoader.hideLoadingDialog(context);
+                    if (res.status!) {
+                      Navigator.pushNamedAndRemoveUntil(context,
+                          RouteConstants.bottomNavBarScreen, (val) => false);
+                    }
                   },
                   child: SignInOptionsAuthComponent(
                       assetName: AssetConstants.icGoogle,

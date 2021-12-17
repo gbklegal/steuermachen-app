@@ -36,6 +36,21 @@ class FormsProvider extends ChangeNotifier {
           status: true, message: "Something went wrong");
     }
   }
+  Future<CommonResponseWrapper> userProfile(
+      UserProfileDataCollector formData) async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      await firestore
+          .collection("user_profile")
+          .doc("${user?.uid}")
+          .set(formData.toJson());
+      return CommonResponseWrapper(
+          status: true, message: "Profile updated successfully");
+    } catch (e) {
+      return CommonResponseWrapper(
+          status: true, message: "Something went wrong");
+    }
+  }
 }
 
 class ContactUsFormDataCollector {
@@ -51,5 +66,20 @@ class ContactUsFormDataCollector {
         "subject": subject,
         "phoneNo": phoneNo,
         "message": message,
+      };
+}
+class UserProfileDataCollector {
+  final String? surname, firstName, street, postalCode, cityTown, country;
+
+  UserProfileDataCollector(this.surname, this.firstName, this.street,
+      this.postalCode, this.cityTown, this.country);
+
+  Map<String, dynamic> toJson() => {
+        "surname": surname,
+        "firstName": firstName,
+        "street": street,
+        "postalCode": postalCode,
+        "cityTown": cityTown,
+        "country": country,
       };
 }

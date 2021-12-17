@@ -57,6 +57,7 @@ dependencies:
   url_launcher: ^6.0.17
   file_picker: ^4.2.7
   timeago: ^3.1.0
+  country_picker: ^2.0.9
   fdottedline:
     path: ./fdottedline
   

@@ -8,6 +8,7 @@ import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
+import 'package:steuermachen/utils/input_validation_util.dart';
 
 class FileTaxInfoScreen extends StatefulWidget {
   FileTaxInfoScreen({Key? key}) : super(key: key);
@@ -16,9 +17,30 @@ class FileTaxInfoScreen extends StatefulWidget {
   _FileTaxInfoScreenState createState() => _FileTaxInfoScreenState();
 }
 
-class _FileTaxInfoScreenState extends State<FileTaxInfoScreen> {
+class _FileTaxInfoScreenState extends State<FileTaxInfoScreen>
+    with InputValidationUtil {
+  final TextEditingController _firstNameController =
+      TextEditingController(text: "Osama");
+  final TextEditingController _surNameController =
+      TextEditingController(text: "Asif");
+  final TextEditingController _emailController =
+      TextEditingController(text: "osama.asif20@gmail.com");
+  final TextEditingController _subjectController =
+      TextEditingController(text: "testing subject");
+  final TextEditingController _phoneNoController =
+      TextEditingController(text: "03092783699");
+  final TextEditingController _messageController =
+      TextEditingController(text: "testing message");
+  final GlobalKey<FormState> _userInfoFormKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+     const sizedBox4 = SizedBox(
+      height: 4,
+    );
+    const sizedBox6 = SizedBox(
+      height: 6,
+    );
+    final fontStyle = FontStyles.fontRegular(fontSize: 14);
     return Scaffold(
       appBar: const AppBarComponent(
         StringConstants.fillInfo,
@@ -38,89 +60,69 @@ class _FileTaxInfoScreenState extends State<FileTaxInfoScreen> {
               ),
               TextComponent(
                 StringConstants.surName,
-                style: FontStyles.fontRegular(fontSize: 14),
+                style: fontStyle,
               ),
-              const SizedBox(
-                height: 4,
-              ),
+             sizedBox4,
               TextFormField(
                 decoration: InputDecoration(
                   hintText: StringConstants.enterTitle,
-                  hintStyle: FontStyles.fontRegular(fontSize: 14),
+                  hintStyle: fontStyle,
                 ),
               ),
-              const SizedBox(
-                height: 6,
-              ),
+              sizedBox6,
               TextComponent(
                 StringConstants.firstName,
-                style: FontStyles.fontRegular(fontSize: 14),
+                style: fontStyle,
               ),
-              const SizedBox(
-                height: 4,
-              ),
+              sizedBox4,
               TextFormField(
                 decoration: InputDecoration(
                   hintText: StringConstants.enterTitle,
-                  hintStyle: FontStyles.fontRegular(fontSize: 14),
+                  hintStyle: fontStyle,
                 ),
               ),
-              const SizedBox(
-                height: 6,
-              ),
+             sizedBox6,
               TextComponent(
                 StringConstants.email,
-                style: FontStyles.fontRegular(fontSize: 14),
+                style: fontStyle,
               ),
-              const SizedBox(
-                height: 4,
-              ),
+              sizedBox4,
               TextFormField(
                 decoration: InputDecoration(
                   hintText: StringConstants.enterTitle,
-                  hintStyle: FontStyles.fontRegular(fontSize: 14),
+                  hintStyle: fontStyle,
                 ),
               ),
-              const SizedBox(
-                height: 6,
-              ),
+              sizedBox6,
               TextComponent(
                 StringConstants.road,
-                style: FontStyles.fontRegular(fontSize: 14),
+                style: fontStyle,
               ),
-              const SizedBox(
-                height: 4,
-              ),
+              sizedBox4,
               TextFormField(
                 decoration: InputDecoration(
                   hintText: StringConstants.enterTitle,
-                  hintStyle: FontStyles.fontRegular(fontSize: 14),
+                  hintStyle: fontStyle,
                 ),
               ),
-              const SizedBox(
-                height: 4,
-              ),
+             sizedBox4,
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  const SizedBox(
-                    height: 6,
-                  ),
+                  sizedBox6,
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         TextComponent(
                           StringConstants.houseNo,
-                          style: FontStyles.fontRegular(fontSize: 14),
+                          style: fontStyle,
                         ),
-                        const SizedBox(
-                          height: 4,
-                        ),
+                       sizedBox4,
                         TextFormField(
                           decoration: InputDecoration(
                             hintText: StringConstants.enterTitle,
-                            hintStyle: FontStyles.fontRegular(fontSize: 14),
+                            hintStyle: fontStyle,
                           ),
                         ),
                       ],
@@ -133,15 +135,13 @@ class _FileTaxInfoScreenState extends State<FileTaxInfoScreen> {
                       children: [
                         TextComponent(
                           StringConstants.postcode,
-                          style: FontStyles.fontRegular(fontSize: 14),
+                          style: fontStyle,
                         ),
-                        const SizedBox(
-                          height: 4,
-                        ),
+                      sizedBox4,
                         TextFormField(
                           decoration: InputDecoration(
                             hintText: StringConstants.enterTitle,
-                            hintStyle: FontStyles.fontRegular(fontSize: 14),
+                            hintStyle: fontStyle,
                           ),
                         ),
                       ],
@@ -149,30 +149,24 @@ class _FileTaxInfoScreenState extends State<FileTaxInfoScreen> {
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 4,
-              ),
+              sizedBox4,
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  const SizedBox(
-                    height: 6,
-                  ),
+                  sizedBox6,
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         TextComponent(
                           StringConstants.place,
-                          style: FontStyles.fontRegular(fontSize: 14),
+                          style: fontStyle,
                         ),
-                        const SizedBox(
-                          height: 4,
-                        ),
+                       sizedBox4,
                         TextFormField(
                           decoration: InputDecoration(
                             hintText: StringConstants.enterTitle,
-                            hintStyle: FontStyles.fontRegular(fontSize: 14),
+                            hintStyle: fontStyle,
                           ),
                         ),
                       ],
@@ -185,15 +179,13 @@ class _FileTaxInfoScreenState extends State<FileTaxInfoScreen> {
                       children: [
                         TextComponent(
                           StringConstants.phoneNo,
-                          style: FontStyles.fontRegular(fontSize: 14),
+                          style: fontStyle,
                         ),
-                        const SizedBox(
-                          height: 4,
-                        ),
+                        sizedBox4,
                         TextFormField(
                           decoration: InputDecoration(
                             hintText: StringConstants.enterTitle,
-                            hintStyle: FontStyles.fontRegular(fontSize: 14),
+                            hintStyle: fontStyle,
                           ),
                         ),
                       ],

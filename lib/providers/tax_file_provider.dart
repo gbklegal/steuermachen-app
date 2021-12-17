@@ -1,16 +1,56 @@
 import 'package:flutter/material.dart';
 
-class TaxFileProvider extends ChangeNotifier {}
+class TaxFileProvider extends ChangeNotifier {
+  final TaxFileDataCollector _taxFileDataCollector = TaxFileDataCollector();
+
+  TaxFileDataCollector get taxFile => _taxFileDataCollector;
+  setMartialStatus(String val) {
+    _taxFileDataCollector.martialStatus = val;
+    notifyListeners();
+  }
+
+  setYear(String val) {
+    _taxFileDataCollector.selectYear = val;
+    notifyListeners();
+  }
+
+  setIncome(String income, String estPrice, String? promoCode) {
+    _taxFileDataCollector.income = income;
+    _taxFileDataCollector.estimatedPrice = estPrice;
+    _taxFileDataCollector.promoCode = promoCode;
+    notifyListeners();
+  }
+
+  setUserInformation(UserInformation user) {
+    _taxFileDataCollector.userInformation = user;
+    notifyListeners();
+  }
+}
 
 class TaxFileDataCollector {
-  final String martialStatus;
-  final String selectYear;
-  final String income;
-  final String estimatedPrice;
-  final UserInformation userInformation;
+  String? martialStatus;
+  String? selectYear;
+  String? income;
+  String? estimatedPrice;
+  String? promoCode;
+  UserInformation? userInformation;
 
-  TaxFileDataCollector(this.martialStatus, this.selectYear, this.income,
-      this.estimatedPrice, this.userInformation);
+  TaxFileDataCollector(
+      {this.martialStatus,
+      this.selectYear,
+      this.income,
+      this.estimatedPrice,
+      this.userInformation,
+      this.promoCode});
+
+  Map<String, dynamic> toJson() => {
+        "martial_status": martialStatus,
+        "select_year": selectYear,
+        "promo_code": promoCode,
+        "income": income,
+        "estimated_price": estimatedPrice,
+        "userInformation": userInformation!.toJson()
+      };
 }
 
 class UserInformation {

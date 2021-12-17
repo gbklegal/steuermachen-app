@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
-import 'package:steuermachen/components/app_bar/appbar_with_side_corner_circle_and_body.dart';
 import 'package:steuermachen/components/button_component.dart';
 import 'package:steuermachen/components/dialogs/completed_dialog_component.dart';
 import 'package:steuermachen/components/popup_loader_component.dart';

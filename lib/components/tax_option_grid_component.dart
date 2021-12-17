@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:steuermachen/components/text_component.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:steuermachen/constants/styles/widget_styles.dart';
+import 'package:steuermachen/providers/tax_file_provider.dart';
 import 'package:steuermachen/screens/file_tax/marital_status_model.dart';
 
 class TaxOptionGridComponent extends StatefulWidget {
@@ -55,21 +57,28 @@ class _TaxOptionGridComponentState extends State<TaxOptionGridComponent> {
   Widget _itemMaritalStatus(int index) {
     return Column(
       children: <Widget>[
-        InkWell(
-          child: Container(
-            width: 109.296,
-            height: 100.337,
-            decoration: maritalStatusModelList[index].isSelected!
-                ? _selectedBoxDeco()
-                : _unSelectedBoxDeco(),
-            child: _buildContainerChild(index),
-          ),
-          onTap: () {
-            _setFalseAllList();
-            maritalStatusModelList[index].isSelected = true;
-            setState(() {});
-          },
-        ),
+        Consumer<TaxFileProvider>(builder: (context, consumer, child) {
+          return InkWell(
+            child: Container(
+              width: 109.296,
+              height: 100.337,
+              decoration: maritalStatusModelList[index].isSelected!
+                  ? _selectedBoxDeco()
+                  : _unSelectedBoxDeco(),
+              child: _buildContainerChild(index),
+            ),
+            onTap: () {
+              if (widget.showYears) {
+                consumer.setYear(maritalStatusModelList[index].title!);
+              } else {
+                consumer.setMartialStatus(maritalStatusModelList[index].title!);
+              }
+              _setFalseAllList();
+              maritalStatusModelList[index].isSelected = true;
+              setState(() {});
+            },
+          );
+        }),
         !widget.showYears
             ? Column(
                 children: [

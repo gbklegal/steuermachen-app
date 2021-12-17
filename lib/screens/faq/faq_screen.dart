@@ -54,7 +54,11 @@ class _FaqScreenState extends State<FaqScreen> {
                           element["active"] = false;
                         }
                         setState(() {
-                          faqItem[i]["active"] = true;
+                          if (!faqItem[i]["active"]) {
+                            faqItem[i]["active"] = true;
+                          } else {
+                            faqItem[i]["active"] = false;
+                          }
                         });
                       },
                       child: ListTile(

@@ -1,3 +1,4 @@
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
@@ -5,9 +6,8 @@ import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
-import 'package:steuermachen/components/logo_component.dart';
+import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/screens/auth/auth_components/richtext__auth_component.dart';
-import 'package:steuermachen/screens/auth/auth_components/title_text_auth_component.dart';
 
 class VerifyAccountScreen extends StatelessWidget {
   const VerifyAccountScreen({Key? key}) : super(key: key);
@@ -34,7 +34,7 @@ class VerifyAccountScreen extends StatelessWidget {
                 children: [
                   Image.asset(AssetConstants.verifyAccount),
                   Text(
-                    StringConstants.verifyYourAccount,
+                    LocaleKeys.verifyYourAccount.tr(),
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.headline6?.copyWith(
                         fontWeight: FontWeight.w700, letterSpacing: -0.3),
@@ -74,14 +74,14 @@ class VerifyAccountScreen extends StatelessWidget {
                       length: 4,
                       onChanged: (value) {}),
                   const SizedBox(height: 22),
-                  _singInButton(context, StringConstants.getStarted, () {
+                  _singInButton(context, LocaleKeys.getStarted.tr(), () {
                     Navigator.pushNamed(
                         context, RouteConstants.bottomNavBarScreen);
                   }),
                   const SizedBox(height: 35),
                   RichTextAuthComponent(
-                    textSpan1: StringConstants.didntReceiveCode,
-                    textSpan2: StringConstants.resend,
+                    textSpan1: LocaleKeys.didntReceiveCode.tr(),
+                    textSpan2: LocaleKeys.resend.tr(),
                     onTap: () {
                       // Navigator.pushNamed(context, RouteConstants.signupScreen);
                     },

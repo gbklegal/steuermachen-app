@@ -1,8 +1,10 @@
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
 import 'package:steuermachen/constants/strings/string_constants.dart';
+import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/utils/image_picker/image_preview_util.dart';
 
 class MediaSourceSelectionWidget extends StatefulWidget {
@@ -32,15 +34,15 @@ class _MediaSourceSelectionWidgetState
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text(StringConstants.chooseOption),
+      title:  Text(LocaleKeys.chooseOption.tr()),
       content: SingleChildScrollView(
         child: ListBody(
           children: <Widget>[
             InkWell(
               enableFeedback: true,
-              child: const ListTile(
-                leading: Icon(Icons.photo),
-                title: Text(StringConstants.gallery),
+              child:  ListTile(
+                leading:const Icon(Icons.photo),
+                title: Text(LocaleKeys.gallery.tr()),
               ),
               onTap: () async {
                 await getImage(context);
@@ -49,9 +51,9 @@ class _MediaSourceSelectionWidgetState
             const Padding(padding: EdgeInsets.all(8.0)),
             InkWell(
               enableFeedback: true,
-              child: const ListTile(
-                leading: Icon(Icons.camera),
-                title: Text(StringConstants.camera),
+              child:  ListTile(
+                leading: const Icon(Icons.camera),
+                title: Text(LocaleKeys.camera.tr()),
               ),
               onTap: () async{
                 await getImageCamera(context);

@@ -1,10 +1,10 @@
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:steuermachen/components/custom_icon_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
-import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
+import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/screens/bottom_nav_bar/more_screen.dart';
 import 'package:steuermachen/screens/calculator/calculator_screen.dart';
 import 'package:steuermachen/screens/home/home_screen.dart';
@@ -18,7 +18,7 @@ class BottomNavBarScreen extends StatefulWidget {
 
 class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
   int _currentIndex = 0;
-  static List<Widget> _widgetOptions = const <Widget>[
+  static const List<Widget> _widgetOptions =  <Widget>[
     HomeScreen(),
     CalculatorScreen(),
     MoreScreen(),
@@ -45,15 +45,15 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
         },
         items: [
           BottomNavigationBarItem(
-            label: StringConstants.home,
+            label: LocaleKeys.home.tr(),
             icon: CustomIcon(AssetConstants.icHome),
           ),
           BottomNavigationBarItem(
-            label: StringConstants.calc,
+            label: LocaleKeys.calc.tr(),
             icon: CustomIcon(AssetConstants.icCal),
           ),
           BottomNavigationBarItem(
-            label: StringConstants.more,
+            label: LocaleKeys.more.tr(),
             icon: CustomIcon(AssetConstants.icMore),
           ),
         ],

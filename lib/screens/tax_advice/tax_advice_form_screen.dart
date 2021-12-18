@@ -1,3 +1,4 @@
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
@@ -9,6 +10,7 @@ import 'package:steuermachen/components/toast_component.dart';
 import 'package:steuermachen/constants/app_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
+import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/providers/forms_provider.dart';
 import 'package:steuermachen/utils/input_validation_util.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
@@ -62,8 +64,8 @@ class _TaxAdviceFormScreenState extends State<TaxAdviceFormScreen>
     );
     final fontStyle = FontStyles.fontRegular(fontSize: 14);
     return Scaffold(
-      appBar: const AppBarComponent(
-        StringConstants.initInfo,
+      appBar:  AppBarComponent(
+        LocaleKeys.initInfo.tr(),
         showNotificationIcon: false,
       ),
       body: SingleChildScrollView(
@@ -77,7 +79,7 @@ class _TaxAdviceFormScreenState extends State<TaxAdviceFormScreen>
                 const SizedBox(
                   height: 35,
                 ),
-                Text(StringConstants.getInTouch,
+                Text(LocaleKeys.getInTouch.tr(),
                     style: Theme.of(context)
                         .textTheme
                         .bodyText1!
@@ -86,62 +88,62 @@ class _TaxAdviceFormScreenState extends State<TaxAdviceFormScreen>
                   height: 23,
                 ),
                 sizedBox4,
-                _title(StringConstants.surName),
+                _title(LocaleKeys.surName.tr()),
                 sizedBox4,
                 TextFormField(
                   controller: _surNameController,
                   decoration: InputDecoration(
-                    hintText: StringConstants.surName,
+                    hintText: LocaleKeys.surName.tr(),
                     hintStyle: fontStyle,
                   ),
                   validator: validateFieldEmpty,
                 ),
                 sizedBox6,
-                _title(StringConstants.firstName),
+                _title(LocaleKeys.firstName.tr()),
                 sizedBox4,
                 TextFormField(
                   controller: _firstNameController,
                   decoration: InputDecoration(
-                    hintText: StringConstants.firstName,
+                    hintText: LocaleKeys.firstName.tr(),
                     hintStyle: fontStyle,
                   ),
                   validator: validateFieldEmpty,
                 ),
                 sizedBox4,
-                _title(StringConstants.email),
+                _title(LocaleKeys.email.tr()),
                 sizedBox4,
                 TextFormField(
                   controller: _emailController,
                   decoration: InputDecoration(
-                    hintText: StringConstants.email,
+                    hintText: LocaleKeys.email.tr(),
                     hintStyle: fontStyle,
                   ),
                   validator: validateEmail,
                 ),
                 sizedBox4,
-                _title(StringConstants.subject),
+                _title(LocaleKeys.subject.tr()),
                 sizedBox4,
                 TextFormField(
                   controller: _subjectController,
                   decoration: InputDecoration(
-                    hintText: StringConstants.subject,
+                    hintText: LocaleKeys.subject.tr(),
                     hintStyle: fontStyle,
                   ),
                   validator: validateFieldEmpty,
                 ),
                 sizedBox4,
-                _title(StringConstants.phoneNo),
+                _title(LocaleKeys.phoneNo.tr()),
                 sizedBox4,
                 TextFormField(
                   controller: _phoneNoController,
                   decoration: InputDecoration(
-                    hintText: StringConstants.phoneNo,
+                    hintText: LocaleKeys.phoneNo.tr(),
                     hintStyle: fontStyle,
                   ),
                   validator: validatePhone,
                 ),
                 sizedBox4,
-                _title(StringConstants.disscussFreeInitial),
+                _title(LocaleKeys.disscussFreeInitial.tr()),
                 sizedBox4,
                 SizedBox(
                   height: 5 * 24.0,
@@ -163,7 +165,7 @@ class _TaxAdviceFormScreenState extends State<TaxAdviceFormScreen>
         padding: AppConstants.bottomBtnPadding,
         child: ButtonComponent(
           btnHeight: 56,
-          buttonText: StringConstants.send,
+          buttonText: LocaleKeys.send.tr(),
           onPressed: () async {
             if (_contactFormKey.currentState!.validate()) {
               PopupLoader.showLoadingDialog(context);

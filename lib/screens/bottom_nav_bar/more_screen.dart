@@ -98,7 +98,7 @@ class _MoreScreenState extends State<MoreScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TextComponent(
-                  StringConstants.myAccount,
+                  LocaleKeys.myAccount.tr(),
                   style: FontStyles.fontBold(fontSize: 20),
                 ),
                 const SizedBox(height: 8),

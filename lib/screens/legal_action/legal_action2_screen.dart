@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -8,8 +9,8 @@ import 'package:steuermachen/components/dialogs/completed_dialog_component.dart'
 import 'package:steuermachen/components/popup_loader_component.dart';
 import 'package:steuermachen/constants/app_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
-import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:signature/signature.dart';
+import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/providers/document_provider.dart';
 
 class LegalAction2Screen extends StatefulWidget {
@@ -46,8 +47,8 @@ class _LegalAction2ScreenState extends State<LegalAction2Screen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarComponent(
-        StringConstants.powerOfAttorney,
+      appBar:  AppBarComponent(
+        LocaleKeys.powerOfAttorney.tr(),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -56,7 +57,7 @@ class _LegalAction2ScreenState extends State<LegalAction2Screen> {
           children: [
             const SizedBox(height: 25),
             Text(
-              StringConstants.discPowerOfAttorney,
+              LocaleKeys.discPowerOfAttorney.tr(),
               style: Theme.of(context)
                   .textTheme
                   .headline6!
@@ -64,7 +65,7 @@ class _LegalAction2ScreenState extends State<LegalAction2Screen> {
             ),
             const SizedBox(height: 5),
             Text(
-              StringConstants.digitalSignature,
+              LocaleKeys.digitalSignature.tr(),
               style: Theme.of(context)
                   .textTheme
                   .bodyText1!
@@ -72,7 +73,7 @@ class _LegalAction2ScreenState extends State<LegalAction2Screen> {
             ),
             const SizedBox(height: 25),
             Text(
-              StringConstants.signHere,
+              LocaleKeys.signHere.tr(),
               style: Theme.of(context)
                   .textTheme
                   .bodyText1!
@@ -109,9 +110,9 @@ class _LegalAction2ScreenState extends State<LegalAction2Screen> {
             PopupLoader.hideLoadingDialog(context);
             _dialog();
           },
-          child: const Text(
-            StringConstants.send,
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+          child:  Text(
+            LocaleKeys.send.tr(),
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
           ),
         ),
       ),

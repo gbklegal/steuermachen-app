@@ -1,3 +1,4 @@
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
 import 'package:steuermachen/components/button_component.dart';
@@ -9,6 +10,7 @@ import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
+import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/screens/file_tax/marital_status_model.dart';
 
 class TaxFileMaritalStatusScreen extends StatefulWidget {
@@ -54,16 +56,16 @@ class _TaxFileMaritalStatusScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarComponent(
-        StringConstants.areSingle,
+      appBar:  AppBarComponent(
+        LocaleKeys.areSingle.tr(),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          const Padding(
-            padding: EdgeInsets.only(left: 16, right: 16, top: 25),
+           Padding(
+            padding: const EdgeInsets.only(left: 16, right: 16, top: 25),
             child: TextProgressBarComponent(
-              title: "${StringConstants.step} 1/5",
+              title: "${LocaleKeys.step.tr()} 1/5",
               progress: 0.2,
             ),
           ),
@@ -92,7 +94,7 @@ class _TaxFileMaritalStatusScreenState
          padding: AppConstants.bottomBtnPadding,
         child: ButtonComponent(
           btnHeight: 56,
-          buttonText: StringConstants.next.toUpperCase(),
+          buttonText: LocaleKeys.next.tr().toUpperCase(),
           textStyle:
               FontStyles.fontRegular(color: ColorConstants.white, fontSize: 18),
           onPressed: () {

@@ -65,7 +65,7 @@ onGenerateRoutes(RouteSettings settings) {
           builder: (_) => SelectDocumentForScreen(
             showNextBtn: obj["showNextBtn"] ??  false,
             onNextBtnRoute: obj["nextRoute"] ?? "",
-            uploadBtnNow: obj["uploadBtn"],
+            uploadBtnNow: obj["uploadBtn"]?? false,
           ),
         );
       }
@@ -128,10 +128,10 @@ onGenerateRoutes(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (_) => const TaxTipsScreen(),
       );
-    case RouteConstants.taxTipsDetailScreen:
-      return MaterialPageRoute(
-        builder: (_) => const TaxTipsDetailScreen(),
-      );
+    // case RouteConstants.taxTipsDetailScreen:
+    //   return MaterialPageRoute(
+    //     builder: (_) => const TaxTipsDetailScreen(),
+    //   );
     case RouteConstants.legalAction2Screen:
       return MaterialPageRoute(
         builder: (_) => const LegalAction2Screen(),

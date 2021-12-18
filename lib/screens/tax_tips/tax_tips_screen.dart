@@ -8,6 +8,7 @@ import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/main.dart';
+import 'package:steuermachen/screens/tax_tips/tax_tips_detail_screen.dart';
 import 'package:steuermachen/screens/tax_tips/tax_tips_top_component.dart';
 import 'package:steuermachen/wrappers/tax_tips_wrapper.dart';
 
@@ -41,8 +42,7 @@ class TaxTipsScreen extends StatelessWidget {
                               if (i == 0)
                                 InkWell(
                                   onTap: () {
-                                    Navigator.pushNamed(context,
-                                        RouteConstants.taxTipsDetailScreen);
+                                    _navigateToDetail(context, res.en![i]);
                                   },
                                   child: TaxTipTopComponent(
                                     title: res.en![i].title,
@@ -57,20 +57,31 @@ class TaxTipsScreen extends StatelessWidget {
                               else
                                 InkWell(
                                   onTap: () {
-                                    Navigator.pushNamed(context,
-                                        RouteConstants.taxTipsDetailScreen);
+                                    _navigateToDetail(context, res.en![i]);
                                   },
                                   child: const _ListItems(),
                                 )
                           else
                             for (var i = 0; i < res.du!.length; i++)
                               if (i == 0)
-                                const TaxTipTopComponent()
+                                InkWell(
+                                  onTap: () {
+                                    _navigateToDetail(context, res.du![i]);
+                                  },
+                                  child: TaxTipTopComponent(
+                                    title: res.du![i].title,
+                                    subtitle: res.du![i].subtitle,
+                                    publishedDate:
+                                        res.du![i].publishedDate.toString(),
+                                    articleBy: res.du![i].articleBy,
+                                    image: res.du![i].image,
+                                    readTime: res.du![i].readTime,
+                                  ),
+                                )
                               else
                                 InkWell(
                                   onTap: () {
-                                    Navigator.pushNamed(context,
-                                        RouteConstants.taxTipsDetailScreen);
+                                    _navigateToDetail(context, res.du![i]);
                                   },
                                   child: const _ListItems(),
                                 )
@@ -85,6 +96,15 @@ class TaxTipsScreen extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  _navigateToDetail(context, TaxTipsContent content) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => TaxTipsDetailScreen(taxTipsContent: content),
       ),
     );
   }

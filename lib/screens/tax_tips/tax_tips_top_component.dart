@@ -1,5 +1,7 @@
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
-import 'package:steuermachen/constants/strings/string_constants.dart';
+import 'package:steuermachen/languages/locale_keys.g.dart';
+import 'package:steuermachen/utils/utils.dart';
 
 class TaxTipTopComponent extends StatelessWidget {
   const TaxTipTopComponent(
@@ -20,7 +22,7 @@ class TaxTipTopComponent extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(top: 50, left: 15),
           child: Text(
-            StringConstants.featuredArticle,
+            LocaleKeys.featuredArticle.tr(),
             textAlign: TextAlign.left,
             style: Theme.of(context).textTheme.headline5!.copyWith(
                   fontWeight: FontWeight.w700,
@@ -31,7 +33,7 @@ class TaxTipTopComponent extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(top: 10, left: 15),
           child: Text(
-            "WIDOW'S PENSION",
+            title!,
             textAlign: TextAlign.left,
             style: Theme.of(context).textTheme.headline5!.copyWith(
                   fontWeight: FontWeight.w600,
@@ -44,7 +46,7 @@ class TaxTipTopComponent extends StatelessWidget {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(25),
             child: Image.network(
-              "https://images.unsplash.com/photo-1586749874058-30b75a9b3e29?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8d2lkb3d8ZW58MHx8MHx8&w=1000&q=80",
+              image!,
               height: 179,
               width: MediaQuery.of(context).size.width,
               fit: BoxFit.cover,
@@ -54,7 +56,7 @@ class TaxTipTopComponent extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(top: 10, left: 15),
           child: Text(
-            "Widow's Pension: What Should You Know?",
+            subtitle!,
             textAlign: TextAlign.left,
             style: Theme.of(context).textTheme.headline5!.copyWith(
                   fontWeight: FontWeight.w600,
@@ -69,7 +71,7 @@ class TaxTipTopComponent extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 10, left: 15),
               child: Text(
-                "BY DIANA PROSVIRKINA\nNOVEMBER 29, 2021 ",
+                "BY $articleBy\n${Utils.getTimeAgo(DateTime.parse(publishedDate!))} ",
                 textAlign: TextAlign.left,
                 style: Theme.of(context).textTheme.headline5!.copyWith(
                       fontWeight: FontWeight.w400,
@@ -80,7 +82,7 @@ class TaxTipTopComponent extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 10, right: 15),
               child: Text(
-                "4 min read",
+                readTime!,
                 textAlign: TextAlign.left,
                 style: Theme.of(context).textTheme.headline5!.copyWith(
                       fontWeight: FontWeight.w400,

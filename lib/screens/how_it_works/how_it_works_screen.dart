@@ -8,6 +8,7 @@ import 'package:steuermachen/constants/app_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
+import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/main.dart';
 import 'package:steuermachen/wrappers/how_it_works_wrapper.dart';
 
@@ -71,9 +72,9 @@ class HowItWorksScreen extends StatelessWidget {
               Navigator.pushNamedAndRemoveUntil(
                   context, RouteConstants.bottomNavBarScreen, (val) => false);
             },
-            child: const Text(
-              StringConstants.applyNow,
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+            child:  Text(
+              LocaleKeys.applyNow.tr(),
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
             ),
           ),
         ),

@@ -60,7 +60,7 @@ class HomeScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 45, right: 30),
                   child: Text(
-                    StringConstants.howWouldYouLikeToMoveForwardWithUs,
+                    LocaleKeys.howWouldYouLikeToMoveForwardWithUs.tr(),
                     textAlign: TextAlign.left,
                     style: Theme.of(context)
                         .textTheme

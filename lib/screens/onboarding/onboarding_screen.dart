@@ -42,10 +42,10 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                         Navigator.pushNamedAndRemoveUntil(context,
                             RouteConstants.getStartedScreen, (val) => false);
                       },
-                      child: const Text(
-                        StringConstants.skip,
+                      child:  Text(
+                        LocaleKeys.skip.tr(),
                         textAlign: TextAlign.center,
-                        style: TextStyle(
+                        style: const TextStyle(
                             color: ColorConstants.black,
                             fontStyle: FontStyle.normal,
                             letterSpacing: 1,

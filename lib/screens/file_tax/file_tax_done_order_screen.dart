@@ -1,3 +1,4 @@
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
 import 'package:steuermachen/components/button_component.dart';
@@ -6,6 +7,7 @@ import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
+import 'package:steuermachen/languages/locale_keys.g.dart';
 
 class FileTaxDoneOrderScreen extends StatelessWidget {
   const FileTaxDoneOrderScreen({Key? key}) : super(key: key);
@@ -15,8 +17,8 @@ class FileTaxDoneOrderScreen extends StatelessWidget {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-        appBar: const AppBarComponent(
-          StringConstants.done,
+        appBar:  AppBarComponent(
+          LocaleKeys.done.tr(),
           showBackButton: false,
           showNotificationIcon: false,
         ),
@@ -25,8 +27,8 @@ class FileTaxDoneOrderScreen extends StatelessWidget {
           child: Column(
             children: [
               const SizedBox(height: 16),
-              const TextProgressBarComponent(
-                title: "${StringConstants.step} 5/5",
+               TextProgressBarComponent(
+                title: "${LocaleKeys.step.tr()} 5/5",
                 progress: 1,
               ),
               const SizedBox(
@@ -44,18 +46,18 @@ class FileTaxDoneOrderScreen extends StatelessWidget {
                   children: [
                     Image.asset(AssetConstants.done),
                     const SizedBox(height: 10),
-                    const Text(
-                      StringConstants.thankYouForOrder,
-                      style: TextStyle(
+                     Text(
+                      LocaleKeys.thankYouForOrder.tr(),
+                      style:const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                     const SizedBox(height: 20),
-                    const Text(
-                      StringConstants.impRecEmail,
+                     Text(
+                      LocaleKeys.impRecEmail.tr(),
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
                       ),
@@ -70,7 +72,7 @@ class FileTaxDoneOrderScreen extends StatelessWidget {
                               padding: const EdgeInsets.only(right: 4, top: 10),
                               child: ButtonComponent(
                                 btnHeight: 56,
-                                buttonText: StringConstants.goToHome,
+                                buttonText: LocaleKeys.goToHome.tr(),
                                 textStyle: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w700,
@@ -89,7 +91,7 @@ class FileTaxDoneOrderScreen extends StatelessWidget {
                               padding: const EdgeInsets.only(left: 4, top: 10),
                               child: ButtonComponent(
                                 btnHeight: 56,
-                                buttonText: StringConstants.orderNew,
+                                buttonText: LocaleKeys.orderNew.tr(),
                                 textStyle: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w700,

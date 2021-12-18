@@ -60,7 +60,7 @@ class UploadedDocumentScreen extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsets.only(left: 40),
                           child: Text(
-                            StringConstants.document,
+                            LocaleKeys.document,
                             style: FontStyles.fontBold(fontSize: 24),
                           ),
                         ),
@@ -97,7 +97,7 @@ class UploadedDocumentScreen extends StatelessWidget {
                 ),
             onPressed: () {},
             child: const Text(
-              StringConstants.useCamera,
+              LocaleKeys.useCamera,
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.normal),
             ),
           )
@@ -122,7 +122,7 @@ class UploadedDocumentScreen extends StatelessWidget {
             width: MediaQuery.of(context).size.width,
             child: const Center(
               child: Text(
-                StringConstants.upload,
+                LocaleKeys.upload,
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.normal),
               ),
             ),

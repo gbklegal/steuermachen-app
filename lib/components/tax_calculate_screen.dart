@@ -1,9 +1,10 @@
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
-import 'package:steuermachen/constants/strings/string_constants.dart';
+import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/providers/tax_calculator_provider.dart';
 import 'package:steuermachen/providers/tax_file_provider.dart';
 
@@ -29,7 +30,7 @@ class TaxCalculatorComponent extends StatelessWidget {
                 fontStyle: FontStyle.normal,
                 color: ColorConstants.black.withOpacity(0.4),
               ),
-              label: const Text(StringConstants.annualIncom),
+              label:  Text(LocaleKeys.annualIncom.tr()),
               filled: false,
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(5.0),
@@ -60,7 +61,7 @@ class TaxCalculatorComponent extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(top: 25, bottom: 15),
               child: Text(
-                StringConstants.estimatedPrice,
+                LocaleKeys.estimatedPrice.tr(),
                 textAlign: TextAlign.left,
                 style: Theme.of(context)
                     .textTheme

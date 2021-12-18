@@ -1,9 +1,10 @@
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:steuermachen/components/button_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
-import 'package:steuermachen/constants/strings/string_constants.dart';
+import 'package:steuermachen/languages/locale_keys.g.dart';
 
 class CompletedDialogComponent extends StatelessWidget {
   const CompletedDialogComponent({
@@ -22,8 +23,8 @@ class CompletedDialogComponent extends StatelessWidget {
           children: [
             Image.asset(AssetConstants.done),
             const SizedBox(height: 10),
-            const Text(StringConstants.thankYou),
-            const Text(StringConstants.weWillBeInTouchShortly),
+            Text(LocaleKeys.thankYou.tr()),
+            Text(LocaleKeys.weWillBeInTouchShortly.tr()),
             Row(
               children: [
                 Flexible(
@@ -31,7 +32,7 @@ class CompletedDialogComponent extends StatelessWidget {
                     padding: const EdgeInsets.only(right: 4, top: 10),
                     child: ButtonComponent(
                       btnHeight: 55,
-                      buttonText: StringConstants.goToHome,
+                      buttonText: LocaleKeys.goToHome,
                       textStyle: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w700,
@@ -49,7 +50,7 @@ class CompletedDialogComponent extends StatelessWidget {
                           padding: const EdgeInsets.only(left: 4, top: 10),
                           child: ButtonComponent(
                             btnHeight: 55,
-                            buttonText: StringConstants.back,
+                            buttonText: LocaleKeys.back.tr(),
                             textStyle: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w700,

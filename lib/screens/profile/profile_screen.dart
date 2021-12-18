@@ -1,3 +1,4 @@
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/components/app_bar/appbar_with_side_corner_circle_and_body.dart';
@@ -8,6 +9,7 @@ import 'package:steuermachen/components/toast_component.dart';
 import 'package:steuermachen/constants/app_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
+import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/providers/forms_provider.dart';
 import 'package:steuermachen/utils/input_validation_util.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
@@ -68,62 +70,62 @@ class _ProfileScreenState extends State<ProfileScreen>
                     const SizedBox(
                       height: 35,
                     ),
-                    _title(StringConstants.surName),
+                    _title(LocaleKeys.surName.tr()),
                     sizedBox4,
                     TextFormField(
                       controller: _surNameController,
                       decoration: InputDecoration(
-                        hintText: StringConstants.surName,
+                        hintText: LocaleKeys.surName.tr(),
                         hintStyle: fontStyle,
                       ),
                       validator: validateFieldEmpty,
                     ),
                     sizedBox6,
-                    _title(StringConstants.firstName),
+                    _title(LocaleKeys.firstName.tr()),
                     sizedBox4,
                     TextFormField(
                       controller: _firstNameController,
                       decoration: InputDecoration(
-                        hintText: StringConstants.firstName,
+                        hintText: LocaleKeys.firstName.tr(),
                         hintStyle: fontStyle,
                       ),
                       validator: validateFieldEmpty,
                     ),
                     sizedBox6,
-                    _title(StringConstants.street),
+                    _title(LocaleKeys.street.tr()),
                     sizedBox4,
                     TextFormField(
                       controller: _streetController,
                       decoration: InputDecoration(
-                        hintText: StringConstants.street,
+                        hintText: LocaleKeys.street.tr(),
                         hintStyle: fontStyle,
                       ),
                       validator: validateFieldEmpty,
                     ),
                     sizedBox4,
-                    _title(StringConstants.postalCode),
+                    _title(LocaleKeys.postalCode.tr()),
                     sizedBox4,
                     TextFormField(
                       controller: _postalCodeController,
                       decoration: InputDecoration(
-                        hintText: StringConstants.postalCode,
+                        hintText: LocaleKeys.postalCode.tr(),
                         hintStyle: fontStyle,
                       ),
                       validator: validateFieldEmpty,
                     ),
                     sizedBox4,
-                    _title(StringConstants.cityTown),
+                    _title(LocaleKeys.cityTown.tr()),
                     sizedBox4,
                     TextFormField(
                       controller: _cityTownController,
                       decoration: InputDecoration(
-                        hintText: StringConstants.cityTown,
+                        hintText: LocaleKeys.cityTown.tr(),
                         hintStyle: fontStyle,
                       ),
                       validator: validateFieldEmpty,
                     ),
                     sizedBox4,
-                    _title(StringConstants.selectCountry),
+                    _title(LocaleKeys.selectCountry.tr()),
                     sizedBox4,
                     InkWell(
                       onTap: () {
@@ -141,7 +143,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                         enabled: false,
                         controller: _countryController,
                         decoration: InputDecoration(
-                          hintText: StringConstants.selectCountry,
+                          hintText: LocaleKeys.selectCountry.tr(),
                           hintStyle: fontStyle,
                         ),
                         validator: validateFieldEmpty,
@@ -159,7 +161,7 @@ class _ProfileScreenState extends State<ProfileScreen>
         padding: AppConstants.bottomBtnPadding,
         child: ButtonComponent(
           btnHeight: 56,
-          buttonText: StringConstants.save,
+          buttonText: LocaleKeys.save.tr(),
           onPressed: () async {
             if (_userFormKey.currentState!.validate()) {
               PopupLoader.showLoadingDialog(context);

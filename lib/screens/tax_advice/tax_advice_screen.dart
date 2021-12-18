@@ -9,6 +9,7 @@ import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
+import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/main.dart';
 import 'package:steuermachen/wrappers/tax_advice_wrapper.dart';
 
@@ -26,8 +27,8 @@ class TaxAdviceScreen extends StatelessWidget {
                   snapshot.data.data() as Map<String, dynamic>;
               TaxAdviceContentWrapper res = TaxAdviceContentWrapper.fromJson(x);
               return Scaffold(
-                appBar: const AppBarComponent(
-                  StringConstants.initialTaxAdvice,
+                appBar: AppBarComponent(
+                  LocaleKeys.initialTaxAdvice.tr(),
                 ),
                 body: SingleChildScrollView(
                   child: Padding(
@@ -37,7 +38,7 @@ class TaxAdviceScreen extends StatelessWidget {
                       children: [
                         const SizedBox(height: 25),
                         Text(
-                          StringConstants.pricing,
+                          LocaleKeys.pricing.tr(),
                           style: Theme.of(context)
                               .textTheme
                               .headline6!
@@ -46,7 +47,7 @@ class TaxAdviceScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 5),
                         Text(
-                          StringConstants.chooseTheRightPrice,
+                          LocaleKeys.chooseTheRightPrice.tr(),
                           style: Theme.of(context)
                               .textTheme
                               .bodyText1!
@@ -83,10 +84,10 @@ class TaxAdviceScreen extends StatelessWidget {
                       Navigator.pushNamed(
                           context, RouteConstants.taxAdviceFormScreen);
                     },
-                    child: const Text(
-                      StringConstants.applyNowForAfee,
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                    child: Text(
+                      LocaleKeys.applyNowForAfee.tr(),
+                      style: const TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.w600),
                     ),
                   ),
                 ),

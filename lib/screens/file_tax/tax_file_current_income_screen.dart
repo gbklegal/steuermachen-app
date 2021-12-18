@@ -1,3 +1,4 @@
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
@@ -10,6 +11,7 @@ import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
+import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/providers/tax_file_provider.dart';
 
 class TaxFileCurrentIncomeScreen extends StatefulWidget {
@@ -28,8 +30,8 @@ class _TaxFileCurrentIncomeScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarComponent(
-        StringConstants.curStatus,
+      appBar: AppBarComponent(
+        LocaleKeys.curStatus.tr(),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -37,15 +39,15 @@ class _TaxFileCurrentIncomeScreenState
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const TextProgressBarComponent(
-                title: "${StringConstants.step} 3/5",
+              TextProgressBarComponent(
+                title: "${LocaleKeys.step.tr()} 3/5",
                 progress: 0.6,
               ),
               const SizedBox(
                 height: 62,
               ),
               TextComponent(
-                StringConstants.grossAnnualIncome,
+                LocaleKeys.grossAnnualIncome.tr(),
                 style: FontStyles.fontBold(fontSize: 24),
               ),
               const SizedBox(
@@ -92,7 +94,7 @@ class _TaxFileCurrentIncomeScreenState
                 height: 24,
               ),
               TextComponent(
-                StringConstants.promoCode,
+                LocaleKeys.promoCode.tr(),
                 style: FontStyles.fontMedium(fontSize: 18),
               ),
               const SizedBox(
@@ -118,7 +120,7 @@ class _TaxFileCurrentIncomeScreenState
               ),
               const SizedBox(height: 12),
               TextComponent(
-                StringConstants.applyNow,
+                LocaleKeys.applyNow.tr(),
                 style: FontStyles.fontMedium(
                     fontSize: 18,
                     underLine: true,
@@ -133,14 +135,14 @@ class _TaxFileCurrentIncomeScreenState
         return Padding(
           padding: AppConstants.bottomBtnPadding,
           child: ButtonComponent(
-            buttonText: StringConstants.next.toUpperCase(),
+            buttonText: LocaleKeys.next.tr().toUpperCase(),
             textStyle: FontStyles.fontRegular(
                 color: ColorConstants.white, fontSize: 18),
             btnHeight: 56,
             onPressed: () {
               if (consumer.taxFile.income == null) {
-                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                  content: Text(StringConstants.enterYourGrossAnnualIncome),
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text(LocaleKeys.enterYourGrossAnnualIncome.tr()),
                 ));
               } else {
                 Navigator.pushNamed(context, RouteConstants.fileTaxInfoScreen);

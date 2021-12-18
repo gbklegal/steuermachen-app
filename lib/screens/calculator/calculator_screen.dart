@@ -44,7 +44,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                     padding: const EdgeInsets.only(
                         left: 15, top: 35, right: 15, bottom: 20),
                     child: Text(
-                      StringConstants.whatIsYourAnnualIncomeGoal,
+                      LocaleKeys.whatIsYourAnnualIncomeGoal.tr(),
                       textAlign: TextAlign.left,
                       style: Theme.of(context)
                           .textTheme
@@ -69,9 +69,9 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                         Navigator.pushNamedAndRemoveUntil(context,
                             RouteConstants.bottomNavBarScreen, (val) => false);
                       },
-                      child: const Text(
-                        StringConstants.orderNow,
-                        style: TextStyle(
+                      child:  Text(
+                        LocaleKeys.orderNow.tr(),
+                        style: const TextStyle(
                             fontSize: 20, fontWeight: FontWeight.w500),
                       ),
                     ),

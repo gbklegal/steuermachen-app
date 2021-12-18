@@ -1,10 +1,12 @@
 import 'dart:io';
 
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
+import 'package:steuermachen/languages/locale_keys.g.dart';
 class CustomImagePreview extends StatefulWidget {
   // final PickedFile image;
   final GestureTapCallback? imageCroped, onButtonSubmit, onButtonCancel;
@@ -71,9 +73,9 @@ class _CustomImagePreviewState extends State<CustomImagePreview> {
                 child: TextButton(
                   // color: Colors.red,
                   onPressed: widget.onButtonCancel,
-                  child: const Text(
-                    StringConstants.cancel,
-                    style: TextStyle(
+                  child:  Text(
+                    LocaleKeys.cancel.tr(),
+                    style: const TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
                         color: Colors.white),
@@ -89,9 +91,9 @@ class _CustomImagePreviewState extends State<CustomImagePreview> {
                       onPressed: () {
                         widget.onImagePath!(cropImagePath != "" ? cropImagePath! : widget.path!);
                       },
-                      child: const Text(
-                        StringConstants.submit,
-                        style: TextStyle(
+                      child:  Text(
+                        LocaleKeys.submit.tr(),
+                        style: const TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
                             color: Colors.white),

@@ -1,9 +1,11 @@
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
+import 'package:steuermachen/languages/locale_keys.g.dart';
 
 class GetStartedScreen extends StatelessWidget {
   const GetStartedScreen({Key? key}) : super(key: key);
@@ -19,11 +21,11 @@ class GetStartedScreen extends StatelessWidget {
               const SizedBox(height: 35),
               Expanded(child: _topTitle(context)),
               Image.asset(AssetConstants.fileArtWork),
-              _button(context, StringConstants.calculateYourPrice, () {
+              _button(context, LocaleKeys.calculateYourPrice.tr(), () {
                 Navigator.pushNamed(context, RouteConstants.calculatorScreen);
               }),
               const SizedBox(height: 20),
-              _button(context, StringConstants.getStarted, () {
+              _button(context, LocaleKeys.getStarted.tr(), () {
                 Navigator.pushNamed(context, RouteConstants.signupScreen);
               }),
               const SizedBox(height: 22),
@@ -39,7 +41,7 @@ class GetStartedScreen extends StatelessWidget {
     return Align(
       alignment: Alignment.topLeft,
       child: Text(
-        StringConstants.getStartedText_1,
+        LocaleKeys.getStartedText_1.tr(),
         textAlign: TextAlign.start,
         style: Theme.of(context)
             .textTheme
@@ -67,11 +69,11 @@ class GetStartedScreen extends StatelessWidget {
   RichText _richText(BuildContext context) {
     return RichText(
       text: TextSpan(
-        text: StringConstants.alreadyRegistered + " ",
+        text: LocaleKeys.alreadyRegistered.tr() + " ",
         style: Theme.of(context).textTheme.bodyText1?.copyWith(fontSize: 15),
         children: <TextSpan>[
           TextSpan(
-              text: StringConstants.signIn,
+              text: LocaleKeys.signIn.tr(),
               style: Theme.of(context).textTheme.bodyText1?.copyWith(
                   color: ColorConstants.primary, fontWeight: FontWeight.w700),
               recognizer: TapGestureRecognizer()

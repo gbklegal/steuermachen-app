@@ -1,3 +1,4 @@
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
@@ -9,6 +10,7 @@ import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
+import 'package:steuermachen/languages/locale_keys.g.dart';
 
 class FileTaxUploadDocumentScreen extends StatefulWidget {
   const FileTaxUploadDocumentScreen({Key? key}) : super(key: key);
@@ -23,8 +25,8 @@ class _FileTaxUploadDocumentScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarComponent(
-        StringConstants.uplaodYourDocuments,
+      appBar:  AppBarComponent(
+        LocaleKeys.uplaodYourDocuments.tr(),
       ),
       body: Padding(
         padding: const EdgeInsets.only(left: 16, right: 16, top: 25),
@@ -32,8 +34,8 @@ class _FileTaxUploadDocumentScreenState
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             const SizedBox(height: 16),
-            const TextProgressBarComponent(
-              title: "${StringConstants.step} 5/5",
+             TextProgressBarComponent(
+              title: "${LocaleKeys.step.tr()} 5/5",
               progress: 1,
             ),
             const SizedBox(
@@ -50,7 +52,7 @@ class _FileTaxUploadDocumentScreenState
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(8.0),
         child: ButtonComponent(
-          buttonText: StringConstants.next,
+          buttonText: LocaleKeys.next.tr(),
           onPressed: () {
             Navigator.pushNamed(
                 context, RouteConstants.fileTaxFinalSubmissionScreen);
@@ -74,7 +76,7 @@ class _FileTaxUploadDocumentScreenState
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           TextComponent(
-            StringConstants.uploadDocuments,
+            LocaleKeys.uploadDocuments.tr(),
             style: FontStyles.fontRegular(fontSize: 14),
           ),
           const SizedBox(
@@ -95,7 +97,7 @@ class _FileTaxUploadDocumentScreenState
                   height: 8,
                 ),
                 TextComponent(
-                  StringConstants.upload,
+                  LocaleKeys.upload.tr(),
                   style: FontStyles.fontRegular(
                       fontSize: 12, color: ColorConstants.charcoalGrey),
                 ),
@@ -121,7 +123,7 @@ class _FileTaxUploadDocumentScreenState
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           TextComponent(
-            StringConstants.annualSlip,
+            LocaleKeys.annualSlip.tr(),
             style: FontStyles.fontRegular(fontSize: 14),
           ),
           const SizedBox(

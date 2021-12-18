@@ -1,42 +1,37 @@
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:steuermachen/components/app_bar/appbar_with_side_corner_circle_and_body.dart';
+import 'package:steuermachen/constants/app_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
-import 'package:steuermachen/constants/strings/string_constants.dart';
+import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/screens/tax_tips/tax_tips_top_component.dart';
+import 'package:steuermachen/wrappers/tax_tips_wrapper.dart';
 
 class TaxTipsDetailScreen extends StatelessWidget {
-  const TaxTipsDetailScreen({Key? key}) : super(key: key);
+  const TaxTipsDetailScreen({Key? key, required this.taxTipsContent})
+      : super(key: key);
+  final TaxTipsContent taxTipsContent;
   @override
   Widget build(BuildContext context) {
-    String sampleText =
-        """In 2021, pensioners will pay almost 100 billion euros in taxes and duties
-POSTED ON NOVEMBER 15, 2021 BY DIANA PROSVIRKINA
-Retirees, pension, old-age provision, double taxation
-Reading time: 3 minutes
-The year 2021 is not quite over yet, but something can already be gleaned from the forecast, which is based on the half-yearly figures. And it looks tough for the retirees! Just the health insurance contributions paid by retirees add up to an estimated EUR 46.1 billion.
-
- The tax burden has been increasing for years
-At the request of the Left parliamentary group, the federal government announced the following figures for this year:
-
-EUR 46.1 billion in health insurance contributions
-EUR 41.8 billion income tax
-EUR 8.8 billion long-term care insurance
-The total is EUR 96.7 billion. In comparison, it was only EUR 71.3 billion in 2014.
-
-The left-wing parliamentary group leader Dietmar Bartsch criticized such an increase and called it “unacceptable”.""";
-
     return Scaffold(
       body: AppBarWithSideCornerCircleAndRoundBody(
         body: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const TaxTipTopComponent(),
+              TaxTipTopComponent(
+                title: taxTipsContent.title,
+                subtitle: taxTipsContent.subtitle,
+                publishedDate: taxTipsContent.publishedDate.toString(),
+                articleBy: taxTipsContent.articleBy,
+                image: taxTipsContent.image,
+                readTime: taxTipsContent.readTime,
+              ),
               Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
                 child: Text(
-                  sampleText,
+                  taxTipsContent.content!,
                   style: Theme.of(context).textTheme.bodyText2,
                 ),
               ),
@@ -45,20 +40,20 @@ The left-wing parliamentary group leader Dietmar Bartsch criticized such an incr
         ),
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+        padding: AppConstants.bottomBtnPadding,
         child: ElevatedButton(
           style: ElevatedButtonTheme.of(context).style?.copyWith(
                 minimumSize: MaterialStateProperty.all(
-                  Size(MediaQuery.of(context).size.width, 70),
+                  Size(MediaQuery.of(context).size.width, 56),
                 ),
               ),
           onPressed: () {
             Navigator.pushNamedAndRemoveUntil(
                 context, RouteConstants.bottomNavBarScreen, (val) => false);
           },
-          child: const Text(
-            StringConstants.applyNow,
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+          child: Text(
+            LocaleKeys.applyNow.tr(),
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
           ),
         ),
       ),

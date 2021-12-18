@@ -1,3 +1,4 @@
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:steuermachen/components/app_bar/appbar_with_side_corner_circle_and_body.dart';
@@ -5,6 +6,7 @@ import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
+import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ContactUsOptionScreen extends StatefulWidget {
@@ -43,13 +45,13 @@ class _ContactUsOptionScreenState extends State<ContactUsOptionScreen> {
         const SizedBox(
           height: 24,
         ),
-        Text(StringConstants.howCanWeHelpYou,
+        Text(LocaleKeys.howCanWeHelpYou.tr(),
             style:
                 Theme.of(context).textTheme.headline6!.copyWith(fontSize: 24)),
         const SizedBox(
           height: 10,
         ),
-        Text(StringConstants.getInTouchWithUs,
+        Text(LocaleKeys.getInTouchWithUs.tr(),
             style:
                 Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 20)),
         const SizedBox(
@@ -63,7 +65,7 @@ class _ContactUsOptionScreenState extends State<ContactUsOptionScreen> {
                 await launch(emailLaunchUri.toString());
               },
               child: _emailAndCallUs(
-                  context, AssetConstants.email, StringConstants.emailUs),
+                  context, AssetConstants.email, LocaleKeys.emailUs.tr()),
             ),
             const SizedBox(
               width: 40,
@@ -73,7 +75,7 @@ class _ContactUsOptionScreenState extends State<ContactUsOptionScreen> {
                 await _makePhoneCall("03092783699");
               },
               child: _emailAndCallUs(
-                  context, AssetConstants.phoneCall, StringConstants.callUs),
+                  context, AssetConstants.phoneCall, LocaleKeys.callUs.tr()),
             ),
           ],
         ),
@@ -81,7 +83,7 @@ class _ContactUsOptionScreenState extends State<ContactUsOptionScreen> {
           height: 23,
         ),
         Text(
-            "${StringConstants.orUseOur} ${StringConstants.contactUs} ${StringConstants.form}",
+            "${LocaleKeys.orUseOur.tr()} ${LocaleKeys.contactUs.tr()} ${LocaleKeys.form.tr()}",
             style:
                 Theme.of(context).textTheme.bodyText1?.copyWith(fontSize: 15)),
         Padding(
@@ -98,7 +100,7 @@ class _ContactUsOptionScreenState extends State<ContactUsOptionScreen> {
               Navigator.pushNamed(context, RouteConstants.contactUsFormScreen);
             },
             child: const Text(
-              StringConstants.contactForm,
+              LocaleKeys.contactForm,
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
             ),
           ),

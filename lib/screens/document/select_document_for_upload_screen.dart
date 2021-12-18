@@ -17,6 +17,7 @@ import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:path/path.dart' as path;
+import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/providers/document_provider.dart';
 import 'package:steuermachen/utils/image_picker/media_source_selection_utils.dart';
 import 'package:steuermachen/utils/utils.dart';
@@ -100,8 +101,8 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
           child: ButtonComponent(
             btnHeight: 56,
             buttonText: widget.uploadBtnNow!
-                ? StringConstants.upload
-                : StringConstants.next.toUpperCase(),
+                ? LocaleKeys.upload
+                : LocaleKeys.next.toUpperCase(),
             textStyle: FontStyles.fontRegular(
                 color: ColorConstants.white, fontSize: 18),
             onPressed: () async {
@@ -171,7 +172,7 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Text(
-              StringConstants.selectDocument,
+              LocaleKeys.selectDocument,
               style: FontStyles.fontMedium(
                   lineSpacing: 1.1, fontSize: 24, fontWeight: FontWeight.w600),
             ),
@@ -309,7 +310,7 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
               _openCameraGallerySelectionDialog();
             },
             child: const Text(
-              StringConstants.useCamera,
+              LocaleKeys.useCamera,
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
             ),
           )
@@ -338,7 +339,7 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
               width: MediaQuery.of(context).size.width,
               child: const Center(
                 child: Text(
-                  StringConstants.select,
+                  LocaleKeys.select,
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.normal),
                 ),
               ),
@@ -365,7 +366,7 @@ class _DocumentOverview extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              StringConstants.documentOverview,
+              LocaleKeys.documentOverview,
               style: FontStyles.fontMedium(
                   fontSize: 24, fontWeight: FontWeight.w600),
             ),

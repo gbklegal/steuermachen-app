@@ -1,3 +1,4 @@
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
@@ -9,6 +10,7 @@ import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
+import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/providers/tax_file_provider.dart';
 import 'package:steuermachen/utils/input_validation_util.dart';
 
@@ -55,8 +57,8 @@ class _FileTaxInfoScreenState extends State<FileTaxInfoScreen>
     );
     final fontStyle = FontStyles.fontRegular(fontSize: 14);
     return Scaffold(
-      appBar: const AppBarComponent(
-        StringConstants.fillInfo,
+      appBar:  AppBarComponent(
+        LocaleKeys.fillInfo.tr(),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -66,49 +68,49 @@ class _FileTaxInfoScreenState extends State<FileTaxInfoScreen>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                const TextProgressBarComponent(
-                  title: "${StringConstants.step} 4/5",
+                 TextProgressBarComponent(
+                  title: "${LocaleKeys.step.tr()} 4/5",
                   progress: 0.8,
                 ),
                 const SizedBox(
                   height: 62,
                 ),
-                _title(StringConstants.surName),
+                _title(LocaleKeys.surName.tr()),
                 sizedBox4,
                 TextFormField(
                     controller: _surNameController,
                     decoration: InputDecoration(
-                      hintText: StringConstants.surName,
+                      hintText: LocaleKeys.surName.tr(),
                       hintStyle: fontStyle,
                     ),
                     validator: validateFieldEmpty),
                 sizedBox6,
-                _title(StringConstants.firstName),
+                _title(LocaleKeys.firstName.tr()),
                 sizedBox4,
                 TextFormField(
                     controller: _firstNameController,
                     decoration: InputDecoration(
-                      hintText: StringConstants.firstName,
+                      hintText: LocaleKeys.firstName.tr(),
                       hintStyle: fontStyle,
                     ),
                     validator: validateFieldEmpty),
                 sizedBox6,
-                _title(StringConstants.email),
+                _title(LocaleKeys.email.tr()),
                 sizedBox4,
                 TextFormField(
                     controller: _emailController,
                     decoration: InputDecoration(
-                      hintText: StringConstants.email,
+                      hintText: LocaleKeys.email.tr(),
                       hintStyle: fontStyle,
                     ),
                     validator: validateFieldEmpty),
                 sizedBox6,
-                _title(StringConstants.road),
+                _title(LocaleKeys.road.tr()),
                 sizedBox4,
                 TextFormField(
                     controller: _roadController,
                     decoration: InputDecoration(
-                      hintText: StringConstants.road,
+                      hintText: LocaleKeys.road.tr(),
                       hintStyle: fontStyle,
                     ),
                     validator: validateFieldEmpty),
@@ -121,12 +123,12 @@ class _FileTaxInfoScreenState extends State<FileTaxInfoScreen>
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _title(StringConstants.houseNo),
+                          _title(LocaleKeys.houseNo.tr()),
                           sizedBox4,
                           TextFormField(
                               controller: _houseNoController,
                               decoration: InputDecoration(
-                                hintText: StringConstants.houseNo,
+                                hintText: LocaleKeys.houseNo.tr(),
                                 hintStyle: fontStyle,
                               ),
                               validator: validateFieldEmpty),
@@ -138,12 +140,12 @@ class _FileTaxInfoScreenState extends State<FileTaxInfoScreen>
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _title(StringConstants.postalCode),
+                          _title(LocaleKeys.postalCode.tr()),
                           sizedBox4,
                           TextFormField(
                               controller: _postalCodeController,
                               decoration: InputDecoration(
-                                hintText: StringConstants.postalCode,
+                                hintText: LocaleKeys.postalCode.tr(),
                                 hintStyle: fontStyle,
                               ),
                               validator: validateFieldEmpty),
@@ -161,12 +163,12 @@ class _FileTaxInfoScreenState extends State<FileTaxInfoScreen>
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _title(StringConstants.place),
+                          _title(LocaleKeys.place.tr()),
                           sizedBox4,
                           TextFormField(
                               controller: _placeController,
                               decoration: InputDecoration(
-                                hintText: StringConstants.place,
+                                hintText: LocaleKeys.place.tr(),
                                 hintStyle: fontStyle,
                               ),
                               validator: validateFieldEmpty),
@@ -178,12 +180,12 @@ class _FileTaxInfoScreenState extends State<FileTaxInfoScreen>
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _title(StringConstants.phoneNo),
+                          _title(LocaleKeys.phoneNo.tr()),
                           sizedBox4,
                           TextFormField(
                               controller: _phoneNoController,
                               decoration: InputDecoration(
-                                hintText: StringConstants.phoneNo,
+                                hintText: LocaleKeys.phoneNo.tr(),
                                 hintStyle: fontStyle,
                               ),
                               validator: validatePhone),
@@ -201,7 +203,7 @@ class _FileTaxInfoScreenState extends State<FileTaxInfoScreen>
         padding: AppConstants.bottomBtnPadding,
         child: ButtonComponent(
           btnHeight: 56,
-          buttonText: StringConstants.next.toUpperCase(),
+          buttonText: LocaleKeys.next.tr().toUpperCase(),
           textStyle:
               FontStyles.fontRegular(color: ColorConstants.white, fontSize: 18),
           onPressed: () {

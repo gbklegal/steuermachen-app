@@ -1,3 +1,4 @@
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
@@ -6,6 +7,7 @@ import 'package:steuermachen/components/toast_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
+import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/providers/auth_provider.dart';
 import 'package:steuermachen/screens/auth/auth_components/button_auth_component.dart';
 import 'package:steuermachen/screens/auth/auth_components/choice_auth_component.dart';
@@ -55,12 +57,12 @@ class _SignInScreenState extends State<SignInScreen> with InputValidationUtil {
             child: Column(
               children: [
                 const SizedBox(height: 10),
-                const TitleTextAuthComponent(title: StringConstants.signIn),
+                 TitleTextAuthComponent(title: LocaleKeys.signIn.tr()),
                 const SizedBox(height: 35),
                 _authFields(),
                 const SizedBox(height: 25),
                 ButtonAuthComponent(
-                    btnText: StringConstants.signIn,
+                    btnText: LocaleKeys.signIn.tr(),
                     onPressed: () async {
                       if (_signupFormKey.currentState!.validate()) {
                         PopupLoader.showLoadingDialog(context);
@@ -79,11 +81,11 @@ class _SignInScreenState extends State<SignInScreen> with InputValidationUtil {
                         }
                       }
                     }),
-                const ChoiceTextAuthComponent(
-                    text: StringConstants.orSigninWith),
+                 ChoiceTextAuthComponent(
+                    text: LocaleKeys.orSigninWith.tr()),
                 SignInOptionsAuthComponent(
                     assetName: AssetConstants.icApple,
-                    btnText: StringConstants.appleSignIn),
+                    btnText: LocaleKeys.appleSignIn.tr()),
                 const SizedBox(height: 22),
                 InkWell(
                   onTap: () async {
@@ -100,21 +102,21 @@ class _SignInScreenState extends State<SignInScreen> with InputValidationUtil {
                   },
                   child: SignInOptionsAuthComponent(
                       assetName: AssetConstants.icGoogle,
-                      btnText: StringConstants.googleSignIn,
+                      btnText: LocaleKeys.googleSignIn.tr(),
                       textColor: Colors.blueAccent),
                 ),
                 const SizedBox(height: 22),
                 RichTextAuthComponent(
-                  textSpan1: StringConstants.dontHaveAnAccount,
-                  textSpan2: StringConstants.signupNow,
+                  textSpan1: LocaleKeys.dontHaveAnAccount.tr(),
+                  textSpan2: LocaleKeys.signupNow.tr(),
                   onTap: () {
                     Navigator.pushNamed(context, RouteConstants.signupScreen);
                   },
                 ),
                 const SizedBox(height: 22),
                 RichTextAuthComponent(
-                  textSpan1: StringConstants.signInTermsAndCondition_1 + "\n",
-                  textSpan2: StringConstants.signInTermsAndCondition_2,
+                  textSpan1: LocaleKeys.signInTermsAndCondition_1.tr() + "\n",
+                  textSpan2: LocaleKeys.signInTermsAndCondition_2.tr(),
                   onTap: () {
                     // Navigator.pushNamed(context, RouteConstants.signupScreen);
                   },
@@ -135,16 +137,16 @@ class _SignInScreenState extends State<SignInScreen> with InputValidationUtil {
         children: [
           TextFormField(
             controller: _emailController,
-            decoration: const InputDecoration(
-              label: Text(StringConstants.email),
+            decoration:  InputDecoration(
+              label: Text(LocaleKeys.email.tr()),
             ),
             validator: validateEmail,
           ),
           const SizedBox(height: 20),
           TextFormField(
             controller: _passwordController,
-            decoration: const InputDecoration(
-              label: Text(StringConstants.password),
+            decoration:  InputDecoration(
+              label: Text(LocaleKeys.password.tr()),
             ),
             obscureText: true,
             validator: validateFieldEmpty,

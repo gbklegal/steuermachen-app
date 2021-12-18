@@ -63,8 +63,9 @@ onGenerateRoutes(RouteSettings settings) {
         Map obj = settings.arguments as Map;
         return MaterialPageRoute(
           builder: (_) => SelectDocumentForScreen(
-            showNextBtn: obj["showNextBtn"],
-            onNextBtnRoute: obj["nextRoute"],
+            showNextBtn: obj["showNextBtn"] ??  false,
+            onNextBtnRoute: obj["nextRoute"] ?? "",
+            uploadBtnNow: obj["uploadBtn"],
           ),
         );
       }

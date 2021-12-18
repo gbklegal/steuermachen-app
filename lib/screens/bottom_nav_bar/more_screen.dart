@@ -131,6 +131,11 @@ class _MoreScreenState extends State<MoreScreen> {
                             PopupLoader.hideLoadingDialog(context);
                             Navigator.pushNamedAndRemoveUntil(context,
                                 RouteConstants.splashScreen, (val) => false);
+                          }
+                          if (moreOptions.routeName ==
+                              RouteConstants.selectDocumentForScreen) {
+                            Navigator.pushNamed(context, moreOptions.routeName,
+                                arguments: {"uploadBtn": true});
                           } else {
                             Navigator.pushNamed(context, moreOptions.routeName);
                           }

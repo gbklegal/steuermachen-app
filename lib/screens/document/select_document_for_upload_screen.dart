@@ -1,6 +1,4 @@
 import 'dart:io';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fdottedline/fdottedline.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -11,27 +9,30 @@ import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/components/app_bar/appbar_with_side_corner_circle_and_body.dart';
 import 'package:steuermachen/components/button_component.dart';
-import 'package:steuermachen/components/error_component.dart';
-import 'package:steuermachen/components/loading_component.dart';
 import 'package:steuermachen/components/popup_loader_component.dart';
+import 'package:steuermachen/components/toast_component.dart';
 import 'package:steuermachen/constants/app_constants.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:path/path.dart' as path;
-import 'package:steuermachen/main.dart';
 import 'package:steuermachen/providers/document_provider.dart';
 import 'package:steuermachen/utils/image_picker/media_source_selection_utils.dart';
 import 'package:steuermachen/utils/utils.dart';
+import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 import 'package:steuermachen/wrappers/documents_wrapper.dart';
 
 class SelectDocumentForScreen extends StatefulWidget {
   const SelectDocumentForScreen(
-      {Key? key, this.showNextBtn = false, this.onNextBtnRoute})
+      {Key? key,
+      this.showNextBtn = false,
+      this.onNextBtnRoute,
+      this.uploadBtnNow = false})
       : super(key: key);
 
   final bool? showNextBtn;
+  final bool? uploadBtnNow;
   final String? onNextBtnRoute;
   @override
   State<SelectDocumentForScreen> createState() =>
@@ -93,18 +94,27 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
         body: _mainBody(context),
       ),
       bottomNavigationBar: Visibility(
-        visible: widget.showNextBtn!,
+        visible: widget.showNextBtn! || widget.uploadBtnNow!,
         child: Padding(
           padding: AppConstants.bottomBtnPadding,
           child: ButtonComponent(
             btnHeight: 56,
-            buttonText: StringConstants.next.toUpperCase(),
+            buttonText: widget.uploadBtnNow!
+                ? StringConstants.upload
+                : StringConstants.next.toUpperCase(),
             textStyle: FontStyles.fontRegular(
                 color: ColorConstants.white, fontSize: 18),
-            onPressed: () {
+            onPressed: () async {
               _provider
                   .setFilesForUpload([...selectPDFList, ...selectImageList]);
-              Navigator.pushNamed(context, widget.onNextBtnRoute!);
+              if (widget.uploadBtnNow!) {
+                PopupLoader.showLoadingDialog(context);
+                CommonResponseWrapper res = await _provider.uploadFiles();
+                PopupLoader.hideLoadingDialog(context);
+                ToastComponent.showToast(res.message!);
+              } else {
+                Navigator.pushNamed(context, widget.onNextBtnRoute!);
+              }
             },
           ),
         ),

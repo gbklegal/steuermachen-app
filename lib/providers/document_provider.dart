@@ -11,7 +11,7 @@ import 'package:steuermachen/wrappers/documents_wrapper.dart';
 
 class DocumentsProvider extends ChangeNotifier {
   List<String> _selectedFiles = [];
-  late String _signaturePath;
+  late String _signaturePath ="";
   setFilesForUpload(List<String> files) {
     _selectedFiles = files;
   }
@@ -38,7 +38,7 @@ class DocumentsProvider extends ChangeNotifier {
             .add({"url": _url});
       }
 
-      if (_signaturePath.isNotEmpty && _signaturePath != "") {
+      if (_signaturePath != "") {
         String digiSignatureUrl =
             await _uploadToFirebaseStorage(_signaturePath);
         if (digiSignatureUrl.isNotEmpty) {
@@ -51,7 +51,7 @@ class DocumentsProvider extends ChangeNotifier {
       }
       _clearFields();
       return CommonResponseWrapper(
-          status: true, message: "Legal advice submitted");
+          status: true, message: "Documents uploaded");
     } catch (e) {
       return CommonResponseWrapper(
           status: true, message: ErrorMessagesConstants.somethingWentWrong);

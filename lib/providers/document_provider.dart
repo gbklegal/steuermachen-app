@@ -30,19 +30,24 @@ class DocumentsProvider extends ChangeNotifier {
         }
       }
       User? user = FirebaseAuth.instance.currentUser;
-      await firestore
-          .collection("user_documents")
-          .doc("${user?.uid}")
-          .collection("path")
-          .add({"url": _url});
+      if (_url.isNotEmpty) {
+        await firestore
+            .collection("user_documents")
+            .doc("${user?.uid}")
+            .collection("path")
+            .add({"url": _url});
+      }
+
       if (_signaturePath.isNotEmpty && _signaturePath != "") {
         String digiSignatureUrl =
             await _uploadToFirebaseStorage(_signaturePath);
-        await firestore
-            .collection("legal_advice")
-            .doc("${user?.uid}")
-            .collection("path")
-            .add({"signature_path": digiSignatureUrl});
+        if (digiSignatureUrl.isNotEmpty) {
+          await firestore
+              .collection("legal_advice")
+              .doc("${user?.uid}")
+              .collection("path")
+              .add({"signature_path": digiSignatureUrl});
+        }
       }
       _clearFields();
       return CommonResponseWrapper(

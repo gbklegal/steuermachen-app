@@ -91,16 +91,13 @@ class _FileTaxFinalSubmissionScreenState
                 PopupLoader.showLoadingDialog(context);
                 TaxFileProvider taxFileProvider =
                     Provider.of<TaxFileProvider>(context, listen: false);
-                DocumentsProvider documentsProvider =
-                    Provider.of<DocumentsProvider>(context, listen: false);
+
                 CommonResponseWrapper res = await taxFileProvider
-                    .submitTaxFileForm(taxFileProvider.taxFile);
-                CommonResponseWrapper resFiles =
-                    await documentsProvider.uploadFiles();
+                    .submitTaxFileForm(taxFileProvider.taxFile, context);
+                PopupLoader.hideLoadingDialog(context);
                 if (res.status!) {
-                  // Navigator.pushNamed(
-                  //     context, RouteConstants.fileTaxDoneOrderScreen);
-                  ToastComponent.showToast((resFiles.message!+" files"), long: true);
+                  Navigator.pushNamed(
+                      context, RouteConstants.fileTaxDoneOrderScreen);
                   ToastComponent.showToast(res.message!, long: true);
                 } else {
                   ToastComponent.showToast(res.message!, long: true);

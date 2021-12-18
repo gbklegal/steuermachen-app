@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/main.dart';
+import 'package:steuermachen/providers/document_provider.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 
 class TaxFileProvider extends ChangeNotifier {
@@ -32,16 +34,23 @@ class TaxFileProvider extends ChangeNotifier {
   }
 
   Future<CommonResponseWrapper> submitTaxFileForm(
-      TaxFileDataCollector formData) async {
+      TaxFileDataCollector formData, BuildContext context) async {
     try {
       User? user = FirebaseAuth.instance.currentUser;
+      DocumentsProvider documentsProvider =
+          Provider.of<DocumentsProvider>(context, listen: false);
+      CommonResponseWrapper _fileRes = await documentsProvider.uploadFiles();
+      if (!_fileRes.status!) {
+        return CommonResponseWrapper(
+            status: true, message: "Something went wrong");
+      }
       await firestore
           .collection("forms_data")
           .doc("tax_file")
           .collection("${user?.uid}")
           .add(formData.toJson());
       return CommonResponseWrapper(
-          status: true, message: "Profile updated successfully");
+          status: true, message: "Tax filed successfully");
     } catch (e) {
       return CommonResponseWrapper(
           status: true, message: "Something went wrong");

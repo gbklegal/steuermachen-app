@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
 import 'package:steuermachen/components/button_component.dart';
 import 'package:steuermachen/components/tax_calculate_screen.dart';
@@ -9,6 +10,7 @@ import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
+import 'package:steuermachen/providers/tax_file_provider.dart';
 
 class TaxFileCurrentIncomeScreen extends StatefulWidget {
   const TaxFileCurrentIncomeScreen({Key? key}) : super(key: key);
@@ -126,19 +128,27 @@ class _TaxFileCurrentIncomeScreenState
           ),
         ),
       ),
-      bottomNavigationBar: Padding(
-        padding: AppConstants.bottomBtnPadding,
-        child: ButtonComponent(
-          buttonText: StringConstants.next.toUpperCase(),
-          textStyle:
-              FontStyles.fontRegular(color: ColorConstants.white, fontSize: 18),
-          btnHeight: 56,
-          onPressed: () {
-            Navigator.pushNamed(context, RouteConstants.fileTaxInfoScreen);
-          },
-        ),
-      ),
+      bottomNavigationBar:
+          Consumer<TaxFileProvider>(builder: (context, consumer, child) {
+        return Padding(
+          padding: AppConstants.bottomBtnPadding,
+          child: ButtonComponent(
+            buttonText: StringConstants.next.toUpperCase(),
+            textStyle: FontStyles.fontRegular(
+                color: ColorConstants.white, fontSize: 18),
+            btnHeight: 56,
+            onPressed: () {
+              if (consumer.taxFile.income == null) {
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  content: Text(StringConstants.enterYourGrossAnnualIncome),
+                ));
+              } else {
+                Navigator.pushNamed(context, RouteConstants.fileTaxInfoScreen);
+              }
+            },
+          ),
+        );
+      }),
     );
   }
 }
-

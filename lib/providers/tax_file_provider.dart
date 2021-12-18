@@ -1,7 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:steuermachen/constants/strings/string_constants.dart';
+import 'package:steuermachen/main.dart';
+import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 
 class TaxFileProvider extends ChangeNotifier {
-  final TaxFileDataCollector _taxFileDataCollector = TaxFileDataCollector();
+  final TaxFileDataCollector _taxFileDataCollector = TaxFileDataCollector(
+      martialStatus: StringConstants.student, selectYear: "2017");
 
   TaxFileDataCollector get taxFile => _taxFileDataCollector;
   setMartialStatus(String val) {
@@ -24,6 +29,23 @@ class TaxFileProvider extends ChangeNotifier {
   setUserInformation(UserInformation user) {
     _taxFileDataCollector.userInformation = user;
     notifyListeners();
+  }
+
+  Future<CommonResponseWrapper> submitTaxFileForm(
+      TaxFileDataCollector formData) async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      await firestore
+          .collection("forms_data")
+          .doc("tax_file")
+          .collection("${user?.uid}")
+          .add(formData.toJson());
+      return CommonResponseWrapper(
+          status: true, message: "Profile updated successfully");
+    } catch (e) {
+      return CommonResponseWrapper(
+          status: true, message: "Something went wrong");
+    }
   }
 }
 

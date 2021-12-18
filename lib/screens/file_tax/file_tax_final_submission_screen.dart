@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
 import 'package:steuermachen/components/button_component.dart';
+import 'package:steuermachen/components/popup_loader_component.dart';
 import 'package:steuermachen/components/text_component.dart';
 import 'package:steuermachen/components/text_progress_bar_component.dart';
+import 'package:steuermachen/components/toast_component.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
+import 'package:steuermachen/providers/document_provider.dart';
+import 'package:steuermachen/providers/tax_file_provider.dart';
+import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 
 class FileTaxFinalSubmissionScreen extends StatefulWidget {
   const FileTaxFinalSubmissionScreen({Key? key}) : super(key: key);
@@ -81,9 +87,24 @@ class _FileTaxFinalSubmissionScreenState
                 fontSize: 18,
               ),
               color: ColorConstants.toxicGreen,
-              onPressed: () {
-                Navigator.pushNamed(
-                    context, RouteConstants.fileTaxDoneOrderScreen);
+              onPressed: () async {
+                PopupLoader.showLoadingDialog(context);
+                TaxFileProvider taxFileProvider =
+                    Provider.of<TaxFileProvider>(context, listen: false);
+                DocumentsProvider documentsProvider =
+                    Provider.of<DocumentsProvider>(context, listen: false);
+                CommonResponseWrapper res = await taxFileProvider
+                    .submitTaxFileForm(taxFileProvider.taxFile);
+                CommonResponseWrapper resFiles =
+                    await documentsProvider.uploadFiles();
+                if (res.status!) {
+                  // Navigator.pushNamed(
+                  //     context, RouteConstants.fileTaxDoneOrderScreen);
+                  ToastComponent.showToast((resFiles.message!+" files"), long: true);
+                  ToastComponent.showToast(res.message!, long: true);
+                } else {
+                  ToastComponent.showToast(res.message!, long: true);
+                }
               },
             ),
           ],

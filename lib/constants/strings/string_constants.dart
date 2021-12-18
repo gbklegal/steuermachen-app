@@ -76,6 +76,7 @@ class StringConstants {
   static const String place = "Place";
   static const String phoneNo = "Phone No";
   static const String message = "Message";
+  static const String enterYourGrossAnnualIncome = "Enter your gross annual income";
   static const String disscussFreeInitial =
       "What do you want to discuss in the free initial";
   // File tax upload document

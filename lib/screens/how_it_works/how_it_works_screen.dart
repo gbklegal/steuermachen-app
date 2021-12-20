@@ -74,7 +74,6 @@ class HowItWorksScreen extends StatelessWidget {
             },
             child:  Text(
               LocaleKeys.applyNow.tr(),
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
             ),
           ),
         ),
@@ -98,7 +97,7 @@ class HowItWorksScreen extends StatelessWidget {
                 child: Visibility(
                   visible: showTopLine,
                   child: Container(
-                    height: 30,
+                    height: 18,
                     width: 1,
                     color: ColorConstants.green,
                   ),
@@ -109,7 +108,7 @@ class HowItWorksScreen extends StatelessWidget {
                   shape: BoxShape.circle,
                   color: ColorConstants.green,
                 ),
-                padding: const EdgeInsets.all(18),
+                padding: const EdgeInsets.all(15),
                 child: Padding(
                   padding: const EdgeInsets.only(bottom: 4),
                   child: Text(
@@ -117,14 +116,14 @@ class HowItWorksScreen extends StatelessWidget {
                     style: Theme.of(context)
                         .textTheme
                         .bodyText1!
-                        .copyWith(color: ColorConstants.white, fontSize: 24),
+                        .copyWith(color: ColorConstants.white, fontSize: 17),
                   ),
                 ),
               ),
               Positioned(
                 top: 50,
                 child: Container(
-                  height: 32,
+                  height: 22,
                   width: 1,
                   color: ColorConstants.green,
                 ),
@@ -139,8 +138,8 @@ class HowItWorksScreen extends StatelessWidget {
             textAlign: TextAlign.center,
             style: Theme.of(context)
                 .textTheme
-                .bodyText1!
-                .copyWith(fontWeight: FontWeight.w700),
+                .bodyText2!
+                .copyWith(fontWeight: FontWeight.w600),
           ),
         ),
         Text(

@@ -25,17 +25,17 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen>
     with InputValidationUtil {
   final TextEditingController _firstNameController =
-      TextEditingController(text: "Osama");
+      TextEditingController();
   final TextEditingController _surNameController =
-      TextEditingController(text: "Asif");
+      TextEditingController();
   final TextEditingController _streetController =
-      TextEditingController(text: "North");
+      TextEditingController();
   final TextEditingController _postalCodeController =
-      TextEditingController(text: "74580");
+      TextEditingController();
   final TextEditingController _cityTownController =
-      TextEditingController(text: "Karachi");
+      TextEditingController();
   final TextEditingController _countryController =
-      TextEditingController(text: "Pakistan");
+      TextEditingController();
   final GlobalKey<FormState> _userFormKey = GlobalKey<FormState>();
 
   late FormsProvider _formsProvider;

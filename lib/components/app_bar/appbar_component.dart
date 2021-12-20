@@ -1,16 +1,20 @@
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:steuermachen/components/text_component.dart';
 import 'package:steuermachen/constants/app_constants.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
+import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/providers/language_provider.dart';
 
 class AppBarComponent extends StatelessWidget with PreferredSizeWidget {
   final Function()? overrideBackPressed;
   final String? text;
+  final String? backText;
   final String? imageTitle;
   final Color backgroundColor;
   final bool? showBackButton;
@@ -25,6 +29,7 @@ class AppBarComponent extends StatelessWidget with PreferredSizeWidget {
     this.showBackButton = true,
     this.showNotificationIcon = true,
     this.showBottomLine = true,
+    this.backText,
   }) : super(key: key);
 
   @override
@@ -44,27 +49,37 @@ class AppBarComponent extends StatelessWidget with PreferredSizeWidget {
         child: AppBar(
           backgroundColor: backgroundColor,
           title: _title(),
+          leadingWidth: 90,
           // iconTheme: ,
           titleSpacing: -5,
           elevation: 0,
           leading: Visibility(
             visible: showBackButton!,
-            child: Row(
-              children: [
-                IconButton(
-                  icon: const Icon(
-                    Icons.arrow_back_ios_new_rounded,
-                    color: ColorConstants.black,
+            child: InkWell(
+              onTap: () {
+                /*  overrideBackPressed == null
+                            ? Get.back()
+                            : overrideBackPressed!(); */
+                Navigator.pop(context);
+              },
+              child: Row(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(left: 8.0),
+                    child: Icon(
+                      Icons.arrow_back_ios_new_rounded,
+                      color: ColorConstants.black,
+                    ),
                   ),
-                  onPressed: () {
-                    /*  overrideBackPressed == null
-                        ? Get.back()
-                        : overrideBackPressed!(); */
-                    Navigator.pop(context);
-                  },
-                ),
-                // const Text(StringConstants.back)
-              ],
+                  TextComponent(
+                    backText ?? LocaleKeys.back.tr(),
+                    style: const TextStyle(
+                        color: ColorConstants.black,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 17),
+                  )
+                ],
+              ),
             ),
           ),
           centerTitle: true,
@@ -107,7 +122,7 @@ class AppBarComponent extends StatelessWidget with PreferredSizeWidget {
     return Consumer<LanguageProvider>(builder: (context, consumer, child) {
       return Text(
         text ?? "",
-        style: FontStyles.fontMedium(fontSize: 16, fontWeight: FontWeight.w600),
+        style: FontStyles.fontMedium(fontSize: 16, fontWeight: FontWeight.w400),
       );
     });
   }

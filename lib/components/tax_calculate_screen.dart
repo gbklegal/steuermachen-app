@@ -1,6 +1,7 @@
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
@@ -24,13 +25,12 @@ class TaxCalculatorComponent extends StatelessWidget {
               FilteringTextInputFormatter.digitsOnly,
             ],
             decoration: InputDecoration(
-              labelStyle: TextStyle(
+              labelStyle: GoogleFonts.raleway(
                 fontSize: 16.0,
-                fontFamily: 'helvetica',
                 fontStyle: FontStyle.normal,
                 color: ColorConstants.black.withOpacity(0.4),
               ),
-              label:  Text(LocaleKeys.annualIncom.tr()),
+              label: Text(LocaleKeys.annualIncom.tr()),
               filled: false,
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(5.0),
@@ -66,7 +66,7 @@ class TaxCalculatorComponent extends StatelessWidget {
                 style: Theme.of(context)
                     .textTheme
                     .bodyText1!
-                    .copyWith(fontWeight: FontWeight.w600, fontSize: 18),
+                    .copyWith(fontWeight: FontWeight.w500, fontSize: 17),
               ),
             ),
           ),
@@ -78,14 +78,26 @@ class TaxCalculatorComponent extends StatelessWidget {
             ),
             child: Padding(
               padding: const EdgeInsets.all(18.0),
-              child: Center(
-                  child: Text(
-                "${consumer.calculatedPrice} euros",
-                style: Theme.of(context)
-                    .textTheme
-                    .headline6!
-                    .copyWith(fontWeight: FontWeight.w500, fontSize: 25),
-              )),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "${consumer.calculatedPrice}",
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline6!
+                        .copyWith(fontWeight: FontWeight.w500, fontSize: 25),
+                  ),
+                  Text(
+                    "euros",
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText1!
+                        .copyWith(fontWeight: FontWeight.w500, fontSize: 17),
+                  ),
+                ],
+              ),
             ),
           ),
         ],

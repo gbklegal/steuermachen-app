@@ -56,28 +56,36 @@ class HomeScreen extends StatelessWidget {
                   alignment: Alignment.topRight,
                   child: SvgPicture.asset(AssetConstants.topRightRoundCircle),
                 ),
-                Image.asset(AssetConstants.tax),
-                Padding(
-                  padding: const EdgeInsets.only(left: 45, right: 30),
-                  child: Text(
-                    LocaleKeys.howWouldYouLikeToMoveForwardWithUs.tr(),
-                    textAlign: TextAlign.left,
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline5!
-                        .copyWith(fontWeight: FontWeight.w700, fontSize: 28),
-                  ),
+                Image.asset(
+                  AssetConstants.tax,
+                  height: 144,
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(
+                  height: 35,
+                ),
                 Padding(
-                  padding: const EdgeInsets.only(right: 15, bottom: 20),
-                  child: Text(
-                    "Select catogorie suitable to you",
-                    textAlign: TextAlign.left,
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline5!
-                        .copyWith(fontWeight: FontWeight.w400, fontSize: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 35),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        LocaleKeys.howWouldYouLikeToMoveForwardWithUs.tr(),
+                        textAlign: TextAlign.left,
+                        style: Theme.of(context).textTheme.headline5!.copyWith(
+                            fontWeight: FontWeight.w700, fontSize: 28),
+                      ),
+                      const SizedBox(height: 5),
+                      Text(
+                        "Select catogorie suitable to you".tr(),
+                        textAlign: TextAlign.left,
+                        style: Theme.of(context).textTheme.headline5!.copyWith(
+                            fontWeight: FontWeight.w400, fontSize: 17),
+                      ),
+                      const SizedBox(
+                        height: 35,
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -156,9 +164,9 @@ class _HomeCards extends StatelessWidget {
                           textAlign: TextAlign.left,
                           style: Theme.of(context)
                               .textTheme
-                              .headline5!
+                              .bodyText1!
                               .copyWith(
-                                  fontWeight: FontWeight.w400, fontSize: 20),
+                                  fontWeight: FontWeight.w500, fontSize: 17, letterSpacing: -0.3),
                         ),
                       ],
                     ),

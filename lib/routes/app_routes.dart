@@ -3,6 +3,7 @@ import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/screens/auth/signin_screen.dart';
 import 'package:steuermachen/screens/auth/signup_screen.dart';
 import 'package:steuermachen/screens/bottom_nav_bar/bottom_nav_bar_screen.dart';
+import 'package:steuermachen/screens/bottom_nav_bar/more_screen.dart';
 import 'package:steuermachen/screens/calculator/calculator_screen.dart';
 import 'package:steuermachen/screens/contact_us/contact_us_form_screen.dart';
 import 'package:steuermachen/screens/contact_us/contact_us_options_screen.dart';
@@ -63,9 +64,10 @@ onGenerateRoutes(RouteSettings settings) {
         Map obj = settings.arguments as Map;
         return MaterialPageRoute(
           builder: (_) => SelectDocumentForScreen(
-            showNextBtn: obj["showNextBtn"] ??  false,
+            showNextBtn: obj["showNextBtn"] ?? false,
             onNextBtnRoute: obj["nextRoute"] ?? "",
-            uploadBtnNow: obj["uploadBtn"]?? false,
+            uploadBtnNow: obj["uploadBtn"] ?? false,
+            showRoundBody: obj["roundBody"] ?? true,
           ),
         );
       }
@@ -151,6 +153,10 @@ onGenerateRoutes(RouteSettings settings) {
     case RouteConstants.calculatorScreen:
       return MaterialPageRoute(
         builder: (_) => const CalculatorScreen(),
+      );
+    case RouteConstants.moreScreen:
+      return MaterialPageRoute(
+        builder: (_) => const MoreScreen(),
       );
     default:
       return MaterialPageRoute(

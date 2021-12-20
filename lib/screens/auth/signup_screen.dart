@@ -27,9 +27,9 @@ class SignupScreen extends StatefulWidget {
 class _SignupScreenState extends State<SignupScreen> with InputValidationUtil {
   late AuthProvider authProvider;
   final TextEditingController _emailController =
-      TextEditingController(text: "mirza.jaun@hotmail.com");
+      TextEditingController();
   final TextEditingController _passwordController =
-      TextEditingController(text: "12345678");
+      TextEditingController();
   final GlobalKey<FormState> _signupFormKey = GlobalKey<FormState>();
   @override
   void initState() {
@@ -56,7 +56,7 @@ class _SignupScreenState extends State<SignupScreen> with InputValidationUtil {
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
               children: [
-                const Expanded(child: SizedBox(height: 35)),
+                const SizedBox(height: 35),
                  TitleTextAuthComponent(title: LocaleKeys.signUp.tr()),
                 const SizedBox(height: 35),
                 _authFields(),
@@ -109,7 +109,7 @@ class _SignupScreenState extends State<SignupScreen> with InputValidationUtil {
                         context, RouteConstants.signInScreen);
                   },
                 ),
-                const Expanded(child: SizedBox(height: 22)),
+                const SizedBox(height: 50),
                 RichTextAuthComponent(
                   textSpan1: LocaleKeys.signInTermsAndCondition_1.tr() + "\n",
                   textSpan2: LocaleKeys.signInTermsAndCondition_2.tr(),

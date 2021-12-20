@@ -6,13 +6,10 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
-import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/languages/codegen_loader.g.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/providers/initialize_provider.dart';
-import 'package:steuermachen/providers/language_provider.dart';
 import 'package:steuermachen/routes/app_routes.dart';
-import 'package:steuermachen/screens/onboarding/onboarding_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:steuermachen/screens/splash_screen.dart';
 
@@ -79,9 +76,8 @@ class MyApp extends StatelessWidget {
 
   InputDecorationTheme _inputDecorationTheme() {
     return InputDecorationTheme(
-        labelStyle: TextStyle(
-          fontSize: 20.0,
-          fontFamily: 'helvetica',
+        labelStyle: GoogleFonts.raleway(
+          fontSize: 17.0,
           fontStyle: FontStyle.normal,
           color: ColorConstants.black.withOpacity(0.4),
         ),
@@ -97,6 +93,7 @@ class MyApp extends StatelessWidget {
           borderSide:
               const BorderSide(color: ColorConstants.formFieldBackground),
         ),
+        
         fillColor: ColorConstants.formFieldBackground);
   }
 
@@ -108,10 +105,9 @@ class MyApp extends StatelessWidget {
         ),
         elevation: 0.8,
         backgroundColor: ColorConstants.primary,
-        textStyle: const TextStyle(
-            fontSize: 18.0,
-            fontFamily: 'helvetica',
-            fontWeight: FontWeight.w700,
+        textStyle: GoogleFonts.raleway(
+            fontSize: 17.0,
+            fontWeight: FontWeight.w500,
             fontStyle: FontStyle.normal),
       ),
     );
@@ -127,9 +123,8 @@ class MyApp extends StatelessWidget {
           fontStyle: FontStyle.normal),
       bodyText1:
           GoogleFonts.raleway(fontSize: 16.0, color: ColorConstants.black),
-      bodyText2: GoogleFonts.raleway(
-        fontSize: 14.0,
-      ),
+      bodyText2:
+          GoogleFonts.raleway(fontSize: 14.0, color: ColorConstants.black),
       button: GoogleFonts.raleway(
           fontSize: 16.0,
           fontWeight: FontWeight.bold,

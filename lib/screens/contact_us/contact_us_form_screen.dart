@@ -25,17 +25,17 @@ class ContactUsFormScreen extends StatefulWidget {
 class _ContactUsFormScreenState extends State<ContactUsFormScreen>
     with InputValidationUtil {
   final TextEditingController _firstNameController =
-      TextEditingController(text: "Osama");
+      TextEditingController();
   final TextEditingController _surNameController =
-      TextEditingController(text: "Asif");
+      TextEditingController();
   final TextEditingController _emailController =
-      TextEditingController(text: "osama.asif20@gmail.com");
+      TextEditingController();
   final TextEditingController _subjectController =
-      TextEditingController(text: "testing subject");
+      TextEditingController();
   final TextEditingController _phoneNoController =
-      TextEditingController(text: "03092783699");
+      TextEditingController();
   final TextEditingController _messageController =
-      TextEditingController(text: "testing message");
+      TextEditingController();
   final GlobalKey<FormState> _contactFormKey = GlobalKey<FormState>();
 
   late FormsProvider _formsProvider;

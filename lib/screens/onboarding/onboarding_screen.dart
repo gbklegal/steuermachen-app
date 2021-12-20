@@ -49,7 +49,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                             color: ColorConstants.black,
                             fontStyle: FontStyle.normal,
                             letterSpacing: 1,
-                            fontSize: 18),
+                            fontSize: 17),
                       ),
                     ),
                     const LanguageDropdownComponent(),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:steuermachen/components/custom_icon_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
+import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/screens/bottom_nav_bar/more_screen.dart';
@@ -18,10 +19,10 @@ class BottomNavBarScreen extends StatefulWidget {
 
 class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
   int _currentIndex = 0;
-  static const List<Widget> _widgetOptions =  <Widget>[
+  static const List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
     CalculatorScreen(),
-    MoreScreen(),
+    SizedBox(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -39,9 +40,13 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
         unselectedLabelStyle: FontStyles.fontRegular(fontSize: 14),
         onTap: (value) {
           // Respond to item press.
-          setState(() {
-            _currentIndex = value;
-          });
+          if (value == 2) {
+            Navigator.pushNamed(context, RouteConstants.moreScreen);
+          } else {
+            setState(() {
+              _currentIndex = value;
+            });
+          }
         },
         items: [
           BottomNavigationBarItem(

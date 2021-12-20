@@ -122,7 +122,7 @@ class _TaxFileCurrentIncomeScreenState
               TextComponent(
                 LocaleKeys.applyNow.tr(),
                 style: FontStyles.fontMedium(
-                    fontSize: 18,
+                    fontSize: 17,
                     underLine: true,
                     color: ColorConstants.toxicGreen),
               ),

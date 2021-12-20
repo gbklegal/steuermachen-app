@@ -87,7 +87,7 @@ class _TaxOptionGridComponentState extends State<TaxOptionGridComponent> {
                   ),
                   TextComponent(
                     maritalStatusModelList[index].title!,
-                    style: FontStyles.fontRegular(fontSize: 20),
+                    style: FontStyles.fontRegular(fontSize: 17),
                   )
                 ],
               )

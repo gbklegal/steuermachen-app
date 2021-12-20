@@ -23,7 +23,7 @@ class SignInOptionsAuthComponent extends StatelessWidget {
                 offset: const Offset(0, 1),
                 blurRadius: 2)
           ]),
-      padding: const EdgeInsets.all(21),
+      padding: const EdgeInsets.all(17),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -36,7 +36,7 @@ class SignInOptionsAuthComponent extends StatelessWidget {
             btnText,
             textAlign: TextAlign.start,
             style: Theme.of(context).textTheme.headline6!.copyWith(
-                fontWeight: FontWeight.w700, fontSize: 24, color: textColor),
+                fontWeight: FontWeight.w700, fontSize: 17, color: textColor),
           ),
         ],
       ),

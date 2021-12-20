@@ -38,9 +38,9 @@ class ButtonComponent extends StatelessWidget {
         buttonText,
         // text: buttonText,
         // ignore: prefer_if_null_operators
-        style: textStyle != null
-            ? textStyle
-            : const TextStyle(fontWeight: FontWeight.w500),
+        // style: textStyle != null
+        //     ? textStyle
+        //     : const TextStyle(fontWeight: FontWeight.w500),
       ),
       onPressed: isDisabled! ? null : (onPressed ?? () => {}),
     );

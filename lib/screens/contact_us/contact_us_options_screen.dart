@@ -99,9 +99,9 @@ class _ContactUsOptionScreenState extends State<ContactUsOptionScreen> {
             onPressed: () {
               Navigator.pushNamed(context, RouteConstants.contactUsFormScreen);
             },
-            child: const Text(
-              LocaleKeys.contactForm,
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
+            child: Text(
+              LocaleKeys.contactForm.tr(),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
             ),
           ),
         ),

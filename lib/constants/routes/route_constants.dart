@@ -27,4 +27,5 @@ class RouteConstants {
   static const String taxAdviceFormScreen = "TaxAdviceFormScreen";
   static const String profileScreen = "ProfileScreen";
   static const String calculatorScreen = "CalculatorScreen";
+  static const String moreScreen = "MoreScreen";
 }

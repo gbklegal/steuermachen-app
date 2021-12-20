@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:fdottedline/fdottedline.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
+import 'package:steuermachen/components/app_bar/appbar_component.dart';
 import 'package:steuermachen/components/app_bar/appbar_with_side_corner_circle_and_body.dart';
 import 'package:steuermachen/components/button_component.dart';
 import 'package:steuermachen/components/popup_loader_component.dart';
@@ -14,7 +16,6 @@ import 'package:steuermachen/components/toast_component.dart';
 import 'package:steuermachen/constants/app_constants.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
-import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:path/path.dart' as path;
 import 'package:steuermachen/languages/locale_keys.g.dart';
@@ -29,12 +30,14 @@ class SelectDocumentForScreen extends StatefulWidget {
       {Key? key,
       this.showNextBtn = false,
       this.onNextBtnRoute,
-      this.uploadBtnNow = false})
+      this.uploadBtnNow = false,
+      this.showRoundBody = true})
       : super(key: key);
 
   final bool? showNextBtn;
   final bool? uploadBtnNow;
   final String? onNextBtnRoute;
+  final bool? showRoundBody;
   @override
   State<SelectDocumentForScreen> createState() =>
       _SelectDocumentForScreenState();
@@ -88,12 +91,24 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
     }
   }
 
+  PreferredSizeWidget? _appBar() {
+    if (!widget.showRoundBody!) {
+      return AppBarComponent(
+        LocaleKeys.uplaodYourDocuments.tr(),
+        showNotificationIcon: false,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: AppBarWithSideCornerCircleAndRoundBody(
-        body: _mainBody(context),
-      ),
+      appBar: _appBar(),
+      body: widget.showRoundBody!
+          ? AppBarWithSideCornerCircleAndRoundBody(
+              body: _mainBody(context),
+            )
+          : _mainBody(context),
       bottomNavigationBar: Visibility(
         visible: widget.showNextBtn! || widget.uploadBtnNow!,
         child: Padding(
@@ -101,8 +116,8 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
           child: ButtonComponent(
             btnHeight: 56,
             buttonText: widget.uploadBtnNow!
-                ? LocaleKeys.upload
-                : LocaleKeys.next.toUpperCase(),
+                ? LocaleKeys.upload.tr()
+                : LocaleKeys.next.tr().toUpperCase(),
             textStyle: FontStyles.fontRegular(
                 color: ColorConstants.white, fontSize: 18),
             onPressed: () async {
@@ -172,7 +187,7 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Text(
-              LocaleKeys.selectDocument,
+              LocaleKeys.selectDocument.tr(),
               style: FontStyles.fontMedium(
                   lineSpacing: 1.1, fontSize: 24, fontWeight: FontWeight.w600),
             ),
@@ -309,9 +324,9 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
             onPressed: () {
               _openCameraGallerySelectionDialog();
             },
-            child: const Text(
-              LocaleKeys.useCamera,
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+            child: Text(
+              LocaleKeys.useCamera.tr(),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
             ),
           )
         ],
@@ -337,10 +352,11 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
             padding: const EdgeInsets.symmetric(vertical: 15),
             child: SizedBox(
               width: MediaQuery.of(context).size.width,
-              child: const Center(
+              child: Center(
                 child: Text(
-                  LocaleKeys.select,
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.normal),
+                  LocaleKeys.select.tr(),
+                  style: const TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.normal),
                 ),
               ),
             ),
@@ -366,7 +382,7 @@ class _DocumentOverview extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              LocaleKeys.documentOverview,
+              LocaleKeys.documentOverview.tr(),
               style: FontStyles.fontMedium(
                   fontSize: 24, fontWeight: FontWeight.w600),
             ),

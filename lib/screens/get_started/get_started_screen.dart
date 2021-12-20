@@ -20,7 +20,10 @@ class GetStartedScreen extends StatelessWidget {
             children: [
               const SizedBox(height: 35),
               Expanded(child: _topTitle(context)),
-              Image.asset(AssetConstants.fileArtWork),
+              Image.asset(
+                AssetConstants.fileArtWork,
+                height: 280,
+              ),
               _button(context, LocaleKeys.calculateYourPrice.tr(), () {
                 Navigator.pushNamed(context, RouteConstants.calculatorScreen);
               }),
@@ -29,7 +32,9 @@ class GetStartedScreen extends StatelessWidget {
                 Navigator.pushNamed(context, RouteConstants.signupScreen);
               }),
               const SizedBox(height: 22),
-              Expanded(child: _richText(context))
+              Expanded(
+                child: _richText(context),
+              )
             ],
           ),
         ),
@@ -56,7 +61,7 @@ class GetStartedScreen extends StatelessWidget {
     return ElevatedButton(
       style: ElevatedButtonTheme.of(context).style?.copyWith(
             minimumSize: MaterialStateProperty.all(
-              Size(MediaQuery.of(context).size.width, 70),
+              Size(MediaQuery.of(context).size.width, 56),
             ),
           ),
       onPressed: onPressed,

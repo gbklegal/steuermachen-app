@@ -21,7 +21,7 @@ class _LanguageDropdownComponentState extends State<LanguageDropdownComponent> {
         value: consumer.value,
         icon: SvgPicture.asset(
           AssetConstants.icDown,
-          height: 10,
+          height: 8,
         ),
         iconSize: 18,
         style: const TextStyle(color: ColorConstants.toxicGreen, fontSize: 18),
@@ -29,11 +29,17 @@ class _LanguageDropdownComponentState extends State<LanguageDropdownComponent> {
         onChanged: (String? newValue) {
           consumer.changeLanguage(newValue!, context);
         },
-        items:
-            <String>['English', 'Deutsch'].map<DropdownMenuItem<String>>((String value) {
+        items: <String>['English', 'Deutsch']
+            .map<DropdownMenuItem<String>>((String value) {
           return DropdownMenuItem<String>(
             value: value,
-            child: Text(value),
+            child: Text(
+              value,
+              style: const TextStyle(
+                  fontSize: 17,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 0.9),
+            ),
           );
         }).toList(),
       );

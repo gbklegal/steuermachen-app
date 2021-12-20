@@ -32,7 +32,7 @@ class CompletedDialogComponent extends StatelessWidget {
                     padding: const EdgeInsets.only(right: 4, top: 10),
                     child: ButtonComponent(
                       btnHeight: 55,
-                      buttonText: LocaleKeys.goToHome,
+                      buttonText: LocaleKeys.goToHome.tr(),
                       textStyle: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w700,

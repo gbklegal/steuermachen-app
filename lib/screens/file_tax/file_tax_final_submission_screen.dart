@@ -52,7 +52,7 @@ class _FileTaxFinalSubmissionScreenState
             ),
             TextComponent(
               LocaleKeys.ifNeedInit.tr(),
-              style: FontStyles.fontRegular(fontSize: 18),
+              style: FontStyles.fontRegular(fontSize: 17),
             ),
             const SizedBox(
               height: 26,

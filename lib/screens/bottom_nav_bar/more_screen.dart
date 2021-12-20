@@ -5,10 +5,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:steuermachen/components/app_bar/appbar_component.dart';
 import 'package:steuermachen/components/language_dropdown_component.dart';
 import 'package:steuermachen/components/popup_loader_component.dart';
 import 'package:steuermachen/components/text_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
+import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
@@ -82,32 +84,44 @@ class _MoreScreenState extends State<MoreScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Column(
+    return Scaffold(
+      appBar: AppBarComponent(
+        "",
+        showNotificationIcon: false,
+        showBottomLine: false,
+        backText: LocaleKeys.more.tr(),
+      ),
+      body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
-            padding: EdgeInsets.only(right: 8),
-            child: Align(
-                alignment: Alignment.topRight,
-                child: LanguageDropdownComponent()),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                TextComponent(
-                  LocaleKeys.myAccount.tr(),
-                  style: FontStyles.fontBold(fontSize: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextComponent(
+                      LocaleKeys.myAccount.tr(),
+                      style: FontStyles.fontBold(fontSize: 20),
+                    ),
+                    const SizedBox(height: 8),
+                    TextComponent(user!.email!,
+                        style: FontStyles.fontRegular(fontSize: 20),
+                        overFlow: TextOverflow.ellipsis),
+                  ],
                 ),
-                const SizedBox(height: 8),
-                TextComponent(
-                  user!.email!,
-                  style: FontStyles.fontRegular(fontSize: 20),
+              ),
+              Transform.translate(
+                offset: const Offset(0, -15),
+                child: const Padding(
+                  padding: EdgeInsets.only(right: 15, top: 0),
+                  child: LanguageDropdownComponent(),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
           const SizedBox(height: 25),
           Expanded(
@@ -143,10 +157,15 @@ class _MoreScreenState extends State<MoreScreen> {
                         child: Consumer<LanguageProvider>(
                             builder: (context, consumer, child) {
                           return ListTile(
-                            leading: Image.asset(moreOptions.leadingIcon),
+                            leading: Image.asset(
+                              moreOptions.leadingIcon,
+                              height: 20,
+                              width: 20,
+                              color: ColorConstants.toxicGreen,
+                            ),
                             title: TextComponent(
                               moreOptions.title.tr(),
-                              style: FontStyles.fontRegular(fontSize: 20),
+                              style: FontStyles.fontRegular(fontSize: 17),
                             ),
                             trailing:
                                 SvgPicture.asset(moreOptions.trailingIcon),

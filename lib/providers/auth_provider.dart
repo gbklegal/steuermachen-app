@@ -63,10 +63,12 @@ class AuthProvider extends ChangeNotifier {
             status: true, message: ErrorMessagesConstants.somethingWentWrong);
       }
     }
-
-    return CommonResponseWrapper(
-        status: true, message: ErrorMessagesConstants.somethingWentWrong);
-    ;
+    if (googleSignInAccount == null) {
+      return CommonResponseWrapper(
+          status: false, message: "");
+    } else {
+      return CommonResponseWrapper(status: false, message: ErrorMessagesConstants.somethingWentWrong);
+    }
   }
 
   Future<CommonResponseWrapper> registerWithEmailAndPassword(

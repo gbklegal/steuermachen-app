@@ -71,8 +71,6 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                       },
                       child:  Text(
                         LocaleKeys.orderNow.tr(),
-                        style: const TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w500),
                       ),
                     ),
                   ),

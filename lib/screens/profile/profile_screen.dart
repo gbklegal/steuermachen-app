@@ -7,7 +7,6 @@ import 'package:steuermachen/components/popup_loader_component.dart';
 import 'package:steuermachen/components/text_component.dart';
 import 'package:steuermachen/components/toast_component.dart';
 import 'package:steuermachen/constants/app_constants.dart';
-import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/providers/forms_provider.dart';

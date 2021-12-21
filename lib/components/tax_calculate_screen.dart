@@ -21,6 +21,7 @@ class TaxCalculatorComponent extends StatelessWidget {
         children: [
           TextFormField(
             keyboardType: TextInputType.number,
+            textInputAction: TextInputAction.done,
             inputFormatters: [
               FilteringTextInputFormatter.digitsOnly,
             ],
@@ -46,8 +47,8 @@ class TaxCalculatorComponent extends StatelessWidget {
               ),
             ),
             onChanged: (val) {
+                consumer.calculateTax(val);
               if (val != "") {
-                consumer.calculateTax(int.parse(val));
                 if (routeName == RouteConstants.currentIncomeScreen) {
                   Provider.of<TaxFileProvider>(context, listen: false)
                       .setIncome(val, consumer.calculatedPrice.toString(),
@@ -83,7 +84,7 @@ class TaxCalculatorComponent extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "${consumer.calculatedPrice}",
+                    consumer.calculatedPrice == 0 ? 'x' : consumer.calculatedPrice.toString()+',00',
                     style: Theme.of(context)
                         .textTheme
                         .headline6!

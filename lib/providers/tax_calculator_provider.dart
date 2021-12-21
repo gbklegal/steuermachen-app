@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 
 class TaxCalculatorProvider extends ChangeNotifier {
-  List<int> prices = [89, 99, 129, 169, 189, 229, 299, 319, 369, 429];
+  List<int> prices = [89, 99, 129, 169, 189, 229, 299, 319, 369, 429, 0];
   late int calculatedPrice = 0;
-  void calculateTax(int bje) {
+  void calculateTax(String val) {
+    int bje;
+    if (val != "") {
+      bje = int.parse(val);
+    } else {
+      bje = 250001;
+    }
     int priceIndex = 0;
     // gross annual income
     if (bje <= 8000) {
@@ -26,8 +32,8 @@ class TaxCalculatorProvider extends ChangeNotifier {
       priceIndex = 8;
     } else if (bje >= 200001 && bje <= 250000) {
       priceIndex = 9;
-    } else {
-      calculatedPrice = 0;
+    } else if (bje > 250000) {
+      priceIndex = 10;
     }
 
     calculatedPrice = prices[priceIndex];

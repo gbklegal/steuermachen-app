@@ -12,6 +12,7 @@ import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
+import 'package:steuermachen/providers/tax_calculator_provider.dart';
 import 'package:steuermachen/providers/tax_file_provider.dart';
 
 class TaxFileCurrentIncomeScreen extends StatefulWidget {
@@ -26,6 +27,12 @@ class _TaxFileCurrentIncomeScreenState
     extends State<TaxFileCurrentIncomeScreen> {
   // RangeLabels labels = const RangeLabels('0', "250000");
   // SfRangeValues _values = const SfRangeValues(1000, 250000);
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<TaxCalculatorProvider>(context, listen: false).calculatedPrice =
+        0;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,100 +40,111 @@ class _TaxFileCurrentIncomeScreenState
       appBar: AppBarComponent(
         LocaleKeys.curStatus.tr(),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 16, right: 16, top: 25),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TextProgressBarComponent(
-                title: "${LocaleKeys.step.tr()} 3/5",
-                progress: 0.6,
-              ),
-              const SizedBox(
-                height: 62,
-              ),
-              TextComponent(
-                LocaleKeys.grossAnnualIncome.tr(),
-                style: FontStyles.fontBold(fontSize: 24),
-              ),
-              const SizedBox(
-                height: 12,
-              ),
-              // SfRangeSlider(
-              //   min: 0,
-              //   max: 250000,
-              //   values: _values,
-              //   interval: 1000,
-              //   showTicks: false,
-              //   showLabels: false,
-              //   enableTooltip: true,
-              //   minorTicksPerInterval: 1000,
-              //   onChanged: (SfRangeValues values) {
-              //     setState(() {
-              //       _values = values;
-              //     });
-              //   },
-              // ),
-              const TaxCalculatorComponent(
-                routeName: RouteConstants.currentIncomeScreen,
-              ),
+      body: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () {
+          FocusScopeNode currentFocus = FocusScope.of(context);
 
-              // RangeSlider(
-              //     divisions: 10,
-              //     activeColor: ColorConstants.primary,
-              //     inactiveColor: ColorConstants.primary,
-              //     min: 1,
-              //     max: 100,
-              //     values: values,
-              //     labels: labels,
-              //     onChanged: (value) {
-              //       print("START: ${value.start}, End: ${value.end}");
-              //       setState(() {
-              //         values = value;
-              //         labels = RangeLabels(
-              //             "${value.start.toInt().toString()}\$",
-              //             "${value.start.toInt().toString()}\$");
-              //       });
-              //     }),
+          if (!currentFocus.hasPrimaryFocus &&
+              currentFocus.focusedChild != null) {
+            FocusManager.instance.primaryFocus!.unfocus();
+          }
+        },
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.only(left: 16, right: 16, top: 25),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextProgressBarComponent(
+                  title: "${LocaleKeys.step.tr()} 3/5",
+                  progress: 0.6,
+                ),
+                const SizedBox(
+                  height: 62,
+                ),
+                TextComponent(
+                  LocaleKeys.grossAnnualIncome.tr(),
+                  style: FontStyles.fontBold(fontSize: 24),
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                // SfRangeSlider(
+                //   min: 0,
+                //   max: 250000,
+                //   values: _values,
+                //   interval: 1000,
+                //   showTicks: false,
+                //   showLabels: false,
+                //   enableTooltip: true,
+                //   minorTicksPerInterval: 1000,
+                //   onChanged: (SfRangeValues values) {
+                //     setState(() {
+                //       _values = values;
+                //     });
+                //   },
+                // ),
+                const TaxCalculatorComponent(
+                  routeName: RouteConstants.currentIncomeScreen,
+                ),
 
-              const SizedBox(
-                height: 24,
-              ),
-              TextComponent(
-                LocaleKeys.promoCode.tr(),
-                style: FontStyles.fontMedium(fontSize: 18),
-              ),
-              const SizedBox(
-                height: 12,
-              ),
-              TextFormField(
-                decoration: InputDecoration(
-                  hintText: "",
-                  filled: false,
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(5.0),
-                    borderSide: const BorderSide(
-                      color: ColorConstants.green,
+                // RangeSlider(
+                //     divisions: 10,
+                //     activeColor: ColorConstants.primary,
+                //     inactiveColor: ColorConstants.primary,
+                //     min: 1,
+                //     max: 100,
+                //     values: values,
+                //     labels: labels,
+                //     onChanged: (value) {
+                //       print("START: ${value.start}, End: ${value.end}");
+                //       setState(() {
+                //         values = value;
+                //         labels = RangeLabels(
+                //             "${value.start.toInt().toString()}\$",
+                //             "${value.start.toInt().toString()}\$");
+                //       });
+                //     }),
+
+                const SizedBox(
+                  height: 24,
+                ),
+                TextComponent(
+                  LocaleKeys.promoCode.tr(),
+                  style: FontStyles.fontMedium(fontSize: 18),
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                TextFormField(
+                  decoration: InputDecoration(
+                    hintText: "",
+                    filled: false,
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                      borderSide: const BorderSide(
+                        color: ColorConstants.green,
+                      ),
                     ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(5.0),
-                    borderSide: const BorderSide(
-                      color: ColorConstants.green,
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                      borderSide: const BorderSide(
+                        color: ColorConstants.green,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 12),
-              TextComponent(
-                LocaleKeys.applyNow.tr(),
-                style: FontStyles.fontMedium(
-                    fontSize: 17,
-                    underLine: true,
-                    color: ColorConstants.toxicGreen),
-              ),
-            ],
+                const SizedBox(height: 12),
+                TextComponent(
+                  LocaleKeys.applyNow.tr(),
+                  style: FontStyles.fontMedium(
+                      fontSize: 17,
+                      underLine: true,
+                      color: ColorConstants.toxicGreen),
+                ),
+              ],
+            ),
           ),
         ),
       ),

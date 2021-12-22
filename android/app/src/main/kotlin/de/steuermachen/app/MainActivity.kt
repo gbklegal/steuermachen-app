@@ -1,4 +1,4 @@
-package com.app.steuermachen.steuermachen
+package de.steuermachen.app
 
 import io.flutter.embedding.android.FlutterActivity
 

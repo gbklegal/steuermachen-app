@@ -7,17 +7,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:257707946117:android:3fcc30a70ba83b9a8839ec",
+        "mobilesdk_app_id": "1:257707946117:android:5560a75bcdf873438839ec",
         "android_client_info": {
-          "package_name": "com.app.steuermachen.steuermachen"
+          "package_name": "de.steuermachen.app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "257707946117-ssnc82ngkra6gsekva6rsvue64gu5ph8.apps.googleusercontent.com",
+          "client_id": "257707946117-spceqocm2p9uak0pput1v707va99t0n1.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.app.steuermachen.steuermachen",
+            "package_name": "de.steuermachen.app",
             "certificate_hash": "f1aa4574cdce5c91946d288a5a882e1b429505c9"
           }
         },

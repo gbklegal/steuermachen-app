@@ -1,6 +1,7 @@
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
 import 'package:steuermachen/components/popup_loader_component.dart';
 import 'package:steuermachen/components/toast_component.dart';
@@ -57,7 +58,7 @@ class _SignInScreenState extends State<SignInScreen> with InputValidationUtil {
             child: Column(
               children: [
                 const SizedBox(height: 10),
-                 TitleTextAuthComponent(title: LocaleKeys.signIn.tr()),
+                TitleTextAuthComponent(title: LocaleKeys.signIn.tr()),
                 const SizedBox(height: 35),
                 _authFields(),
                 const SizedBox(height: 25),
@@ -81,11 +82,16 @@ class _SignInScreenState extends State<SignInScreen> with InputValidationUtil {
                         }
                       }
                     }),
-                 ChoiceTextAuthComponent(
-                    text: LocaleKeys.orSigninWith.tr()),
-                SignInOptionsAuthComponent(
-                    assetName: AssetConstants.icApple,
-                    btnText: LocaleKeys.appleSignIn.tr()),
+                ChoiceTextAuthComponent(text: LocaleKeys.orSigninWith.tr()),
+               
+                InkWell(
+                  onTap: ()async{
+                      await authProvider.signInWithApple();
+                  },
+                  child: SignInOptionsAuthComponent(
+                      assetName: AssetConstants.icApple,
+                      btnText: LocaleKeys.appleSignIn.tr()),
+                ),
                 const SizedBox(height: 22),
                 InkWell(
                   onTap: () async {
@@ -137,7 +143,7 @@ class _SignInScreenState extends State<SignInScreen> with InputValidationUtil {
         children: [
           TextFormField(
             controller: _emailController,
-            decoration:  InputDecoration(
+            decoration: InputDecoration(
               label: Text(LocaleKeys.email.tr()),
             ),
             validator: validateEmail,
@@ -145,7 +151,7 @@ class _SignInScreenState extends State<SignInScreen> with InputValidationUtil {
           const SizedBox(height: 20),
           TextFormField(
             controller: _passwordController,
-            decoration:  InputDecoration(
+            decoration: InputDecoration(
               label: Text(LocaleKeys.password.tr()),
             ),
             obscureText: true,

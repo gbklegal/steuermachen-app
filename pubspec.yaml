@@ -59,6 +59,7 @@ dependencies:
   timeago: ^3.1.0
   country_picker: ^2.0.9
   sign_in_with_apple: ^3.3.0
+  crypto: ^3.0.1
   fdottedline:
     path: ./fdottedline
   
@@ -79,7 +80,7 @@ dev_dependencies:
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/icon/icon.png"
+  image_path: "assets/app-icon.png"
 # The following section is specific to Flutter.
 flutter:
 

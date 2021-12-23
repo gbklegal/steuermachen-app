@@ -50,7 +50,7 @@ class AuthProvider extends ChangeNotifier {
         rawNonce: rawNonce,
       );
 
-      // Sign in the user with Firebase. If the nonce we generated earlier does 9o8so5as8  1234567@1234O
+      // Sign in the user with Firebase. If the nonce we generated earlier does
       // not match the nonce in `appleCredential.identityToken`, sign in will fail.
       return await FirebaseAuth.instance.signInWithCredential(oauthCredential);
     } catch (e) {

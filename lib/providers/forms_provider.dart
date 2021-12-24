@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:steuermachen/main.dart';
@@ -20,6 +21,7 @@ class FormsProvider extends ChangeNotifier {
           status: true, message: "Something went wrong");
     }
   }
+
   Future<CommonResponseWrapper> submitInitialAviceForm(
       ContactUsFormDataCollector formData) async {
     try {
@@ -36,7 +38,8 @@ class FormsProvider extends ChangeNotifier {
           status: true, message: "Something went wrong");
     }
   }
-  Future<CommonResponseWrapper> userProfile(
+
+  Future<CommonResponseWrapper> submitUserProfile(
       UserProfileDataCollector formData) async {
     try {
       User? user = FirebaseAuth.instance.currentUser;
@@ -46,6 +49,20 @@ class FormsProvider extends ChangeNotifier {
           .set(formData.toJson());
       return CommonResponseWrapper(
           status: true, message: "Profile updated successfully");
+    } catch (e) {
+      return CommonResponseWrapper(
+          status: true, message: "Something went wrong");
+    }
+  }
+
+  Future<CommonResponseWrapper> getUserProfile() async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      DocumentSnapshot snapshot =
+          await firestore.collection("user_profile").doc("${user?.uid}").get();
+      Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
+      UserProfileDataCollector _user = UserProfileDataCollector.fromJson(data);
+      return CommonResponseWrapper(status: true, message: "", data: _user);
     } catch (e) {
       return CommonResponseWrapper(
           status: true, message: "Something went wrong");
@@ -68,12 +85,26 @@ class ContactUsFormDataCollector {
         "message": message,
       };
 }
+
 class UserProfileDataCollector {
   final String? surname, firstName, street, postalCode, cityTown, country;
 
-  UserProfileDataCollector(this.surname, this.firstName, this.street,
-      this.postalCode, this.cityTown, this.country);
-
+  UserProfileDataCollector(
+      {this.surname,
+      this.firstName,
+      this.street,
+      this.postalCode,
+      this.cityTown,
+      this.country});
+  factory UserProfileDataCollector.fromJson(Map<String, dynamic> json) =>
+      UserProfileDataCollector(
+        surname: json["surname"],
+        firstName: json["firstName"],
+        street: json["street"],
+        postalCode: json["postalCode"],
+        cityTown: json["cityTown"],
+        country: json["country"],
+      );
   Map<String, dynamic> toJson() => {
         "surname": surname,
         "firstName": firstName,

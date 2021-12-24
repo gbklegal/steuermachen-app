@@ -77,7 +77,7 @@ class TaxAdviceScreen extends StatelessWidget {
                   child: ElevatedButton(
                     style: ElevatedButtonTheme.of(context).style?.copyWith(
                           minimumSize: MaterialStateProperty.all(
-                            Size(MediaQuery.of(context).size.width, 70),
+                            Size(MediaQuery.of(context).size.width, 56),
                           ),
                         ),
                     onPressed: () {

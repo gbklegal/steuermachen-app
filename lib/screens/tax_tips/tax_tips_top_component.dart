@@ -71,7 +71,7 @@ class TaxTipTopComponent extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 10, left: 15),
               child: Text(
-                "BY $articleBy\n${Utils.getTimeAgo(DateTime.parse(publishedDate!))} ",
+                "BY $articleBy\n${Utils.dateFormatter(publishedDate!)} ",
                 textAlign: TextAlign.left,
                 style: Theme.of(context).textTheme.headline5!.copyWith(
                       fontWeight: FontWeight.w400,

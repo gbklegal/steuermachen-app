@@ -10,6 +10,7 @@ import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/main.dart';
 import 'package:steuermachen/screens/tax_tips/tax_tips_detail_screen.dart';
 import 'package:steuermachen/screens/tax_tips/tax_tips_top_component.dart';
+import 'package:steuermachen/utils/utils.dart';
 import 'package:steuermachen/wrappers/tax_tips_wrapper.dart';
 
 class TaxTipsScreen extends StatelessWidget {
@@ -59,7 +60,15 @@ class TaxTipsScreen extends StatelessWidget {
                                   onTap: () {
                                     _navigateToDetail(context, res.en![i]);
                                   },
-                                  child: const _ListItems(),
+                                  child: _ListItems(
+                                    title: res.en![i].title,
+                                    subtitle: res.en![i].subtitle,
+                                    publishedDate:
+                                        res.en![i].publishedDate.toString(),
+                                    articleBy: res.en![i].articleBy,
+                                    image: res.en![i].image,
+                                    readTime: res.en![i].readTime,
+                                  ),
                                 )
                           else
                             for (var i = 0; i < res.du!.length; i++)
@@ -83,7 +92,15 @@ class TaxTipsScreen extends StatelessWidget {
                                   onTap: () {
                                     _navigateToDetail(context, res.du![i]);
                                   },
-                                  child: const _ListItems(),
+                                  child: _ListItems(
+                                    title: res.du![i].title,
+                                    subtitle: res.du![i].subtitle,
+                                    publishedDate:
+                                        res.du![i].publishedDate.toString(),
+                                    articleBy: res.du![i].articleBy,
+                                    image: res.du![i].image,
+                                    readTime: res.du![i].readTime,
+                                  ),
                                 )
                         ],
                       );
@@ -113,8 +130,14 @@ class TaxTipsScreen extends StatelessWidget {
 class _ListItems extends StatelessWidget {
   const _ListItems({
     Key? key,
+    this.title,
+    this.subtitle,
+    this.articleBy,
+    this.publishedDate,
+    this.readTime,
+    this.image,
   }) : super(key: key);
-
+  final String? title, subtitle, articleBy, publishedDate, readTime, image;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -131,7 +154,7 @@ class _ListItems extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: Image.network(
-                "https://images.unsplash.com/photo-1586749874058-30b75a9b3e29?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8d2lkb3d8ZW58MHx8MHx8&w=1000&q=80",
+                image!,
                 height: 50,
                 width: 71,
                 fit: BoxFit.cover,
@@ -144,7 +167,7 @@ class _ListItems extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 10, left: 15),
                     child: Text(
-                      "Widow's Pension: What Should You Know?",
+                      title!,
                       textAlign: TextAlign.left,
                       style: Theme.of(context).textTheme.headline5!.copyWith(
                             fontWeight: FontWeight.w600,
@@ -161,7 +184,7 @@ class _ListItems extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(top: 10, left: 15),
                           child: Text(
-                            "BY DIANA PROSVIRKINA\nNOVEMBER 29, 2021 ",
+                            "BY $articleBy\n${Utils.dateFormatter(publishedDate!)}",
                             textAlign: TextAlign.left,
                             style:
                                 Theme.of(context).textTheme.headline5!.copyWith(
@@ -173,7 +196,7 @@ class _ListItems extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(top: 10, right: 15),
                           child: Text(
-                            "4 min read",
+                            readTime!,
                             textAlign: TextAlign.left,
                             style:
                                 Theme.of(context).textTheme.headline5!.copyWith(

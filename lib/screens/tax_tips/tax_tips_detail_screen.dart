@@ -16,26 +16,29 @@ class TaxTipsDetailScreen extends StatelessWidget {
     return Scaffold(
       body: AppBarWithSideCornerCircleAndRoundBody(
         body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TaxTipTopComponent(
-                title: taxTipsContent.title,
-                subtitle: taxTipsContent.subtitle,
-                publishedDate: taxTipsContent.publishedDate.toString(),
-                articleBy: taxTipsContent.articleBy,
-                image: taxTipsContent.image,
-                readTime: taxTipsContent.readTime,
-              ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
-                child: Text(
-                  taxTipsContent.content!,
-                  style: Theme.of(context).textTheme.bodyText2,
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TaxTipTopComponent(
+                  title: taxTipsContent.title,
+                  subtitle: taxTipsContent.subtitle,
+                  publishedDate: taxTipsContent.publishedDate.toString(),
+                  articleBy: taxTipsContent.articleBy,
+                  image: taxTipsContent.image,
+                  readTime: taxTipsContent.readTime,
                 ),
-              ),
-            ],
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+                  child: Text(
+                    taxTipsContent.content!,
+                    style: Theme.of(context).textTheme.bodyText2,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

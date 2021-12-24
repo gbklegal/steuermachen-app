@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class Utils {
@@ -10,5 +12,10 @@ class Utils {
         .format(subtractedDateTime, locale: 'en_short')
         .toString()
         .replaceAll(RegExp(r'~'), "");
+  }
+
+  static String dateFormatter(String dateTime) {
+    var formattedDate = DateFormat.yMMMd().format(DateTime.parse(dateTime));
+    return formattedDate;
   }
 }

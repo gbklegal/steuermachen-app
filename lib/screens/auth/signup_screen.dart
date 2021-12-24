@@ -78,9 +78,14 @@ class _SignupScreenState extends State<SignupScreen> with InputValidationUtil {
                     }),
                  ChoiceTextAuthComponent(
                     text: LocaleKeys.orSigninWith.tr()),
-                SignInOptionsAuthComponent(
-                    assetName: AssetConstants.icApple,
-                    btnText: LocaleKeys.appleSignIn.tr()),
+                InkWell(
+                  onTap: (){
+                     ToastComponent.showToast("Will implement in next phase");
+                  },
+                  child: SignInOptionsAuthComponent(
+                      assetName: AssetConstants.icApple,
+                      btnText: LocaleKeys.appleSignIn.tr()),
+                ),
                 const SizedBox(height: 22),
                 InkWell(
                   onTap: () async {

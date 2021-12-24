@@ -86,7 +86,8 @@ class _SignInScreenState extends State<SignInScreen> with InputValidationUtil {
                
                 InkWell(
                   onTap: ()async{
-                      await authProvider.signInWithApple();
+                      // await authProvider.signInWithApple();
+                      ToastComponent.showToast("Will implement in next phase");
                   },
                   child: SignInOptionsAuthComponent(
                       assetName: AssetConstants.icApple,

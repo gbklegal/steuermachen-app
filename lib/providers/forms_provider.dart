@@ -60,12 +60,20 @@ class FormsProvider extends ChangeNotifier {
       User? user = FirebaseAuth.instance.currentUser;
       DocumentSnapshot snapshot =
           await firestore.collection("user_profile").doc("${user?.uid}").get();
-      Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
-      UserProfileDataCollector _user = UserProfileDataCollector.fromJson(data);
-      return CommonResponseWrapper(status: true, message: "", data: _user);
+      if (snapshot.data() != null) {
+        Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
+        UserProfileDataCollector _user =
+            UserProfileDataCollector.fromJson(data);
+        return CommonResponseWrapper(status: true, message: "", data: _user);
+      } else {
+        return CommonResponseWrapper(
+          status: true,
+          message: "",
+        );
+      }
     } catch (e) {
       return CommonResponseWrapper(
-          status: true, message: "Something went wrong");
+          status: false, message: "Something went wrong");
     }
   }
 }

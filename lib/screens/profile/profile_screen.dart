@@ -41,13 +41,15 @@ class _ProfileScreenState extends State<ProfileScreen>
     _formsProvider = Provider.of<FormsProvider>(context, listen: false);
     _formsProvider.getUserProfile().then((value) {
       if (value.status!) {
-        UserProfileDataCollector user = value.data;
-        _firstNameController.text = user.firstName!;
-        _surNameController.text = user.surname!;
-        _streetController.text = user.street!;
-        _postalCodeController.text = user.postalCode!;
-        _cityTownController.text = user.cityTown!;
-        _countryController.text = user.country!;
+        if (value.data != null) {
+          UserProfileDataCollector user = value.data;
+          _firstNameController.text = user.firstName!;
+          _surNameController.text = user.surname!;
+          _streetController.text = user.street!;
+          _postalCodeController.text = user.postalCode!;
+          _cityTownController.text = user.cityTown!;
+          _countryController.text = user.country!;
+        }
       }
       response = value;
       setState(() {

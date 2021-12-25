@@ -113,6 +113,7 @@ class _ContactUsOptionScreenState extends State<ContactUsOptionScreen> {
       BuildContext context, String assetName, String btnName) {
     return Container(
       width: 130,
+      height: (context.locale == const Locale('en')) ? 130 : 200,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: const Color(0xffF1F6FC),
@@ -130,11 +131,12 @@ class _ContactUsOptionScreenState extends State<ContactUsOptionScreen> {
           const SizedBox(
             height: 15,
           ),
-          Text(btnName,
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyText1!
-                  .copyWith(fontSize: 20)),
+          Text(
+            btnName,
+            style:
+                Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 20),
+            // overflow: TextOverflow.ellipsis,
+          ),
         ],
       ),
     );

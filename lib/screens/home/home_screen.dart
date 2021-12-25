@@ -16,17 +16,17 @@ class HomeScreen extends StatelessWidget {
     List<Map<String, dynamic>> content = [
       {
         "leadingAsset": AssetConstants.icDocument,
-        "title": "Have done tax online",
+        "title": LocaleKeys.haveDoneTaxOnline.tr(),
         "action": RouteConstants.maritalStatusScreen
       },
       {
         "leadingAsset": AssetConstants.icLegalAction,
-        "title": "Legal Action",
+        "title": LocaleKeys.legalAction.tr(),
         "action": RouteConstants.selectDocumentForScreen
       },
       {
         "leadingAsset": AssetConstants.icPersons,
-        "title": "Intial Tax Advice",
+        "title": LocaleKeys.initialTaxAdvice.tr(),
         "action": RouteConstants.taxAdviceScreen
       },
     ];
@@ -77,7 +77,7 @@ class HomeScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 5),
                       Text(
-                        "Select catogorie suitable to you".tr(),
+                       LocaleKeys.selectCategory.tr(),
                         textAlign: TextAlign.left,
                         style: Theme.of(context).textTheme.headline5!.copyWith(
                             fontWeight: FontWeight.w400, fontSize: 17),

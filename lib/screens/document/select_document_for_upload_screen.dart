@@ -318,7 +318,7 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
           ElevatedButton(
             style: ElevatedButtonTheme.of(context).style?.copyWith(
                   minimumSize: MaterialStateProperty.all(
-                    Size(MediaQuery.of(context).size.width, 58),
+                    Size(MediaQuery.of(context).size.width, 54.5),
                   ),
                 ),
             onPressed: () {
@@ -326,7 +326,9 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
             },
             child: Text(
               LocaleKeys.useCamera.tr(),
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+              style: TextStyle(
+                  fontSize: (context.locale == const Locale('en')) ? 18 : 14,
+                  fontWeight: FontWeight.w500),
             ),
           )
         ],

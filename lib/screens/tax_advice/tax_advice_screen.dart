@@ -92,7 +92,6 @@ class TaxAdviceScreen extends StatelessWidget {
                   ),
                 ),
               );
-              ;
             } else if (snapshot.hasError) {
               return const ErrorComponent();
             } else {

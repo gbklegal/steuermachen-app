@@ -1,4 +1,5 @@
 import 'package:easy_localization/src/public_ext.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -83,10 +84,15 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                               ),
                             ),
                         onPressed: () {
-                          Navigator.pushNamedAndRemoveUntil(
-                              context,
-                              RouteConstants.bottomNavBarScreen,
-                              (val) => false);
+                          if (FirebaseAuth.instance.currentUser != null) {
+                            Navigator.pushNamedAndRemoveUntil(
+                                context,
+                                RouteConstants.bottomNavBarScreen,
+                                (val) => false);
+                          } else {
+                            Navigator.popAndPushNamed(
+                                context, RouteConstants.signInScreen);
+                          }
                         },
                         child: Text(
                           LocaleKeys.orderNow.tr(),

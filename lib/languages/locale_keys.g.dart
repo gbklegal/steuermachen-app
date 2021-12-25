@@ -129,6 +129,10 @@ abstract class  LocaleKeys {
   static const street = 'street';
   static const cityTown = 'cityTown';
   static const selectCountry = 'selectCountry';
+  static const haveDoneTaxOnline = 'haveDoneTaxOnline';
+  static const legalAction = 'legalAction';
+  static const intialTaxAdvice = 'intialTaxAdvice';
+  static const selectCategory = 'selectCategory';
   static const logout = 'logout';
 
 }

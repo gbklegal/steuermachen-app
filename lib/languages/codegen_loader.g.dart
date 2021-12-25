@@ -143,6 +143,10 @@ class CodegenLoader extends AssetLoader{
   "street": "Straße",
   "cityTown": "Stadt/Stadt",
   "selectCountry": "Land auswählen",
+  "haveDoneTaxOnline": "Steuern online gemacht",
+  "legalAction": "Klage",
+  "intialTaxAdvice": "Erste Steuerberatung",
+  "selectCategory": "Wählen Sie die für Sie passende Kategorie",
   "logout": "Ausloggen"
 };
 static const Map<String,dynamic> en = {
@@ -272,6 +276,10 @@ static const Map<String,dynamic> en = {
   "street": "Street",
   "cityTown": "City/Town",
   "selectCountry": "Select Country",
+  "haveDoneTaxOnline": "Have done tax online",
+  "legalAction": "Legal Action",
+  "intialTaxAdvice": "Intial Tax Advice",
+  "selectCategory": "Select category suitable to you",
   "logout": "Logout"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"de": de, "en": en};

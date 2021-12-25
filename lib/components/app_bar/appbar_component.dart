@@ -46,56 +46,58 @@ class AppBarComponent extends StatelessWidget with PreferredSizeWidget {
             ),
           ),
         ),
-        child: AppBar(
-          backgroundColor: backgroundColor,
-          title: _title(),
-          leadingWidth: 90,
-          // iconTheme: ,
-          titleSpacing: -5,
-          elevation: 0,
-          leading: Visibility(
-            visible: showBackButton!,
-            child: InkWell(
-              onTap: () {
-                /*  overrideBackPressed == null
-                            ? Get.back()
-                            : overrideBackPressed!(); */
-                Navigator.pop(context);
-              },
-              child: Row(
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.only(left: 8.0),
-                    child: Icon(
-                      Icons.arrow_back_ios_new_rounded,
-                      color: ColorConstants.black,
-                    ),
-                  ),
-                  TextComponent(
-                    backText ?? LocaleKeys.back.tr(),
-                    style: const TextStyle(
+        child: Consumer<LanguageProvider>(builder: (context, consumer, child) {
+          return AppBar(
+            backgroundColor: backgroundColor,
+            title: _title(),
+            leadingWidth: 90,
+            // iconTheme: ,
+            titleSpacing: -5,
+            elevation: 0,
+            leading: Visibility(
+              visible: showBackButton!,
+              child: InkWell(
+                onTap: () {
+                  /*  overrideBackPressed == null
+                                ? Get.back()
+                                : overrideBackPressed!(); */
+                  Navigator.pop(context);
+                },
+                child: Row(
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.only(left: 8.0),
+                      child: Icon(
+                        Icons.arrow_back_ios_new_rounded,
                         color: ColorConstants.black,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 17),
-                  )
-                ],
+                      ),
+                    ),
+                    TextComponent(
+                      backText ?? LocaleKeys.back.tr(),
+                      style: const TextStyle(
+                          color: ColorConstants.black,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 17),
+                    )
+                  ],
+                ),
               ),
             ),
-          ),
-          centerTitle: true,
-          systemOverlayStyle: const SystemUiOverlayStyle(
-              statusBarColor: Colors.transparent,
-              statusBarIconBrightness: Brightness.dark),
-          actions: [
-            Visibility(
-              visible: showNotificationIcon!,
-              child: Padding(
-                padding: const EdgeInsets.only(right: 15, top: 5),
-                child: SvgPicture.asset(AssetConstants.icNotification),
+            centerTitle: true,
+            systemOverlayStyle: const SystemUiOverlayStyle(
+                statusBarColor: Colors.transparent,
+                statusBarIconBrightness: Brightness.dark),
+            actions: [
+              Visibility(
+                visible: showNotificationIcon!,
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 15, top: 5),
+                  child: SvgPicture.asset(AssetConstants.icNotification),
+                ),
               ),
-            ),
-          ],
-        ),
+            ],
+          );
+        }),
       ),
     );
   }
@@ -110,19 +112,25 @@ class AppBarComponent extends StatelessWidget with PreferredSizeWidget {
               imageTitle!,
               height: 28,
             ),
-            const SizedBox(width: 10),
+            const SizedBox(width: 5),
             Text(
               text ?? "",
-              style: FontStyles.fontBold(fontSize: 24),
+              style: FontStyles.fontBold(
+                  fontSize: (context.locale == const Locale('en')) ? 24 : 20),
             )
           ],
         );
       });
     }
     return Consumer<LanguageProvider>(builder: (context, consumer, child) {
-      return Text(
-        text ?? "",
-        style: FontStyles.fontMedium(fontSize: 16, fontWeight: FontWeight.w400),
+      return Padding(
+        padding: const EdgeInsets.only(left: 5, bottom: 2),
+        child: Text(
+          text ?? "",
+          style: FontStyles.fontMedium(
+              fontSize: (context.locale == const Locale('en')) ? 16 : 14,
+              fontWeight: FontWeight.w400),
+        ),
       );
     });
   }

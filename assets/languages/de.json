@@ -127,5 +127,9 @@
     "street": "Straße",
     "cityTown": "Stadt/Stadt",
     "selectCountry": "Land auswählen",
+    "haveDoneTaxOnline" : "Steuern online gemacht",
+    "legalAction" : "Klage",
+    "intialTaxAdvice" : "Erste Steuerberatung",
+    "selectCategory" : "Wählen Sie die für Sie passende Kategorie",
     "logout": "Ausloggen"
 }

@@ -125,6 +125,11 @@
     "street" : "Street",
     "cityTown" : "City/Town",
     "selectCountry" : "Select Country",
+    "haveDoneTaxOnline" : "Have done tax online",
+    "legalAction" : "Legal Action",
+    "intialTaxAdvice" : "Intial Tax Advice",
+    "selectCategory" : "Select category suitable to you",
+
     "logout" : "Logout"
 
 }

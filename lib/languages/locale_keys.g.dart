@@ -115,6 +115,7 @@ abstract class  LocaleKeys {
   static const alreadyRegistered = 'alreadyRegistered';
   static const signIn = 'signIn';
   static const signUp = 'signUp';
+  static const forgotPassword = 'forgotPassword';
   static const calculateYourPrice = 'calculateYourPrice';
   static const getStartedText_1 = 'getStartedText_1';
   static const signInTermsAndCondition_1 = 'signInTermsAndCondition_1';

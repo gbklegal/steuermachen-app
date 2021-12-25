@@ -4,14 +4,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
-import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 
 class AppBarWithSideCornerCircleAndRoundBody extends StatelessWidget {
   const AppBarWithSideCornerCircleAndRoundBody({
     Key? key,
     required this.body,
-    this.showNotificationIcon = true,
+    this.showNotificationIcon = false,
   }) : super(key: key);
   final Widget body;
   final bool? showNotificationIcon;
@@ -20,9 +19,9 @@ class AppBarWithSideCornerCircleAndRoundBody extends StatelessWidget {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBarComponent(
-        StringConstants.appName,
+        "",
         // LocaleKeys.appName.tr(),
-        imageTitle: AssetConstants.logo,
+        // imageTitle: AssetConstants.logo,
         backgroundColor: Colors.transparent,
         showBottomLine: false,
         showNotificationIcon: showNotificationIcon,

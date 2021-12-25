@@ -49,6 +49,7 @@ class _LegalAction2ScreenState extends State<LegalAction2Screen> {
     return Scaffold(
       appBar:  AppBarComponent(
         LocaleKeys.powerOfAttorney.tr(),
+        showNotificationIcon: false,
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -96,7 +97,7 @@ class _LegalAction2ScreenState extends State<LegalAction2Screen> {
         child: ElevatedButton(
           style: ElevatedButtonTheme.of(context).style?.copyWith(
                 minimumSize: MaterialStateProperty.all(
-                  Size(MediaQuery.of(context).size.width, 70),
+                  Size(MediaQuery.of(context).size.width, 56),
                 ),
               ),
           onPressed: () async {

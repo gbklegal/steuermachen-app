@@ -5,7 +5,6 @@ import 'package:steuermachen/components/app_bar/appbar_with_side_corner_circle_a
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
-import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -19,7 +18,7 @@ class ContactUsOptionScreen extends StatefulWidget {
 class _ContactUsOptionScreenState extends State<ContactUsOptionScreen> {
   final Uri emailLaunchUri = Uri(
     scheme: 'mailto',
-    path: 'smith@example.com',
+    path: 'dialog@steuermachen.de',
   );
 
   Future<void> _makePhoneCall(String phoneNumber) async {
@@ -72,7 +71,7 @@ class _ContactUsOptionScreenState extends State<ContactUsOptionScreen> {
             ),
             InkWell(
               onTap: () async {
-                await _makePhoneCall("03092783699");
+                await _makePhoneCall("0911-80190910");
               },
               child: _emailAndCallUs(
                   context, AssetConstants.phoneCall, LocaleKeys.callUs.tr()),

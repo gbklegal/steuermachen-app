@@ -6,6 +6,7 @@ import 'package:steuermachen/components/app_bar/appbar_component.dart';
 import 'package:steuermachen/components/popup_loader_component.dart';
 import 'package:steuermachen/components/toast_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
+import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
@@ -26,10 +27,8 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> with InputValidationUtil {
-  final TextEditingController _emailController =
-      TextEditingController();
-  final TextEditingController _passwordController =
-      TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<FormState> _signupFormKey = GlobalKey<FormState>();
   late AuthProvider authProvider;
   @override
@@ -62,32 +61,21 @@ class _SignInScreenState extends State<SignInScreen> with InputValidationUtil {
                 const SizedBox(height: 35),
                 _authFields(),
                 const SizedBox(height: 25),
-                ButtonAuthComponent(
-                    btnText: LocaleKeys.signIn.tr(),
-                    onPressed: () async {
-                      if (_signupFormKey.currentState!.validate()) {
-                        PopupLoader.showLoadingDialog(context);
-                        CommonResponseWrapper res =
-                            await authProvider.signInWithEmailAndPassword(
-                                _emailController.text,
-                                _passwordController.text);
-                        ToastComponent.showToast(res.message!, long: true);
-
-                        PopupLoader.hideLoadingDialog(context);
-                        if (res.status!) {
-                          Navigator.pushNamedAndRemoveUntil(
-                              context,
-                              RouteConstants.bottomNavBarScreen,
-                              (val) => false);
-                        }
-                      }
-                    }),
+                _signInBtn(context),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: Text(
+                    LocaleKeys.forgotPassword.tr() + "?",
+                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        color: ColorConstants.primary,
+                        fontWeight: FontWeight.w700),
+                  ),
+                ),
                 ChoiceTextAuthComponent(text: LocaleKeys.orSigninWith.tr()),
-               
                 InkWell(
-                  onTap: ()async{
-                      // await authProvider.signInWithApple();
-                      ToastComponent.showToast("Will implement in next phase");
+                  onTap: () async {
+                    // await authProvider.signInWithApple();
+                    ToastComponent.showToast("Will implement in next phase");
                   },
                   child: SignInOptionsAuthComponent(
                       assetName: AssetConstants.icApple,
@@ -135,6 +123,26 @@ class _SignInScreenState extends State<SignInScreen> with InputValidationUtil {
         ),
       ),
     );
+  }
+
+  ButtonAuthComponent _signInBtn(BuildContext context) {
+    return ButtonAuthComponent(
+        btnText: LocaleKeys.signIn.tr(),
+        onPressed: () async {
+          if (_signupFormKey.currentState!.validate()) {
+            PopupLoader.showLoadingDialog(context);
+            CommonResponseWrapper res =
+                await authProvider.signInWithEmailAndPassword(
+                    _emailController.text, _passwordController.text);
+            ToastComponent.showToast(res.message!, long: true);
+
+            PopupLoader.hideLoadingDialog(context);
+            if (res.status!) {
+              Navigator.pushNamedAndRemoveUntil(
+                  context, RouteConstants.bottomNavBarScreen, (val) => false);
+            }
+          }
+        });
   }
 
   Form _authFields() {

@@ -84,79 +84,80 @@ class _MoreScreenState extends State<MoreScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBarComponent(
-        "",
-        showNotificationIcon: false,
-        showBottomLine: false,
-        backText: LocaleKeys.more.tr(),
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TextComponent(
-                      LocaleKeys.myAccount.tr(),
-                      style: FontStyles.fontBold(fontSize: 20),
-                    ),
-                    const SizedBox(height: 8),
-                    TextComponent(user!.email!,
-                        style: FontStyles.fontRegular(fontSize: 20),
-                        overFlow: TextOverflow.ellipsis),
-                  ],
-                ),
-              ),
-              Transform.translate(
-                offset: const Offset(0, -15),
-                child: const Padding(
-                  padding: EdgeInsets.only(right: 15, top: 0),
-                  child: LanguageDropdownComponent(),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 25),
-          Expanded(
-            child: ListView.builder(
-                shrinkWrap: false,
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  MoreOptions moreOptions = moreOptionsList[index];
-                  return Column(
+    return Consumer<LanguageProvider>(builder: (context, consumer, child) {
+      return Scaffold(
+        appBar: AppBarComponent(
+          "",
+          showNotificationIcon: false,
+          showBottomLine: false,
+          backText: LocaleKeys.more.tr(),
+        ),
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Divider(
-                        height: 1,
-                        thickness: 0.8,
+                      TextComponent(
+                        LocaleKeys.myAccount.tr(),
+                        style: FontStyles.fontBold(fontSize: 20),
                       ),
-                      InkWell(
-                        onTap: () async {
-                          if (moreOptions.routeName ==
-                              RouteConstants.splashScreen) {
-                            PopupLoader.showLoadingDialog(context);
-                            await FirebaseAuth.instance.signOut();
-                            PopupLoader.hideLoadingDialog(context);
-                            Navigator.pushNamedAndRemoveUntil(context,
-                                RouteConstants.splashScreen, (val) => false);
-                          }
-                          if (moreOptions.routeName ==
-                              RouteConstants.selectDocumentForScreen) {
-                            Navigator.pushNamed(context, moreOptions.routeName,
-                                arguments: {"uploadBtn": true});
-                          } else {
-                            Navigator.pushNamed(context, moreOptions.routeName);
-                          }
-                        },
-                        child: Consumer<LanguageProvider>(
-                            builder: (context, consumer, child) {
-                          return ListTile(
+                      const SizedBox(height: 8),
+                      TextComponent(user!.email!,
+                          style: FontStyles.fontRegular(fontSize: 20),
+                          overFlow: TextOverflow.ellipsis),
+                    ],
+                  ),
+                ),
+                Transform.translate(
+                  offset: const Offset(0, -15),
+                  child: const Padding(
+                    padding: EdgeInsets.only(right: 15, top: 0),
+                    child: LanguageDropdownComponent(),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 25),
+            Expanded(
+              child: ListView.builder(
+                  shrinkWrap: false,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    MoreOptions moreOptions = moreOptionsList[index];
+                    return Column(
+                      children: [
+                        const Divider(
+                          height: 1,
+                          thickness: 0.8,
+                        ),
+                        InkWell(
+                          onTap: () async {
+                            if (moreOptions.routeName ==
+                                RouteConstants.splashScreen) {
+                              PopupLoader.showLoadingDialog(context);
+                              await FirebaseAuth.instance.signOut();
+                              PopupLoader.hideLoadingDialog(context);
+                              Navigator.pushNamedAndRemoveUntil(context,
+                                  RouteConstants.splashScreen, (val) => false);
+                            }
+                            if (moreOptions.routeName ==
+                                RouteConstants.selectDocumentForScreen) {
+                              Navigator.pushNamed(
+                                  context, moreOptions.routeName,
+                                  arguments: {"uploadBtn": true});
+                            } else {
+                              Navigator.pushNamed(
+                                  context, moreOptions.routeName);
+                            }
+                          },
+                          child: ListTile(
                             leading: Image.asset(
                               moreOptions.leadingIcon,
                               height: 20,
@@ -169,23 +170,23 @@ class _MoreScreenState extends State<MoreScreen> {
                             ),
                             trailing:
                                 SvgPicture.asset(moreOptions.trailingIcon),
-                          );
-                        }),
-                      ),
-                      const Divider(
-                        height: 1,
-                        thickness: 0.8,
-                      ),
-                      if (index == 0) const SizedBox(height: 35),
-                      if (index == 5) const SizedBox(height: 50),
-                    ],
-                  );
-                },
-                itemCount: 8),
-          ),
-        ],
-      ),
-    );
+                          ),
+                        ),
+                        const Divider(
+                          height: 1,
+                          thickness: 0.8,
+                        ),
+                        if (index == 0) const SizedBox(height: 35),
+                        if (index == 5) const SizedBox(height: 50),
+                      ],
+                    );
+                  },
+                  itemCount: 8),
+            ),
+          ],
+        ),
+      );
+    });
   }
 }
 

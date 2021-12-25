@@ -35,7 +35,6 @@ class HomeScreen extends StatelessWidget {
       extendBodyBehindAppBar: true,
       appBar: const AppBarComponent(
         StringConstants.appName,
-        // LocaleKeys.appName.tr(),
         imageTitle: AssetConstants.logo,
         backgroundColor: Colors.transparent,
         showBackButton: false,
@@ -58,10 +57,10 @@ class HomeScreen extends StatelessWidget {
                 ),
                 Image.asset(
                   AssetConstants.tax,
-                  height: 144,
+                  height: 120,
                 ),
                 const SizedBox(
-                  height: 35,
+                  height: 25,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 35),

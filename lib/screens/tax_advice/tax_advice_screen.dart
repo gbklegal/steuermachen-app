@@ -8,7 +8,6 @@ import 'package:steuermachen/constants/app_constants.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
-import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/main.dart';
 import 'package:steuermachen/wrappers/tax_advice_wrapper.dart';
@@ -29,6 +28,7 @@ class TaxAdviceScreen extends StatelessWidget {
               return Scaffold(
                 appBar: AppBarComponent(
                   LocaleKeys.initialTaxAdvice.tr(),
+                  showNotificationIcon: false,
                 ),
                 body: SingleChildScrollView(
                   child: Padding(

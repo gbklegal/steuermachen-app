@@ -39,6 +39,7 @@ class _TaxFileCurrentIncomeScreenState
     return Scaffold(
       appBar: AppBarComponent(
         LocaleKeys.curStatus.tr(),
+        showNotificationIcon: false,
       ),
       body: GestureDetector(
         behavior: HitTestBehavior.opaque,

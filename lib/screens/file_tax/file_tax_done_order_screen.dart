@@ -6,7 +6,6 @@ import 'package:steuermachen/components/text_progress_bar_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
-import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 
 class FileTaxDoneOrderScreen extends StatelessWidget {

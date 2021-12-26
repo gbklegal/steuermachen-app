@@ -7,7 +7,6 @@ import 'package:steuermachen/components/text_progress_bar_component.dart';
 import 'package:steuermachen/constants/app_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
-import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/screens/file_tax/marital_status_model.dart';
@@ -51,6 +50,7 @@ class _TaxFileYearScreenState extends State<TaxFileYearScreen> {
     return Scaffold(
       appBar:  AppBarComponent(
         LocaleKeys.selectYear.tr(),
+        showNotificationIcon: false,
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,

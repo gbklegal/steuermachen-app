@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
+import 'package:steuermachen/screens/auth/forgot_password_screen.dart';
 import 'package:steuermachen/screens/auth/signin_screen.dart';
 import 'package:steuermachen/screens/auth/signup_screen.dart';
 import 'package:steuermachen/screens/bottom_nav_bar/bottom_nav_bar_screen.dart';
@@ -27,7 +28,6 @@ import 'package:steuermachen/screens/splash_screen.dart';
 import 'package:steuermachen/screens/sustainability/sustainability_screen.dart';
 import 'package:steuermachen/screens/tax_advice/tax_advice_form_screen.dart';
 import 'package:steuermachen/screens/tax_advice/tax_advice_screen.dart';
-import 'package:steuermachen/screens/tax_tips/tax_tips_detail_screen.dart';
 import 'package:steuermachen/screens/tax_tips/tax_tips_screen.dart';
 
 onGenerateRoutes(RouteSettings settings) {
@@ -47,6 +47,10 @@ onGenerateRoutes(RouteSettings settings) {
     case RouteConstants.signInScreen:
       return MaterialPageRoute(
         builder: (_) => const SignInScreen(),
+      );
+    case RouteConstants.forgotPasswordScreen:
+      return MaterialPageRoute(
+        builder: (_) => const ForgotPasswordScreen(),
       );
     case RouteConstants.signupScreen:
       return MaterialPageRoute(
@@ -84,7 +88,7 @@ onGenerateRoutes(RouteSettings settings) {
       );
     case RouteConstants.fileTaxInfoScreen:
       return MaterialPageRoute(
-        builder: (_) => FileTaxInfoScreen(),
+        builder: (_) => const FileTaxInfoScreen(),
       );
     case RouteConstants.fileTaxUploadDocScreen:
       return MaterialPageRoute(

@@ -154,6 +154,18 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
+  Future<CommonResponseWrapper> forgotPassword(String email) async {
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      return CommonResponseWrapper(
+          status: true,
+          message: 'Check your email for the reset password link');
+    } on FirebaseAuthException catch (e) {
+      return CommonResponseWrapper(
+          status: false, message: 'Something went wrong');
+    }
+  }
+
   sendVerificationEmail() async {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null && !user.emailVerified) {

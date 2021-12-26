@@ -62,15 +62,7 @@ class _SignInScreenState extends State<SignInScreen> with InputValidationUtil {
                 _authFields(),
                 const SizedBox(height: 25),
                 _signInBtn(context),
-                Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: Text(
-                    LocaleKeys.forgotPassword.tr() + "?",
-                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                        color: ColorConstants.primary,
-                        fontWeight: FontWeight.w700),
-                  ),
-                ),
+                _forgotPassword(context),
                 ChoiceTextAuthComponent(text: LocaleKeys.orSigninWith.tr()),
                 InkWell(
                   onTap: () async {
@@ -120,6 +112,22 @@ class _SignInScreenState extends State<SignInScreen> with InputValidationUtil {
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  InkWell _forgotPassword(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        Navigator.pushNamed(context, RouteConstants.forgotPasswordScreen);
+      },
+      child: Padding(
+        padding: const EdgeInsets.only(top: 8.0),
+        child: Text(
+          LocaleKeys.forgotPassword.tr() + "?",
+          style: Theme.of(context).textTheme.bodyText1?.copyWith(
+              color: ColorConstants.primary, fontWeight: FontWeight.w700),
         ),
       ),
     );

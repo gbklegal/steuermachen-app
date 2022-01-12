@@ -1,7 +1,6 @@
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
 import 'package:steuermachen/components/popup_loader_component.dart';
 import 'package:steuermachen/components/toast_component.dart';
@@ -35,6 +34,7 @@ class _SignInScreenState extends State<SignInScreen> with InputValidationUtil {
   void initState() {
     authProvider = Provider.of<AuthProvider>(context, listen: false);
     authProvider.initializeGoogleSignIn();
+    authProvider.checkSignInWithAppleAvailable();
     super.initState();
   }
 
@@ -64,15 +64,7 @@ class _SignInScreenState extends State<SignInScreen> with InputValidationUtil {
                 _signInBtn(context),
                 _forgotPassword(context),
                 ChoiceTextAuthComponent(text: LocaleKeys.orSigninWith.tr()),
-                InkWell(
-                  onTap: () async {
-                    // await authProvider.signInWithApple();
-                    ToastComponent.showToast("Will implement in next phase");
-                  },
-                  child: SignInOptionsAuthComponent(
-                      assetName: AssetConstants.icApple,
-                      btnText: LocaleKeys.appleSignIn.tr()),
-                ),
+                _signInWithApple(),
                 const SizedBox(height: 22),
                 InkWell(
                   onTap: () async {
@@ -115,6 +107,31 @@ class _SignInScreenState extends State<SignInScreen> with InputValidationUtil {
         ),
       ),
     );
+  }
+
+  Widget _signInWithApple() {
+    return Consumer<AuthProvider>(builder: (context, consumer, child) {
+      if (consumer.signInWithAppleIsAvailable) {
+        return InkWell(
+          onTap: () async {
+            PopupLoader.showLoadingDialog(context);
+            CommonResponseWrapper res = await authProvider.signInWithApple();
+            ToastComponent.showToast(res.message!, long: true);
+
+            PopupLoader.hideLoadingDialog(context);
+            if (res.status!) {
+              Navigator.pushNamedAndRemoveUntil(
+                  context, RouteConstants.bottomNavBarScreen, (val) => false);
+            }
+          },
+          child: SignInOptionsAuthComponent(
+              assetName: AssetConstants.icApple,
+              btnText: LocaleKeys.appleSignIn.tr()),
+        );
+      } else {
+        return const SizedBox();
+      }
+    });
   }
 
   InkWell _forgotPassword(BuildContext context) {

@@ -10,7 +10,7 @@ import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 
 class AuthProvider extends ChangeNotifier {
   late GoogleSignIn _googleSignIn;
-
+  bool signInWithAppleIsAvailable = false;
   initializeGoogleSignIn() {
     _googleSignIn = GoogleSignIn(
       scopes: [
@@ -20,22 +20,22 @@ class AuthProvider extends ChangeNotifier {
     );
   }
 
+  checkSignInWithAppleAvailable() async {
+    bool status = await SignInWithApple.isAvailable();
+    signInWithAppleIsAvailable = status;
+    notifyListeners();
+  }
+
   String sha256ofString(String input) {
     final bytes = utf8.encode(input);
     final digest = sha256.convert(bytes);
     return digest.toString();
   }
 
-  Future<UserCredential?> signInWithApple() async {
+  Future<CommonResponseWrapper> signInWithApple() async {
     try {
-      // To prevent replay attacks with the credential returned from Apple, we
-      // include a nonce in the credential request. When signing in with
-      // Firebase, the nonce in the id token returned by Apple, is expected to
-      // match the sha256 hash of `rawNonce`.
       final rawNonce = generateNonce();
       final nonce = sha256ofString(rawNonce);
-
-      // Request credential for the currently signed in Apple account.
       final appleCredential = await SignInWithApple.getAppleIDCredential(
         scopes: [
           AppleIDAuthorizationScopes.email,
@@ -43,18 +43,16 @@ class AuthProvider extends ChangeNotifier {
         ],
         nonce: nonce,
       );
-
-      // Create an `OAuthCredential` from the credential returned by Apple.
       final oauthCredential = OAuthProvider("apple.com").credential(
         idToken: appleCredential.identityToken,
         rawNonce: rawNonce,
       );
-
-      // Sign in the user with Firebase. If the nonce we generated earlier does
-      // not match the nonce in `appleCredential.identityToken`, sign in will fail.
-      return await FirebaseAuth.instance.signInWithCredential(oauthCredential);
+      await FirebaseAuth.instance.signInWithCredential(oauthCredential);
+      return CommonResponseWrapper(
+          status: true, message: "Signin successfully");
     } catch (e) {
-      print(e);
+       return CommonResponseWrapper(
+          status: false, message: 'something went wrong');
     }
   }
 

@@ -26,15 +26,14 @@ class SignupScreen extends StatefulWidget {
 
 class _SignupScreenState extends State<SignupScreen> with InputValidationUtil {
   late AuthProvider authProvider;
-  final TextEditingController _emailController =
-      TextEditingController();
-  final TextEditingController _passwordController =
-      TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<FormState> _signupFormKey = GlobalKey<FormState>();
   @override
   void initState() {
     authProvider = Provider.of<AuthProvider>(context, listen: false);
     authProvider.initializeGoogleSignIn();
+    authProvider.checkSignInWithAppleAvailable();
     super.initState();
   }
 
@@ -57,7 +56,7 @@ class _SignupScreenState extends State<SignupScreen> with InputValidationUtil {
             child: Column(
               children: [
                 const SizedBox(height: 35),
-                 TitleTextAuthComponent(title: LocaleKeys.signUp.tr()),
+                TitleTextAuthComponent(title: LocaleKeys.signUp.tr()),
                 const SizedBox(height: 35),
                 _authFields(),
                 const SizedBox(height: 25),
@@ -76,16 +75,8 @@ class _SignupScreenState extends State<SignupScreen> with InputValidationUtil {
                             context, RouteConstants.signInScreen);
                       }
                     }),
-                 ChoiceTextAuthComponent(
-                    text: LocaleKeys.orSigninWith.tr()),
-                InkWell(
-                  onTap: (){
-                     ToastComponent.showToast("Will implement in next phase");
-                  },
-                  child: SignInOptionsAuthComponent(
-                      assetName: AssetConstants.icApple,
-                      btnText: LocaleKeys.appleSignIn.tr()),
-                ),
+                ChoiceTextAuthComponent(text: LocaleKeys.orSigninWith.tr()),
+                _signInWithApple(),
                 const SizedBox(height: 22),
                 InkWell(
                   onTap: () async {
@@ -131,6 +122,31 @@ class _SignupScreenState extends State<SignupScreen> with InputValidationUtil {
     );
   }
 
+  Widget _signInWithApple() {
+    return Consumer<AuthProvider>(builder: (context, consumer, child) {
+      if (consumer.signInWithAppleIsAvailable) {
+        return InkWell(
+          onTap: () async {
+            PopupLoader.showLoadingDialog(context);
+            CommonResponseWrapper res = await authProvider.signInWithApple();
+            ToastComponent.showToast(res.message!, long: true);
+
+            PopupLoader.hideLoadingDialog(context);
+            if (res.status!) {
+              Navigator.pushNamedAndRemoveUntil(
+                  context, RouteConstants.bottomNavBarScreen, (val) => false);
+            }
+          },
+          child: SignInOptionsAuthComponent(
+              assetName: AssetConstants.icApple,
+              btnText: LocaleKeys.appleSignIn.tr()),
+        );
+      } else {
+        return const SizedBox();
+      }
+    });
+  }
+
   Consumer _authFields() {
     return Consumer<AuthProvider>(builder: (context, consumer, child) {
       return Form(
@@ -139,14 +155,13 @@ class _SignupScreenState extends State<SignupScreen> with InputValidationUtil {
           children: [
             TextFormField(
               controller: _emailController,
-              decoration:
-                   InputDecoration(label: Text(LocaleKeys.email.tr())),
+              decoration: InputDecoration(label: Text(LocaleKeys.email.tr())),
               validator: validateEmail,
             ),
             const SizedBox(height: 15),
             TextFormField(
               controller: _passwordController,
-              decoration:  InputDecoration(
+              decoration: InputDecoration(
                 label: Text(LocaleKeys.password.tr()),
               ),
               obscureText: true,

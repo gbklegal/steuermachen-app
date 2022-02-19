@@ -2,14 +2,11 @@
 
 abstract class  LocaleKeys {
   static const appName = 'appName';
+  static const onboardingTitle = 'onboardingTitle';
   static const onboardingOne = 'onboardingOne';
-  static const onboardingOneText = 'onboardingOneText';
   static const onboardingTwo = 'onboardingTwo';
-  static const onboardingTwoText = 'onboardingTwoText';
   static const onboardingThree = 'onboardingThree';
-  static const onboardingThreeText = 'onboardingThreeText';
   static const onboardingFour = 'onboardingFour';
-  static const onboardingFourText = 'onboardingFourText';
   static const frequentlyAskedQuestion = 'frequentlyAskedQuestion';
   static const faqItem1 = 'faqItem1';
   static const faqItem2 = 'faqItem2';

@@ -1,10 +1,10 @@
-import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:steuermachen/components/language_dropdown_component.dart';
+import 'package:steuermachen/components/logo_component.dart';
+import 'package:steuermachen/components/text_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
-import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/providers/language_provider.dart';
 import 'package:provider/provider.dart';
@@ -19,116 +19,104 @@ class OnBoardingScreen extends StatefulWidget {
 class _OnBoardingScreenState extends State<OnBoardingScreen> {
   int pageIndex = 0;
   final pageController = PageController(initialPage: 0);
-
+  List<OnboardingDataModel> onboardingData = [
+    OnboardingDataModel(
+        text1: LocaleKeys.onboardingOne,
+        text2: LocaleKeys.onboardingTitle,
+        imagePath: AssetConstants.onboard1),
+    OnboardingDataModel(
+        text1: LocaleKeys.onboardingTwo,
+        text2: LocaleKeys.onboardingTitle,
+        imagePath: AssetConstants.onboard2),
+    OnboardingDataModel(
+        text1: LocaleKeys.onboardingThree,
+        text2: LocaleKeys.onboardingTitle,
+        imagePath: AssetConstants.onboard3),
+    OnboardingDataModel(
+        text1: LocaleKeys.onboardingFour,
+        text2: LocaleKeys.onboardingTitle,
+        imagePath: AssetConstants.onboard4)
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        color: ColorConstants.white,
-        height: MediaQuery.of(context).size.height,
-        child: Consumer<LanguageProvider>(builder: (context, consumer, child) {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 56, left: 12, right: 12),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  // ignore: prefer_const_literals_to_create_immutables
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        Navigator.pushNamedAndRemoveUntil(context,
-                            RouteConstants.getStartedScreen, (val) => false);
-                      },
-                      child:  Text(
-                        LocaleKeys.skip.tr(),
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                            color: ColorConstants.black,
-                            fontStyle: FontStyle.normal,
-                            letterSpacing: 1,
-                            fontSize: 17),
-                      ),
-                    ),
-                    const LanguageDropdownComponent(),
-                  ],
-                ),
-              ),
-              Flexible(
-                child: PageView(
-                  controller: pageController,
-                  scrollDirection: Axis.horizontal,
-                  onPageChanged: (index) {
-                    setState(() {
-                      pageIndex = index;
-                    });
-                  },
-                  children: [
-                    _bottomTitleAndText(
-                        text: LocaleKeys.onboardingOneText.tr(),
-                        title: LocaleKeys.onboardingOne.tr(),
-                        assetName: AssetConstants.onboard1),
-                    _bottomTitleAndText(
-                        text: LocaleKeys.onboardingTwoText.tr(),
-                        title: LocaleKeys.onboardingTwo.tr(),
-                        assetName: AssetConstants.onboard2),
-                    _bottomTitleAndText(
-                        text: LocaleKeys.onboardingThreeText.tr(),
-                        title: LocaleKeys.onboardingThree.tr(),
-                        assetName: AssetConstants.onboard3),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Flexible(
-                          child: _bottomTitleAndText(
-                              text: LocaleKeys.onboardingFourText.tr(),
-                              title: LocaleKeys.onboardingFour.tr(),
-                              assetName: AssetConstants.onboard4),
+      backgroundColor: ColorConstants.white,
+      body: SafeArea(
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height,
+          child:
+              Consumer<LanguageProvider>(builder: (context, consumer, child) {
+            return Column(
+              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 12, right: 12, bottom: 50),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    // ignore: prefer_const_literals_to_create_immutables
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushNamedAndRemoveUntil(context,
+                              RouteConstants.getStartedScreen, (val) => false);
+                        },
+                        child: const TextComponent(
+                          LocaleKeys.skip,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: ColorConstants.black,
+                              fontStyle: FontStyle.normal,
+                              letterSpacing: 1,
+                              fontSize: 17),
                         ),
-                        InkWell(
-                          onTap: () {
-                            Navigator.pushNamed(
-                                context, RouteConstants.getStartedScreen);
-                          },
-                          child: const Padding(
-                            padding: EdgeInsets.only(
-                              bottom: 70,
-                              right: 15,
-                            ),
-                            child: Icon(
-                              Icons.arrow_forward_ios,
-                              color: ColorConstants.primary,
-                            ),
+                      ),
+                      const LogoComponent(
+                        fontSize: 20,
+                      ),
+                      const LanguageDropdownComponent(),
+                    ],
+                  ),
+                ),
+                Flexible(
+                  child: PageView(
+                    controller: pageController,
+                    scrollDirection: Axis.horizontal,
+                    onPageChanged: (index) {
+                      setState(() {
+                        pageIndex = index;
+                      });
+                    },
+                    children: [
+                      for (var item in onboardingData)
+                        _bottomTitleAndText(
+                            title: item.text1,
+                            text: item.text2,
+                            assetName: item.imagePath),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 30, top: 80),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      for (int i = 0; i < onboardingData.length; i++)
+                        Padding(
+                          padding: const EdgeInsets.all(6.0),
+                          child: _indicatorDotsWidget(
+                            color: pageIndex == i
+                                ? ColorConstants.primary
+                                : ColorConstants.mediumGrey,
                           ),
-                        )
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 30),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    for (int i = 0; i < 4; i++)
-                      Padding(
-                        padding: const EdgeInsets.all(6.0),
-                        child: _indicatorDotsWidget(
-                          color: pageIndex == i
-                              ? ColorConstants.primary
-                              : ColorConstants.mediumGrey,
                         ),
-                      ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          );
-        }),
+              ],
+            );
+          }),
+        ),
       ),
     );
   }
@@ -142,37 +130,27 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const SizedBox(),
-          Flexible(
-            child: Image.asset(assetName, height: 256, width: 256),
+          TextComponent(
+            text,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+                color: ColorConstants.black,
+                fontWeight: FontWeight.bold,
+                fontStyle: FontStyle.normal,
+                letterSpacing: 1,
+                fontSize: 20),
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                text,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                    color: ColorConstants.green,
-                    fontWeight: FontWeight.bold,
-                    fontStyle: FontStyle.normal,
-                    letterSpacing: 1,
-                    fontSize: 48),
-              ),
-              Container(
-                padding: const EdgeInsets.only(top: 10, right: 50, bottom: 50),
-                child: Text(
-                  title,
-                  textAlign: TextAlign.start,
-                  style: const TextStyle(
-                      color: ColorConstants.black,
-                      fontWeight: FontWeight.bold,
-                      fontStyle: FontStyle.normal,
-                      fontSize: 24),
-                ),
-              ),
-            ],
+          Flexible(
+            child: Image.asset(assetName, height: 196, width: 196),
+          ),
+          TextComponent(
+            title,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+                color: ColorConstants.black,
+                fontWeight: FontWeight.bold,
+                fontStyle: FontStyle.normal,
+                fontSize: 24),
           ),
         ],
       ),
@@ -187,4 +165,11 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
           BoxDecoration(color: color, borderRadius: BorderRadius.circular(10)),
     );
   }
+}
+
+class OnboardingDataModel {
+  final String text1, text2, imagePath;
+
+  OnboardingDataModel(
+      {required this.text1, required this.text2, required this.imagePath});
 }

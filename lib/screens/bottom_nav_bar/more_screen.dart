@@ -111,7 +111,7 @@ class _MoreScreenState extends State<MoreScreen> {
                       const SizedBox(height: 8),
                       TextComponent(user!.email!,
                           style: FontStyles.fontRegular(fontSize: 20),
-                          overFlow: TextOverflow.ellipsis),
+                          overflow: TextOverflow.ellipsis),
                     ],
                   ),
                 ),

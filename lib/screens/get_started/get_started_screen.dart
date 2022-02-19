@@ -1,10 +1,11 @@
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:steuermachen/components/logo_component.dart';
+import 'package:steuermachen/components/text_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
-import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 
 class GetStartedScreen extends StatelessWidget {
@@ -18,23 +19,30 @@ class GetStartedScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
             children: [
+              const LogoComponent(),
               const SizedBox(height: 35),
               Expanded(child: _topTitle(context)),
               Image.asset(
                 AssetConstants.fileArtWork,
                 height: 280,
               ),
-              _button(context, LocaleKeys.calculateYourPrice.tr(), () {
+              _button(context, LocaleKeys.calculateYourPrice, () {
                 Navigator.pushNamed(context, RouteConstants.calculatorScreen);
               }),
               const SizedBox(height: 20),
-              _button(context, LocaleKeys.getStarted.tr(), () {
+              _button(context, LocaleKeys.getStarted, () {
                 Navigator.pushNamed(context, RouteConstants.signupScreen);
               }),
               const SizedBox(height: 22),
-              Expanded(
-                child: _richText(context),
-              )
+              _button(context, LocaleKeys.alreadyHaveAnAccount, () {
+                Navigator.pushNamed(context, RouteConstants.signInScreen);
+              }),
+              const Expanded(
+                child: SizedBox(height: 22),
+              ),
+              // Expanded(
+              //   child: _richTextComponent(context),
+              // )
             ],
           ),
         ),
@@ -42,17 +50,14 @@ class GetStartedScreen extends StatelessWidget {
     );
   }
 
-  Align _topTitle(BuildContext context) {
-    return Align(
-      alignment: Alignment.topLeft,
-      child: Text(
-        LocaleKeys.getStartedText_1.tr(),
-        textAlign: TextAlign.start,
-        style: Theme.of(context)
-            .textTheme
-            .headline6!
-            .copyWith(fontWeight: FontWeight.w700, letterSpacing: 3),
-      ),
+  TextComponent _topTitle(BuildContext context) {
+    return TextComponent(
+      LocaleKeys.getStartedText_1,
+      textAlign: TextAlign.start,
+      style: Theme.of(context)
+          .textTheme
+          .headline6!
+          .copyWith(fontWeight: FontWeight.w700, letterSpacing: 3),
     );
   }
 
@@ -65,27 +70,8 @@ class GetStartedScreen extends StatelessWidget {
             ),
           ),
       onPressed: onPressed,
-      child: Text(
+      child: TextComponent(
         btnText,
-      ),
-    );
-  }
-
-  RichText _richText(BuildContext context) {
-    return RichText(
-      text: TextSpan(
-        text: LocaleKeys.alreadyRegistered.tr() + " ",
-        style: Theme.of(context).textTheme.bodyText1?.copyWith(fontSize: 15),
-        children: <TextSpan>[
-          TextSpan(
-              text: LocaleKeys.signIn.tr(),
-              style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                  color: ColorConstants.primary, fontWeight: FontWeight.w700),
-              recognizer: TapGestureRecognizer()
-                ..onTap = () {
-                  Navigator.pushNamed(context, RouteConstants.signInScreen);
-                })
-        ],
       ),
     );
   }

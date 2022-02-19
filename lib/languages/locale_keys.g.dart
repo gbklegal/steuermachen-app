@@ -109,7 +109,7 @@ abstract class  LocaleKeys {
   static const taxEasyNow = 'taxEasyNow';
   static const onlyForInitialTax = 'onlyForInitialTax';
   static const getStarted = 'getStarted';
-  static const alreadyRegistered = 'alreadyRegistered';
+  static const alreadyHaveAnAccount = 'alreadyHaveAnAccount';
   static const signIn = 'signIn';
   static const signUp = 'signUp';
   static const forgotPassword = 'forgotPassword';

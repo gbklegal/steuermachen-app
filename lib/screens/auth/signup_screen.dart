@@ -97,14 +97,14 @@ class _SignupScreenState extends State<SignupScreen> with InputValidationUtil {
                       textColor: Colors.blueAccent),
                 ),
                 const SizedBox(height: 22),
-                RichTextAuthComponent(
-                  textSpan1: LocaleKeys.alreadyRegistered.tr() + " ",
-                  textSpan2: LocaleKeys.signIn.tr(),
-                  onTap: () {
-                    Navigator.pushReplacementNamed(
-                        context, RouteConstants.signInScreen);
-                  },
-                ),
+                // RichTextAuthComponent(
+                //   textSpan1: LocaleKeys.alreadyRegistered.tr() + " ",
+                //   textSpan2: LocaleKeys.signIn.tr(),
+                //   onTap: () {
+                //     Navigator.pushReplacementNamed(
+                //         context, RouteConstants.signInScreen);
+                //   },
+                // ),
                 const SizedBox(height: 50),
                 RichTextAuthComponent(
                   textSpan1: LocaleKeys.signInTermsAndCondition_1.tr() + "\n",

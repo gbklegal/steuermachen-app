@@ -111,7 +111,7 @@ class _CustomImagePreviewState extends State<CustomImagePreview> {
   }
 
   Future<Null> _cropImage(String path) async {
-    File? croppedFile = await ImageCropper.cropImage(
+    File? croppedFile = await ImageCropper().cropImage(
         sourcePath: path,
         compressQuality: 70,
         // maxHeight: 600,

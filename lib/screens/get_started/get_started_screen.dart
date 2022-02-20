@@ -1,5 +1,3 @@
-import 'package:easy_localization/src/public_ext.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:steuermachen/components/logo_component.dart';
 import 'package:steuermachen/components/text_component.dart';
@@ -26,13 +24,11 @@ class GetStartedScreen extends StatelessWidget {
                 AssetConstants.fileArtWork,
                 height: 280,
               ),
-              _button(context, LocaleKeys.calculateYourPrice, () {
-                Navigator.pushNamed(context, RouteConstants.calculatorScreen);
-              }),
+              borderButton(context, RouteConstants.calculatorScreen,
+                  LocaleKeys.calculateYourPrice),
               const SizedBox(height: 20),
-              _button(context, LocaleKeys.getStarted, () {
-                Navigator.pushNamed(context, RouteConstants.signupScreen);
-              }),
+              borderButton(
+                  context, RouteConstants.signupScreen, LocaleKeys.getStarted),
               const SizedBox(height: 22),
               _button(context, LocaleKeys.alreadyHaveAnAccount, () {
                 Navigator.pushNamed(context, RouteConstants.signInScreen);
@@ -50,6 +46,21 @@ class GetStartedScreen extends StatelessWidget {
     );
   }
 
+  Container borderButton(
+      BuildContext context, String nextRoute, String btnText) {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: ColorConstants.primary),
+        borderRadius: const BorderRadius.all(
+          Radius.circular(10.0),
+        ),
+      ),
+      child: _button(context, btnText, () {
+        Navigator.pushNamed(context, nextRoute);
+      }, backgroundColor: MaterialStateProperty.all(ColorConstants.white)),
+    );
+  }
+
   TextComponent _topTitle(BuildContext context) {
     return TextComponent(
       LocaleKeys.getStartedText_1,
@@ -62,17 +73,19 @@ class GetStartedScreen extends StatelessWidget {
   }
 
   ElevatedButton _button(
-      BuildContext context, String btnText, void Function()? onPressed) {
+      BuildContext context, String btnText, void Function()? onPressed,
+      {MaterialStateProperty<Color?>? backgroundColor}) {
     return ElevatedButton(
       style: ElevatedButtonTheme.of(context).style?.copyWith(
             minimumSize: MaterialStateProperty.all(
               Size(MediaQuery.of(context).size.width, 56),
             ),
+            backgroundColor: backgroundColor,
           ),
       onPressed: onPressed,
-      child: TextComponent(
-        btnText,
-      ),
+      child: TextComponent(btnText,
+          style: Theme.of(context).textTheme.button!.copyWith(
+              color: backgroundColor != null ? ColorConstants.black : null)),
     );
   }
 }

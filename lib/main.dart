@@ -127,7 +127,7 @@ class MyApp extends StatelessWidget {
           GoogleFonts.raleway(fontSize: 14.0, color: ColorConstants.black),
       button: GoogleFonts.raleway(
           fontSize: 16.0,
-          fontWeight: FontWeight.bold,
+          // fontWeight: FontWeight.bold,
           color: ColorConstants.white),
     );
   }

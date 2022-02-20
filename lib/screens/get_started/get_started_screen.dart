@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:steuermachen/components/button_component.dart';
 import 'package:steuermachen/components/logo_component.dart';
 import 'package:steuermachen/components/text_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
@@ -25,10 +26,10 @@ class GetStartedScreen extends StatelessWidget {
                 height: 280,
               ),
               borderButton(context, RouteConstants.calculatorScreen,
-                  LocaleKeys.calculateYourPrice),
+                  LocaleKeys.tryForFree),
               const SizedBox(height: 20),
-              borderButton(
-                  context, RouteConstants.signupScreen, LocaleKeys.getStarted),
+              borderButton(context, RouteConstants.signupScreen,
+                  LocaleKeys.startYourTaxReturn),
               const SizedBox(height: 22),
               _button(context, LocaleKeys.alreadyHaveAnAccount, () {
                 Navigator.pushNamed(context, RouteConstants.signInScreen);
@@ -36,9 +37,6 @@ class GetStartedScreen extends StatelessWidget {
               const Expanded(
                 child: SizedBox(height: 22),
               ),
-              // Expanded(
-              //   child: _richTextComponent(context),
-              // )
             ],
           ),
         ),
@@ -57,7 +55,7 @@ class GetStartedScreen extends StatelessWidget {
       ),
       child: _button(context, btnText, () {
         Navigator.pushNamed(context, nextRoute);
-      }, backgroundColor: MaterialStateProperty.all(ColorConstants.white)),
+      }, backgroundColor: ColorConstants.white),
     );
   }
 
@@ -72,20 +70,15 @@ class GetStartedScreen extends StatelessWidget {
     );
   }
 
-  ElevatedButton _button(
+  ButtonComponent _button(
       BuildContext context, String btnText, void Function()? onPressed,
-      {MaterialStateProperty<Color?>? backgroundColor}) {
-    return ElevatedButton(
-      style: ElevatedButtonTheme.of(context).style?.copyWith(
-            minimumSize: MaterialStateProperty.all(
-              Size(MediaQuery.of(context).size.width, 56),
-            ),
-            backgroundColor: backgroundColor,
-          ),
+      {Color? backgroundColor}) {
+    return ButtonComponent(
+      color: backgroundColor,
       onPressed: onPressed,
-      child: TextComponent(btnText,
-          style: Theme.of(context).textTheme.button!.copyWith(
-              color: backgroundColor != null ? ColorConstants.black : null)),
+      buttonText: btnText,
+      textStyle: Theme.of(context).textTheme.button!.copyWith(
+          color: backgroundColor != null ? ColorConstants.black : null),
     );
   }
 }

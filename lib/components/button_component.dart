@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:steuermachen/components/text_component.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 
 class ButtonComponent extends StatelessWidget {
@@ -17,7 +18,7 @@ class ButtonComponent extends StatelessWidget {
       this.buttonText = '',
       this.border = 0.0,
       this.textStyle,
-      this.btnHeight = 56,
+      this.btnHeight = 48,
       this.isDisabled = false,
       this.disabledColor = ColorConstants.mediumGrey,
       this.elevation = 0,
@@ -34,13 +35,10 @@ class ButtonComponent extends StatelessWidget {
                 ? MaterialStateProperty.all<Color>(color!)
                 : MaterialStateProperty.all<Color>(ColorConstants.primary),
           ),
-      child: Text(
+      child: TextComponent(
         buttonText,
-        // text: buttonText,
-        // ignore: prefer_if_null_operators
-        // style: textStyle != null
-        //     ? textStyle
-        //     : const TextStyle(fontWeight: FontWeight.w500),
+        style: textStyle,
+        textAlign: TextAlign.center,
       ),
       onPressed: isDisabled! ? null : (onPressed ?? () => {}),
     );

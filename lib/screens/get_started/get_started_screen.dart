@@ -65,7 +65,7 @@ class GetStartedScreen extends StatelessWidget {
       textAlign: TextAlign.start,
       style: Theme.of(context)
           .textTheme
-          .headline6!
+          .headline5!
           .copyWith(fontWeight: FontWeight.w700, letterSpacing: 3),
     );
   }

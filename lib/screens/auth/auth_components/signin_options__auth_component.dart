@@ -15,29 +15,32 @@ class SignInOptionsAuthComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(7),
           color: ColorConstants.white,
           boxShadow: [
             BoxShadow(
-                color: ColorConstants.black.withOpacity(0.15),
-                offset: const Offset(0, 1),
-                blurRadius: 2)
+                color: ColorConstants.veryLightPurple.withOpacity(0.08),
+                offset: const Offset(0, 0),
+                blurRadius: 5,
+                spreadRadius: 3)
           ]),
-      padding: const EdgeInsets.all(17),
+      padding: const EdgeInsets.all(14),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           SvgPicture.asset(
             assetName,
-            height: 24,
+            height: 20,
           ),
-          const SizedBox(width: 22),
-          Text(
-            btnText,
-            textAlign: TextAlign.start,
-            style: Theme.of(context).textTheme.headline6!.copyWith(
-                fontWeight: FontWeight.w700, fontSize: 17, color: textColor),
+          Center(
+            child: Text(
+              btnText,
+              textAlign: TextAlign.start,
+              style: Theme.of(context).textTheme.headline6!.copyWith(
+                  fontWeight: FontWeight.w700, fontSize: 15, color: textColor),
+            ),
           ),
+          const SizedBox(),
         ],
       ),
     );

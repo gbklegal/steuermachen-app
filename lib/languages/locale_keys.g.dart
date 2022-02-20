@@ -123,7 +123,7 @@ abstract class  LocaleKeys {
   static const googleSignIn = 'googleSignIn';
   static const emailUs = 'emailUs';
   static const password = 'password';
-  static const orSigninWith = 'orSigninWith';
+  static const signinWith = 'signinWith';
   static const dontHaveAnAccount = 'dontHaveAnAccount';
   static const signupNow = 'signupNow';
   static const street = 'street';

@@ -36,7 +36,7 @@ class VerifyAccountScreen extends StatelessWidget {
                   Text(
                     LocaleKeys.verifyYourAccount.tr(),
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.headline6?.copyWith(
+                    style: Theme.of(context).textTheme.headline5?.copyWith(
                         fontWeight: FontWeight.w700, letterSpacing: -0.3),
                   ),
                   const SizedBox(height: 35),

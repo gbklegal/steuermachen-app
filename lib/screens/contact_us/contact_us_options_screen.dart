@@ -46,7 +46,7 @@ class _ContactUsOptionScreenState extends State<ContactUsOptionScreen> {
         ),
         Text(LocaleKeys.howCanWeHelpYou.tr(),
             style:
-                Theme.of(context).textTheme.headline6!.copyWith(fontSize: 24)),
+                Theme.of(context).textTheme.headline5!.copyWith(fontSize: 24)),
         const SizedBox(
           height: 10,
         ),

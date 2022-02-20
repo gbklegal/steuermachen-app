@@ -121,7 +121,7 @@
     "googleSignIn": "Anmeldung mit Google",
     "emailUs": "E-Mail an uns",
     "password": "Passwort",
-    "orSigninWith": "oder melde dich mit an",
+    "signinWith" : "sign in with",
     "dontHaveAnAccount": "Sie haben kein Konto?",
     "signupNow": "Jetzt registrieren",
     "street": "Straße",

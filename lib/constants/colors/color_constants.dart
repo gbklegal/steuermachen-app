@@ -7,6 +7,7 @@ class ColorConstants {
   static const Color mediumGrey = Color(0xffDEDEDE);
   static const Color greyBottomBar = Color(0x84787878);
   static const Color black = Color(0xff000000);
+  static const Color veryLightPurple = Color(0xff5A6684);
   static const Color white = Color(0xffffffff);
   static const Color green = Color(0xff14EA69);
   static const Color toxicGreen = Color(0xff66db3b);

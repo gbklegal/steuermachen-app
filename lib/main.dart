@@ -75,24 +75,18 @@ class MyApp extends StatelessWidget {
   }
 
   InputDecorationTheme _inputDecorationTheme() {
+    const underlineInputBorder =  UnderlineInputBorder(
+          borderSide:
+              BorderSide(color: ColorConstants.veryLightPurple, width: 0.3),
+        );
     return InputDecorationTheme(
         labelStyle: GoogleFonts.raleway(
-          fontSize: 17.0,
+          fontSize: 15.0,
           fontStyle: FontStyle.normal,
-          color: ColorConstants.black.withOpacity(0.4),
+          color: ColorConstants.veryLightPurple,
         ),
-        border: InputBorder.none,
-        filled: true,
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(5.0),
-          borderSide:
-              const BorderSide(color: ColorConstants.formFieldBackground),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(5.0),
-          borderSide:
-              const BorderSide(color: ColorConstants.formFieldBackground),
-        ),
+        enabledBorder: underlineInputBorder,
+        focusedBorder: underlineInputBorder,
         
         fillColor: ColorConstants.formFieldBackground);
   }
@@ -101,7 +95,7 @@ class MyApp extends StatelessWidget {
     return ElevatedButtonThemeData(
       style: TextButton.styleFrom(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(7),
         ),
         elevation: 0.8,
         backgroundColor: ColorConstants.primary,
@@ -119,6 +113,9 @@ class MyApp extends StatelessWidget {
           GoogleFonts.raleway(fontSize: 72.0, fontWeight: FontWeight.bold),
       headline6: GoogleFonts.raleway(
           fontSize: 36.0,
+          fontWeight: FontWeight.bold,
+          fontStyle: FontStyle.normal),
+      headline5: GoogleFonts.raleway(
           fontWeight: FontWeight.bold,
           fontStyle: FontStyle.normal),
       bodyText1:

@@ -41,7 +41,7 @@ class TaxAdviceScreen extends StatelessWidget {
                           LocaleKeys.pricing.tr(),
                           style: Theme.of(context)
                               .textTheme
-                              .headline6!
+                              .headline5!
                               .copyWith(
                                   fontSize: 24, fontWeight: FontWeight.w600),
                         ),

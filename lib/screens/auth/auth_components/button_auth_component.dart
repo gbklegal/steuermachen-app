@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:steuermachen/components/button_component.dart';
 
 class ButtonAuthComponent extends StatelessWidget {
   const ButtonAuthComponent({
@@ -10,16 +11,9 @@ class ButtonAuthComponent extends StatelessWidget {
   final void Function()? onPressed;
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      style: ElevatedButtonTheme.of(context).style?.copyWith(
-            minimumSize: MaterialStateProperty.all(
-              Size(MediaQuery.of(context).size.width, 56),
-            ),
-          ),
+    return ButtonComponent(
       onPressed: onPressed,
-      child: Text(
-        btnText,
-      ),
+      buttonText: btnText,
     );
   }
 }

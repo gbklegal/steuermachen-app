@@ -75,7 +75,7 @@ class _SignupScreenState extends State<SignupScreen> with InputValidationUtil {
                             context, RouteConstants.signInScreen);
                       }
                     }),
-                ChoiceTextAuthComponent(text: LocaleKeys.orSigninWith.tr()),
+                const ChoiceTextAuthComponent(text: LocaleKeys.signinWith),
                 _signInWithApple(),
                 const SizedBox(height: 22),
                 InkWell(

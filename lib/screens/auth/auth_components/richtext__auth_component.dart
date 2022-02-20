@@ -14,15 +14,17 @@ class RichTextAuthComponent extends StatelessWidget {
       textAlign: TextAlign.center,
       text: TextSpan(
         text: textSpan1 + " ",
-        style: Theme.of(context)
-            .textTheme
-            .bodyText1
-            ?.copyWith(fontSize: 15, height: 1.2),
+        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+            fontSize: 14,
+            height: 1.2,
+            color: ColorConstants.black.withOpacity(0.6)),
         children: <TextSpan>[
           TextSpan(
               text: textSpan2,
               style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                  color: ColorConstants.primary, fontWeight: FontWeight.w700),
+                  fontSize: 14,
+                  color: ColorConstants.black,
+                  fontWeight: FontWeight.w700),
               recognizer: TapGestureRecognizer()..onTap = onTap)
         ],
       ),

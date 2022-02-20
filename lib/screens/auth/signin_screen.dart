@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
 import 'package:steuermachen/components/popup_loader_component.dart';
+import 'package:steuermachen/components/textformfield_icon_component.dart';
 import 'package:steuermachen/components/toast_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
@@ -38,6 +39,30 @@ class _SignInScreenState extends State<SignInScreen> with InputValidationUtil {
     super.initState();
   }
 
+  _googleSignIn() async {
+    PopupLoader.showLoadingDialog(context);
+    CommonResponseWrapper res = await authProvider.signInWithGoogle();
+    ToastComponent.showToast(res.message!, long: true);
+
+    PopupLoader.hideLoadingDialog(context);
+    if (res.status!) {
+      Navigator.pushNamedAndRemoveUntil(
+          context, RouteConstants.bottomNavBarScreen, (val) => false);
+    }
+  }
+
+  _appleSignIn() async {
+    PopupLoader.showLoadingDialog(context);
+    CommonResponseWrapper res = await authProvider.signInWithApple();
+    ToastComponent.showToast(res.message!, long: true);
+
+    PopupLoader.hideLoadingDialog(context);
+    if (res.status!) {
+      Navigator.pushNamedAndRemoveUntil(
+          context, RouteConstants.bottomNavBarScreen, (val) => false);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,34 +82,15 @@ class _SignInScreenState extends State<SignInScreen> with InputValidationUtil {
             child: Column(
               children: [
                 const SizedBox(height: 10),
+                const SizedBox(height: 35),
                 TitleTextAuthComponent(title: LocaleKeys.signIn.tr()),
                 const SizedBox(height: 35),
                 _authFields(),
                 const SizedBox(height: 25),
                 _signInBtn(context),
+                const SizedBox(height: 15),
                 _forgotPassword(context),
-                ChoiceTextAuthComponent(text: LocaleKeys.orSigninWith.tr()),
-                _signInWithApple(),
-                const SizedBox(height: 22),
-                InkWell(
-                  onTap: () async {
-                    PopupLoader.showLoadingDialog(context);
-                    CommonResponseWrapper res =
-                        await authProvider.signInWithGoogle();
-                    ToastComponent.showToast(res.message!, long: true);
-
-                    PopupLoader.hideLoadingDialog(context);
-                    if (res.status!) {
-                      Navigator.pushNamedAndRemoveUntil(context,
-                          RouteConstants.bottomNavBarScreen, (val) => false);
-                    }
-                  },
-                  child: SignInOptionsAuthComponent(
-                      assetName: AssetConstants.icGoogle,
-                      btnText: LocaleKeys.googleSignIn.tr(),
-                      textColor: Colors.blueAccent),
-                ),
-                const SizedBox(height: 22),
+                const SizedBox(height: 20),
                 RichTextAuthComponent(
                   textSpan1: LocaleKeys.dontHaveAnAccount.tr(),
                   textSpan2: LocaleKeys.signupNow.tr(),
@@ -92,18 +98,47 @@ class _SignInScreenState extends State<SignInScreen> with InputValidationUtil {
                     Navigator.pushNamed(context, RouteConstants.signupScreen);
                   },
                 ),
+                const ChoiceTextAuthComponent(text: LocaleKeys.signinWith),
+                const SizedBox(height: 25),
+                _signInWithApple(),
                 const SizedBox(height: 22),
-                RichTextAuthComponent(
-                  textSpan1: LocaleKeys.signInTermsAndCondition_1.tr() + "\n",
-                  textSpan2: LocaleKeys.signInTermsAndCondition_2.tr(),
-                  onTap: () {
-                    // Navigator.pushNamed(context, RouteConstants.signupScreen);
-                  },
+                InkWell(
+                  onTap: _googleSignIn,
+                  child: SignInOptionsAuthComponent(
+                      assetName: AssetConstants.icGoogle,
+                      btnText: LocaleKeys.googleSignIn.tr(),
+                      textColor: Colors.blueAccent),
                 ),
                 const SizedBox(height: 22),
+                _privacyConditions(context),
+                const SizedBox(height: 180),
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  Flexible _privacyConditions(BuildContext context) {
+    text(val) => Text(
+          val,
+          style: Theme.of(context).textTheme.bodyText2?.copyWith(
+              fontSize: 13,
+              color: ColorConstants.black,
+              fontWeight: FontWeight.w500),
+        );
+    return Flexible(
+      fit: FlexFit.tight,
+      child: Align(
+        alignment: Alignment.bottomCenter,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            text("Imprint | "),
+            text("Privacy Policy | "),
+            text("Conditions"),
+          ],
         ),
       ),
     );
@@ -113,17 +148,7 @@ class _SignInScreenState extends State<SignInScreen> with InputValidationUtil {
     return Consumer<AuthProvider>(builder: (context, consumer, child) {
       if (consumer.signInWithAppleIsAvailable) {
         return InkWell(
-          onTap: () async {
-            PopupLoader.showLoadingDialog(context);
-            CommonResponseWrapper res = await authProvider.signInWithApple();
-            ToastComponent.showToast(res.message!, long: true);
-
-            PopupLoader.hideLoadingDialog(context);
-            if (res.status!) {
-              Navigator.pushNamedAndRemoveUntil(
-                  context, RouteConstants.bottomNavBarScreen, (val) => false);
-            }
-          },
+          onTap: _appleSignIn,
           child: SignInOptionsAuthComponent(
               assetName: AssetConstants.icApple,
               btnText: LocaleKeys.appleSignIn.tr()),
@@ -179,6 +204,10 @@ class _SignInScreenState extends State<SignInScreen> with InputValidationUtil {
             controller: _emailController,
             decoration: InputDecoration(
               label: Text(LocaleKeys.email.tr()),
+              prefixIcon: TextFormFieldIcons(
+                assetName: AssetConstants.icEmail,
+                padding: 16,
+              ),
             ),
             validator: validateEmail,
           ),
@@ -187,6 +216,12 @@ class _SignInScreenState extends State<SignInScreen> with InputValidationUtil {
             controller: _passwordController,
             decoration: InputDecoration(
               label: Text(LocaleKeys.password.tr()),
+              contentPadding: const EdgeInsets.only(left: 0),
+              prefixIcon: TextFormFieldIcons(
+                assetName: AssetConstants.icEmail,
+                padding: 16,
+                icColor: ColorConstants.white,
+              ),
             ),
             obscureText: true,
             validator: validateFieldEmpty,

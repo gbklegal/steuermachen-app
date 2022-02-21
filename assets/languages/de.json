@@ -134,6 +134,13 @@
     "selectCountry": "Land auswählen",
     "haveDoneTaxOnline" : "Steuern online gemacht",
     "legalAction" : "Klage",
+    "getYourTaxReturnDoneNow" : "Get your tax return done now",
+    "taxEasyInitialTaxAdvice" : "taxEASY | initial tax advice",
+    "objectionRejection" : "Objection rejected | Complaint to the Finance Court",
+    "yourProfile" : "your profile",
+    "collectReceipts" : "collect receipts",
+    "overView" : "overview",
+    "taxAdvisor" : "Tax Advisor",
     "intialTaxAdvice" : "Erste Steuerberatung",
     "selectCategory" : "Wählen Sie die für Sie passende Kategorie",
     "logout": "Ausloggen"

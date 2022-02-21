@@ -136,6 +136,13 @@ abstract class  LocaleKeys {
   static const selectCountry = 'selectCountry';
   static const haveDoneTaxOnline = 'haveDoneTaxOnline';
   static const legalAction = 'legalAction';
+  static const getYourTaxReturnDoneNow = 'getYourTaxReturnDoneNow';
+  static const taxEasyInitialTaxAdvice = 'taxEasyInitialTaxAdvice';
+  static const objectionRejection = 'objectionRejection';
+  static const yourProfile = 'yourProfile';
+  static const collectReceipts = 'collectReceipts';
+  static const overView = 'overView';
+  static const taxAdvisor = 'taxAdvisor';
   static const intialTaxAdvice = 'intialTaxAdvice';
   static const selectCategory = 'selectCategory';
   static const logout = 'logout';

@@ -92,7 +92,7 @@ class _SignInScreenState extends State<SignInScreen> with InputValidationUtil {
       ),
       body: SingleChildScrollView(
         child: SizedBox(
-          height: MediaQuery.of(context).size.height,
+          height: MediaQuery.of(context).size.height * 0.9,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
@@ -111,7 +111,8 @@ class _SignInScreenState extends State<SignInScreen> with InputValidationUtil {
                   textSpan1: LocaleKeys.dontHaveAnAccount.tr(),
                   textSpan2: LocaleKeys.signupNow.tr(),
                   onTap: () {
-                    Navigator.pushReplacementNamed(context, RouteConstants.signupScreen);
+                    Navigator.pushReplacementNamed(
+                        context, RouteConstants.signupScreen);
                   },
                 ),
                 const ChoiceTextAuthComponent(text: LocaleKeys.signinWith),
@@ -127,7 +128,7 @@ class _SignInScreenState extends State<SignInScreen> with InputValidationUtil {
                 ),
                 const SizedBox(height: 22),
                 const PrivacyTermsConditionsAuthComponent(),
-                const SizedBox(height: 180),
+                const Flexible(child: SizedBox(height: 180)),
               ],
             ),
           ),

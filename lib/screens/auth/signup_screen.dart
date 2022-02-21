@@ -89,7 +89,7 @@ class _SignupScreenState extends State<SignupScreen> with InputValidationUtil {
       ),
       body: SingleChildScrollView(
         child: SizedBox(
-          height: MediaQuery.of(context).size.height,
+          height: MediaQuery.of(context).size.height * 0.9,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
@@ -123,7 +123,7 @@ class _SignupScreenState extends State<SignupScreen> with InputValidationUtil {
                 ),
                 const SizedBox(height: 50),
                 const PrivacyTermsConditionsAuthComponent(),
-                const SizedBox(height: 180),
+                const Flexible(child: SizedBox(height: 180)),
               ],
             ),
           ),

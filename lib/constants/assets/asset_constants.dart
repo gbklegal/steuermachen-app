@@ -21,6 +21,7 @@ class AssetConstants {
   static String uploadDoc = "assets/icons/upload_doc.svg";
   static String removePic = "assets/icons/remove-pic.svg";
   static String icBin = "assets/icons/bin-icon.svg";
+  static String icReceipts = "assets/icons/receipts-icon.svg";
   static String icDocument = "assets/icons/document-icon.svg";
   static String icExclamation = "assets/icons/exclamation-icon.svg";
   static String icLegalAction = "assets/icons/legal-action-icon.svg";

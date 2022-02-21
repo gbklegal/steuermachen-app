@@ -17,15 +17,19 @@ class HomeScreen extends StatelessWidget {
     List<_CardItemsModel> content = [
       _CardItemsModel(
           leadAsset: AssetConstants.icDocument,
-          title: LocaleKeys.haveDoneTaxOnline.tr(),
+          title: LocaleKeys.getYourTaxReturnDoneNow.tr(),
           action: RouteConstants.maritalStatusScreen),
       _CardItemsModel(
           leadAsset: AssetConstants.icLegalAction,
-          title: LocaleKeys.legalAction.tr(),
+          title: LocaleKeys.taxEasyInitialTaxAdvice.tr(),
           action: RouteConstants.selectDocumentForScreen),
       _CardItemsModel(
           leadAsset: AssetConstants.icPersons,
-          title: LocaleKeys.initialTaxAdvice.tr(),
+          title: LocaleKeys.objectionRejection.tr(),
+          action: RouteConstants.taxAdviceScreen),
+      _CardItemsModel(
+          leadAsset: AssetConstants.icLegalAction,
+          title: LocaleKeys.yourProfile.tr(),
           action: RouteConstants.taxAdviceScreen),
     ];
 
@@ -63,7 +67,7 @@ class HomeScreen extends StatelessWidget {
                   style: Theme.of(context)
                       .textTheme
                       .bodyText1!
-                      .copyWith(fontWeight: FontWeight.w500, fontSize: 20),
+                      .copyWith(fontWeight: FontWeight.w600, fontSize: 20),
                 ),
                 const SizedBox(height: 5),
                 Text(
@@ -72,7 +76,7 @@ class HomeScreen extends StatelessWidget {
                   style: Theme.of(context)
                       .textTheme
                       .bodyText1!
-                      .copyWith(fontWeight: FontWeight.w500, fontSize: 20),
+                      .copyWith(fontWeight: FontWeight.w600, fontSize: 20),
                 ),
                 const SizedBox(
                   height: 15,
@@ -91,22 +95,54 @@ class HomeScreen extends StatelessWidget {
                                   "nextRoute": RouteConstants.legalAction2Screen
                                 });
                               } else {
-                                Navigator.pushNamed(
-                                    context, content[i].action);
+                                Navigator.pushNamed(context, content[i].action);
                               }
                             },
                             child: _HomeCards(
                               leadingAsset: content[i].leadAsset,
                               title: content[i].title,
                             ),
-                          )
+                          ),
+                        const SizedBox(
+                          height: 25,
+                        ),
+                        const _CollectReceipts()
                       ],
                     ),
                   ),
-                )
+                ),
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class _CollectReceipts extends StatelessWidget {
+  const _CollectReceipts({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: ColorConstants.primary, width: 1),
+        borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+      ),
+      child: ListTile(
+        leading: SvgPicture.asset(AssetConstants.icReceipts),
+        title: Text(
+          LocaleKeys.collectReceipts.tr(),
+          textAlign: TextAlign.left,
+          style: Theme.of(context).textTheme.bodyText1!.copyWith(
+              fontWeight: FontWeight.w500, fontSize: 17, letterSpacing: -0.3),
+        ),
+        trailing: SvgPicture.asset(
+          AssetConstants.icForward,
+          height: 12,
         ),
       ),
     );
@@ -141,30 +177,20 @@ class _HomeCards extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(12.0),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                children: [
-                  SvgPicture.asset(leadingAsset),
-                  const SizedBox(width: 15),
-                  Column(
-                    children: [
-                      Text(
-                        title,
-                        textAlign: TextAlign.left,
-                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 17,
-                            letterSpacing: -0.3),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              SvgPicture.asset(
-                AssetConstants.icExclamation,
-                color: ColorConstants.charcoalGrey,
-              ),
+              SvgPicture.asset(leadingAsset),
+              const SizedBox(width: 15),
+              Flexible(
+                child: Text(
+                  title,
+                  textAlign: TextAlign.left,
+                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 17,
+                      letterSpacing: -0.3),
+                ),
+              )
             ],
           ),
         ),

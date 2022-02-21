@@ -26,29 +26,82 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen>
     with InputValidationUtil {
   final TextEditingController _firstNameController = TextEditingController();
-  final TextEditingController _surNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _streetController = TextEditingController();
-  final TextEditingController _postalCodeController = TextEditingController();
-  final TextEditingController _cityTownController = TextEditingController();
-  final TextEditingController _countryController = TextEditingController();
+  final TextEditingController _houseNumberController = TextEditingController();
+  final TextEditingController _plzController = TextEditingController();
+  final TextEditingController _locationController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _landController = TextEditingController();
   final GlobalKey<FormState> _userFormKey = GlobalKey<FormState>();
   bool loading = true;
   late CommonResponseWrapper response;
   late FormsProvider _formsProvider;
+  List<_UserFormModel> formFields = [];
+  _addFields() {
+    formFields.addAll([
+      _UserFormModel(
+        controller: _firstNameController,
+        labelText: LocaleKeys.firstName.tr(),
+        validator: validateFieldEmpty,
+      ),
+      _UserFormModel(
+        controller: _lastNameController,
+        labelText: LocaleKeys.surName.tr(),
+        validator: validateFieldEmpty,
+      ),
+      _UserFormModel(
+        controller: _streetController,
+        labelText: LocaleKeys.street.tr(),
+        validator: validateFieldEmpty,
+      ),
+      _UserFormModel(
+        controller: _houseNumberController,
+        labelText: LocaleKeys.houseNo.tr(),
+        validator: validateFieldEmpty,
+      ),
+      _UserFormModel(
+        controller: _plzController,
+        labelText: "plz",
+        validator: validateFieldEmpty,
+      ),
+      _UserFormModel(
+        controller: _locationController,
+        labelText: "location",
+        validator: validateFieldEmpty,
+      ),
+      _UserFormModel(
+        controller: _phoneController,
+        labelText: LocaleKeys.phoneNo.tr(),
+        validator: validateFieldEmpty,
+      ),
+      _UserFormModel(
+        controller: _emailController,
+        labelText: LocaleKeys.email.tr(),
+        validator: validateEmail,
+      ),
+    ]);
+  }
+
   @override
   void initState() {
     super.initState();
     _formsProvider = Provider.of<FormsProvider>(context, listen: false);
+    _addFields();
     _formsProvider.getUserProfile().then((value) {
       if (value.status!) {
         if (value.data != null) {
           UserProfileDataCollector user = value.data;
           _firstNameController.text = user.firstName!;
-          _surNameController.text = user.surname!;
+          _lastNameController.text = user.lastName!;
           _streetController.text = user.street!;
-          _postalCodeController.text = user.postalCode!;
-          _cityTownController.text = user.cityTown!;
-          _countryController.text = user.country!;
+          _houseNumberController.text = user.houseNumber!;
+          _plzController.text = user.plz!;
+          _locationController.text = user.location!;
+          _phoneController.text = user.phone!;
+          _emailController.text = user.email!;
+          _landController.text = user.land!;
         }
       }
       response = value;
@@ -90,14 +143,18 @@ class _ProfileScreenState extends State<ProfileScreen>
         onPressed: () async {
           if (_userFormKey.currentState!.validate()) {
             PopupLoader.showLoadingDialog(context);
-            CommonResponseWrapper res = await _formsProvider.submitUserProfile(
-                UserProfileDataCollector(
-                    surname: _surNameController.text,
-                    firstName: _firstNameController.text,
-                    street: _streetController.text,
-                    postalCode: _postalCodeController.text,
-                    cityTown: _cityTownController.text,
-                    country: _countryController.text));
+            CommonResponseWrapper res =
+                await _formsProvider.submitUserProfile(UserProfileDataCollector(
+              firstName: _firstNameController.text,
+              lastName: _lastNameController.text,
+              street: _streetController.text,
+              houseNumber: _houseNumberController.text,
+              plz: _plzController.text,
+              location: _locationController.text,
+              phone: _phoneController.text,
+              email: _emailController.text,
+              land: _landController.text,
+            ));
             PopupLoader.hideLoadingDialog(context);
             ToastComponent.showToast(res.message!, long: true);
           }
@@ -137,62 +194,59 @@ class _ProfileScreenState extends State<ProfileScreen>
             const SizedBox(
               height: 35,
             ),
-            _title(LocaleKeys.surName.tr()),
-            sizedBox4,
+            for (var item in formFields)
+              TextFormField(
+                controller: item.controller,
+                decoration: InputDecoration(
+                  labelText: item.labelText,
+                  hintStyle: fontStyle,
+                ),
+                validator: item.validator,
+              ),
             TextFormField(
-              controller: _surNameController,
+              controller: _lastNameController,
               decoration: InputDecoration(
-                hintText: LocaleKeys.surName.tr(),
+                labelText: LocaleKeys.surName.tr(),
                 hintStyle: fontStyle,
               ),
               validator: validateFieldEmpty,
             ),
             sizedBox6,
-            _title(LocaleKeys.firstName.tr()),
-            sizedBox4,
             TextFormField(
               controller: _firstNameController,
               decoration: InputDecoration(
-                hintText: LocaleKeys.firstName.tr(),
+                labelText: LocaleKeys.firstName.tr(),
                 hintStyle: fontStyle,
               ),
               validator: validateFieldEmpty,
             ),
             sizedBox6,
-            _title(LocaleKeys.street.tr()),
-            sizedBox4,
             TextFormField(
               controller: _streetController,
               decoration: InputDecoration(
-                hintText: LocaleKeys.street.tr(),
+                labelText: LocaleKeys.street.tr(),
                 hintStyle: fontStyle,
               ),
               validator: validateFieldEmpty,
             ),
-            sizedBox4,
-            _title(LocaleKeys.postalCode.tr()),
             sizedBox4,
             TextFormField(
-              controller: _postalCodeController,
+              controller: _houseNumberController,
               decoration: InputDecoration(
-                hintText: LocaleKeys.postalCode.tr(),
+                labelText: LocaleKeys.postalCode.tr(),
                 hintStyle: fontStyle,
               ),
               validator: validateFieldEmpty,
             ),
-            sizedBox4,
-            _title(LocaleKeys.cityTown.tr()),
             sizedBox4,
             TextFormField(
-              controller: _cityTownController,
+              controller: _plzController,
               decoration: InputDecoration(
-                hintText: LocaleKeys.cityTown.tr(),
+                labelText: LocaleKeys.cityTown.tr(),
                 hintStyle: fontStyle,
               ),
               validator: validateFieldEmpty,
             ),
-            sizedBox4,
-            _title(LocaleKeys.selectCountry.tr()),
             sizedBox4,
             InkWell(
               onTap: () {
@@ -202,15 +256,15 @@ class _ProfileScreenState extends State<ProfileScreen>
                       true, // optional. Shows phone code before the country name.
                   onSelect: (Country country) {
                     print('Select country: ${country.displayName}');
-                    _countryController.text = country.displayName;
+                    _locationController.text = country.displayName;
                   },
                 );
               },
               child: TextFormField(
                 enabled: false,
-                controller: _countryController,
+                controller: _locationController,
                 decoration: InputDecoration(
-                  hintText: LocaleKeys.selectCountry.tr(),
+                  labelText: LocaleKeys.selectCountry.tr(),
                   hintStyle: fontStyle,
                 ),
                 validator: validateFieldEmpty,
@@ -229,4 +283,12 @@ class _ProfileScreenState extends State<ProfileScreen>
       style: FontStyles.fontRegular(fontSize: 14),
     );
   }
+}
+
+class _UserFormModel {
+  String? Function(String?)? validator;
+  TextEditingController? controller;
+  String? labelText;
+
+  _UserFormModel({this.controller, this.labelText, this.validator});
 }

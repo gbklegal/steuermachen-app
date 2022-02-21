@@ -95,30 +95,48 @@ class ContactUsFormDataCollector {
 }
 
 class UserProfileDataCollector {
-  final String? surname, firstName, street, postalCode, cityTown, country;
+  final String? firstName,
+      lastName,
+      street,
+      houseNumber,
+      plz,
+      location,
+      phone,
+      email,
+      land;
 
-  UserProfileDataCollector(
-      {this.surname,
-      this.firstName,
-      this.street,
-      this.postalCode,
-      this.cityTown,
-      this.country});
+  UserProfileDataCollector({
+    this.firstName,
+    this.lastName,
+    this.street,
+    this.email,
+    this.phone,
+    this.land,
+    this.houseNumber,
+    this.plz,
+    this.location,
+  });
   factory UserProfileDataCollector.fromJson(Map<String, dynamic> json) =>
       UserProfileDataCollector(
-        surname: json["surname"],
         firstName: json["firstName"],
+        lastName: json["lastName"],
         street: json["street"],
-        postalCode: json["postalCode"],
-        cityTown: json["cityTown"],
-        country: json["country"],
+        houseNumber: json["houseNumber"],
+        plz: json["plz"],
+        location: json["location"],
+        phone: json["phone"],
+        email: json["email"],
+        land: json["country"],
       );
   Map<String, dynamic> toJson() => {
-        "surname": surname,
         "firstName": firstName,
+        "lastName": lastName,
         "street": street,
-        "postalCode": postalCode,
-        "cityTown": cityTown,
-        "country": country,
+        "houseNumber": houseNumber,
+        "plz": plz,
+        "location": location,
+        "phone": phone,
+        "email": email,
+        "land": land,
       };
 }

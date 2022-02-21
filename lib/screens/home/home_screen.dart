@@ -104,7 +104,7 @@ class HomeScreen extends StatelessWidget {
                             ),
                           ),
                         const SizedBox(
-                          height: 25,
+                          height: 40,
                         ),
                         const _CollectReceipts()
                       ],
@@ -130,15 +130,21 @@ class _CollectReceipts extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         border: Border.all(color: ColorConstants.primary, width: 1),
-        borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+        borderRadius: const BorderRadius.all(
+          Radius.circular(20.0),
+        ),
       ),
       child: ListTile(
-        leading: SvgPicture.asset(AssetConstants.icReceipts),
+        leading: SvgPicture.asset(
+          AssetConstants.icReceipts,
+          height: 18,
+          color: ColorConstants.black,
+        ),
         title: Text(
           LocaleKeys.collectReceipts.tr(),
           textAlign: TextAlign.left,
           style: Theme.of(context).textTheme.bodyText1!.copyWith(
-              fontWeight: FontWeight.w500, fontSize: 17, letterSpacing: -0.3),
+              fontWeight: FontWeight.w500, fontSize: 15, letterSpacing: -0.3),
         ),
         trailing: SvgPicture.asset(
           AssetConstants.icForward,
@@ -163,6 +169,7 @@ class _HomeCards extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: Container(
+        height: 48,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(7),
           color: ColorConstants.white,
@@ -179,7 +186,11 @@ class _HomeCards extends StatelessWidget {
           child: Row(
             // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SvgPicture.asset(leadingAsset),
+              SvgPicture.asset(
+                leadingAsset,
+                height: 18,
+                color: ColorConstants.black,
+              ),
               const SizedBox(width: 15),
               Flexible(
                 child: Text(
@@ -187,7 +198,7 @@ class _HomeCards extends StatelessWidget {
                   textAlign: TextAlign.left,
                   style: Theme.of(context).textTheme.bodyText1!.copyWith(
                       fontWeight: FontWeight.w500,
-                      fontSize: 17,
+                      fontSize: 14,
                       letterSpacing: -0.3),
                 ),
               )

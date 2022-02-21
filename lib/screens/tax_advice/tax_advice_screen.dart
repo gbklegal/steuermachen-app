@@ -28,7 +28,7 @@ class TaxAdviceScreen extends StatelessWidget {
               return Scaffold(
                 appBar: AppBarComponent(
                   LocaleKeys.initialTaxAdvice.tr(),
-                  showNotificationIcon: false,
+                  showPersonIcon: false,
                 ),
                 body: SingleChildScrollView(
                   child: Padding(

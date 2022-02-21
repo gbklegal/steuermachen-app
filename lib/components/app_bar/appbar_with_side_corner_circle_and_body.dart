@@ -24,7 +24,7 @@ class AppBarWithSideCornerCircleAndRoundBody extends StatelessWidget {
         // imageTitle: AssetConstants.logo,
         backgroundColor: Colors.transparent,
         showBottomLine: false,
-        showNotificationIcon: showNotificationIcon,
+        showPersonIcon: showNotificationIcon,
       ),
       body: Stack(
         children: [

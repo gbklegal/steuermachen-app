@@ -16,6 +16,7 @@ class AssetConstants {
   static String weddingRings = "assets/icons/wedding-rings.svg";
   static String icNotification = "assets/icons/notification-icon.svg";
   static String icEmail = "assets/icons/email-icon.svg";
+  static String icPerson = "assets/icons/person-icon.svg";
   static String topRightRoundCircle = "assets/top-right-round-circle.svg";
   static String uploadDoc = "assets/icons/upload_doc.svg";
   static String removePic = "assets/icons/remove-pic.svg";

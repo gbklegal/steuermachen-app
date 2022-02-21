@@ -49,7 +49,7 @@ class _LegalAction2ScreenState extends State<LegalAction2Screen> {
     return Scaffold(
       appBar:  AppBarComponent(
         LocaleKeys.powerOfAttorney.tr(),
-        showNotificationIcon: false,
+        showPersonIcon: false,
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),

@@ -7,28 +7,26 @@ import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
+import 'package:steuermachen/utils/string_utils.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    List<Map<String, dynamic>> content = [
-      {
-        "leadingAsset": AssetConstants.icDocument,
-        "title": LocaleKeys.haveDoneTaxOnline.tr(),
-        "action": RouteConstants.maritalStatusScreen
-      },
-      {
-        "leadingAsset": AssetConstants.icLegalAction,
-        "title": LocaleKeys.legalAction.tr(),
-        "action": RouteConstants.selectDocumentForScreen
-      },
-      {
-        "leadingAsset": AssetConstants.icPersons,
-        "title": LocaleKeys.initialTaxAdvice.tr(),
-        "action": RouteConstants.taxAdviceScreen
-      },
+    List<_CardItemsModel> content = [
+      _CardItemsModel(
+          leadAsset: AssetConstants.icDocument,
+          title: LocaleKeys.haveDoneTaxOnline.tr(),
+          action: RouteConstants.maritalStatusScreen),
+      _CardItemsModel(
+          leadAsset: AssetConstants.icLegalAction,
+          title: LocaleKeys.legalAction.tr(),
+          action: RouteConstants.selectDocumentForScreen),
+      _CardItemsModel(
+          leadAsset: AssetConstants.icPersons,
+          title: LocaleKeys.initialTaxAdvice.tr(),
+          action: RouteConstants.taxAdviceScreen),
     ];
 
     return Scaffold(
@@ -38,86 +36,78 @@ class HomeScreen extends StatelessWidget {
         imageTitle: AssetConstants.logo,
         backgroundColor: Colors.transparent,
         showBackButton: false,
-        showNotificationIcon: true,
+        showPersonIcon: true,
         showBottomLine: false,
       ),
-      body: Column(
-        children: [
-          Container(
-            decoration: const BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(50),
-                ),
-                color: ColorConstants.formFieldBackground),
+      body: SafeArea(
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 16),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Align(
-                  alignment: Alignment.topRight,
-                  child: SvgPicture.asset(AssetConstants.topRightRoundCircle),
-                ),
-                Image.asset(
-                  AssetConstants.tax,
-                  height: 120,
-                ),
-                const SizedBox(
-                  height: 25,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 35),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        LocaleKeys.howWouldYouLikeToMoveForwardWithUs.tr(),
-                        textAlign: TextAlign.left,
-                        style: Theme.of(context).textTheme.headline5!.copyWith(
-                            fontWeight: FontWeight.w700, fontSize: 28),
-                      ),
-                      const SizedBox(height: 5),
-                      Text(
-                       LocaleKeys.selectCategory.tr(),
-                        textAlign: TextAlign.left,
-                        style: Theme.of(context).textTheme.headline5!.copyWith(
-                            fontWeight: FontWeight.w400, fontSize: 17),
-                      ),
-                      const SizedBox(
-                        height: 35,
-                      ),
-                    ],
+                  alignment: Alignment.center,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 25),
+                    child: Image.asset(
+                      AssetConstants.tax,
+                      height: 120,
+                    ),
                   ),
                 ),
+                Text(
+                  LocaleKeys.hello.tr().onlyFirstInCaps + " OSAMA",
+                  textAlign: TextAlign.left,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText1!
+                      .copyWith(fontWeight: FontWeight.w500, fontSize: 20),
+                ),
+                const SizedBox(height: 5),
+                Text(
+                  LocaleKeys.howCanWeHelpYou.tr(),
+                  textAlign: TextAlign.left,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText1!
+                      .copyWith(fontWeight: FontWeight.w500, fontSize: 20),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        for (var i = 0; i < content.length; i++)
+                          InkWell(
+                            onTap: () {
+                              if (i == 1) {
+                                Navigator.pushNamed(
+                                    context, content[i].action, arguments: {
+                                  "showNextBtn": true,
+                                  "nextRoute": RouteConstants.legalAction2Screen
+                                });
+                              } else {
+                                Navigator.pushNamed(
+                                    context, content[i].action);
+                              }
+                            },
+                            child: _HomeCards(
+                              leadingAsset: content[i].leadAsset,
+                              title: content[i].title,
+                            ),
+                          )
+                      ],
+                    ),
+                  ),
+                )
               ],
             ),
           ),
-          const SizedBox(height: 15),
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  for (var i = 0; i < content.length; i++)
-                    InkWell(
-                      onTap: () {
-                        if (i == 1) {
-                          Navigator.pushNamed(context, content[i]["action"],
-                              arguments: {
-                                "showNextBtn": true,
-                                "nextRoute": RouteConstants.legalAction2Screen
-                              });
-                        } else {
-                          Navigator.pushNamed(context, content[i]["action"]);
-                        }
-                      },
-                      child: _HomeCards(
-                        leadingAsset: content[i]["leadingAsset"],
-                        title: content[i]["title"],
-                      ),
-                    )
-                ],
-              ),
-            ),
-          )
-        ],
+        ),
       ),
     );
   }
@@ -135,49 +125,57 @@ class _HomeCards extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+      padding: const EdgeInsets.symmetric(vertical: 10),
       child: Container(
-          decoration: BoxDecoration(
-              color: ColorConstants.formFieldBackground,
-              boxShadow: [
-                BoxShadow(
-                  color: ColorConstants.black.withOpacity(0.3),
-                  offset: const Offset(0, 2),
-                  spreadRadius: 1,
-                  blurRadius: 2,
-                )
-              ]),
-          child: Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    SvgPicture.asset(leadingAsset),
-                    const SizedBox(width: 15),
-                    Column(
-                      children: [
-                        Text(
-                          title,
-                          textAlign: TextAlign.left,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText1!
-                              .copyWith(
-                                  fontWeight: FontWeight.w500, fontSize: 17, letterSpacing: -0.3),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                SvgPicture.asset(
-                  AssetConstants.icExclamation,
-                  color: ColorConstants.charcoalGrey,
-                ),
-              ],
-            ),
-          )),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(7),
+          color: ColorConstants.white,
+          boxShadow: [
+            BoxShadow(
+                color: ColorConstants.veryLightPurple.withOpacity(0.4),
+                offset: const Offset(0, 2),
+                blurRadius: 3,
+                spreadRadius: 1)
+          ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  SvgPicture.asset(leadingAsset),
+                  const SizedBox(width: 15),
+                  Column(
+                    children: [
+                      Text(
+                        title,
+                        textAlign: TextAlign.left,
+                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 17,
+                            letterSpacing: -0.3),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              SvgPicture.asset(
+                AssetConstants.icExclamation,
+                color: ColorConstants.charcoalGrey,
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
+}
+
+class _CardItemsModel {
+  final String leadAsset, title, action;
+
+  _CardItemsModel(
+      {required this.leadAsset, required this.title, required this.action});
 }

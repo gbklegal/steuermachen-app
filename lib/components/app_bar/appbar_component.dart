@@ -18,7 +18,7 @@ class AppBarComponent extends StatelessWidget with PreferredSizeWidget {
   final String? imageTitle;
   final Color backgroundColor;
   final bool? showBackButton;
-  final bool? showNotificationIcon;
+  final bool? showPersonIcon;
   final bool? showBottomLine;
   const AppBarComponent(
     this.text, {
@@ -27,7 +27,7 @@ class AppBarComponent extends StatelessWidget with PreferredSizeWidget {
     this.imageTitle,
     this.backgroundColor = ColorConstants.white,
     this.showBackButton = true,
-    this.showNotificationIcon = true,
+    this.showPersonIcon = true,
     this.showBottomLine = true,
     this.backText,
   }) : super(key: key);
@@ -89,10 +89,10 @@ class AppBarComponent extends StatelessWidget with PreferredSizeWidget {
                 statusBarIconBrightness: Brightness.dark),
             actions: [
               Visibility(
-                visible: showNotificationIcon!,
+                visible: showPersonIcon!,
                 child: Padding(
                   padding: const EdgeInsets.only(right: 15, top: 5),
-                  child: SvgPicture.asset(AssetConstants.icNotification),
+                  child: SvgPicture.asset(AssetConstants.icPerson),
                 ),
               ),
             ],

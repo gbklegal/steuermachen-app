@@ -22,7 +22,7 @@ class VerifyAccountScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         showBackButton: false,
         showBottomLine: false,
-        showNotificationIcon: false,
+        showPersonIcon: false,
       ),
       body: SafeArea(
         child: SizedBox(

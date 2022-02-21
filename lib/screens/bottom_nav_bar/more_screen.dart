@@ -88,7 +88,7 @@ class _MoreScreenState extends State<MoreScreen> {
       return Scaffold(
         appBar: AppBarComponent(
           "",
-          showNotificationIcon: false,
+          showPersonIcon: false,
           showBottomLine: false,
           backText: LocaleKeys.more.tr(),
         ),

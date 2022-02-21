@@ -42,7 +42,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen>
         backgroundColor: Colors.transparent,
         showBackButton: true,
         showBottomLine: false,
-        showNotificationIcon: false,
+        showPersonIcon: false,
       ),
       body: SingleChildScrollView(
         child: SizedBox(

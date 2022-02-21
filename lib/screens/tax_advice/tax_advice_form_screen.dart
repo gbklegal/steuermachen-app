@@ -66,7 +66,7 @@ class _TaxAdviceFormScreenState extends State<TaxAdviceFormScreen>
     return Scaffold(
       appBar:  AppBarComponent(
         LocaleKeys.initInfo.tr(),
-        showNotificationIcon: false,
+        showPersonIcon: false,
       ),
       body: SingleChildScrollView(
         child: Padding(

@@ -50,7 +50,7 @@ class _TaxFileYearScreenState extends State<TaxFileYearScreen> {
     return Scaffold(
       appBar:  AppBarComponent(
         LocaleKeys.selectYear.tr(),
-        showNotificationIcon: false,
+        showPersonIcon: false,
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,

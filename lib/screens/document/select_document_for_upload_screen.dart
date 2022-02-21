@@ -95,7 +95,7 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
     if (!widget.showRoundBody!) {
       return AppBarComponent(
         LocaleKeys.uplaodYourDocuments.tr(),
-        showNotificationIcon: false,
+        showPersonIcon: false,
       );
     }
   }

@@ -37,7 +37,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
         backgroundColor: Colors.transparent,
         showBackButton: false,
         showBottomLine: false,
-        showNotificationIcon: false,
+        showPersonIcon: false,
       ),
       body: Column(
         children: [

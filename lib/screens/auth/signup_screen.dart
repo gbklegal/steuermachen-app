@@ -85,7 +85,7 @@ class _SignupScreenState extends State<SignupScreen> with InputValidationUtil {
         backgroundColor: Colors.transparent,
         showBackButton: false,
         showBottomLine: false,
-        showNotificationIcon: false,
+        showPersonIcon: false,
       ),
       body: SingleChildScrollView(
         child: SizedBox(

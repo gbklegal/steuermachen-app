@@ -19,7 +19,7 @@ class FileTaxDoneOrderScreen extends StatelessWidget {
         appBar:  AppBarComponent(
           LocaleKeys.done.tr(),
           showBackButton: false,
-          showNotificationIcon: false,
+          showPersonIcon: false,
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),

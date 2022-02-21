@@ -59,7 +59,7 @@ class _FileTaxInfoScreenState extends State<FileTaxInfoScreen>
     return Scaffold(
       appBar:  AppBarComponent(
         LocaleKeys.fillInfo.tr(),
-        showNotificationIcon: false,
+        showPersonIcon: false,
       ),
       body: SingleChildScrollView(
         child: Padding(

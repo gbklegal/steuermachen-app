@@ -29,7 +29,7 @@ class _FileTaxFinalSubmissionScreenState
     return Scaffold(
       appBar:  AppBarComponent(
         LocaleKeys.curStatus.tr(),
-        showNotificationIcon: false,
+        showPersonIcon: false,
       ),
       body: Padding(
         padding: const EdgeInsets.only(left: 16, right: 16),

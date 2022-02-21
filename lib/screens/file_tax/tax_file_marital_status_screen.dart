@@ -58,7 +58,7 @@ class _TaxFileMaritalStatusScreenState
     return Scaffold(
       appBar:  AppBarComponent(
         LocaleKeys.areSingle.tr(),
-        showNotificationIcon: false,
+        showPersonIcon: false,
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,

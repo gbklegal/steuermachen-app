@@ -88,7 +88,7 @@ class _SignInScreenState extends State<SignInScreen> with InputValidationUtil {
         backgroundColor: Colors.transparent,
         showBackButton: false,
         showBottomLine: false,
-        showNotificationIcon: false,
+        showPersonIcon: false,
       ),
       body: SingleChildScrollView(
         child: SizedBox(

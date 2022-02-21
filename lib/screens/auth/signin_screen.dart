@@ -13,6 +13,7 @@ import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/providers/auth_provider.dart';
 import 'package:steuermachen/screens/auth/auth_components/button_auth_component.dart';
 import 'package:steuermachen/screens/auth/auth_components/choice_auth_component.dart';
+import 'package:steuermachen/screens/auth/auth_components/privacy_terms_condition_auth_component.dart';
 import 'package:steuermachen/screens/auth/auth_components/signin_options__auth_component.dart';
 import 'package:steuermachen/screens/auth/auth_components/richtext__auth_component.dart';
 import 'package:steuermachen/screens/auth/auth_components/title_text_auth_component.dart';
@@ -63,6 +64,21 @@ class _SignInScreenState extends State<SignInScreen> with InputValidationUtil {
     }
   }
 
+  _emailPasswordSignIn() async {
+    if (_signupFormKey.currentState!.validate()) {
+      PopupLoader.showLoadingDialog(context);
+      CommonResponseWrapper res = await authProvider.signInWithEmailAndPassword(
+          _emailController.text, _passwordController.text);
+      ToastComponent.showToast(res.message!, long: true);
+
+      PopupLoader.hideLoadingDialog(context);
+      if (res.status!) {
+        Navigator.pushNamedAndRemoveUntil(
+            context, RouteConstants.bottomNavBarScreen, (val) => false);
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,7 +99,7 @@ class _SignInScreenState extends State<SignInScreen> with InputValidationUtil {
               children: [
                 const SizedBox(height: 10),
                 const SizedBox(height: 35),
-                TitleTextAuthComponent(title: LocaleKeys.signIn.tr()),
+                TitleTextAuthComponent(title: LocaleKeys.login.tr()),
                 const SizedBox(height: 35),
                 _authFields(),
                 const SizedBox(height: 25),
@@ -95,7 +111,7 @@ class _SignInScreenState extends State<SignInScreen> with InputValidationUtil {
                   textSpan1: LocaleKeys.dontHaveAnAccount.tr(),
                   textSpan2: LocaleKeys.signupNow.tr(),
                   onTap: () {
-                    Navigator.pushNamed(context, RouteConstants.signupScreen);
+                    Navigator.pushReplacementNamed(context, RouteConstants.signupScreen);
                   },
                 ),
                 const ChoiceTextAuthComponent(text: LocaleKeys.signinWith),
@@ -110,35 +126,11 @@ class _SignInScreenState extends State<SignInScreen> with InputValidationUtil {
                       textColor: Colors.blueAccent),
                 ),
                 const SizedBox(height: 22),
-                _privacyConditions(context),
+                const PrivacyTermsConditionsAuthComponent(),
                 const SizedBox(height: 180),
               ],
             ),
           ),
-        ),
-      ),
-    );
-  }
-
-  Flexible _privacyConditions(BuildContext context) {
-    text(val) => Text(
-          val,
-          style: Theme.of(context).textTheme.bodyText2?.copyWith(
-              fontSize: 13,
-              color: ColorConstants.black,
-              fontWeight: FontWeight.w500),
-        );
-    return Flexible(
-      fit: FlexFit.tight,
-      child: Align(
-        alignment: Alignment.bottomCenter,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            text("Imprint | "),
-            text("Privacy Policy | "),
-            text("Conditions"),
-          ],
         ),
       ),
     );
@@ -177,22 +169,7 @@ class _SignInScreenState extends State<SignInScreen> with InputValidationUtil {
 
   ButtonAuthComponent _signInBtn(BuildContext context) {
     return ButtonAuthComponent(
-        btnText: LocaleKeys.signIn.tr(),
-        onPressed: () async {
-          if (_signupFormKey.currentState!.validate()) {
-            PopupLoader.showLoadingDialog(context);
-            CommonResponseWrapper res =
-                await authProvider.signInWithEmailAndPassword(
-                    _emailController.text, _passwordController.text);
-            ToastComponent.showToast(res.message!, long: true);
-
-            PopupLoader.hideLoadingDialog(context);
-            if (res.status!) {
-              Navigator.pushNamedAndRemoveUntil(
-                  context, RouteConstants.bottomNavBarScreen, (val) => false);
-            }
-          }
-        });
+        btnText: LocaleKeys.login.tr(), onPressed: _emailPasswordSignIn);
   }
 
   Form _authFields() {

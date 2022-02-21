@@ -121,6 +121,10 @@ abstract class  LocaleKeys {
   static const signInTermsAndCondition_2 = 'signInTermsAndCondition_2';
   static const appleSignIn = 'appleSignIn';
   static const googleSignIn = 'googleSignIn';
+  static const login = 'login';
+  static const toRegister = 'toRegister';
+  static const alreadyRegistered = 'alreadyRegistered';
+  static const signupWith = 'signupWith';
   static const emailUs = 'emailUs';
   static const password = 'password';
   static const signinWith = 'signinWith';

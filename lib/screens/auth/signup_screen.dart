@@ -2,14 +2,17 @@ import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
 import 'package:steuermachen/components/popup_loader_component.dart';
+import 'package:steuermachen/components/textformfield_icon_component.dart';
 import 'package:steuermachen/components/toast_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
+import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/providers/auth_provider.dart';
 import 'package:steuermachen/screens/auth/auth_components/button_auth_component.dart';
 import 'package:steuermachen/screens/auth/auth_components/choice_auth_component.dart';
+import 'package:steuermachen/screens/auth/auth_components/privacy_terms_condition_auth_component.dart';
 import 'package:steuermachen/screens/auth/auth_components/richtext__auth_component.dart';
 import 'package:steuermachen/screens/auth/auth_components/signin_options__auth_component.dart';
 import 'package:steuermachen/screens/auth/auth_components/title_text_auth_component.dart';
@@ -37,6 +40,42 @@ class _SignupScreenState extends State<SignupScreen> with InputValidationUtil {
     super.initState();
   }
 
+  _signupWithEmailAndPass() async {
+    if (_signupFormKey.currentState!.validate()) {
+      PopupLoader.showLoadingDialog(context);
+      CommonResponseWrapper res =
+          await authProvider.registerWithEmailAndPassword(
+              _emailController.text, _passwordController.text);
+      ToastComponent.showToast(res.message!, long: true);
+      PopupLoader.hideLoadingDialog(context);
+      Navigator.pushNamed(context, RouteConstants.signInScreen);
+    }
+  }
+
+  _googleSignIn() async {
+    PopupLoader.showLoadingDialog(context);
+    CommonResponseWrapper res = await authProvider.signInWithGoogle();
+    ToastComponent.showToast(res.message!, long: true);
+
+    PopupLoader.hideLoadingDialog(context);
+    if (res.status!) {
+      Navigator.pushNamedAndRemoveUntil(
+          context, RouteConstants.bottomNavBarScreen, (val) => false);
+    }
+  }
+
+  _appleSignIn() async {
+    PopupLoader.showLoadingDialog(context);
+    CommonResponseWrapper res = await authProvider.signInWithApple();
+    ToastComponent.showToast(res.message!, long: true);
+
+    PopupLoader.hideLoadingDialog(context);
+    if (res.status!) {
+      Navigator.pushNamedAndRemoveUntil(
+          context, RouteConstants.bottomNavBarScreen, (val) => false);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,64 +95,35 @@ class _SignupScreenState extends State<SignupScreen> with InputValidationUtil {
             child: Column(
               children: [
                 const SizedBox(height: 35),
-                TitleTextAuthComponent(title: LocaleKeys.signUp.tr()),
+                TitleTextAuthComponent(title: LocaleKeys.toRegister.tr()),
                 const SizedBox(height: 35),
                 _authFields(),
                 const SizedBox(height: 25),
                 ButtonAuthComponent(
-                    btnText: LocaleKeys.signUp.tr(),
-                    onPressed: () async {
-                      if (_signupFormKey.currentState!.validate()) {
-                        PopupLoader.showLoadingDialog(context);
-                        CommonResponseWrapper res =
-                            await authProvider.registerWithEmailAndPassword(
-                                _emailController.text,
-                                _passwordController.text);
-                        ToastComponent.showToast(res.message!, long: true);
-                        PopupLoader.hideLoadingDialog(context);
-                        Navigator.pushNamed(
-                            context, RouteConstants.signInScreen);
-                      }
-                    }),
+                    btnText: LocaleKeys.toRegister.tr(),
+                    onPressed: _signupWithEmailAndPass),
+                const SizedBox(height: 22),
+                RichTextAuthComponent(
+                  textSpan1: LocaleKeys.alreadyRegistered.tr() + " ",
+                  textSpan2: LocaleKeys.signIn.tr(),
+                  onTap: () {
+                    Navigator.pushReplacementNamed(
+                        context, RouteConstants.signInScreen);
+                  },
+                ),
                 const ChoiceTextAuthComponent(text: LocaleKeys.signinWith),
                 _signInWithApple(),
                 const SizedBox(height: 22),
                 InkWell(
-                  onTap: () async {
-                    PopupLoader.showLoadingDialog(context);
-                    CommonResponseWrapper res =
-                        await authProvider.signInWithGoogle();
-                    ToastComponent.showToast(res.message!, long: true);
-
-                    PopupLoader.hideLoadingDialog(context);
-                    if (res.status!) {
-                      Navigator.pushNamedAndRemoveUntil(context,
-                          RouteConstants.bottomNavBarScreen, (val) => false);
-                    }
-                  },
+                  onTap: _googleSignIn,
                   child: SignInOptionsAuthComponent(
                       assetName: AssetConstants.icGoogle,
                       btnText: LocaleKeys.googleSignIn.tr(),
                       textColor: Colors.blueAccent),
                 ),
-                const SizedBox(height: 22),
-                // RichTextAuthComponent(
-                //   textSpan1: LocaleKeys.alreadyRegistered.tr() + " ",
-                //   textSpan2: LocaleKeys.signIn.tr(),
-                //   onTap: () {
-                //     Navigator.pushReplacementNamed(
-                //         context, RouteConstants.signInScreen);
-                //   },
-                // ),
                 const SizedBox(height: 50),
-                RichTextAuthComponent(
-                  textSpan1: LocaleKeys.signInTermsAndCondition_1.tr() + "\n",
-                  textSpan2: LocaleKeys.signInTermsAndCondition_2.tr(),
-                  onTap: () {
-                    // Navigator.pushNamed(context, RouteConstants.signupScreen);
-                  },
-                ),
-                const SizedBox(height: 50),
+                const PrivacyTermsConditionsAuthComponent(),
+                const SizedBox(height: 180),
               ],
             ),
           ),
@@ -126,17 +136,7 @@ class _SignupScreenState extends State<SignupScreen> with InputValidationUtil {
     return Consumer<AuthProvider>(builder: (context, consumer, child) {
       if (consumer.signInWithAppleIsAvailable) {
         return InkWell(
-          onTap: () async {
-            PopupLoader.showLoadingDialog(context);
-            CommonResponseWrapper res = await authProvider.signInWithApple();
-            ToastComponent.showToast(res.message!, long: true);
-
-            PopupLoader.hideLoadingDialog(context);
-            if (res.status!) {
-              Navigator.pushNamedAndRemoveUntil(
-                  context, RouteConstants.bottomNavBarScreen, (val) => false);
-            }
-          },
+          onTap: _appleSignIn,
           child: SignInOptionsAuthComponent(
               assetName: AssetConstants.icApple,
               btnText: LocaleKeys.appleSignIn.tr()),
@@ -155,7 +155,13 @@ class _SignupScreenState extends State<SignupScreen> with InputValidationUtil {
           children: [
             TextFormField(
               controller: _emailController,
-              decoration: InputDecoration(label: Text(LocaleKeys.email.tr())),
+              decoration: InputDecoration(
+                label: Text(LocaleKeys.email.tr()),
+                prefixIcon: TextFormFieldIcons(
+                  assetName: AssetConstants.icEmail,
+                  padding: 16,
+                ),
+              ),
               validator: validateEmail,
             ),
             const SizedBox(height: 15),
@@ -163,6 +169,11 @@ class _SignupScreenState extends State<SignupScreen> with InputValidationUtil {
               controller: _passwordController,
               decoration: InputDecoration(
                 label: Text(LocaleKeys.password.tr()),
+                prefixIcon: TextFormFieldIcons(
+                  assetName: AssetConstants.icEmail,
+                  icColor: ColorConstants.white,
+                  padding: 16,
+                ),
               ),
               obscureText: true,
               validator: validatePassword,

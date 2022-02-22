@@ -89,6 +89,10 @@ abstract class  LocaleKeys {
   static const callUs = 'callUs';
   static const contactUs = 'contactUs';
   static const howWouldYouLikeToMoveForwardWithUs = 'howWouldYouLikeToMoveForwardWithUs';
+  static const howWouldYouLikeToProceed = 'howWouldYouLikeToProceed';
+  static const inCaseOf20Percent = 'inCaseOf20Percent';
+  static const safeTax = 'safeTax';
+  static const taxReturnAtAGuaranteedfixedPrice = 'taxReturnAtAGuaranteedfixedPrice';
   static const getInTouchWithUs = 'getInTouchWithUs';
   static const howCanWeHelpYou = 'howCanWeHelpYou';
   static const myAccount = 'myAccount';

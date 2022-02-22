@@ -194,15 +194,6 @@ class _ProfileScreenState extends State<ProfileScreen>
             const SizedBox(
               height: 35,
             ),
-            for (var item in formFields)
-              TextFormField(
-                controller: item.controller,
-                decoration: InputDecoration(
-                  labelText: item.labelText,
-                  hintStyle: fontStyle,
-                ),
-                validator: item.validator,
-              ),
             TextFormField(
               controller: _lastNameController,
               decoration: InputDecoration(

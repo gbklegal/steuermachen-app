@@ -40,9 +40,9 @@ class AppBarComponent extends StatelessWidget with PreferredSizeWidget {
         decoration: BoxDecoration(
           border: Border(
             bottom: BorderSide(
-              width: showBottomLine! ? 2 : 0,
-              color: ColorConstants.greyBottomBar
-                  .withOpacity(showBottomLine! ? 0.2 : 0),
+              width: showBottomLine! ? 0.2 : 0,
+              color: ColorConstants.black
+                  .withOpacity(showBottomLine! ? 1 : 0),
             ),
           ),
         ),

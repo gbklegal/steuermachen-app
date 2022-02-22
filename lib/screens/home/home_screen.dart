@@ -18,7 +18,7 @@ class HomeScreen extends StatelessWidget {
       _CardItemsModel(
           leadAsset: AssetConstants.icDocument,
           title: LocaleKeys.getYourTaxReturnDoneNow.tr(),
-          action: RouteConstants.maritalStatusScreen),
+          action: RouteConstants.selectSafeAndQuickTaxScreen),
       _CardItemsModel(
           leadAsset: AssetConstants.icLegalAction,
           title: LocaleKeys.taxEasyInitialTaxAdvice.tr(),

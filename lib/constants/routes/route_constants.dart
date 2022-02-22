@@ -13,7 +13,10 @@ class RouteConstants {
   static const String fileTaxUploadDocScreen = "fileTaxUploadDocScreen";
   static const String fileTaxFinalSubmissionScreen = "fileTaxFinalSubmissionScreen";
   static const String fileTaxDoneOrderScreen = "FileTaxDoneOrderScreen";
-  static const String bottomNavBarScreen = "bottomNavBarScreen";
+  static const String bottomNavBarScreen = "BottomNavBarScreen";
+  static const String selectSafeAndQuickTaxScreen = "SelectSafeAndQuickTaxScreen";
+  static const String quickTaxScreen = "QuickTaxScreen";
+  static const String safeTaxScreen = "SafeTaxScreen";
   static const String contactUsOptionScreen = "ContactUsOptionScreen";
   static const String uploadedDocumentScreen = "UploadedDocumentScreen";
   static const String howItWorksScreen = "howItWorksScreen";

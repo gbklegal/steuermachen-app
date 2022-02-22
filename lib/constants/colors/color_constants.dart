@@ -6,11 +6,13 @@ class ColorConstants {
   static const Color formFieldBackground = Color(0xffF1F6FC);
   static const Color mediumGrey = Color(0xffDEDEDE);
   static const Color greyBottomBar = Color(0x84787878);
+  static const Color grey = Color.fromARGB(132, 167, 167, 167);
   static const Color black = Color(0xff000000);
   static const Color veryLightPurple = Color(0xff5A6684);
   static const Color white = Color(0xffffffff);
   static const Color green = Color(0xff14EA69);
   static const Color toxicGreen = Color(0xff66db3b);
+  static const Color plantGreen = Color(0xff4CC871);
   static const Color paleGrey = Color(0xffe5e5ea);
   static const Color charcoalGrey = Color(0x993c3c43);
   static const Color blackSix = Color(0x0f000000);

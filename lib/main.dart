@@ -86,8 +86,7 @@ class MyApp extends StatelessWidget {
           color: ColorConstants.veryLightPurple,
         ),
         enabledBorder: underlineInputBorder,
-        focusedBorder: underlineInputBorder,
-        
+        focusedBorder: underlineInputBorder,      
         fillColor: ColorConstants.formFieldBackground);
   }
 

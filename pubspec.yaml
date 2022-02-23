@@ -107,6 +107,7 @@ flutter:
     - assets/tax.png
     - assets/email.png
     - assets/icons/
+    - assets/icons/nav/
     - assets/icons/more/
     - assets/icons/sustain/
     - assets/icons/process/

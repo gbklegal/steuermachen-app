@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/main.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 import 'package:steuermachen/wrappers/quick_tax_wrapper.dart';
@@ -9,32 +8,6 @@ class QuickTaxProvider extends ChangeNotifier {
   bool get getBusyStateQuickState => _busyStateQuickTax;
   set setBusyStateQuickTax(bool _isBusy) {
     _busyStateQuickTax = _isBusy;
-    notifyListeners();
-  }
-
-  final TaxFileDataCollector _taxFileDataCollector = TaxFileDataCollector(
-      martialStatus: StringConstants.student, selectYear: "2017");
-
-  TaxFileDataCollector get taxFile => _taxFileDataCollector;
-  setMartialStatus(String val) {
-    _taxFileDataCollector.martialStatus = val;
-    notifyListeners();
-  }
-
-  setYear(String val) {
-    _taxFileDataCollector.selectYear = val;
-    notifyListeners();
-  }
-
-  setIncome(String income, String estPrice, String? promoCode) {
-    _taxFileDataCollector.income = income;
-    _taxFileDataCollector.estimatedPrice = estPrice;
-    _taxFileDataCollector.promoCode = promoCode;
-    notifyListeners();
-  }
-
-  setUserInformation(UserInformation user) {
-    _taxFileDataCollector.userInformation = user;
     notifyListeners();
   }
 
@@ -53,6 +26,8 @@ class QuickTaxProvider extends ChangeNotifier {
     }
   }
 
+  //Execute this function for adding UI view in firestore 
+  // JSON//filepath: quick_tax_view.json
   Future<CommonResponseWrapper> addQuickTaxViewData() async {
     try {
       // await firestore.collection("quick_tax").doc("content").set({});
@@ -63,54 +38,4 @@ class QuickTaxProvider extends ChangeNotifier {
           status: true, message: "Something went wrong");
     }
   }
-}
-
-class TaxFileDataCollector {
-  String? martialStatus;
-  String? selectYear;
-  String? income;
-  String? estimatedPrice;
-  String? promoCode;
-  UserInformation? userInformation;
-
-  TaxFileDataCollector(
-      {this.martialStatus,
-      this.selectYear,
-      this.income,
-      this.estimatedPrice,
-      this.userInformation,
-      this.promoCode});
-
-  Map<String, dynamic> toJson() => {
-        "martial_status": martialStatus,
-        "select_year": selectYear,
-        "promo_code": promoCode,
-        "income": income,
-        "estimated_price": estimatedPrice,
-        "userInformation": userInformation!.toJson()
-      };
-}
-
-class UserInformation {
-  final String? surname,
-      firstName,
-      email,
-      road,
-      houseNo,
-      postalCode,
-      place,
-      phoneNo;
-
-  UserInformation(this.surname, this.firstName, this.email, this.road,
-      this.houseNo, this.postalCode, this.place, this.phoneNo);
-  Map<String, dynamic> toJson() => {
-        "surname": surname,
-        "first_name": firstName,
-        "email": email,
-        "road": road,
-        "house_no": houseNo,
-        "postal_code": postalCode,
-        "place": place,
-        "phone_no": phoneNo,
-      };
 }

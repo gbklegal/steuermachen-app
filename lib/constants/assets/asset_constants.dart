@@ -56,8 +56,14 @@ class AssetConstants {
   static String icWidowed = "assets/icons/process/widowed.png";
   static String icBrokenSvg = "assets/icons/process/broken-icon.svg";
   static String icStickmanSvg = "assets/icons/process/stickman-icon.svg";
-  static String icWeddingRingsSvg = "assets/icons/process/wedding-rings-icon-svg";
+  static String icWeddingRingsSvg =
+      "assets/icons/process/wedding-rings-icon-svg";
   static String icWidowedSvg = "assets/icons/process/widowed-icon.svg";
+
+  //Nav
+  static String icBackNav = "assets/icons/nav/back-icon.svg";
+  static String icForwardNav = "assets/icons/nav/forward-icon.svg";
+  static String icReset = "assets/icons/nav/reset-icon.svg";
 
   //Sustain
   static String sustain1 = "assets/icons/sustain/1.png";

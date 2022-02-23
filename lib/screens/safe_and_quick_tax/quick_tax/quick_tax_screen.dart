@@ -3,13 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
+import 'package:steuermachen/components/back_reset_forward_btn_component.dart';
 import 'package:steuermachen/components/empty_screen_loader_component.dart';
 import 'package:steuermachen/components/error_component%20copy.dart';
 import 'package:steuermachen/components/selection_card_component.dart';
 import 'package:steuermachen/components/text_progress_bar_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
+import 'package:steuermachen/constants/strings/options_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
+import 'package:steuermachen/constants/styles/widget_styles.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/providers/quick_tax_provider.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
@@ -98,6 +101,7 @@ class _QuestionsViewState extends State<_QuestionsView> {
     return PageView(
       controller: pageController,
       scrollDirection: Axis.horizontal,
+      physics: const NeverScrollableScrollPhysics(),
       onPageChanged: (index) {
         setState(() {
           pageIndex = index;
@@ -111,7 +115,7 @@ class _QuestionsViewState extends State<_QuestionsView> {
               TextProgressBarComponent(
                 title:
                     "${LocaleKeys.step.tr()} ${i + 1}/${widget.quickTaxData.length}",
-                progress: 0.9,
+                progress: (i + 1) / widget.quickTaxData.length,
               ),
               const SizedBox(
                 height: 20,
@@ -133,17 +137,57 @@ class _QuestionsViewState extends State<_QuestionsView> {
                     padding: const EdgeInsets.only(bottom: 25),
                     child: Column(
                       children: [
-                        for (var x = 0;
-                            x < widget.quickTaxData[i].options.length;
-                            x++)
-                          SelectionCardComponent(
-                            title: widget.quickTaxData[i].options[x],
-                          )
+                        if (widget.quickTaxData[i].optionType ==
+                            OptionConstants.singleSelect)
+                          for (var x = 0;
+                              x < widget.quickTaxData[i].options.length;
+                              x++)
+                            InkWell(
+                              onTap: () {
+                                pageController.animateToPage(i + 1,
+                                    duration: const Duration(milliseconds: 500),
+                                    curve: Curves.easeInToLinear);
+                              },
+                              child: SelectionCardComponent(
+                                title: widget.quickTaxData[i].options[x],
+                              ),
+                            )
+                        else
+                          TextFormField(
+                            // controller: _emailController,
+                            textAlign: TextAlign.center,
+                            decoration: InputDecoration(
+                                label: Text(widget.quickTaxData[i].inputTitle),
+                                floatingLabelAlignment:
+                                    FloatingLabelAlignment.center,
+                                floatingLabelBehavior:
+                                    FloatingLabelBehavior.auto,
+                                focusedBorder: WidgetStyles.outlineInputBorder,
+                                enabledBorder: WidgetStyles.outlineInputBorder,
+                                filled: true),
+                            // validator: validateEmail,
+                          ),
                       ],
                     ),
                   ),
                 ),
-              )
+              ),
+              if (widget.quickTaxData[i].showBottomNav)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 50),
+                  child: BackResetForwardBtnComponent(
+                    onTapBack: () {
+                      pageController.animateToPage(i - 1,
+                          duration: const Duration(milliseconds: 500),
+                          curve: Curves.easeInOutBack);
+                    },
+                    onTapContinue: () {
+                      pageController.animateToPage(i + 1,
+                          duration: const Duration(milliseconds: 500),
+                          curve: Curves.easeInToLinear);
+                    },
+                  ),
+                )
             ],
           ),
       ],

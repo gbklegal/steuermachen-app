@@ -1,11 +1,13 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
 import 'package:steuermachen/components/text_progress_bar_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
+import 'package:steuermachen/providers/quick_tax_provider.dart';
 
 class QuickTaxScreen extends StatefulWidget {
   const QuickTaxScreen({Key? key}) : super(key: key);
@@ -39,13 +41,19 @@ class _QuickTaxScreenState extends State<QuickTaxScreen> {
             const SizedBox(
               height: 20,
             ),
-            Text(
-              "Wähle dein jährliches\nBruttoeinkommen aus (ca.)",
-              textAlign: TextAlign.left,
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyText1!
-                  .copyWith(fontWeight: FontWeight.w600, fontSize: 16),
+            InkWell(
+              onTap: () async {
+                // await Provider.of<QuickTaxProvider>(context, listen: false)
+                //     .addQuickTaxViewData();
+              },
+              child: Text(
+                "Wähle dein jährliches\nBruttoeinkommen aus (ca.)",
+                textAlign: TextAlign.left,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyText1!
+                    .copyWith(fontWeight: FontWeight.w600, fontSize: 16),
+              ),
             ),
             const SizedBox(
               height: 15,

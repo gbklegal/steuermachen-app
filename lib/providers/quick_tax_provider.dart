@@ -1,12 +1,17 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/main.dart';
-import 'package:steuermachen/providers/document_provider.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
+import 'package:steuermachen/wrappers/quick_tax_wrapper.dart';
 
 class QuickTaxProvider extends ChangeNotifier {
+  bool _busyStateQuickTax = true;
+  bool get getBusyStateQuickState => _busyStateQuickTax;
+  set setBusyStateQuickTax(bool _isBusy) {
+    _busyStateQuickTax = _isBusy;
+    notifyListeners();
+  }
+
   final TaxFileDataCollector _taxFileDataCollector = TaxFileDataCollector(
       martialStatus: StringConstants.student, selectYear: "2017");
 
@@ -33,11 +38,21 @@ class QuickTaxProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<CommonResponseWrapper> getQuickTaxViewData() async {
+    try {
+      var res = await firestore.collection("quick_tax").doc("content").get();
+      Map<String, dynamic> x = res.data() as Map<String, dynamic>;
+      QuickTaxWrapper quickTaxWrapper = QuickTaxWrapper.fromJson(x);
+      return CommonResponseWrapper(status: true, data: quickTaxWrapper);
+    } catch (e) {
+      return CommonResponseWrapper(
+          status: true, message: "Something went wrong");
+    }
+  }
+
   Future<CommonResponseWrapper> addQuickTaxViewData() async {
     try {
-      await firestore
-          .collection("quick_tax")
-          .doc("content").set(json);
+      // await firestore.collection("quick_tax").doc("content").set({});
       return CommonResponseWrapper(
           status: true, message: "Tax filed successfully");
     } catch (e) {
@@ -46,255 +61,6 @@ class QuickTaxProvider extends ChangeNotifier {
     }
   }
 }
-
-var json = {
-  "en": [
-    {
-      "title": "Wähle dein jährliches Bruttoeinkommen aus (ca.)",
-      "option_type": "single_select",
-      "options": [
-        "bis 9.000 Euro",
-        "10.000 Euro - 14.000 Euro",
-        "15.000 Euro - 34.000 Euro",
-        "35.000 Euro - 54.000 Euro",
-        "55.000 Euro - 69.000 Euro",
-        "über 70.000 Euro"
-      ],
-      "input_title": "",
-      "input_type": "",
-      "show_bottom_nav": false
-    },
-    {
-      "title": "Wähle deine Steuerklasse aus",
-      "option_type": "single_select",
-      "options": [
-        "Steuerklasse 1",
-        "Steuerklasse 2",
-        "Steuerklasse 3",
-        "Steuerklasse 4",
-        "Steuerklasse 5",
-        "Steuerklasse 6"
-      ],
-      "input_title": "",
-      "input_type": "",
-      "show_bottom_nav": false
-    },
-    {
-      "title": "Gib deinen Arbeitsweg in km an (einfache Wegstrecke)",
-      "option_type": "input",
-      "options": [],
-      "input_title": "km",
-      "input_type": "number",
-      "show_bottom_nav": true
-    },
-    {
-      "title": "Hattest du eine/mehrere berufliche Weiterbildung/en?",
-      "option_type": "single_select",
-      "options": [
-        "Ja",
-        "Nein"
-      ],
-      "input_title": "",
-      "input_type": "",
-      "show_bottom_nav": false
-    },
-    {
-      "title": "Wie viele Weiterbildungen hattest du?",
-      "option_type": "single_select",
-      "options": [
-        "1",
-        "2",
-        "3",
-        "4",
-        "5",
-        "5 oder mehr"
-      ],
-      "input_title": "",
-      "input_type": "",
-      "show_bottom_nav": false
-    },
-    {
-      "title": "Bist du bereits verheiratet?aus",
-      "option_type": "single_select",
-      "options": [
-        "Ja",
-        "Nein"
-      ],
-      "input_title": "",
-      "input_type": "",
-      "show_bottom_nav": false
-    },
-    {
-      "title": "Wähle dein jährliches Bruttoeinkommen aus (ca.)",
-      "option_type": "single_select",
-      "options": [
-        "bis 9.000 Euro",
-        "10.000 Euro - 14.000 Euro",
-        "15.000 Euro - 34.000 Euro",
-        "35.000 Euro - 54.000 Euro",
-        "55.000 Euro - 69.000 Euro",
-        "über 70.000 Euro"
-      ],
-      "input_title": "",
-      "input_type": "",
-      "show_bottom_nav": false
-    },
-    {
-      "title": "In welcher Steuerklasse ist dein Partner?",
-      "option_type": "single_select",
-      "options": [
-        "Steuerklasse 3",
-        "Steuerklasse 4",
-        "Steuerklasse 5"
-      ],
-      "input_title": "",
-      "input_type": "",
-      "show_bottom_nav": false
-    },
-    {
-      "title": "Gib den Arbeitsweg deines Partners in km an (einfache Wegstrecke)",
-      "option_type": "input",
-      "options": [],
-      "input_title": "km",
-      "input_type": "number",
-      "show_bottom_nav": true
-    },
-    {
-      "title": "Hatte dein Partner eine/mehrere berufliche Weiterbildung/en?",
-      "option_type": "single_select",
-      "options": [
-        "Ja",
-        "Nein"
-      ],
-      "input_title": "",
-      "input_type": "",
-      "show_bottom_nav": false
-    }
-  ],
-   "du": [
-    {
-      "title": "Wähle dein jährliches Bruttoeinkommen aus (ca.)",
-      "option_type": "single_select",
-      "options": [
-        "bis 9.000 Euro",
-        "10.000 Euro - 14.000 Euro",
-        "15.000 Euro - 34.000 Euro",
-        "35.000 Euro - 54.000 Euro",
-        "55.000 Euro - 69.000 Euro",
-        "über 70.000 Euro"
-      ],
-      "input_title": "",
-      "input_type": "",
-      "show_bottom_nav": false
-    },
-    {
-      "title": "Wähle deine Steuerklasse aus",
-      "option_type": "single_select",
-      "options": [
-        "Steuerklasse 1",
-        "Steuerklasse 2",
-        "Steuerklasse 3",
-        "Steuerklasse 4",
-        "Steuerklasse 5",
-        "Steuerklasse 6"
-      ],
-      "input_title": "",
-      "input_type": "",
-      "show_bottom_nav": false
-    },
-    {
-      "title": "Gib deinen Arbeitsweg in km an (einfache Wegstrecke)",
-      "option_type": "input",
-      "options": [],
-      "input_title": "km",
-      "input_type": "number",
-      "show_bottom_nav": true
-    },
-    {
-      "title": "Hattest du eine/mehrere berufliche Weiterbildung/en?",
-      "option_type": "single_select",
-      "options": [
-        "Ja",
-        "Nein"
-      ],
-      "input_title": "",
-      "input_type": "",
-      "show_bottom_nav": false
-    },
-    {
-      "title": "Wie viele Weiterbildungen hattest du?",
-      "option_type": "single_select",
-      "options": [
-        "1",
-        "2",
-        "3",
-        "4",
-        "5",
-        "5 oder mehr"
-      ],
-      "input_title": "",
-      "input_type": "",
-      "show_bottom_nav": false
-    },
-    {
-      "title": "Bist du bereits verheiratet?aus",
-      "option_type": "single_select",
-      "options": [
-        "Ja",
-        "Nein"
-      ],
-      "input_title": "",
-      "input_type": "",
-      "show_bottom_nav": false
-    },
-    {
-      "title": "Wähle dein jährliches Bruttoeinkommen aus (ca.)",
-      "option_type": "single_select",
-      "options": [
-        "bis 9.000 Euro",
-        "10.000 Euro - 14.000 Euro",
-        "15.000 Euro - 34.000 Euro",
-        "35.000 Euro - 54.000 Euro",
-        "55.000 Euro - 69.000 Euro",
-        "über 70.000 Euro"
-      ],
-      "input_title": "",
-      "input_type": "",
-      "show_bottom_nav": false
-    },
-    {
-      "title": "In welcher Steuerklasse ist dein Partner?",
-      "option_type": "single_select",
-      "options": [
-        "Steuerklasse 3",
-        "Steuerklasse 4",
-        "Steuerklasse 5"
-      ],
-      "input_title": "",
-      "input_type": "",
-      "show_bottom_nav": false
-    },
-    {
-      "title": "Gib den Arbeitsweg deines Partners in km an (einfache Wegstrecke)",
-      "option_type": "input",
-      "options": [],
-      "input_title": "km",
-      "input_type": "number",
-      "show_bottom_nav": true
-    },
-    {
-      "title": "Hatte dein Partner eine/mehrere berufliche Weiterbildung/en?",
-      "option_type": "single_select",
-      "options": [
-        "Ja",
-        "Nein"
-      ],
-      "input_title": "",
-      "input_type": "",
-      "show_bottom_nav": false
-    }
-  ]
-};
 
 class TaxFileDataCollector {
   String? martialStatus;

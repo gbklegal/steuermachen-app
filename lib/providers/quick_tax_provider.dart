@@ -40,11 +40,14 @@ class QuickTaxProvider extends ChangeNotifier {
 
   Future<CommonResponseWrapper> getQuickTaxViewData() async {
     try {
+      setBusyStateQuickTax = true;
       var res = await firestore.collection("quick_tax").doc("content").get();
       Map<String, dynamic> x = res.data() as Map<String, dynamic>;
       QuickTaxWrapper quickTaxWrapper = QuickTaxWrapper.fromJson(x);
+      setBusyStateQuickTax = false;
       return CommonResponseWrapper(status: true, data: quickTaxWrapper);
     } catch (e) {
+      setBusyStateQuickTax = false;
       return CommonResponseWrapper(
           status: true, message: "Something went wrong");
     }

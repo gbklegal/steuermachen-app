@@ -1,22 +1,26 @@
 class QuickTaxWrapper {
   QuickTaxWrapper({
-    required this.quickTax,
+    required this.en,
+    required this.du,
   });
-  late final List<QuickTax> quickTax;
+  late final List<QuickTaxData> en;
+  late final List<QuickTaxData> du;
   
   QuickTaxWrapper.fromJson(Map<String, dynamic> json){
-    quickTax = List.from(json['quick_tax']).map((e)=>QuickTax.fromJson(e)).toList();
+    en = List.from(json['en']).map((e)=>QuickTaxData.fromJson(e)).toList();
+    du = List.from(json['du']).map((e)=>QuickTaxData.fromJson(e)).toList();
   }
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
-    _data['quick_tax'] = quickTax.map((e)=>e.toJson()).toList();
+    _data['en'] = en.map((e)=>e.toJson()).toList();
+    _data['du'] = du.map((e)=>e.toJson()).toList();
     return _data;
   }
 }
 
-class QuickTax {
-  QuickTax({
+class QuickTaxData {
+  QuickTaxData({
     required this.title,
     required this.optionType,
     required this.options,
@@ -31,7 +35,7 @@ class QuickTax {
   late final String inputType;
   late final bool showBottomNav;
   
-  QuickTax.fromJson(Map<String, dynamic> json){
+  QuickTaxData.fromJson(Map<String, dynamic> json){
     title = json['title'];
     optionType = json['option_type'];
     options = List.castFrom<dynamic, String>(json['options']);

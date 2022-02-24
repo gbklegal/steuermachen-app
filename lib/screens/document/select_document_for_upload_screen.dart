@@ -19,7 +19,7 @@ import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:path/path.dart' as path;
 import 'package:steuermachen/languages/locale_keys.g.dart';
-import 'package:steuermachen/providers/document_provider.dart';
+import 'package:steuermachen/providers/document/document_provider.dart';
 import 'package:steuermachen/utils/image_picker/media_source_selection_utils.dart';
 import 'package:steuermachen/utils/utils.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';

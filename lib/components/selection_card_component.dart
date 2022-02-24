@@ -42,7 +42,7 @@ class SelectionCardComponent extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               imagePath != null
-                  ? Image.asset(
+                  ? Image.network(
                       imagePath!,
                       color: ColorConstants.black,
                       height: 32,

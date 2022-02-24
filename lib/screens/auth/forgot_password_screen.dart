@@ -8,7 +8,7 @@ import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
-import 'package:steuermachen/providers/auth_provider.dart';
+import 'package:steuermachen/providers/auth/auth_provider.dart';
 import 'package:steuermachen/screens/auth/auth_components/button_auth_component.dart';
 import 'package:steuermachen/screens/auth/auth_components/title_text_auth_component.dart';
 import 'package:steuermachen/utils/input_validation_util.dart';

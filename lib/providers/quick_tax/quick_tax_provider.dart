@@ -5,7 +5,7 @@ import 'package:steuermachen/wrappers/quick_tax_wrapper.dart';
 
 class QuickTaxProvider extends ChangeNotifier {
   bool _busyStateQuickTax = true;
-  bool get getBusyStateQuickState => _busyStateQuickTax;
+  bool get getBusyStateQuickTax => _busyStateQuickTax;
   set setBusyStateQuickTax(bool _isBusy) {
     _busyStateQuickTax = _isBusy;
     notifyListeners();
@@ -22,7 +22,7 @@ class QuickTaxProvider extends ChangeNotifier {
     } catch (e) {
       setBusyStateQuickTax = false;
       return CommonResponseWrapper(
-          status: true, message: "Something went wrong");
+          status: false, message: "Something went wrong");
     }
   }
 
@@ -32,10 +32,10 @@ class QuickTaxProvider extends ChangeNotifier {
     try {
       // await firestore.collection("quick_tax").doc("content").set({});
       return CommonResponseWrapper(
-          status: true, message: "Tax filed successfully");
+          status: true, message: "Quick tax view data added successfully");
     } catch (e) {
       return CommonResponseWrapper(
-          status: true, message: "Something went wrong");
+          status: false, message: "Something went wrong");
     }
   }
 }

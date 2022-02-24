@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/main.dart';
-import 'package:steuermachen/providers/document_provider.dart';
+import 'package:steuermachen/providers/document/document_provider.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 
 class TaxFileProvider extends ChangeNotifier {

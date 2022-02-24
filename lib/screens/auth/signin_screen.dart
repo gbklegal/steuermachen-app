@@ -10,7 +10,7 @@ import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
-import 'package:steuermachen/providers/auth_provider.dart';
+import 'package:steuermachen/providers/auth/auth_provider.dart';
 import 'package:steuermachen/screens/auth/auth_components/button_auth_component.dart';
 import 'package:steuermachen/screens/auth/auth_components/choice_auth_component.dart';
 import 'package:steuermachen/screens/auth/auth_components/privacy_terms_condition_auth_component.dart';

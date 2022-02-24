@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
 import 'package:steuermachen/components/back_reset_forward_btn_component.dart';
@@ -9,30 +8,29 @@ import 'package:steuermachen/components/error_component%20copy.dart';
 import 'package:steuermachen/components/selection_card_component.dart';
 import 'package:steuermachen/components/text_progress_bar_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
-import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/strings/options_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
-import 'package:steuermachen/constants/styles/widget_styles.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/providers/quick_tax/quick_tax_provider.dart';
+import 'package:steuermachen/providers/safe_tax/safe_tax_provider.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
-import 'package:steuermachen/wrappers/quick_tax_wrapper.dart';
+import 'package:steuermachen/wrappers/safe_tax_wrapper.dart';
 
-class QuickTaxScreen extends StatefulWidget {
-  const QuickTaxScreen({Key? key}) : super(key: key);
+class SafeTaxScreen extends StatefulWidget {
+  const SafeTaxScreen({Key? key}) : super(key: key);
 
   @override
-  _QuickTaxScreenState createState() => _QuickTaxScreenState();
+  _SafeTaxScreenState createState() => _SafeTaxScreenState();
 }
 
-class _QuickTaxScreenState extends State<QuickTaxScreen> {
-  late QuickTaxProvider provider;
+class _SafeTaxScreenState extends State<SafeTaxScreen> {
+  late SafeTaxProvider provider;
   CommonResponseWrapper? response;
   @override
   void initState() {
-    provider = Provider.of<QuickTaxProvider>(context, listen: false);
-    WidgetsBinding.instance!.addPostFrameCallback((_) =>
-        provider.getQuickTaxViewData().then((value) => response = value));
+    provider = Provider.of<SafeTaxProvider>(context, listen: false);
+    WidgetsBinding.instance!.addPostFrameCallback(
+        (_) => provider.getSafeTaxViewData().then((value) => response = value));
     super.initState();
   }
 
@@ -50,29 +48,29 @@ class _QuickTaxScreenState extends State<QuickTaxScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.only(left: 16, right: 16, top: 25),
-        child: Consumer<QuickTaxProvider>(builder: (context, consumer, child) {
-          if (consumer.getBusyStateQuickTax || response == null) {
+        child: Consumer<SafeTaxProvider>(builder: (context, consumer, child) {
+          if (consumer.getBusyStateSafeTax || response == null) {
             return const EmptyScreenLoaderComponent();
           } else if (!response!.status!) {
             return ErrorComponent(
               message: response!.message!,
               onTap: () async {
-                consumer.setBusyStateQuickTax = true;
+                consumer.setBusyStateSafeTax = true;
                 await provider
-                    .getQuickTaxViewData()
+                    .getSafeTaxViewData()
                     .then((value) => response = value);
-                consumer.setBusyStateQuickTax = false;
+                consumer.setBusyStateSafeTax = false;
               },
             );
           } else {
-            QuickTaxWrapper quickTaxWrapper = response!.data as QuickTaxWrapper;
+            SafeTaxWrapper safeTaxWrapper = response!.data as SafeTaxWrapper;
             if (context.locale == const Locale('en')) {
               return _QuestionsView(
-                quickTaxData: quickTaxWrapper.en,
+                safeTaxData: safeTaxWrapper.en,
               );
             } else {
               return _QuestionsView(
-                quickTaxData: quickTaxWrapper.du,
+                safeTaxData: safeTaxWrapper.du,
               );
             }
           }
@@ -85,9 +83,9 @@ class _QuickTaxScreenState extends State<QuickTaxScreen> {
 class _QuestionsView extends StatefulWidget {
   const _QuestionsView({
     Key? key,
-    required this.quickTaxData,
+    required this.safeTaxData,
   }) : super(key: key);
-  final List<QuickTaxData> quickTaxData;
+  final List<SafeTaxData> safeTaxData;
 
   @override
   State<_QuestionsView> createState() => _QuestionsViewState();
@@ -96,6 +94,7 @@ class _QuestionsView extends StatefulWidget {
 class _QuestionsViewState extends State<_QuestionsView> {
   final pageController = PageController(initialPage: 0);
   int pageIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return PageView(
@@ -108,20 +107,20 @@ class _QuestionsViewState extends State<_QuestionsView> {
         });
       },
       children: [
-        for (var i = 0; i < widget.quickTaxData.length; i++)
+        for (var i = 0; i < widget.safeTaxData.length; i++)
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TextProgressBarComponent(
                 title:
-                    "${LocaleKeys.step.tr()} ${i + 1}/${widget.quickTaxData.length}",
-                progress: (i + 1) / widget.quickTaxData.length,
+                    "${LocaleKeys.step.tr()} ${i + 1}/${widget.safeTaxData.length}",
+                progress: (i + 1) / widget.safeTaxData.length,
               ),
               const SizedBox(
                 height: 20,
               ),
               Text(
-                widget.quickTaxData[i].title,
+                widget.safeTaxData[i].title,
                 textAlign: TextAlign.left,
                 style: Theme.of(context)
                     .textTheme
@@ -137,10 +136,10 @@ class _QuestionsViewState extends State<_QuestionsView> {
                     padding: const EdgeInsets.only(bottom: 25),
                     child: Column(
                       children: [
-                        if (widget.quickTaxData[i].optionType ==
+                        if (widget.safeTaxData[i].optionType ==
                             OptionConstants.singleSelect)
                           for (var x = 0;
-                              x < widget.quickTaxData[i].options.length;
+                              x < widget.safeTaxData[i].options.length;
                               x++)
                             InkWell(
                               onTap: () {
@@ -149,30 +148,34 @@ class _QuestionsViewState extends State<_QuestionsView> {
                                     curve: Curves.easeInToLinear);
                               },
                               child: SelectionCardComponent(
-                                title: widget.quickTaxData[i].options[x],
+                                title: widget.safeTaxData[i].options[x],
+                                imagePath: widget.safeTaxData[i].optionImgPath.isNotEmpty
+                                    ? widget.safeTaxData[i].optionImgPath[x]
+                                    : null,
                               ),
                             )
                         else
-                          TextFormField(
-                            // controller: _emailController,
-                            textAlign: TextAlign.center,
-                            decoration: InputDecoration(
-                                label: Text(widget.quickTaxData[i].inputTitle),
-                                floatingLabelAlignment:
-                                    FloatingLabelAlignment.center,
-                                floatingLabelBehavior:
-                                    FloatingLabelBehavior.auto,
-                                focusedBorder: WidgetStyles.outlineInputBorder,
-                                enabledBorder: WidgetStyles.outlineInputBorder,
-                                filled: true),
-                            // validator: validateEmail,
-                          ),
+                          SizedBox()
+                        // TextFormField(
+                        //   // controller: _emailController,
+                        //   textAlign: TextAlign.center,
+                        //   decoration: InputDecoration(
+                        //       label: Text(widget.safeTaxData[i].inputTitle),
+                        //       floatingLabelAlignment:
+                        //           FloatingLabelAlignment.center,
+                        //       floatingLabelBehavior:
+                        //           FloatingLabelBehavior.auto,
+                        //       focusedBorder: WidgetStyles.outlineInputBorder,
+                        //       enabledBorder: WidgetStyles.outlineInputBorder,
+                        //       filled: true),
+                        //   // validator: validateEmail,
+                        // ),
                       ],
                     ),
                   ),
                 ),
               ),
-              if (widget.quickTaxData[i].showBottomNav)
+              if (widget.safeTaxData[i].showBottomNav)
                 Padding(
                   padding: const EdgeInsets.only(bottom: 50),
                   child: BackResetForwardBtnComponent(

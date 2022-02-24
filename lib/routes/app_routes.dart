@@ -25,6 +25,7 @@ import 'package:steuermachen/screens/legal_action/legal_action2_screen.dart';
 import 'package:steuermachen/screens/onboarding/onboarding_screen.dart';
 import 'package:steuermachen/screens/profile/profile_screen.dart';
 import 'package:steuermachen/screens/safe_and_quick_tax/quick_tax/quick_tax_screen.dart';
+import 'package:steuermachen/screens/safe_and_quick_tax/safe_tax/safe_tax_screen.dart';
 import 'package:steuermachen/screens/safe_and_quick_tax/select_safe_or_quick_tax_screen.dart';
 import 'package:steuermachen/screens/splash_screen.dart';
 import 'package:steuermachen/screens/sustainability/sustainability_screen.dart';
@@ -115,6 +116,10 @@ onGenerateRoutes(RouteSettings settings) {
     case RouteConstants.quickTaxScreen:
       return MaterialPageRoute(
         builder: (_) => const QuickTaxScreen(),
+      );
+    case RouteConstants.safeTaxScreen:
+      return MaterialPageRoute(
+        builder: (_) => const SafeTaxScreen(),
       );
     case RouteConstants.contactUsOptionScreen:
       return MaterialPageRoute(

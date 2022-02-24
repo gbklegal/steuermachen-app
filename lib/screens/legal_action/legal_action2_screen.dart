@@ -11,7 +11,7 @@ import 'package:steuermachen/constants/app_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:signature/signature.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
-import 'package:steuermachen/providers/document_provider.dart';
+import 'package:steuermachen/providers/document/document_provider.dart';
 
 class LegalAction2Screen extends StatefulWidget {
   const LegalAction2Screen({Key? key}) : super(key: key);

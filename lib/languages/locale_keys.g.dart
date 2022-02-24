@@ -67,6 +67,14 @@ abstract class  LocaleKeys {
   static const surName = 'surName';
   static const enterTitle = 'enterTitle';
   static const firstName = 'firstName';
+  static const mister = 'mister';
+  static const mrs = 'mrs';
+  static const others = 'others';
+  static const phone = 'phone';
+  static const country = 'country';
+  static const emailAddress = 'emailAddress';
+  static const location = 'location';
+  static const lastName = 'lastName';
   static const road = 'road';
   static const houseNo = 'houseNo';
   static const postcode = 'postcode';

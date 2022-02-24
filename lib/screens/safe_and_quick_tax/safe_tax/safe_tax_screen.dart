@@ -7,12 +7,14 @@ import 'package:steuermachen/components/empty_screen_loader_component.dart';
 import 'package:steuermachen/components/error_component%20copy.dart';
 import 'package:steuermachen/components/selection_card_component.dart';
 import 'package:steuermachen/components/text_progress_bar_component.dart';
+import 'package:steuermachen/components/user_form_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/strings/options_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/providers/quick_tax/quick_tax_provider.dart';
 import 'package:steuermachen/providers/safe_tax/safe_tax_provider.dart';
+import 'package:steuermachen/utils/input_validation_util.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 import 'package:steuermachen/wrappers/safe_tax_wrapper.dart';
 
@@ -149,13 +151,15 @@ class _QuestionsViewState extends State<_QuestionsView> {
                               },
                               child: SelectionCardComponent(
                                 title: widget.safeTaxData[i].options[x],
-                                imagePath: widget.safeTaxData[i].optionImgPath.isNotEmpty
+                                imagePath: widget
+                                        .safeTaxData[i].optionImgPath.isNotEmpty
                                     ? widget.safeTaxData[i].optionImgPath[x]
                                     : null,
                               ),
                             )
-                        else
-                          SizedBox()
+                        else if (widget.safeTaxData[i].optionType ==
+                            OptionConstants.userForm)
+                          const UserFormComponent()
                         // TextFormField(
                         //   // controller: _emailController,
                         //   textAlign: TextAlign.center,
@@ -197,3 +201,94 @@ class _QuestionsViewState extends State<_QuestionsView> {
     );
   }
 }
+
+// class UserFormComponent extends StatelessWidget with InputValidationUtil {
+//   const UserFormComponent({Key? key}) : super(key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Column(
+//       children: [
+//         Form(
+//           key: _userFormKey,
+//           child: Column(
+//             crossAxisAlignment: CrossAxisAlignment.start,
+//             children: <Widget>[
+//               const SizedBox(
+//                 height: 35,
+//               ),
+//               TextFormField(
+//                 controller: _lastNameController,
+//                 decoration: InputDecoration(
+//                   labelText: LocaleKeys.surName.tr(),
+//                   hintStyle: fontStyle,
+//                 ),
+//                 validator: validateFieldEmpty,
+//               ),
+//               sizedBox6,
+//               TextFormField(
+//                 controller: _firstNameController,
+//                 decoration: InputDecoration(
+//                   labelText: LocaleKeys.firstName.tr(),
+//                   hintStyle: fontStyle,
+//                 ),
+//                 validator: validateFieldEmpty,
+//               ),
+//               sizedBox6,
+//               TextFormField(
+//                 controller: _streetController,
+//                 decoration: InputDecoration(
+//                   labelText: LocaleKeys.street.tr(),
+//                   hintStyle: fontStyle,
+//                 ),
+//                 validator: validateFieldEmpty,
+//               ),
+//               sizedBox4,
+//               TextFormField(
+//                 controller: _houseNumberController,
+//                 decoration: InputDecoration(
+//                   labelText: LocaleKeys.postalCode.tr(),
+//                   hintStyle: fontStyle,
+//                 ),
+//                 validator: validateFieldEmpty,
+//               ),
+//               sizedBox4,
+//               TextFormField(
+//                 controller: _plzController,
+//                 decoration: InputDecoration(
+//                   labelText: LocaleKeys.cityTown.tr(),
+//                   hintStyle: fontStyle,
+//                 ),
+//                 validator: validateFieldEmpty,
+//               ),
+//               sizedBox4,
+//               InkWell(
+//                 onTap: () {
+//                   showCountryPicker(
+//                     context: context,
+//                     showPhoneCode:
+//                         true, // optional. Shows phone code before the country name.
+//                     onSelect: (Country country) {
+//                       print('Select country: ${country.displayName}');
+//                       _locationController.text = country.displayName;
+//                     },
+//                   );
+//                 },
+//                 child: TextFormField(
+//                   enabled: false,
+//                   controller: _locationController,
+//                   decoration: InputDecoration(
+//                     labelText: LocaleKeys.selectCountry.tr(),
+//                     hintStyle: fontStyle,
+//                   ),
+//                   validator: validateFieldEmpty,
+//                 ),
+//               ),
+//               sizedBox4,
+//             ],
+//           ),
+//         )
+//       ],
+//     );
+//   }
+// }

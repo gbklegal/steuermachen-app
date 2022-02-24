@@ -3,6 +3,7 @@ import 'package:steuermachen/providers/auth/auth_provider.dart';
 import 'package:steuermachen/providers/forms_provider.dart';
 import 'package:steuermachen/providers/language_provider.dart';
 import 'package:steuermachen/providers/document/document_provider.dart';
+import 'package:steuermachen/providers/profile/profile_provider.dart';
 import 'package:steuermachen/providers/quick_tax/quick_tax_provider.dart';
 import 'package:steuermachen/providers/safe_tax/safe_tax_provider.dart';
 import 'package:steuermachen/providers/tax_calculator_provider.dart';
@@ -15,6 +16,9 @@ providerList(context) {
     ),
     ChangeNotifierProvider(
       create: (context) => LanguageProvider(),
+    ),
+    ChangeNotifierProvider(
+      create: (context) => ProfileProvider(),
     ),
     ChangeNotifierProvider(
       create: (context) => FormsProvider(),

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 
-class PrivacyTermsConditionsAuthComponent extends StatelessWidget {
-  const PrivacyTermsConditionsAuthComponent({Key? key}) : super(key: key);
+class ImprintPrivacyConditionsComponent extends StatelessWidget {
+  const ImprintPrivacyConditionsComponent({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     text(val) => Text(
           val,
           style: Theme.of(context).textTheme.bodyText2?.copyWith(
-              fontSize: 13,
+              fontSize: 15,
               color: ColorConstants.black,
               fontWeight: FontWeight.w500),
         );

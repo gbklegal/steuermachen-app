@@ -3,18 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
 import 'package:steuermachen/components/back_reset_forward_btn_component.dart';
+import 'package:steuermachen/components/button_component.dart';
 import 'package:steuermachen/components/empty_screen_loader_component.dart';
 import 'package:steuermachen/components/error_component%20copy.dart';
+import 'package:steuermachen/components/imprint_privacy_condition_component.dart';
 import 'package:steuermachen/components/selection_card_component.dart';
+import 'package:steuermachen/components/signature_component.dart';
 import 'package:steuermachen/components/text_progress_bar_component.dart';
 import 'package:steuermachen/components/user_form_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
+import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/strings/options_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
-import 'package:steuermachen/providers/quick_tax/quick_tax_provider.dart';
 import 'package:steuermachen/providers/safe_tax/safe_tax_provider.dart';
-import 'package:steuermachen/utils/input_validation_util.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 import 'package:steuermachen/wrappers/safe_tax_wrapper.dart';
 
@@ -143,152 +145,162 @@ class _QuestionsViewState extends State<_QuestionsView> {
                           for (var x = 0;
                               x < widget.safeTaxData[i].options.length;
                               x++)
-                            InkWell(
-                              onTap: () {
-                                pageController.animateToPage(i + 1,
-                                    duration: const Duration(milliseconds: 500),
-                                    curve: Curves.easeInToLinear);
-                              },
-                              child: SelectionCardComponent(
-                                title: widget.safeTaxData[i].options[x],
-                                imagePath: widget
-                                        .safeTaxData[i].optionImgPath.isNotEmpty
-                                    ? widget.safeTaxData[i].optionImgPath[x]
-                                    : null,
-                              ),
-                            )
+                            _optionsWidget(i, x)
                         else if (widget.safeTaxData[i].optionType ==
                             OptionConstants.userForm)
                           const UserFormComponent()
-                        // TextFormField(
-                        //   // controller: _emailController,
-                        //   textAlign: TextAlign.center,
-                        //   decoration: InputDecoration(
-                        //       label: Text(widget.safeTaxData[i].inputTitle),
-                        //       floatingLabelAlignment:
-                        //           FloatingLabelAlignment.center,
-                        //       floatingLabelBehavior:
-                        //           FloatingLabelBehavior.auto,
-                        //       focusedBorder: WidgetStyles.outlineInputBorder,
-                        //       enabledBorder: WidgetStyles.outlineInputBorder,
-                        //       filled: true),
-                        //   // validator: validateEmail,
-                        // ),
+                        else if (widget.safeTaxData[i].optionType ==
+                            OptionConstants.signature)
+                          Transform.translate(
+                            offset: const Offset(0, -20),
+                            child: const SignatureComponent(),
+                          )
+                        else if (widget.safeTaxData[i].optionType ==
+                            OptionConstants.termsCondition)
+                          Transform.translate(
+                            offset: const Offset(0, -20),
+                            child: const TermsAndConditionComponent(),
+                          ),
                       ],
                     ),
                   ),
                 ),
               ),
-              if (widget.safeTaxData[i].showBottomNav)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 50),
-                  child: BackResetForwardBtnComponent(
-                    onTapBack: () {
-                      pageController.animateToPage(i - 1,
-                          duration: const Duration(milliseconds: 500),
-                          curve: Curves.easeInOutBack);
-                    },
-                    onTapContinue: () {
-                      pageController.animateToPage(i + 1,
-                          duration: const Duration(milliseconds: 500),
-                          curve: Curves.easeInToLinear);
-                    },
-                  ),
-                )
+              if (widget.safeTaxData[i].showBottomNav) _bottomBtns(i)
             ],
           ),
       ],
     );
   }
+
+  Padding _bottomBtns(int i) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 50),
+      child: BackResetForwardBtnComponent(
+        onTapBack: () {
+          pageController.animateToPage(i - 1,
+              duration: const Duration(milliseconds: 500),
+              curve: Curves.easeInOutBack);
+        },
+        onTapContinue: () {
+          pageController.animateToPage(i + 1,
+              duration: const Duration(milliseconds: 500),
+              curve: Curves.easeInToLinear);
+        },
+      ),
+    );
+  }
+
+  InkWell _optionsWidget(int i, int x) {
+    return InkWell(
+      onTap: () {
+        pageController.animateToPage(i + 1,
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.easeInToLinear);
+      },
+      child: SelectionCardComponent(
+        title: widget.safeTaxData[i].options[x],
+        imagePath: widget.safeTaxData[i].optionImgPath.isNotEmpty
+            ? widget.safeTaxData[i].optionImgPath[x]
+            : null,
+      ),
+    );
+  }
 }
 
-// class UserFormComponent extends StatelessWidget with InputValidationUtil {
-//   const UserFormComponent({Key? key}) : super(key: key);
+class TermsAndConditionComponent extends StatelessWidget {
+  const TermsAndConditionComponent({Key? key}) : super(key: key);
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Column(
-//       children: [
-//         Form(
-//           key: _userFormKey,
-//           child: Column(
-//             crossAxisAlignment: CrossAxisAlignment.start,
-//             children: <Widget>[
-//               const SizedBox(
-//                 height: 35,
-//               ),
-//               TextFormField(
-//                 controller: _lastNameController,
-//                 decoration: InputDecoration(
-//                   labelText: LocaleKeys.surName.tr(),
-//                   hintStyle: fontStyle,
-//                 ),
-//                 validator: validateFieldEmpty,
-//               ),
-//               sizedBox6,
-//               TextFormField(
-//                 controller: _firstNameController,
-//                 decoration: InputDecoration(
-//                   labelText: LocaleKeys.firstName.tr(),
-//                   hintStyle: fontStyle,
-//                 ),
-//                 validator: validateFieldEmpty,
-//               ),
-//               sizedBox6,
-//               TextFormField(
-//                 controller: _streetController,
-//                 decoration: InputDecoration(
-//                   labelText: LocaleKeys.street.tr(),
-//                   hintStyle: fontStyle,
-//                 ),
-//                 validator: validateFieldEmpty,
-//               ),
-//               sizedBox4,
-//               TextFormField(
-//                 controller: _houseNumberController,
-//                 decoration: InputDecoration(
-//                   labelText: LocaleKeys.postalCode.tr(),
-//                   hintStyle: fontStyle,
-//                 ),
-//                 validator: validateFieldEmpty,
-//               ),
-//               sizedBox4,
-//               TextFormField(
-//                 controller: _plzController,
-//                 decoration: InputDecoration(
-//                   labelText: LocaleKeys.cityTown.tr(),
-//                   hintStyle: fontStyle,
-//                 ),
-//                 validator: validateFieldEmpty,
-//               ),
-//               sizedBox4,
-//               InkWell(
-//                 onTap: () {
-//                   showCountryPicker(
-//                     context: context,
-//                     showPhoneCode:
-//                         true, // optional. Shows phone code before the country name.
-//                     onSelect: (Country country) {
-//                       print('Select country: ${country.displayName}');
-//                       _locationController.text = country.displayName;
-//                     },
-//                   );
-//                 },
-//                 child: TextFormField(
-//                   enabled: false,
-//                   controller: _locationController,
-//                   decoration: InputDecoration(
-//                     labelText: LocaleKeys.selectCountry.tr(),
-//                     hintStyle: fontStyle,
-//                   ),
-//                   validator: validateFieldEmpty,
-//                 ),
-//               ),
-//               sizedBox4,
-//             ],
-//           ),
-//         )
-//       ],
-//     );
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        SizedBox(
+          height: MediaQuery.of(context).size.height * 0.6,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Note: Release from confidentiality is urgently required for communication between steuermachen (GDF) and the commissioned tax office.",
+                textAlign: TextAlign.left,
+                style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 16,
+                    letterSpacing: -0.3),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              _checkBox(context, "* I agree to the release from "),
+              Transform.translate(
+                offset: const Offset(0, -15),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 60),
+                  child: Text(
+                    "non-disclosure ",
+                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 15,
+                        letterSpacing: -0.3,
+                        color: ColorConstants.primary),
+                  ),
+                ),
+              ),
+              _checkBox(context,
+                  "* I accept the terms and conditions and the information on data processing and the right of withdrawal from steuermachen."),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Image.asset(
+                  AssetConstants.trustShops,
+                  height: 50,
+                ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(
+          height: 90,
+          child: Column(
+            children: [
+              ButtonComponent(
+                buttonText: "Order now".toUpperCase(),
+                color: ColorConstants.toxicGreen,
+                onPressed: () {},
+              ),
+              const ImprintPrivacyConditionsComponent(),
+            ],
+          ),
+        )
+      ],
+    );
+  }
+
+  Row _checkBox(BuildContext context, String checkBoxTitle) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Checkbox(
+          value: false,
+          onChanged: (bool? value) {},
+        ),
+        const SizedBox(
+          width: 2,
+        ),
+        Flexible(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 12),
+            child: Text(
+              checkBoxTitle,
+              style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 15,
+                  letterSpacing: -0.3),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}

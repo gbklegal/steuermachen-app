@@ -123,6 +123,7 @@ abstract class  LocaleKeys {
   static const getStarted = 'getStarted';
   static const alreadyHaveAnAccount = 'alreadyHaveAnAccount';
   static const signIn = 'signIn';
+  static const clear = 'clear';
   static const signUp = 'signUp';
   static const forgotPassword = 'forgotPassword';
   static const calculateYourPrice = 'calculateYourPrice';

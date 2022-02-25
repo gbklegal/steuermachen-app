@@ -38,6 +38,7 @@ class AssetConstants {
   static String sustain = "assets/sustain.png";
   static String taxAdvice = "assets/tax-advice.png";
   static String done = "assets/icons/done.png";
+  static String trustShops = "assets/trust-shops.png";
 
   //More
   static String icMoreDocument = "assets/icons/more/document-icon.png";

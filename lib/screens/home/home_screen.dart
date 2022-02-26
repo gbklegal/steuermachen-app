@@ -2,6 +2,7 @@ import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
+import 'package:steuermachen/components/shadow_card_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
@@ -22,6 +23,10 @@ class HomeScreen extends StatelessWidget {
       _CardItemsModel(
           leadAsset: AssetConstants.icLegalAction,
           title: LocaleKeys.taxEasyInitialTaxAdvice.tr(),
+          action: RouteConstants.easyTaxScreen),
+      _CardItemsModel(
+          leadAsset: AssetConstants.icLegalAction,
+          title: "reference screen documents",
           action: RouteConstants.selectDocumentForScreen),
       _CardItemsModel(
           leadAsset: AssetConstants.icPersons,
@@ -98,7 +103,7 @@ class HomeScreen extends StatelessWidget {
                                 Navigator.pushNamed(context, content[i].action);
                               }
                             },
-                            child: _HomeCards(
+                            child: ShadowCardComponent(
                               leadingAsset: content[i].leadAsset,
                               title: content[i].title,
                             ),
@@ -155,60 +160,6 @@ class _CollectReceipts extends StatelessWidget {
   }
 }
 
-class _HomeCards extends StatelessWidget {
-  const _HomeCards({
-    Key? key,
-    required this.leadingAsset,
-    required this.title,
-  }) : super(key: key);
-  final String leadingAsset;
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
-      child: Container(
-        height: 48,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(7),
-          color: ColorConstants.white,
-          boxShadow: [
-            BoxShadow(
-                color: ColorConstants.veryLightPurple.withOpacity(0.4),
-                offset: const Offset(0, 2),
-                blurRadius: 3,
-                spreadRadius: 1)
-          ],
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Row(
-            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              SvgPicture.asset(
-                leadingAsset,
-                height: 18,
-                color: ColorConstants.black,
-              ),
-              const SizedBox(width: 15),
-              Flexible(
-                child: Text(
-                  title,
-                  textAlign: TextAlign.left,
-                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 14,
-                      letterSpacing: -0.3),
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
 
 class _CardItemsModel {
   final String leadAsset, title, action;

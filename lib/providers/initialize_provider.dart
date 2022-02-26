@@ -1,5 +1,6 @@
 import 'package:provider/provider.dart';
 import 'package:steuermachen/providers/auth/auth_provider.dart';
+import 'package:steuermachen/providers/easy_tax/easy_tax_provider.dart';
 import 'package:steuermachen/providers/forms_provider.dart';
 import 'package:steuermachen/providers/language_provider.dart';
 import 'package:steuermachen/providers/document/document_provider.dart';
@@ -38,6 +39,9 @@ providerList(context) {
     ),
     ChangeNotifierProvider(
       create: (context) => SafeTaxProvider(),
+    ),
+    ChangeNotifierProvider(
+      create: (context) => EasyTaxProvider(),
     ),
     ChangeNotifierProvider(
       create: (context) => SignatureProvider(),

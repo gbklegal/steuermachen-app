@@ -24,13 +24,13 @@ import 'package:steuermachen/screens/how_it_works/how_it_works_screen.dart';
 import 'package:steuermachen/screens/legal_action/legal_action2_screen.dart';
 import 'package:steuermachen/screens/onboarding/onboarding_screen.dart';
 import 'package:steuermachen/screens/profile/profile_screen.dart';
-import 'package:steuermachen/screens/safe_and_quick_tax/quick_tax/quick_tax_screen.dart';
-import 'package:steuermachen/screens/safe_and_quick_tax/safe_tax/safe_tax_screen.dart';
-import 'package:steuermachen/screens/safe_and_quick_tax/select_safe_or_quick_tax_screen.dart';
 import 'package:steuermachen/screens/splash_screen.dart';
 import 'package:steuermachen/screens/sustainability/sustainability_screen.dart';
-import 'package:steuermachen/screens/tax_advice/tax_advice_form_screen.dart';
-import 'package:steuermachen/screens/tax_advice/tax_advice_screen.dart';
+import 'package:steuermachen/screens/tax/easy_tax/easy_tax_component/tax_advice_form_screen.dart';
+import 'package:steuermachen/screens/tax/easy_tax/easy_tax_screen.dart';
+import 'package:steuermachen/screens/tax/quick_tax/quick_tax_screen.dart';
+import 'package:steuermachen/screens/tax/safe_tax/safe_tax_screen.dart';
+import 'package:steuermachen/screens/tax/select_safe_or_quick_tax_screen.dart';
 import 'package:steuermachen/screens/tax_tips/tax_tips_screen.dart';
 
 onGenerateRoutes(RouteSettings settings) {
@@ -121,6 +121,10 @@ onGenerateRoutes(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (_) => const SafeTaxScreen(),
       );
+    case RouteConstants.easyTaxScreen:
+      return MaterialPageRoute(
+        builder: (_) => const EasyTaxScreen(),
+      );
     case RouteConstants.contactUsOptionScreen:
       return MaterialPageRoute(
         builder: (_) => const ContactUsOptionScreen(),
@@ -157,10 +161,10 @@ onGenerateRoutes(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (_) => const LegalAction2Screen(),
       );
-    case RouteConstants.taxAdviceScreen:
-      return MaterialPageRoute(
-        builder: (_) => const TaxAdviceScreen(),
-      );
+    // case RouteConstants.taxAdviceScreen:
+    //   return MaterialPageRoute(
+    //     builder: (_) => const TaxAdviceScreen(),
+    //   );
     case RouteConstants.taxAdviceFormScreen:
       return MaterialPageRoute(
         builder: (_) => const TaxAdviceFormScreen(),

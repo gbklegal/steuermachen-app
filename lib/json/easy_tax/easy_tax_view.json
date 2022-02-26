@@ -1,0 +1,48 @@
+{
+    "en": [
+        {
+            "title": "",
+            "option_type": "initial_screen",
+            "options": [],
+            "option_img_path": [],
+            "show_bottom_nav": false
+        },
+        {
+            "title": "Check your personal information\nsalutation",
+            "option_type": "user_form",
+            "options": [],
+            "option_img_path": [],
+            "show_bottom_nav": true
+        },
+        {
+            "title": "",
+            "option_type": "payment_methods",
+            "options": [],
+            "option_img_path": [],
+            "show_bottom_nav": false
+        }
+    ],
+    "du": [
+        {
+            "title": "",
+            "option_type": "initial_screen",
+            "options": [],
+            "option_img_path": [],
+            "show_bottom_nav": false
+        },
+        {
+            "title": "Check your personal information\nsalutation",
+            "option_type": "user_form",
+            "options": [],
+            "option_img_path": [],
+            "show_bottom_nav": true
+        },
+        {
+            "title": "",
+            "option_type": "payment_methods",
+            "options": [],
+            "option_img_path": [],
+            "show_bottom_nav": false
+        }
+    ]
+}

@@ -4,4 +4,6 @@ class OptionConstants {
   static const String userForm = "user_form";
   static const String termsCondition = "terms_and_condition";
   static const String signature = "signature";
+  static const String initialScreen = "initial_screen";
+  static const String paymentMethods = "payment_methods";
 }

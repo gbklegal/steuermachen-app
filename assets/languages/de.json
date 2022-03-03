@@ -156,5 +156,6 @@
     "taxAdvisor" : "Tax Advisor",
     "intialTaxAdvice" : "Erste Steuerberatung",
     "selectCategory" : "Wählen Sie die für Sie passende Kategorie",
+    "continue" : "Continue",
     "logout": "Ausloggen"
 }

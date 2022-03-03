@@ -158,6 +158,7 @@ abstract class  LocaleKeys {
   static const taxAdvisor = 'taxAdvisor';
   static const intialTaxAdvice = 'intialTaxAdvice';
   static const selectCategory = 'selectCategory';
+  static const continueWord = 'Continue';
   static const logout = 'logout';
 
 }

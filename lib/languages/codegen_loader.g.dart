@@ -172,6 +172,7 @@ class CodegenLoader extends AssetLoader{
   "taxAdvisor": "Tax Advisor",
   "intialTaxAdvice": "Erste Steuerberatung",
   "selectCategory": "Wählen Sie die für Sie passende Kategorie",
+  "continue": "Continue",
   "logout": "Ausloggen"
 };
 static const Map<String,dynamic> en = {
@@ -330,6 +331,7 @@ static const Map<String,dynamic> en = {
   "taxAdvisor": "Tax Advisor",
   "intialTaxAdvice": "Intial Tax Advice",
   "selectCategory": "Select category suitable to you",
+  "continue": "Continue",
   "logout": "Logout"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"de": de, "en": en};

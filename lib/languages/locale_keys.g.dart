@@ -158,6 +158,10 @@ abstract class  LocaleKeys {
   static const taxAdvisor = 'taxAdvisor';
   static const intialTaxAdvice = 'intialTaxAdvice';
   static const selectCategory = 'selectCategory';
+  static const nameOnTheCard = 'nameOnTheCard';
+  static const cardNumber = 'cardNumber';
+  static const expiryDate = 'expiryDate';
+  static const cv = 'cv';
   static const logout = 'logout';
 
 }

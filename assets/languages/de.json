@@ -156,5 +156,9 @@
     "taxAdvisor" : "Tax Advisor",
     "intialTaxAdvice" : "Erste Steuerberatung",
     "selectCategory" : "Wählen Sie die für Sie passende Kategorie",
+    "nameOnTheCard" : "Name on the card",
+    "cardNumber" : "Card number",
+    "expiryDate" : "Expiry Date",
+    "cv" : "CV",
     "logout": "Ausloggen"
 }

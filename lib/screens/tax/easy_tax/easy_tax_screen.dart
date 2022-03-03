@@ -5,6 +5,7 @@ import 'package:steuermachen/components/app_bar/appbar_component.dart';
 import 'package:steuermachen/components/back_reset_forward_btn_component.dart';
 import 'package:steuermachen/components/empty_screen_loader_component.dart';
 import 'package:steuermachen/components/error_component%20copy.dart';
+import 'package:steuermachen/components/payment/payment_methods_component.dart';
 import 'package:steuermachen/components/selection_card_component.dart';
 import 'package:steuermachen/components/shadow_card_component.dart';
 import 'package:steuermachen/components/text_progress_bar_component.dart';
@@ -180,68 +181,6 @@ class _QuestionsViewState extends State<_QuestionsView> {
                 )
             ],
           ),
-      ],
-    );
-  }
-}
-
-class PaymentMethodsComponent extends StatelessWidget {
-  const PaymentMethodsComponent({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "Choose pay method",
-          style: Theme.of(context)
-              .textTheme
-              .bodyText1!
-              .copyWith(fontSize: 16, fontWeight: FontWeight.w600),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(2.0),
-          child: ShadowCardComponent(
-            height: 60,
-            fontSize: 17,
-            leadingAsset: AssetConstants.icDocument,
-            title: "Credit card",
-            trailingAsset: AssetConstants.icForward,
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(2.0),
-          child: ShadowCardComponent(
-            height: 60,
-            fontSize: 17,
-            leadingAsset: AssetConstants.icPdf,
-            title: "bill",
-            trailingAsset: AssetConstants.icForward,
-          ),
-        ),
-        const SizedBox(
-          height: 35,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "Total",
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyText1!
-                  .copyWith(fontSize: 16, fontWeight: FontWeight.w600),
-            ),
-            Text(
-              "129 euros",
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyText1!
-                  .copyWith(fontSize: 16, fontWeight: FontWeight.w600),
-            ),
-          ],
-        )
       ],
     );
   }

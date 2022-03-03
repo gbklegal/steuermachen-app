@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
 import 'package:steuermachen/components/button_component.dart';
+import 'package:steuermachen/constants/app_constants.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
@@ -70,16 +71,24 @@ class CardPaymentMethodScreen extends StatelessWidget {
                     decoration: InputDecoration(
                       labelText: LocaleKeys.cv.tr() + "*",
                       hintStyle: fontStyle,
+                      suffixIcon: Padding(
+                        padding: const EdgeInsets.only(top: 15, bottom: 15),
+                        child: Image.asset(AssetConstants.icCv, height: 15,),
+                      ),
                     ),
+
                     // validator: validateFieldEmpty,
                   ),
                 ),
               ],
             ),
-            ButtonComponent(
-              buttonText: LocaleKeys.contactForm.tr(),
-            )
           ],
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: AppConstants.bottomBtnPadding,
+        child: ButtonComponent(
+          buttonText: LocaleKeys.continueWord.tr(),
         ),
       ),
     );

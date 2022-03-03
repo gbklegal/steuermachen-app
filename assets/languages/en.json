@@ -154,12 +154,14 @@
     "taxAdvisor" : "Tax Advisor",
     "intialTaxAdvice" : "Intial Tax Advice",
     "selectCategory" : "Select category suitable to you",
-    "continue" : "Continue",
-
+    "continueWord" : "Continue",
     "nameOnTheCard" : "Name on the card",
     "cardNumber" : "Card number",
     "expiryDate" : "Expiry Date",
     "cv" : "CV",
+    "selectBillingAddress" : "Select billing address",
+    "useThisAddress" : "Use this address",
+    "addNewAddress" : "Add new address",
     "logout" : "Logout"
 
 }

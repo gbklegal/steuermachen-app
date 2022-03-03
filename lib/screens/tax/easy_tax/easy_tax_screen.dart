@@ -147,7 +147,7 @@ class _QuestionsViewState extends State<_QuestionsView> {
                             onPressed: () {
                               pageController.animateToPage(i + 1,
                                   duration: const Duration(milliseconds: 500),
-                                  curve: Curves.easeInOutBack);
+                                  curve: Curves.easeInToLinear);
                               // Navigator.pushNamed(
                               //     context, RouteConstants.taxAdviceFormScreen);
                             },

@@ -75,10 +75,9 @@ class MyApp extends StatelessWidget {
   }
 
   InputDecorationTheme _inputDecorationTheme() {
-    const underlineInputBorder =  UnderlineInputBorder(
-          borderSide:
-              BorderSide(color: ColorConstants.veryLightPurple, width: 0.3),
-        );
+    const underlineInputBorder = UnderlineInputBorder(
+      borderSide: BorderSide(color: ColorConstants.veryLightPurple, width: 0.3),
+    );
     return InputDecorationTheme(
         labelStyle: GoogleFonts.raleway(
           fontSize: 15.0,
@@ -86,7 +85,7 @@ class MyApp extends StatelessWidget {
           color: ColorConstants.veryLightPurple,
         ),
         enabledBorder: underlineInputBorder,
-        focusedBorder: underlineInputBorder,      
+        focusedBorder: underlineInputBorder,
         fillColor: ColorConstants.formFieldBackground);
   }
 
@@ -115,16 +114,17 @@ class MyApp extends StatelessWidget {
           fontWeight: FontWeight.bold,
           fontStyle: FontStyle.normal),
       headline5: GoogleFonts.raleway(
-          fontWeight: FontWeight.bold,
+          fontWeight: FontWeight.bold, fontStyle: FontStyle.normal),
+      bodyText1: GoogleFonts.raleway(
+          fontSize: 16.0,
+          color: ColorConstants.black,
           fontStyle: FontStyle.normal),
-      bodyText1:
-          GoogleFonts.raleway(fontSize: 16.0, color: ColorConstants.black),
       bodyText2:
           GoogleFonts.raleway(fontSize: 14.0, color: ColorConstants.black),
       button: GoogleFonts.raleway(
           fontSize: 16.0,
-          // fontWeight: FontWeight.bold,
-          color: ColorConstants.white),
+          color: ColorConstants.white,
+          fontWeight: FontWeight.normal),
     );
   }
 }

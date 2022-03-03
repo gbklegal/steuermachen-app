@@ -156,10 +156,13 @@
     "taxAdvisor" : "Tax Advisor",
     "intialTaxAdvice" : "Erste Steuerberatung",
     "selectCategory" : "Wählen Sie die für Sie passende Kategorie",
-    "continue" : "Continue",
+    "continueWord" : "Continue",
     "nameOnTheCard" : "Name on the card",
     "cardNumber" : "Card number",
     "expiryDate" : "Expiry Date",
     "cv" : "CV",
+    "selectBillingAddress" : "Select billing address",
+    "useThisAddress" : "Use this address",
+    "addNewAddress" : "Add new address",
     "logout": "Ausloggen"
 }

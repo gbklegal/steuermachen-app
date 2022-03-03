@@ -4,5 +4,5 @@ class AppConstants {
   static const String appName = "steuermachen";
   static const double toolbarSize = 60;
   static const bottomBtnPadding =
-      EdgeInsets.only(bottom: 25, left: 15, right: 15, top: 15);
+      EdgeInsets.only(bottom: 56, left: 20, right: 20, top: 15);
 }

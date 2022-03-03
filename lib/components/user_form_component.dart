@@ -12,8 +12,9 @@ import 'package:steuermachen/providers/profile/profile_provider.dart';
 import 'package:steuermachen/utils/input_validation_util.dart';
 
 class UserFormComponent extends StatelessWidget with InputValidationUtil {
-  const UserFormComponent({Key? key}) : super(key: key);
-
+  const UserFormComponent({Key? key, this.isAddNewAddress = false})
+      : super(key: key);
+  final bool? isAddNewAddress;
   @override
   Widget build(BuildContext context) {
     const sizedBox4 = SizedBox(
@@ -31,31 +32,34 @@ class UserFormComponent extends StatelessWidget with InputValidationUtil {
     return Consumer<ProfileProvider>(builder: (context, consumer, child) {
       return Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              for (var item in gender)
-                IntrinsicWidth(
-                  child: ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    horizontalTitleGap: 0,
-                    minLeadingWidth: 0,
-                    title: _title(
-                      item,
-                    ),
-                    leading: Radio(
-                      value: "",
-                      groupValue: '',
-                      onChanged: (String? value) {
-                        // setState(() {
-                        //   _site = value;
-                        // });
-                      },
+          Visibility(
+            visible: !isAddNewAddress!,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                for (var item in gender)
+                  IntrinsicWidth(
+                    child: ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      horizontalTitleGap: 0,
+                      minLeadingWidth: 0,
+                      title: _title(
+                        item,
+                      ),
+                      leading: Radio(
+                        value: "",
+                        groupValue: '',
+                        onChanged: (String? value) {
+                          // setState(() {
+                          //   _site = value;
+                          // });
+                        },
+                      ),
                     ),
                   ),
-                ),
-            ],
+              ],
+            ),
           ),
           Form(
             key: consumer.userFormKey,
@@ -126,23 +130,27 @@ class UserFormComponent extends StatelessWidget with InputValidationUtil {
                   validator: validateFieldEmpty,
                 ),
                 sizedBox4,
-                TextFormField(
-                  controller: consumer.phoneController,
-                  decoration: InputDecoration(
-                    labelText: LocaleKeys.phone.tr() + "*",
-                    hintStyle: fontStyle,
-                  ),
-                  validator: validateFieldEmpty,
-                ),
+                !isAddNewAddress!
+                    ? TextFormField(
+                        controller: consumer.phoneController,
+                        decoration: InputDecoration(
+                          labelText: LocaleKeys.phone.tr() + "*",
+                          hintStyle: fontStyle,
+                        ),
+                        validator: validateFieldEmpty,
+                      )
+                    : const SizedBox(),
                 sizedBox4,
-                TextFormField(
-                  controller: consumer.emailController,
-                  decoration: InputDecoration(
-                    labelText: LocaleKeys.emailAddress.tr() + "*",
-                    hintStyle: fontStyle,
-                  ),
-                  validator: validateFieldEmpty,
-                ),
+                !isAddNewAddress!
+                    ? TextFormField(
+                        controller: consumer.emailController,
+                        decoration: InputDecoration(
+                          labelText: LocaleKeys.emailAddress.tr() + "*",
+                          hintStyle: fontStyle,
+                        ),
+                        validator: validateFieldEmpty,
+                      )
+                    : const SizedBox(),
                 sizedBox4,
                 InkWell(
                   onTap: () {

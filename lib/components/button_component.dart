@@ -37,7 +37,7 @@ class ButtonComponent extends StatelessWidget {
           ),
       child: TextComponent(
         buttonText,
-        style: textStyle,
+        style: textStyle ?? Theme.of(context).textTheme.button,
         textAlign: TextAlign.center,
       ),
       onPressed: isDisabled! ? null : (onPressed ?? () => {}),

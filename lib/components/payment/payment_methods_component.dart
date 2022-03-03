@@ -34,12 +34,16 @@ class PaymentMethodsComponent extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.all(2.0),
-          child: ShadowCardComponent(
-            height: 60,
-            fontSize: 17,
-            leadingAsset: AssetConstants.icPdf,
-            title: "bill",
-            trailingAsset: AssetConstants.icForward,
+          child: InkWell(
+            onTap: () => Navigator.pushNamed(
+                context, RouteConstants.selectBillingAddressScreen),
+            child: ShadowCardComponent(
+              height: 60,
+              fontSize: 17,
+              leadingAsset: AssetConstants.icPdf,
+              title: "bill",
+              trailingAsset: AssetConstants.icForward,
+            ),
           ),
         ),
         const SizedBox(

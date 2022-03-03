@@ -40,6 +40,7 @@ class AssetConstants {
   static String done = "assets/icons/done.png";
   static String trustShops = "assets/trust-shops.png";
   static String paymentMethods = "assets/payment-methods.png";
+  static String icCv = "assets/icons/cv-icon.png";
 
   //More
   static String icMoreDocument = "assets/icons/more/document-icon.png";

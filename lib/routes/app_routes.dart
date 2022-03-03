@@ -23,6 +23,7 @@ import 'package:steuermachen/screens/get_started/get_started_screen.dart';
 import 'package:steuermachen/screens/how_it_works/how_it_works_screen.dart';
 import 'package:steuermachen/screens/legal_action/legal_action2_screen.dart';
 import 'package:steuermachen/screens/onboarding/onboarding_screen.dart';
+import 'package:steuermachen/screens/payment/card_method_screen.dart';
 import 'package:steuermachen/screens/profile/profile_screen.dart';
 import 'package:steuermachen/screens/splash_screen.dart';
 import 'package:steuermachen/screens/sustainability/sustainability_screen.dart';
@@ -152,6 +153,10 @@ onGenerateRoutes(RouteSettings settings) {
     case RouteConstants.taxTipsScreen:
       return MaterialPageRoute(
         builder: (_) => const TaxTipsScreen(),
+      );
+    case RouteConstants.cardPaymentMethodScreen:
+      return MaterialPageRoute(
+        builder: (_) => const CardPaymentMethodScreen(),
       );
     // case RouteConstants.taxTipsDetailScreen:
     //   return MaterialPageRoute(

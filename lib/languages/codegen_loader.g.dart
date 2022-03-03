@@ -173,6 +173,10 @@ class CodegenLoader extends AssetLoader{
   "intialTaxAdvice": "Erste Steuerberatung",
   "selectCategory": "Wählen Sie die für Sie passende Kategorie",
   "continue": "Continue",
+  "nameOnTheCard": "Name on the card",
+  "cardNumber": "Card number",
+  "expiryDate": "Expiry Date",
+  "cv": "CV",
   "logout": "Ausloggen"
 };
 static const Map<String,dynamic> en = {
@@ -331,7 +335,14 @@ static const Map<String,dynamic> en = {
   "taxAdvisor": "Tax Advisor",
   "intialTaxAdvice": "Intial Tax Advice",
   "selectCategory": "Select category suitable to you",
+<<<<<<< HEAD
   "continue": "Continue",
+=======
+  "nameOnTheCard": "Name on the card",
+  "cardNumber": "Card number",
+  "expiryDate": "Expiry Date",
+  "cv": "CV",
+>>>>>>> 737f7ff738911a40433b064643c8efd6b283438d
   "logout": "Logout"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"de": de, "en": en};

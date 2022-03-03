@@ -155,6 +155,11 @@
     "intialTaxAdvice" : "Intial Tax Advice",
     "selectCategory" : "Select category suitable to you",
     "continue" : "Continue",
+
+    "nameOnTheCard" : "Name on the card",
+    "cardNumber" : "Card number",
+    "expiryDate" : "Expiry Date",
+    "cv" : "CV",
     "logout" : "Logout"
 
 }

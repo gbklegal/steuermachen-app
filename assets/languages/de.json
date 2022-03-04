@@ -164,5 +164,8 @@
     "selectBillingAddress" : "Select billing address",
     "useThisAddress" : "Use this address",
     "addNewAddress" : "Add new address",
+    "confirmOrder" : "Confirm order",
+    "billingAddress" : "Billing address",
+    "total" : "Total",
     "logout": "Ausloggen"
 }

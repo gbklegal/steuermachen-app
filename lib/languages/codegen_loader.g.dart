@@ -180,6 +180,9 @@ class CodegenLoader extends AssetLoader{
   "selectBillingAddress": "Select billing address",
   "useThisAddress": "Use this address",
   "addNewAddress": "Add new address",
+  "confirmOrder": "Confirm order",
+  "billingAddress": "Billing address",
+  "total": "Total",
   "logout": "Ausloggen"
 };
 static const Map<String,dynamic> en = {
@@ -346,6 +349,9 @@ static const Map<String,dynamic> en = {
   "selectBillingAddress": "Select billing address",
   "useThisAddress": "Use this address",
   "addNewAddress": "Add new address",
+  "confirmOrder": "Confirm order",
+  "billingAddress": "Billing address",
+  "total": "Total",
   "logout": "Logout"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"de": de, "en": en};

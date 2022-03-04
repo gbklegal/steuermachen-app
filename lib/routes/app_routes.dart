@@ -24,6 +24,7 @@ import 'package:steuermachen/screens/how_it_works/how_it_works_screen.dart';
 import 'package:steuermachen/screens/legal_action/legal_action2_screen.dart';
 import 'package:steuermachen/screens/onboarding/onboarding_screen.dart';
 import 'package:steuermachen/screens/payment/billing/add_new_billing_address_screen.dart';
+import 'package:steuermachen/screens/payment/billing/confirm_bill_screen.dart';
 import 'package:steuermachen/screens/payment/billing/select_billing_address_screen.dart';
 import 'package:steuermachen/screens/payment/card_method_screen.dart';
 import 'package:steuermachen/screens/profile/profile_screen.dart';
@@ -167,6 +168,10 @@ onGenerateRoutes(RouteSettings settings) {
     case RouteConstants.addNewBillingAddressScreen:
       return MaterialPageRoute(
         builder: (_) => const AddNewBillingAddressScreen(),
+      );
+    case RouteConstants.confirmBillingScreen:
+      return MaterialPageRoute(
+        builder: (_) => const ConfirmBillingScreen(),
       );
     // case RouteConstants.taxTipsDetailScreen:
     //   return MaterialPageRoute(

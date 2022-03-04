@@ -166,6 +166,9 @@ abstract class  LocaleKeys {
   static const selectBillingAddress = 'selectBillingAddress';
   static const useThisAddress = 'useThisAddress';
   static const addNewAddress = 'addNewAddress';
+  static const confirmOrder = 'confirmOrder';
+  static const billingAddress = 'billingAddress';
+  static const total = 'total';
   static const logout = 'logout';
 
 }

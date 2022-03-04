@@ -80,19 +80,23 @@ class SelectBillingAddressScreen extends StatelessWidget {
                   const SizedBox(
                     width: 15,
                   ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: ColorConstants.primary,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    padding: const EdgeInsets.all(15),
-                    child: Text(
-                      LocaleKeys.useThisAddress.tr(),
-                      textAlign: TextAlign.left,
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyText2!
-                          .copyWith(color: ColorConstants.white),
+                  InkWell(
+                    onTap: () => Navigator.pushNamed(
+                        context, RouteConstants.confirmBillingScreen),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: ColorConstants.primary,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      padding: const EdgeInsets.all(15),
+                      child: Text(
+                        LocaleKeys.useThisAddress.tr(),
+                        textAlign: TextAlign.left,
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyText2!
+                            .copyWith(color: ColorConstants.white),
+                      ),
                     ),
                   )
                 ],
@@ -117,8 +121,8 @@ class _AddNewAddress extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-     onTap: () => Navigator.pushNamed(
-                context, RouteConstants.addNewBillingAddressScreen),
+      onTap: () => Navigator.pushNamed(
+          context, RouteConstants.addNewBillingAddressScreen),
       child: Container(
         decoration: BoxDecoration(
           border: Border.all(width: 0.2, color: ColorConstants.black),

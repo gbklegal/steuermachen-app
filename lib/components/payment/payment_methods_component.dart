@@ -1,7 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:steuermachen/components/shadow_card_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
+import 'package:steuermachen/languages/locale_keys.g.dart';
 
 class PaymentMethodsComponent extends StatelessWidget {
   const PaymentMethodsComponent({Key? key}) : super(key: key);
@@ -53,7 +55,7 @@ class PaymentMethodsComponent extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Total",
+              LocaleKeys.total.tr(),
               style: Theme.of(context)
                   .textTheme
                   .bodyText1!

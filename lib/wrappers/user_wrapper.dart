@@ -8,6 +8,7 @@ class UserWrapper {
       location,
       phone,
       email,
+      gender,
       land;
 
   UserWrapper({
@@ -20,6 +21,7 @@ class UserWrapper {
     this.houseNumber,
     this.plz,
     this.location,
+    this.gender
   });
   factory UserWrapper.fromJson(Map<String, dynamic> json) =>
       UserWrapper(
@@ -32,6 +34,7 @@ class UserWrapper {
         phone: json["phone"],
         email: json["email"],
         land: json["country"],
+        gender: json["gender"],
       );
   Map<String, dynamic> toJson() => {
         "firstName": firstName,
@@ -43,5 +46,6 @@ class UserWrapper {
         "phone": phone,
         "email": email,
         "land": land,
+        "gender": gender,
       };
 }

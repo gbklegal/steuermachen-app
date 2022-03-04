@@ -34,6 +34,8 @@
     "or" : "OR",
     "orderNow" : "Order Now",
     "order" : "Order",
+    "startWithPersonalInfo" : "Let's start with some personal information",
+    "salutation" : "Salutation",
     "thankOrder" : "Thank you for your order",
     "youReceiveEmail" : "IMPORTANT: You will receive an email with all the information on how to proceed.",
     "goHome" : "Go to Home",

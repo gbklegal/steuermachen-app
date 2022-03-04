@@ -35,6 +35,8 @@ abstract class  LocaleKeys {
   static const or = 'or';
   static const orderNow = 'orderNow';
   static const order = 'order';
+  static const startWithPersonalInfo = 'startWithPersonalInfo';
+  static const salutation = 'salutation';
   static const thankOrder = 'thankOrder';
   static const youReceiveEmail = 'youReceiveEmail';
   static const goHome = 'goHome';

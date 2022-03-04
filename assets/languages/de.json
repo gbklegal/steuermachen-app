@@ -33,6 +33,8 @@
     "or" : "ODER",
     "orderNow" : "Jetzt bestellen",
     "order" : "Order",
+    "startWithPersonalInfo" : "Let's start with some personal information",
+    "salutation" : "Salutation",
     "thankOrder" : "Vielen Dank für Ihren Auftrag",
     "youReceiveEmail" : "WICHTIG: Sie erhalten eine E-Mail mit allen Informationen zum weiteren Vorgehen.",
     "goHome": "Zur Startseite", 

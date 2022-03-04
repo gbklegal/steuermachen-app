@@ -48,7 +48,7 @@ class _SignupScreenState extends State<SignupScreen> with InputValidationUtil {
               _emailController.text, _passwordController.text);
       ToastComponent.showToast(res.message!, long: true);
       PopupLoader.hideLoadingDialog(context);
-      Navigator.pushNamed(context, RouteConstants.signInScreen);
+      Navigator.pushNamed(context, RouteConstants.completeProfileScreen);
     }
   }
 
@@ -60,7 +60,7 @@ class _SignupScreenState extends State<SignupScreen> with InputValidationUtil {
     PopupLoader.hideLoadingDialog(context);
     if (res.status!) {
       Navigator.pushNamedAndRemoveUntil(
-          context, RouteConstants.bottomNavBarScreen, (val) => false);
+          context, RouteConstants.completeProfileScreen, (val) => false);
     }
   }
 
@@ -72,7 +72,7 @@ class _SignupScreenState extends State<SignupScreen> with InputValidationUtil {
     PopupLoader.hideLoadingDialog(context);
     if (res.status!) {
       Navigator.pushNamedAndRemoveUntil(
-          context, RouteConstants.bottomNavBarScreen, (val) => false);
+          context, RouteConstants.completeProfileScreen, (val) => false);
     }
   }
 

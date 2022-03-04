@@ -1,25 +1,27 @@
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:steuermachen/components/app_bar/appbar_with_side_corner_circle_and_body.dart';
+import 'package:steuermachen/components/app_bar/appbar_component.dart';
 import 'package:steuermachen/components/button_component.dart';
 import 'package:steuermachen/components/error_component.dart';
 import 'package:steuermachen/components/loading_component.dart';
 import 'package:steuermachen/components/user_form_component.dart';
 import 'package:steuermachen/constants/app_constants.dart';
+import 'package:steuermachen/constants/assets/asset_constants.dart';
+import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/providers/profile/profile_provider.dart';
 import 'package:steuermachen/utils/input_validation_util.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 
-class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+class CompleteProfileScreen extends StatefulWidget {
+  const CompleteProfileScreen({Key? key}) : super(key: key);
 
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
+  State<CompleteProfileScreen> createState() => _CompleteProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen>
+class _CompleteProfileScreenState extends State<CompleteProfileScreen>
     with InputValidationUtil {
   late ProfileProvider _profileProvider;
   CommonResponseWrapper? response;
@@ -34,6 +36,14 @@ class _ProfileScreenState extends State<ProfileScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: const AppBarComponent(
+        StringConstants.appName,
+        imageTitle: AssetConstants.logo,
+        backgroundColor: Colors.transparent,
+        showBackButton: false,
+        showPersonIcon: false,
+        showBottomLine: false,
+      ),
       body: SingleChildScrollView(
         child: SizedBox(
           height: MediaQuery.of(context).size.height,
@@ -65,9 +75,36 @@ class _ProfileScreenState extends State<ProfileScreen>
   }
 
   Padding _mainBody() {
-    return const Padding(
-      padding: EdgeInsets.only(left: 16.0, right: 16.0),
-      child: UserFormComponent(),
+    return Padding(
+      padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Align(
+            alignment: Alignment.center,
+            child: Text(
+              LocaleKeys.startWithPersonalInfo.tr(),
+              textAlign: TextAlign.center,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyText1!
+                  .copyWith(fontWeight: FontWeight.w600, fontSize: 16),
+            ),
+          ),
+          const SizedBox(
+            height: 25,
+          ),
+          Text(
+            LocaleKeys.salutation.tr(),
+            textAlign: TextAlign.left,
+            style: Theme.of(context)
+                .textTheme
+                .bodyText1!
+                .copyWith(fontWeight: FontWeight.w600, fontSize: 16),
+          ),
+          const UserFormComponent(),
+        ],
+      ),
     );
   }
 
@@ -76,7 +113,7 @@ class _ProfileScreenState extends State<ProfileScreen>
       padding: AppConstants.bottomBtnPadding,
       child: ButtonComponent(
         btnHeight: 56,
-        buttonText: LocaleKeys.save.tr(),
+        buttonText: LocaleKeys.continueWord.tr(),
         onPressed: () async {
           // if (_userFormKey.currentState!.validate()) {
           //   PopupLoader.showLoadingDialog(context);

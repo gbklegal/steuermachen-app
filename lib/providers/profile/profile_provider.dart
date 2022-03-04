@@ -13,6 +13,7 @@ class ProfileProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  final TextEditingController genderController = TextEditingController();
   final TextEditingController firstNameController = TextEditingController();
   final TextEditingController lastNameController = TextEditingController();
   final TextEditingController streetController = TextEditingController();
@@ -64,7 +65,13 @@ class ProfileProvider extends ChangeNotifier {
     }
   }
 
+  setGender(String value) {
+    genderController.text = value;
+    notifyListeners();
+  }
+
   setUserDataToController(UserWrapper user) {
+    genderController.text = user.gender!;
     firstNameController.text = user.firstName!;
     lastNameController.text = user.lastName!;
     streetController.text = user.street!;
@@ -77,6 +84,7 @@ class ProfileProvider extends ChangeNotifier {
   }
 
   dispoeControllers() {
+    genderController.dispose();
     firstNameController.dispose();
     lastNameController.dispose();
     streetController.dispose();

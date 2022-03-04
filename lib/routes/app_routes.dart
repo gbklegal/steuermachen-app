@@ -28,6 +28,7 @@ import 'package:steuermachen/screens/payment/confirm_bill_screen.dart';
 import 'package:steuermachen/screens/payment/billing/select_billing_address_screen.dart';
 import 'package:steuermachen/screens/payment/card/card_method_screen.dart';
 import 'package:steuermachen/screens/payment/payment_terms_condition_screen.dart';
+import 'package:steuermachen/screens/profile/complete_profile_screen.dart';
 import 'package:steuermachen/screens/profile/profile_screen.dart';
 import 'package:steuermachen/screens/splash_screen.dart';
 import 'package:steuermachen/screens/sustainability/sustainability_screen.dart';
@@ -197,6 +198,10 @@ onGenerateRoutes(RouteSettings settings) {
     case RouteConstants.profileScreen:
       return MaterialPageRoute(
         builder: (_) => const ProfileScreen(),
+      );
+    case RouteConstants.completeProfileScreen:
+      return MaterialPageRoute(
+        builder: (_) => const CompleteProfileScreen(),
       );
     case RouteConstants.calculatorScreen:
       return MaterialPageRoute(

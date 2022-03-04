@@ -28,6 +28,7 @@ class RouteConstants {
   static const String selectBillingAddressScreen = "SelectBillingAddressScreen";
   static const String addNewBillingAddressScreen = "AddNewBillingAddressScreen";
   static const String confirmBillingScreen = "ConfirmBillingScreen";
+  static const String paymentTermsConditionScreen = "PaymentTermsConditionScreen";
   static const String taxTipsScreen = "TaxTipsScreen";
   static const String taxTipsDetailScreen = "TaxTipsDetailScreen";
   static const String legalAction2Screen = "LegalAction2Screen";

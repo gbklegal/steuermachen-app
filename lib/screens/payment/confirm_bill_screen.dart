@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
 import 'package:steuermachen/components/button_component.dart';
 import 'package:steuermachen/constants/app_constants.dart';
@@ -105,7 +104,9 @@ class ConfirmBillingScreen extends StatelessWidget {
       bottomNavigationBar: Padding(
         padding: AppConstants.bottomBtnPadding,
         child: ButtonComponent(
-          buttonText: LocaleKeys.orderNow.tr(),
+          buttonText: LocaleKeys.order.tr(),
+          onPressed: () => Navigator.pushNamed(
+              context, RouteConstants.paymentTermsConditionScreen),
         ),
       ),
     );

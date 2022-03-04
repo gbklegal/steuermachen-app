@@ -4,6 +4,7 @@ import 'package:steuermachen/components/app_bar/appbar_component.dart';
 import 'package:steuermachen/components/button_component.dart';
 import 'package:steuermachen/constants/app_constants.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
+import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
@@ -73,7 +74,10 @@ class CardPaymentMethodScreen extends StatelessWidget {
                       hintStyle: fontStyle,
                       suffixIcon: Padding(
                         padding: const EdgeInsets.only(top: 15, bottom: 15),
-                        child: Image.asset(AssetConstants.icCv, height: 15,),
+                        child: Image.asset(
+                          AssetConstants.icCv,
+                          height: 15,
+                        ),
                       ),
                     ),
 
@@ -89,6 +93,8 @@ class CardPaymentMethodScreen extends StatelessWidget {
         padding: AppConstants.bottomBtnPadding,
         child: ButtonComponent(
           buttonText: LocaleKeys.continueWord.tr(),
+          onPressed: () =>
+              Navigator.pushNamed(context, RouteConstants.confirmBillingScreen),
         ),
       ),
     );

@@ -25,13 +25,25 @@ class ProfileProvider extends ChangeNotifier {
   final TextEditingController countryController = TextEditingController();
   final GlobalKey<FormState> userFormKey = GlobalKey<FormState>();
 
-  Future<CommonResponseWrapper> submitUserProfile(UserWrapper formData) async {
+  Future<CommonResponseWrapper> submitUserProfile() async {
+    var userWrapper = UserWrapper(
+      gender: genderController.text,
+      firstName: firstNameController.text,
+      lastName: lastNameController.text,
+      street: streetController.text,
+      houseNumber: houseNumberController.text,
+      plz: postCodeController.text,
+      location: locationController.text,
+      phone: phoneController.text,
+      email: emailController.text,
+      land: countryController.text,
+    );
     try {
       User? user = FirebaseAuth.instance.currentUser;
       await firestore
           .collection("user_profile")
           .doc("${user?.uid}")
-          .set(formData.toJson());
+          .set(userWrapper.toJson());
       return CommonResponseWrapper(
           status: true, message: "Profile updated successfully");
     } catch (e) {

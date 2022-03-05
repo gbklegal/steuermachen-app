@@ -1,3 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:steuermachen/languages/locale_keys.g.dart';
+
 class ErrorMessagesConstants {
   static const String name = 'Name field is required.';
   static const String invalidName = 'Invalid Name.';
@@ -22,6 +25,6 @@ class ErrorMessagesConstants {
   static const String fieldRequired = 'Field is Required';
   static const String errEmpty = "Field is empty";
   static const String errMinLength = "Minimum Length will be";
-    static const String errPasswordsSame = "Passwords must be same";
-
+  static const String errPasswordsSame = "Passwords must be same";
+  static String selectGender = "Select ${LocaleKeys.salutation.tr()}";
 }

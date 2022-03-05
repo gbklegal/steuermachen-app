@@ -56,11 +56,15 @@ class _SignupScreenState extends State<SignupScreen> with InputValidationUtil {
     PopupLoader.showLoadingDialog(context);
     CommonResponseWrapper res = await authProvider.signInWithGoogle();
     ToastComponent.showToast(res.message!, long: true);
-
     PopupLoader.hideLoadingDialog(context);
     if (res.status!) {
-      Navigator.pushNamedAndRemoveUntil(
-          context, RouteConstants.completeProfileScreen, (val) => false);
+      if (authProvider.isFirstTimeLoggedIn) {
+        Navigator.pushNamedAndRemoveUntil(
+            context, RouteConstants.completeProfileScreen, (val) => false);
+      } else {
+        Navigator.pushNamedAndRemoveUntil(
+            context, RouteConstants.bottomNavBarScreen, (val) => false);
+      }
     }
   }
 
@@ -71,8 +75,13 @@ class _SignupScreenState extends State<SignupScreen> with InputValidationUtil {
 
     PopupLoader.hideLoadingDialog(context);
     if (res.status!) {
-      Navigator.pushNamedAndRemoveUntil(
-          context, RouteConstants.completeProfileScreen, (val) => false);
+      if (authProvider.isFirstTimeLoggedIn) {
+        Navigator.pushNamedAndRemoveUntil(
+            context, RouteConstants.completeProfileScreen, (val) => false);
+      } else {
+        Navigator.pushNamedAndRemoveUntil(
+            context, RouteConstants.bottomNavBarScreen, (val) => false);
+      }
     }
   }
 

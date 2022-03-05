@@ -9,8 +9,10 @@ import 'package:steuermachen/constants/strings/error_messages_constants.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 
 class AuthProvider extends ChangeNotifier {
+  // ignore: unused_field
   late GoogleSignIn _googleSignIn;
   bool signInWithAppleIsAvailable = false;
+  bool isFirstTimeLoggedIn = false;
   initializeGoogleSignIn() {
     _googleSignIn = GoogleSignIn(
       scopes: [
@@ -47,11 +49,12 @@ class AuthProvider extends ChangeNotifier {
         idToken: appleCredential.identityToken,
         rawNonce: rawNonce,
       );
+      await checkUserFirstTimeLoggedIn(appleCredential.email!);
       await FirebaseAuth.instance.signInWithCredential(oauthCredential);
       return CommonResponseWrapper(
           status: true, message: "Signin successfully");
     } catch (e) {
-       return CommonResponseWrapper(
+      return CommonResponseWrapper(
           status: false, message: 'something went wrong');
     }
   }
@@ -64,8 +67,8 @@ class AuthProvider extends ChangeNotifier {
 
     final GoogleSignInAccount? googleSignInAccount =
         await googleSignIn.signIn();
-
     if (googleSignInAccount != null) {
+      await checkUserFirstTimeLoggedIn(googleSignInAccount.email);
       final GoogleSignInAuthentication googleSignInAuthentication =
           await googleSignInAccount.authentication;
 
@@ -168,6 +171,15 @@ class AuthProvider extends ChangeNotifier {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null && !user.emailVerified) {
       await user.sendEmailVerification();
+    }
+  }
+
+  checkUserFirstTimeLoggedIn(String email) async {
+    var methods = await FirebaseAuth.instance.fetchSignInMethodsForEmail(email);
+    if (methods.contains('google.com') || methods.contains('apple.com')) {
+      isFirstTimeLoggedIn = false;
+    } else {
+      isFirstTimeLoggedIn = true;
     }
   }
 

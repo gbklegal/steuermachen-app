@@ -5,9 +5,11 @@ import 'package:steuermachen/components/app_bar/appbar_component.dart';
 import 'package:steuermachen/components/button_component.dart';
 import 'package:steuermachen/components/error_component.dart';
 import 'package:steuermachen/components/loading_component.dart';
+import 'package:steuermachen/components/toast_component.dart';
 import 'package:steuermachen/components/user_form_component.dart';
 import 'package:steuermachen/constants/app_constants.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
+import 'package:steuermachen/constants/strings/error_messages_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/providers/profile/profile_provider.dart';
@@ -67,7 +69,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen>
           } else if (!consumer.getBusyStateProfile && !response!.status!) {
             return const SizedBox();
           } else {
-            return _bottomBtn();
+            return _bottomBtn(consumer);
           }
         },
       ),
@@ -102,36 +104,42 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen>
                 .bodyText1!
                 .copyWith(fontWeight: FontWeight.w600, fontSize: 16),
           ),
+          const SizedBox(
+            height: 10,
+          ),
           const UserFormComponent(),
         ],
       ),
     );
   }
 
-  Padding _bottomBtn() {
+  Padding _bottomBtn(ProfileProvider consumer) {
     return Padding(
       padding: AppConstants.bottomBtnPadding,
       child: ButtonComponent(
         btnHeight: 56,
         buttonText: LocaleKeys.continueWord.tr(),
         onPressed: () async {
-          // if (_userFormKey.currentState!.validate()) {
-          //   PopupLoader.showLoadingDialog(context);
-          //   CommonResponseWrapper res =
-          //       await _formsProvider.submitUserProfile(UserProfileDataCollector(
-          //     firstName: _firstNameController.text,
-          //     lastName: _lastNameController.text,
-          //     street: _streetController.text,
-          //     houseNumber: _houseNumberController.text,
-          //     plz: _plzController.text,
-          //     location: _locationController.text,
-          //     phone: _phoneController.text,
-          //     email: _emailController.text,
-          //     land: _landController.text,
-          //   ));
-          //   PopupLoader.hideLoadingDialog(context);
-          //   ToastComponent.showToast(res.message!, long: true);
-          // }
+          if (consumer.genderController.text == "") {
+            ToastComponent.showToast(ErrorMessagesConstants.selectGender, long: true);
+          }
+          if (consumer.userFormKey.currentState!.validate()) {
+            //   PopupLoader.showLoadingDialog(context);
+            //   CommonResponseWrapper res =
+            //       await _formsProvider.submitUserProfile(UserProfileDataCollector(
+            //     firstName: _firstNameController.text,
+            //     lastName: _lastNameController.text,
+            //     street: _streetController.text,
+            //     houseNumber: _houseNumberController.text,
+            //     plz: _plzController.text,
+            //     location: _locationController.text,
+            //     phone: _phoneController.text,
+            //     email: _emailController.text,
+            //     land: _landController.text,
+            //   ));
+            //   PopupLoader.hideLoadingDialog(context);
+            //   ToastComponent.showToast(res.message!, long: true);
+          }
         },
       ),
     );

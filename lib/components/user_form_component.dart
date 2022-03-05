@@ -35,32 +35,61 @@ class UserFormComponent extends StatelessWidget with InputValidationUtil {
           children: [
             Visibility(
               visible: !isAddNewAddress!,
-              child: Transform.translate(
-                offset: const Offset(-15, -5),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    for (var item in gender)
-                      IntrinsicWidth(
-                        child: ListTile(
-                          contentPadding: EdgeInsets.zero,
-                          horizontalTitleGap: 0,
-                          minLeadingWidth: 0,
-                          title: _title(
-                            item,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  for (var item in gender)
+                    InkWell(
+                      onTap: (){
+                        consumer.setGender(item);
+                      },
+                      child: Row(
+                        children: [
+                          Container(
+                            height: 15,
+                            width: 15,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  width: 0.7,
+                                )),
+                            padding: const EdgeInsets.all(2),
+                            child: Container(
+                              height: 12,
+                              width: 12,
+                              decoration: BoxDecoration(
+                                color: item == consumer.genderController.text
+                                    ? ColorConstants.primary
+                                    : null,
+                                shape: BoxShape.circle,
+                              ),
+                            ),
                           ),
-                          leading: Radio(
-                            value: consumer.genderController.text,
-                            groupValue: item,
-                            onChanged: (String? value) {
-                              consumer.setGender(value!);
-                            },
+                          Padding(
+                            padding: const EdgeInsets.only(left: 5, right: 10),
+                            child: _title(
+                              item,
+                            ),
                           ),
-                        ),
+                        ],
                       ),
-                  ],
-                ),
+                    )
+
+                  // IntrinsicWidth(
+                  //   child: RadioListTile(
+                  //     contentPadding: EdgeInsets.zero,
+                  //     title: _title(
+                  //       item,
+                  //     ),
+                  //     value: LocaleKeys.mister.tr(),
+                  //     groupValue: consumer.genderController.text,
+                  //     onChanged: (String? value) {
+                  //       consumer.setGender(value!);
+                  //     },
+                  //   ),
+                  // ),
+                ],
               ),
             ),
             Form(
@@ -74,7 +103,7 @@ class UserFormComponent extends StatelessWidget with InputValidationUtil {
                       labelText: LocaleKeys.firstName.tr() + "*",
                       hintStyle: fontStyle,
                     ),
-                    validator: validateFieldEmpty,
+                    validator: validateName,
                   ),
                   sizedBox6,
                   TextFormField(
@@ -83,7 +112,7 @@ class UserFormComponent extends StatelessWidget with InputValidationUtil {
                       labelText: LocaleKeys.lastName.tr() + "*",
                       hintStyle: fontStyle,
                     ),
-                    validator: validateFieldEmpty,
+                    validator: validateName,
                   ),
                   sizedBox6,
                   Row(
@@ -139,7 +168,7 @@ class UserFormComponent extends StatelessWidget with InputValidationUtil {
                             labelText: LocaleKeys.phone.tr() + "*",
                             hintStyle: fontStyle,
                           ),
-                          validator: validateFieldEmpty,
+                          validator: validatePhone,
                         )
                       : const SizedBox(),
                   sizedBox4,
@@ -150,7 +179,7 @@ class UserFormComponent extends StatelessWidget with InputValidationUtil {
                             labelText: LocaleKeys.emailAddress.tr() + "*",
                             hintStyle: fontStyle,
                           ),
-                          validator: validateFieldEmpty,
+                          validator: validateEmail,
                         )
                       : const SizedBox(),
                   sizedBox4,

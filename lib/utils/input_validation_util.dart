@@ -1,8 +1,8 @@
 import 'package:email_validator/email_validator.dart';
-import 'package:flutter/material.dart';
 import 'package:steuermachen/constants/strings/error_messages_constants.dart';
 
 class InputValidationUtil {
+  static const patternName = r"^\s*([A-Za-z]{1,}([\.,] |[-']| ))+[A-Za-z]+\.?\s*$";
   static const patternPhone = r'^(?:[0]9)?[0-9]{11}$';
   static const Pattern passwordMinLen8withLowerCaseAndSpecialChar =
       r'^((?=.*\d)(?=.*[a-z])(?=.*[\W_]).{8,20})';
@@ -16,6 +16,11 @@ class InputValidationUtil {
   bool _isPhoneValid(String phone) {
     RegExp regexPhone = RegExp(patternPhone);
     return regexPhone.hasMatch(phone);
+  }
+
+  bool _isValidName(String name) {
+    RegExp regexName = RegExp(patternName);
+    return regexName.hasMatch(name);
   }
 
   isPasswordValid(String password, String pattern) {
@@ -56,7 +61,26 @@ class InputValidationUtil {
     }
   }
 
-  @protected
+  String? validatePassAndConfirmPass(String? input, String? input2,
+      {String? errorMessage}) {
+    if (input2!.isEmpty) {
+      if (errorMessage == null) {
+        return ErrorMessagesConstants.fieldRequired;
+      } else {
+        return errorMessage;
+      }
+    } else if (input != input2) {
+      if (errorMessage == null) {
+        return ErrorMessagesConstants.errPasswordsSame;
+      } else {
+        return errorMessage;
+      }
+    } else {
+      return null;
+    }
+  }
+
+
   String? validateEmail(String? email, {String? errorMessage}) {
     if (email!.isEmpty) {
       return ErrorMessagesConstants.errEmpty;
@@ -65,6 +89,21 @@ class InputValidationUtil {
     } else {
       if (errorMessage == null) {
         return ErrorMessagesConstants.invalidEmail;
+      } else {
+        return errorMessage;
+      }
+    }
+  }
+
+
+  String? validateName(String? name, {String? errorMessage}) {
+    if (name!.isEmpty) {
+      return ErrorMessagesConstants.errEmpty;
+    } else if (_isValidName(name)) {
+      return null;
+    } else {
+      if (errorMessage == null) {
+        return ErrorMessagesConstants.invalidName;
       } else {
         return errorMessage;
       }

@@ -6,6 +6,7 @@ import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 import 'package:steuermachen/wrappers/user_wrapper.dart';
 
 class ProfileProvider extends ChangeNotifier {
+  UserWrapper? userData;
   bool _busyStateProfile = true;
   bool get getBusyStateProfile => _busyStateProfile;
   set setBusyStateProfile(bool _isBusy) {
@@ -21,7 +22,8 @@ class ProfileProvider extends ChangeNotifier {
   final TextEditingController postCodeController = TextEditingController();
   final TextEditingController locationController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
+  final TextEditingController emailController =
+      TextEditingController(text: FirebaseAuth.instance.currentUser!.email);
   final TextEditingController countryController = TextEditingController();
   final GlobalKey<FormState> userFormKey = GlobalKey<FormState>();
 
@@ -52,29 +54,35 @@ class ProfileProvider extends ChangeNotifier {
     }
   }
 
-  Future<CommonResponseWrapper> getUserProfile() async {
-    try {
-      setBusyStateProfile = true;
-      User? user = FirebaseAuth.instance.currentUser;
-      DocumentSnapshot snapshot =
-          await firestore.collection("user_profile").doc("${user?.uid}").get();
-      if (snapshot.data() != null) {
-        Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
-        UserWrapper _user = UserWrapper.fromJson(data);
-        setBusyStateProfile = false;
-        setUserDataToController(_user);
-        return CommonResponseWrapper(status: true, message: "", data: _user);
-      } else {
-        setBusyStateProfile = false;
+  Future<CommonResponseWrapper?> getUserProfile() async {
+    if (userData == null) {
+      try {
+        setBusyStateProfile = true;
+        User? user = FirebaseAuth.instance.currentUser;
+        DocumentSnapshot snapshot = await firestore
+            .collection("user_profile")
+            .doc("${user?.uid}")
+            .get();
+        if (snapshot.data() != null) {
+          Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
+          userData = UserWrapper.fromJson(data);
+          setBusyStateProfile = false;
+          setUserDataToController(userData!);
+          return CommonResponseWrapper(
+              status: true, message: "", data: userData);
+        } else {
+          setBusyStateProfile = false;
+          return CommonResponseWrapper(
+            status: true,
+            message: "",
+          );
+        }
+      } catch (e) {
         return CommonResponseWrapper(
-          status: true,
-          message: "",
-        );
+            status: false, message: "Something went wrong");
       }
-    } catch (e) {
-      return CommonResponseWrapper(
-          status: false, message: "Something went wrong");
     }
+    return null;
   }
 
   setGender(String value) {

@@ -6,18 +6,20 @@ import 'package:steuermachen/components/back_reset_forward_btn_component.dart';
 import 'package:steuermachen/components/empty_screen_loader_component.dart';
 import 'package:steuermachen/components/error_component%20copy.dart';
 import 'package:steuermachen/components/payment/payment_methods_component.dart';
-import 'package:steuermachen/components/selection_card_component.dart';
-import 'package:steuermachen/components/shadow_card_component.dart';
+import 'package:steuermachen/components/popup_loader_component.dart';
 import 'package:steuermachen/components/text_progress_bar_component.dart';
+import 'package:steuermachen/components/toast_component.dart';
 import 'package:steuermachen/components/user_form_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
+import 'package:steuermachen/constants/strings/error_messages_constants.dart';
 import 'package:steuermachen/constants/strings/options_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
-import 'package:steuermachen/constants/styles/widget_styles.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/providers/easy_tax/easy_tax_provider.dart';
+import 'package:steuermachen/providers/profile/profile_provider.dart';
 import 'package:steuermachen/screens/tax/easy_tax/easy_tax_component/initial_easy_tax_component.dart';
+import 'package:steuermachen/utils/utils.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 import 'package:steuermachen/wrappers/easy_tax/easy_tax_wrapper.dart';
 
@@ -148,13 +150,14 @@ class _QuestionsViewState extends State<_QuestionsView> {
                               pageController.animateToPage(i + 1,
                                   duration: const Duration(milliseconds: 500),
                                   curve: Curves.easeInToLinear);
-                              // Navigator.pushNamed(
-                              //     context, RouteConstants.taxAdviceFormScreen);
                             },
                           )
                         else if (widget.easyTaxData[i].optionType ==
                             OptionConstants.userForm)
-                          const UserFormComponent()
+                          const Padding(
+                            padding: EdgeInsets.only(top: 10),
+                            child: UserFormComponent(),
+                          )
                         else if (widget.easyTaxData[i].optionType ==
                             OptionConstants.paymentMethods)
                           const PaymentMethodsComponent()
@@ -168,20 +171,25 @@ class _QuestionsViewState extends State<_QuestionsView> {
                   padding: const EdgeInsets.only(bottom: 50),
                   child: BackResetForwardBtnComponent(
                     onTapBack: () {
-                      pageController.animateToPage(i - 1,
-                          duration: const Duration(milliseconds: 500),
-                          curve: Curves.easeInOutBack);
+                      Utils.animateToPreviousPage(pageController, i);
                     },
-                    onTapContinue: () {
-                      pageController.animateToPage(i + 1,
-                          duration: const Duration(milliseconds: 500),
-                          curve: Curves.easeInToLinear);
-                    },
+                    onTapContinue: () => _onTapContinue(i),
                   ),
                 )
             ],
           ),
       ],
     );
+  }
+
+  _onTapContinue(int i) async {
+    if (widget.easyTaxData[i].optionType == OptionConstants.userForm) {
+      bool status = await Utils.submitProfile(context);
+      if (status) {
+        Utils.animateToNextPage(pageController, i);
+      }
+    } else {
+      Utils.animateToNextPage(pageController, i);
+    }
   }
 }

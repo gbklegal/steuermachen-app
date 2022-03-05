@@ -45,7 +45,7 @@ class UserWrapper {
         "location": location,
         "phone": phone,
         "email": email,
-        "land": land,
+        "country": land,
         "gender": gender,
       };
 }

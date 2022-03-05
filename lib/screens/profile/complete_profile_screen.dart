@@ -52,24 +52,15 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen>
       body: SingleChildScrollView(
         child: SizedBox(
           height: MediaQuery.of(context).size.height,
-          child: Consumer<ProfileProvider>(
-            builder: (context, consumer, child) {
-              if (consumer.getBusyStateProfile || response == null) {
-                return const LoadingComponent();
-              } else if (!consumer.getBusyStateProfile && !response!.status!) {
-                return const ErrorComponent();
-              } else {
-                return _mainBody();
-              }
-            },
-          ),
+          child: _mainBody(),
         ),
       ),
       bottomNavigationBar: Consumer<ProfileProvider>(
         builder: (context, consumer, child) {
-          if (consumer.getBusyStateProfile || response == null) {
-            return const SizedBox();
-          } else if (!consumer.getBusyStateProfile && !response!.status!) {
+          if (consumer.getBusyStateProfile || consumer.userData == null) {
+            return const LoadingComponent();
+          } else if (!consumer.getBusyStateProfile &&
+              consumer.userData == null) {
             return const SizedBox();
           } else {
             return _bottomBtn(consumer);
@@ -98,17 +89,6 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen>
           ),
           const SizedBox(
             height: 25,
-          ),
-          Text(
-            LocaleKeys.salutation.tr(),
-            textAlign: TextAlign.left,
-            style: Theme.of(context)
-                .textTheme
-                .bodyText1!
-                .copyWith(fontWeight: FontWeight.w600, fontSize: 16),
-          ),
-          const SizedBox(
-            height: 10,
           ),
           const UserFormComponent(),
         ],

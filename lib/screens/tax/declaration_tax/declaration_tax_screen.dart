@@ -5,16 +5,24 @@ import 'package:steuermachen/components/app_bar/appbar_component.dart';
 import 'package:steuermachen/components/back_reset_forward_btn_component.dart';
 import 'package:steuermachen/components/empty_screen_loader_component.dart';
 import 'package:steuermachen/components/error_component%20copy.dart';
+import 'package:steuermachen/components/payment/payment_methods_component.dart';
 import 'package:steuermachen/components/selection_card_component.dart';
+import 'package:steuermachen/components/tax_calculate_screen.dart';
+import 'package:steuermachen/components/text_component.dart';
 import 'package:steuermachen/components/text_progress_bar_component.dart';
+import 'package:steuermachen/components/user_form_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
+import 'package:steuermachen/constants/colors/color_constants.dart';
+import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/options_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
+import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:steuermachen/constants/styles/widget_styles.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/providers/tax/declaration_tax/declaration_tax_provider.dart';
 import 'package:steuermachen/providers/tax/quick_tax/quick_tax_provider.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
+import 'package:steuermachen/wrappers/declaration_tax_view_wrapper.dart';
 import 'package:steuermachen/wrappers/quick_tax_wrapper.dart';
 
 class DeclarationTaxScreen extends StatefulWidget {
@@ -49,29 +57,31 @@ class _DeclarationTaxScreenState extends State<DeclarationTaxScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.only(left: 16, right: 16, top: 25),
-        child: Consumer<QuickTaxProvider>(builder: (context, consumer, child) {
-          if (consumer.getBusyStateQuickTax || response == null) {
+        child: Consumer<DeclarationTaxProvider>(
+            builder: (context, consumer, child) {
+          if (consumer.getBusyStateDeclarationTax || response == null) {
             return const EmptyScreenLoaderComponent();
           } else if (!response!.status!) {
             return ErrorComponent(
               message: response!.message!,
               onTap: () async {
-                consumer.setBusyStateQuickTax = true;
+                consumer.setBusyStateDeclarationTax = true;
                 await provider
                     .getDeclarationTaxViewData()
                     .then((value) => response = value);
-                consumer.setBusyStateQuickTax = false;
+                consumer.setBusyStateDeclarationTax = false;
               },
             );
           } else {
-            QuickTaxWrapper quickTaxWrapper = response!.data as QuickTaxWrapper;
+            DeclarationTaxViewWrapper declarationTaxViewWrapper =
+                response!.data as DeclarationTaxViewWrapper;
             if (context.locale == const Locale('en')) {
               return _QuestionsView(
-                quickTaxData: quickTaxWrapper.en,
+                declarationTaxData: declarationTaxViewWrapper.en,
               );
             } else {
               return _QuestionsView(
-                quickTaxData: quickTaxWrapper.du,
+                declarationTaxData: declarationTaxViewWrapper.du,
               );
             }
           }
@@ -84,9 +94,9 @@ class _DeclarationTaxScreenState extends State<DeclarationTaxScreen> {
 class _QuestionsView extends StatefulWidget {
   const _QuestionsView({
     Key? key,
-    required this.quickTaxData,
+    required this.declarationTaxData,
   }) : super(key: key);
-  final List<QuickTaxData> quickTaxData;
+  final List<DeclarationTaxViewData> declarationTaxData;
 
   @override
   State<_QuestionsView> createState() => _QuestionsViewState();
@@ -107,20 +117,20 @@ class _QuestionsViewState extends State<_QuestionsView> {
         });
       },
       children: [
-        for (var i = 0; i < widget.quickTaxData.length; i++)
+        for (var i = 0; i < widget.declarationTaxData.length; i++)
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TextProgressBarComponent(
                 title:
-                    "${LocaleKeys.step.tr()} ${i + 1}/${widget.quickTaxData.length}",
-                progress: (i + 1) / widget.quickTaxData.length,
+                    "${LocaleKeys.step.tr()} ${i + 1}/${widget.declarationTaxData.length}",
+                progress: (i + 1) / widget.declarationTaxData.length,
               ),
               const SizedBox(
                 height: 20,
               ),
               Text(
-                widget.quickTaxData[i].title,
+                widget.declarationTaxData[i].title,
                 textAlign: TextAlign.left,
                 style: Theme.of(context)
                     .textTheme
@@ -136,42 +146,27 @@ class _QuestionsViewState extends State<_QuestionsView> {
                     padding: const EdgeInsets.only(bottom: 25),
                     child: Column(
                       children: [
-                        if (widget.quickTaxData[i].optionType ==
+                        if (widget.declarationTaxData[i].optionType ==
                             OptionConstants.singleSelect)
                           for (var x = 0;
-                              x < widget.quickTaxData[i].options.length;
+                              x < widget.declarationTaxData[i].options.length;
                               x++)
-                            InkWell(
-                              onTap: () {
-                                pageController.animateToPage(i + 1,
-                                    duration: const Duration(milliseconds: 500),
-                                    curve: Curves.easeInToLinear);
-                              },
-                              child: SelectionCardComponent(
-                                title: widget.quickTaxData[i].options[x],
-                              ),
-                            )
-                        else
-                          TextFormField(
-                            // controller: _emailController,
-                            textAlign: TextAlign.center,
-                            decoration: InputDecoration(
-                                label: Text(widget.quickTaxData[i].inputTitle),
-                                floatingLabelAlignment:
-                                    FloatingLabelAlignment.center,
-                                floatingLabelBehavior:
-                                    FloatingLabelBehavior.auto,
-                                focusedBorder: WidgetStyles.outlineInputBorder,
-                                enabledBorder: WidgetStyles.outlineInputBorder,
-                                filled: true),
-                            // validator: validateEmail,
-                          ),
+                            _optionsWidget(i, x)
+                        else if (widget.declarationTaxData[i].optionType ==
+                            OptionConstants.grossIncome)
+                          const _TaxCalculator()
+                        else if (widget.declarationTaxData[i].optionType ==
+                            OptionConstants.userForm)
+                          const UserFormComponent()
+                        else if (widget.declarationTaxData[i].optionType ==
+                            OptionConstants.paymentMethods)
+                          const PaymentMethodsComponent()
                       ],
                     ),
                   ),
                 ),
               ),
-              if (widget.quickTaxData[i].showBottomNav)
+              if (widget.declarationTaxData[i].showBottomNav)
                 Padding(
                   padding: const EdgeInsets.only(bottom: 50),
                   child: BackResetForwardBtnComponent(
@@ -189,6 +184,74 @@ class _QuestionsViewState extends State<_QuestionsView> {
                 )
             ],
           ),
+      ],
+    );
+  }
+
+  InkWell _optionsWidget(int i, int x) {
+    return InkWell(
+      onTap: () {
+        pageController.animateToPage(i + 1,
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.easeInToLinear);
+      },
+      child: SelectionCardComponent(
+        title: widget.declarationTaxData[i].options[x],
+        imagePath: widget.declarationTaxData[i].optionImgPath.isNotEmpty
+            ? widget.declarationTaxData[i].optionImgPath[x]
+            : null,
+      ),
+    );
+  }
+}
+
+class _TaxCalculator extends StatelessWidget {
+  const _TaxCalculator({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const TaxCalculatorComponent(
+          routeName: RouteConstants.currentIncomeScreen,
+        ),
+        const SizedBox(
+          height: 24,
+        ),
+        TextComponent(
+          LocaleKeys.promoCode.tr(),
+          style: FontStyles.fontMedium(fontSize: 18),
+        ),
+        const SizedBox(
+          height: 12,
+        ),
+        TextFormField(
+          decoration: InputDecoration(
+            hintText: "",
+            filled: false,
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(5.0),
+              borderSide: const BorderSide(
+                color: ColorConstants.green,
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(5.0),
+              borderSide: const BorderSide(
+                color: ColorConstants.green,
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 12),
+        TextComponent(
+          LocaleKeys.applyNow.tr(),
+          style: FontStyles.fontMedium(
+              fontSize: 17, underLine: true, color: ColorConstants.toxicGreen),
+        ),
       ],
     );
   }

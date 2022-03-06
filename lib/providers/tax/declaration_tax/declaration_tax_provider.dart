@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:steuermachen/main.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
-import 'package:steuermachen/wrappers/easy_tax/easy_tax_wrapper.dart';
+import 'package:steuermachen/wrappers/declaration_tax_view_wrapper.dart';
 
 class DeclarationTaxProvider extends ChangeNotifier {
   bool _busyStateDeclarationTax = true;
@@ -17,7 +17,7 @@ class DeclarationTaxProvider extends ChangeNotifier {
       var res =
           await firestore.collection("declaration_tax").doc("content").get();
       Map<String, dynamic> x = res.data() as Map<String, dynamic>;
-      EasyTaxWrapper declarationTaxWrapper = EasyTaxWrapper.fromJson(x);
+      DeclarationTaxViewWrapper declarationTaxWrapper = DeclarationTaxViewWrapper.fromJson(x);
       setBusyStateDeclarationTax = false;
       return CommonResponseWrapper(status: true, data: declarationTaxWrapper);
     } catch (e) {

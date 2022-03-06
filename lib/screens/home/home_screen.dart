@@ -31,7 +31,7 @@ class HomeScreen extends StatelessWidget {
       _CardItemsModel(
           leadAsset: AssetConstants.icPersons,
           title: LocaleKeys.objectionRejection.tr(),
-          action: RouteConstants.taxAdviceScreen),
+          action: RouteConstants.financeCourtScreen),
       _CardItemsModel(
           leadAsset: AssetConstants.icLegalAction,
           title: LocaleKeys.yourProfile.tr(),

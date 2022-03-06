@@ -1,0 +1,64 @@
+{
+    "en": [
+        {
+            "title": "Check your personal information",
+            "option_type": "user_form",
+            "options": [],
+            "option_img_path": [],
+            "show_bottom_nav": true
+        },
+
+        {
+            "title": "",
+            "option_type": "subject_tax_law",
+            "options": [],
+            "option_img_path": [],
+            "show_bottom_nav": true
+        },
+        {
+            "title": "",
+            "option_type": "signature",
+            "options": [],
+            "option_img_path": [],
+            "show_bottom_nav": true
+        },
+        {
+            "title": "",
+            "option_type": "terms_and_condition",
+            "options": [],
+            "option_img_path": [],
+            "show_bottom_nav": false
+        }
+    ],
+    "du": [
+        {
+            "title": "Check your personal information",
+            "option_type": "user_form",
+            "options": [],
+            "option_img_path": [],
+            "show_bottom_nav": true
+        },
+
+        {
+            "title": "",
+            "option_type": "subject_tax_law",
+            "options": [],
+            "option_img_path": [],
+            "show_bottom_nav": true
+        },
+        {
+            "title": "",
+            "option_type": "signature",
+            "options": [],
+            "option_img_path": [],
+            "show_bottom_nav": true
+        },
+        {
+            "title": "",
+            "option_type": "terms_and_condition",
+            "options": [],
+            "option_img_path": [],
+            "show_bottom_nav": false
+        }
+    ]
+}

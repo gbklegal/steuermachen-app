@@ -19,6 +19,7 @@ class RouteConstants {
   static const String safeTaxScreen = "SafeTaxScreen";
   static const String easyTaxScreen = "EasyTaxScreen";
   static const String declarationTaxScreen = "DeclarationTaxScreen";
+  static const String financeCourtScreen = "FinanceCourtScreen";
   static const String contactUsOptionScreen = "ContactUsOptionScreen";
   static const String uploadedDocumentScreen = "UploadedDocumentScreen";
   static const String howItWorksScreen = "howItWorksScreen";

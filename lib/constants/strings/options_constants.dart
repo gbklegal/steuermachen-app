@@ -7,4 +7,5 @@ class OptionConstants {
   static const String initialScreen = "initial_screen";
   static const String paymentMethods = "payment_methods";
   static const String grossIncome = "gross_income";
+  static const String subjectTaxLaw = "subject_tax_law";
 }

@@ -35,6 +35,7 @@ import 'package:steuermachen/screens/sustainability/sustainability_screen.dart';
 import 'package:steuermachen/screens/tax/declaration_tax/declaration_tax_screen.dart';
 import 'package:steuermachen/screens/tax/easy_tax/easy_tax_component/tax_advice_form_screen.dart';
 import 'package:steuermachen/screens/tax/easy_tax/easy_tax_screen.dart';
+import 'package:steuermachen/screens/tax/finance_court/finance_court_screen.dart';
 import 'package:steuermachen/screens/tax/quick_tax/quick_tax_screen.dart';
 import 'package:steuermachen/screens/tax/safe_tax/safe_tax_screen.dart';
 import 'package:steuermachen/screens/tax/select_safe_or_quick_tax_screen.dart';
@@ -135,6 +136,10 @@ onGenerateRoutes(RouteSettings settings) {
     case RouteConstants.easyTaxScreen:
       return MaterialPageRoute(
         builder: (_) => const EasyTaxScreen(),
+      );
+    case RouteConstants.financeCourtScreen:
+      return MaterialPageRoute(
+        builder: (_) => const FinanceCourtScreen(),
       );
     case RouteConstants.contactUsOptionScreen:
       return MaterialPageRoute(

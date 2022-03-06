@@ -65,7 +65,7 @@ var json = {
       "show_bottom_nav": true
     },
     {
-      "title": "Check your personal information\nsalutation",
+      "title": "Check your personal information",
       "option_type": "user_form",
       "options": [],
       "option_img_path": [],
@@ -102,7 +102,7 @@ var json = {
       "show_bottom_nav": true
     },
     {
-      "title": "Check your personal information\nsalutation",
+      "title": "Check your personal information",
       "option_type": "user_form",
       "options": [],
       "option_img_path": [],

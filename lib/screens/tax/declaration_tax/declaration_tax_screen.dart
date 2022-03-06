@@ -12,25 +12,26 @@ import 'package:steuermachen/constants/strings/options_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/constants/styles/widget_styles.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
+import 'package:steuermachen/providers/tax/declaration_tax/declaration_tax_provider.dart';
 import 'package:steuermachen/providers/tax/quick_tax/quick_tax_provider.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 import 'package:steuermachen/wrappers/quick_tax_wrapper.dart';
 
-class QuickTaxScreen extends StatefulWidget {
-  const QuickTaxScreen({Key? key}) : super(key: key);
+class DeclarationTaxScreen extends StatefulWidget {
+  const DeclarationTaxScreen({Key? key}) : super(key: key);
 
   @override
-  _QuickTaxScreenState createState() => _QuickTaxScreenState();
+  _DeclarationTaxScreenState createState() => _DeclarationTaxScreenState();
 }
 
-class _QuickTaxScreenState extends State<QuickTaxScreen> {
-  late QuickTaxProvider provider;
+class _DeclarationTaxScreenState extends State<DeclarationTaxScreen> {
+  late DeclarationTaxProvider provider;
   CommonResponseWrapper? response;
   @override
   void initState() {
-    provider = Provider.of<QuickTaxProvider>(context, listen: false);
+    provider = Provider.of<DeclarationTaxProvider>(context, listen: false);
     WidgetsBinding.instance!.addPostFrameCallback((_) =>
-        provider.getQuickTaxViewData().then((value) => response = value));
+        provider.getDeclarationTaxViewData().then((value) => response = value));
     super.initState();
   }
 
@@ -57,7 +58,7 @@ class _QuickTaxScreenState extends State<QuickTaxScreen> {
               onTap: () async {
                 consumer.setBusyStateQuickTax = true;
                 await provider
-                    .getQuickTaxViewData()
+                    .getDeclarationTaxViewData()
                     .then((value) => response = value);
                 consumer.setBusyStateQuickTax = false;
               },

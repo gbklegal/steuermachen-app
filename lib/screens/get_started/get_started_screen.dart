@@ -25,7 +25,7 @@ class GetStartedScreen extends StatelessWidget {
                 AssetConstants.fileArtWork,
                 height: 280,
               ),
-              borderButton(context, RouteConstants.calculatorScreen,
+              borderButton(context, RouteConstants.quickTaxScreen,
                   LocaleKeys.tryForFree),
               const SizedBox(height: 20),
               borderButton(context, RouteConstants.signupScreen,

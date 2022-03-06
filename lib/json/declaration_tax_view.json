@@ -31,7 +31,14 @@
             "show_bottom_nav": false
         },
         {
-            "title": "Check your personal information",
+            "title": "",
+            "option_type": "gross_income",
+            "options": [],
+            "option_img_path": [],
+            "show_bottom_nav": true
+        },
+        {
+            "title": "Check your personal information\nsalutation",
             "option_type": "user_form",
             "options": [],
             "option_img_path": [],
@@ -39,14 +46,7 @@
         },
         {
             "title": "",
-            "option_type": "signature",
-            "options": [],
-            "option_img_path": [],
-            "show_bottom_nav": true
-        },
-        {
-            "title": "",
-            "option_type": "terms_and_condition",
+            "option_type": "payment_methods",
             "options": [],
             "option_img_path": [],
             "show_bottom_nav": false
@@ -84,7 +84,14 @@
             "show_bottom_nav": false
         },
         {
-            "title": "Check your personal information",
+            "title": "",
+            "option_type": "gross_income",
+            "options": [],
+            "option_img_path": [],
+            "show_bottom_nav": true
+        },
+        {
+            "title": "Check your personal information\nsalutation",
             "option_type": "user_form",
             "options": [],
             "option_img_path": [],
@@ -92,14 +99,7 @@
         },
         {
             "title": "",
-            "option_type": "signature",
-            "options": [],
-            "option_img_path": [],
-            "show_bottom_nav": true
-        },
-        {
-            "title": "",
-            "option_type": "terms_and_condition",
+            "option_type": "payment_methods",
             "options": [],
             "option_img_path": [],
             "show_bottom_nav": false

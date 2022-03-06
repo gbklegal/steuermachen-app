@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
 import 'package:steuermachen/components/button_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
@@ -8,7 +7,6 @@ import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
-import 'package:steuermachen/providers/safe_tax/safe_tax_provider.dart';
 
 class SelectSafeAndQuickTaxScreen extends StatelessWidget {
   const SelectSafeAndQuickTaxScreen({Key? key}) : super(key: key);
@@ -49,7 +47,7 @@ class SelectSafeAndQuickTaxScreen extends StatelessWidget {
             ButtonComponent(
                 buttonText: LocaleKeys.taxReturnAtAGuaranteedfixedPrice.tr(),
                 onPressed: () {
-                  Navigator.pushNamed(context, RouteConstants.quickTaxScreen);
+                  Navigator.pushNamed(context, RouteConstants.declarationTaxScreen);
                 }),
             sizedBox,
             Text(

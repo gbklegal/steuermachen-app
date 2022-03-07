@@ -120,6 +120,7 @@ class CodegenLoader extends AssetLoader{
   "taxReturnAtAGuaranteedfixedPrice": "Tax return at a guaranteed fixed price",
   "getInTouchWithUs": "Nehmen Sie Kontakt mit uns auf",
   "howCanWeHelpYou": "Wie können wir Ihnen helfen?",
+  "whatCanWeDoForYou": "What can we do for you?",
   "myAccount": "Mein Konto",
   "back": "zurück",
   "submit": "Einreichen",
@@ -192,6 +193,9 @@ class CodegenLoader extends AssetLoader{
   "chatContact": "Chat | Contact",
   "quickCheckForYourRefund": "Quick check for your refund",
   "deletingAnAccount": "Deleting an account",
+  "emailToUs": "email to us",
+  "chatWithExpert": "chat with your tax expert",
+  "useOurContactForm": "user our contact form",
   "logout": "Ausloggen"
 };
 static const Map<String,dynamic> en = {
@@ -301,6 +305,7 @@ static const Map<String,dynamic> en = {
   "taxReturnAtAGuaranteedfixedPrice": "Tax return at a guaranteed fixed price",
   "getInTouchWithUs": "Get in touch with us",
   "howCanWeHelpYou": "How can we help you?",
+  "whatCanWeDoForYou": "What can we do for you?",
   "myAccount": "My Account",
   "thankYou": "Thank you!",
   "thankYouForOrder": "Thank you for your order",
@@ -370,6 +375,9 @@ static const Map<String,dynamic> en = {
   "chatContact": "Chat | Contact",
   "quickCheckForYourRefund": "Quick check for your refund",
   "deletingAnAccount": "Deleting an account",
+  "emailToUs": "email to us",
+  "chatWithExpert": "chat with your tax expert",
+  "useOurContactForm": "user our contact form",
   "logout": "Logout"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"de": de, "en": en};

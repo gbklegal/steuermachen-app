@@ -1,4 +1,3 @@
-import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
@@ -11,17 +10,18 @@ class AppBarWithSideCornerCircleAndRoundBody extends StatelessWidget {
     Key? key,
     required this.body,
     this.showNotificationIcon = false,
+    this.showCircle = false,
   }) : super(key: key);
   final Widget body;
   final bool? showNotificationIcon;
+  final bool showCircle;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBarComponent(
-        "",
-        // LocaleKeys.appName.tr(),
-        // imageTitle: AssetConstants.logo,
+        LocaleKeys.appName,
+        imageTitle: AssetConstants.logo,
         backgroundColor: Colors.transparent,
         showBottomLine: false,
         showPersonIcon: showNotificationIcon,
@@ -30,7 +30,9 @@ class AppBarWithSideCornerCircleAndRoundBody extends StatelessWidget {
         children: [
           Align(
             alignment: Alignment.topRight,
-            child: SvgPicture.asset(AssetConstants.topRightRoundCircle),
+            child: Visibility(
+                visible: showCircle,
+                child: SvgPicture.asset(AssetConstants.topRightRoundCircle)),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 110),

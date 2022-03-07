@@ -106,6 +106,7 @@ abstract class  LocaleKeys {
   static const taxReturnAtAGuaranteedfixedPrice = 'taxReturnAtAGuaranteedfixedPrice';
   static const getInTouchWithUs = 'getInTouchWithUs';
   static const howCanWeHelpYou = 'howCanWeHelpYou';
+  static const whatCanWeDoForYou = 'whatCanWeDoForYou';
   static const myAccount = 'myAccount';
   static const back = 'back';
   static const submit = 'submit';
@@ -178,6 +179,9 @@ abstract class  LocaleKeys {
   static const chatContact = 'chatContact';
   static const quickCheckForYourRefund = 'quickCheckForYourRefund';
   static const deletingAnAccount = 'deletingAnAccount';
+  static const emailToUs = 'emailToUs';
+  static const chatWithExpert = 'chatWithExpert';
+  static const useOurContactForm = 'useOurContactForm';
   static const logout = 'logout';
 
 }

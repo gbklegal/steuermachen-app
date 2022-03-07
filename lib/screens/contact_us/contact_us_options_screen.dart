@@ -1,10 +1,12 @@
 import 'package:easy_localization/src/public_ext.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:steuermachen/components/app_bar/appbar_with_side_corner_circle_and_body.dart';
+import 'package:steuermachen/components/text_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
+import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -31,7 +33,9 @@ class _ContactUsOptionScreenState extends State<ContactUsOptionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return AppBarWithSideCornerCircleAndRoundBody(body: _mainBody(context));
+    return AppBarWithSideCornerCircleAndRoundBody(
+      body: _mainBody(context),
+    );
   }
 
   Column _mainBody(BuildContext context) {
@@ -44,13 +48,13 @@ class _ContactUsOptionScreenState extends State<ContactUsOptionScreen> {
         const SizedBox(
           height: 24,
         ),
-        Text(LocaleKeys.howCanWeHelpYou.tr(),
+        TextComponent(LocaleKeys.whatCanWeDoForYou,
             style:
                 Theme.of(context).textTheme.headline5!.copyWith(fontSize: 24)),
         const SizedBox(
           height: 10,
         ),
-        Text(LocaleKeys.getInTouchWithUs.tr(),
+        TextComponent(LocaleKeys.contactUs,
             style:
                 Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 20)),
         const SizedBox(
@@ -63,8 +67,8 @@ class _ContactUsOptionScreenState extends State<ContactUsOptionScreen> {
               onTap: () async {
                 await launch(emailLaunchUri.toString());
               },
-              child: _emailAndCallUs(
-                  context, AssetConstants.email, LocaleKeys.emailUs.tr()),
+              child: _contactOptions(
+                  context, AssetConstants.icSend, LocaleKeys.emailToUs),
             ),
             const SizedBox(
               width: 40,
@@ -73,68 +77,58 @@ class _ContactUsOptionScreenState extends State<ContactUsOptionScreen> {
               onTap: () async {
                 await _makePhoneCall("0911-80190910");
               },
-              child: _emailAndCallUs(
-                  context, AssetConstants.phoneCall, LocaleKeys.callUs.tr()),
+              child: _contactOptions(
+                  context, AssetConstants.icChat, LocaleKeys.chatWithExpert),
             ),
           ],
         ),
         const SizedBox(
           height: 23,
         ),
-        Text(
-            "${LocaleKeys.orUseOur.tr()} ${LocaleKeys.contactUs.tr()} ${LocaleKeys.form.tr()}",
-            style:
-                Theme.of(context).textTheme.bodyText1?.copyWith(fontSize: 15)),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 55, vertical: 15),
-          child: ElevatedButton(
-            style: ElevatedButtonTheme.of(context).style?.copyWith(
-                  minimumSize: MaterialStateProperty.all(
-                    Size(MediaQuery.of(context).size.width, 55),
-                  ),
-                  backgroundColor:
-                      MaterialStateProperty.all(ColorConstants.toxicGreen),
-                ),
-            onPressed: () {
-              Navigator.pushNamed(context, RouteConstants.contactUsFormScreen);
-            },
-            child: Text(
-              LocaleKeys.contactForm.tr(),
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
-            ),
-          ),
+        InkWell(
+          onTap: () {
+            Navigator.pushNamed(context, RouteConstants.contactUsFormScreen);
+          },
+          child: _contactOptions(
+              context, AssetConstants.icChat, LocaleKeys.useOurContactForm),
         ),
       ],
     );
   }
 
-  Container _emailAndCallUs(
+  Container _contactOptions(
       BuildContext context, String assetName, String btnName) {
     return Container(
       width: 130,
       height: (context.locale == const Locale('en')) ? 130 : 150,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: const Color(0xffF1F6FC),
-          boxShadow: [
-            BoxShadow(
-                color: ColorConstants.black.withOpacity(0.3),
-                spreadRadius: 1,
-                blurRadius: 5,
-                offset: const Offset(0, 2))
-          ]),
+        borderRadius: BorderRadius.circular(10),
+        color: const Color(0xffF1F6FC),
+        boxShadow: [
+          BoxShadow(
+              color: ColorConstants.black.withOpacity(0.3),
+              spreadRadius: 1,
+              blurRadius: 5,
+              offset: const Offset(0, 2))
+        ],
+      ),
       padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
       child: Column(
         children: [
-          Image.asset(assetName),
           const SizedBox(
-            height: 15,
+            height: 10,
           ),
-          Text(
-            btnName,
-            style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                fontSize: (context.locale == const Locale('en')) ? 20 : 14),
-            // overflow: TextOverflow.ellipsis,
+          SvgPicture.asset(assetName),
+          const SizedBox(
+            height: 5,
+          ),
+          Flexible(
+            child: TextComponent(
+              btnName,
+              style: FontStyles.fontRegular(fontSize: 13),
+              // overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
+            ),
           ),
         ],
       ),

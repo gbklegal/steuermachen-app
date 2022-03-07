@@ -113,7 +113,7 @@ class AppBarComponent extends StatelessWidget with PreferredSizeWidget {
               height: 28,
             ),
             const SizedBox(width: 5),
-            Text(
+            TextComponent(
               text ?? "",
               style: FontStyles.fontBold(
                   fontSize: (context.locale == const Locale('en')) ? 20 : 20),
@@ -125,7 +125,7 @@ class AppBarComponent extends StatelessWidget with PreferredSizeWidget {
     return Consumer<LanguageProvider>(builder: (context, consumer, child) {
       return Padding(
         padding: const EdgeInsets.only(left: 5, bottom: 2),
-        child: Text(
+        child: TextComponent(
           text ?? "",
           style: FontStyles.fontMedium(
               fontSize: (context.locale == const Locale('en')) ? 16 : 14,

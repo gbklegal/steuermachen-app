@@ -18,6 +18,7 @@ class ColorConstants {
   static const Color charcoalGrey = Color(0x993c3c43);
   static const Color blackSix = Color(0x0f000000);
   static const Color duckEggBlue = Color(0xfff1f6fc);
+  static const Color blue = Color(0xff4975E9);
   static MaterialColor kPrimaryColor = const MaterialColor(
     0xffFF6138, 
     <int, Color>{

@@ -79,18 +79,18 @@ class FormsProvider extends ChangeNotifier {
 }
 
 class ContactUsFormDataCollector {
-  final String? surname, firstName, email, subject, phoneNo, message;
+  final String? lastName, firstName, email, reference, phoneNo, news;
 
-  ContactUsFormDataCollector(this.surname, this.firstName, this.email,
-      this.subject, this.phoneNo, this.message);
+  ContactUsFormDataCollector(this.lastName, this.firstName, this.email,
+      this.reference, this.phoneNo, this.news);
 
   Map<String, dynamic> toJson() => {
-        "surname": surname,
         "firstName": firstName,
+        "lastName": lastName,
         "email": email,
-        "subject": subject,
-        "phoneNo": phoneNo,
-        "message": message,
+        "reference": reference,
+        "phone": phoneNo,
+        "news": news,
       };
 }
 

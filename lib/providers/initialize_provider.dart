@@ -1,5 +1,6 @@
 import 'package:provider/provider.dart';
 import 'package:steuermachen/providers/auth/auth_provider.dart';
+import 'package:steuermachen/providers/contact/contact_us_provider.dart';
 import 'package:steuermachen/providers/forms_provider.dart';
 import 'package:steuermachen/providers/language_provider.dart';
 import 'package:steuermachen/providers/document/document_provider.dart';
@@ -53,6 +54,9 @@ providerList(context) {
     ),
     ChangeNotifierProvider(
       create: (context) => SignatureProvider(),
+    ),
+    ChangeNotifierProvider(
+      create: (context) => ContactUsProvider(),
     ),
   ];
 }

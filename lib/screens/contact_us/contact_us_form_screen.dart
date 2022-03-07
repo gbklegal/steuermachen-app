@@ -5,13 +5,11 @@ import 'package:steuermachen/components/app_bar/appbar_with_side_corner_circle_a
 import 'package:steuermachen/components/button_component.dart';
 import 'package:steuermachen/components/dialogs/completed_dialog_component.dart';
 import 'package:steuermachen/components/popup_loader_component.dart';
-import 'package:steuermachen/components/text_component.dart';
 import 'package:steuermachen/components/toast_component.dart';
 import 'package:steuermachen/constants/app_constants.dart';
-import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
-import 'package:steuermachen/providers/forms_provider.dart';
+import 'package:steuermachen/providers/contact/contact_us_provider.dart';
 import 'package:steuermachen/utils/input_validation_util.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 
@@ -24,25 +22,19 @@ class ContactUsFormScreen extends StatefulWidget {
 
 class _ContactUsFormScreenState extends State<ContactUsFormScreen>
     with InputValidationUtil {
-  final TextEditingController _firstNameController =
-      TextEditingController();
-  final TextEditingController _surNameController =
-      TextEditingController();
-  final TextEditingController _emailController =
-      TextEditingController();
-  final TextEditingController _subjectController =
-      TextEditingController();
-  final TextEditingController _phoneNoController =
-      TextEditingController();
-  final TextEditingController _messageController =
-      TextEditingController();
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _referenceController = TextEditingController();
+  final TextEditingController _phoneNoController = TextEditingController();
+  final TextEditingController _newsController = TextEditingController();
   final GlobalKey<FormState> _contactFormKey = GlobalKey<FormState>();
 
-  late FormsProvider _formsProvider;
+  late ContactUsProvider _contactUsProvider;
   @override
   void initState() {
     super.initState();
-    _formsProvider = Provider.of<FormsProvider>(context, listen: false);
+    _contactUsProvider = Provider.of<ContactUsProvider>(context, listen: false);
   }
 
   _dialog() {
@@ -61,8 +53,8 @@ class _ContactUsFormScreenState extends State<ContactUsFormScreen>
     const sizedBox4 = SizedBox(
       height: 4,
     );
-    const sizedBox6 = SizedBox(
-      height: 6,
+    const sizedBox15 = SizedBox(
+      height: 15,
     );
     final fontStyle = FontStyles.fontRegular(fontSize: 14);
     return Scaffold(
@@ -78,73 +70,61 @@ class _ContactUsFormScreenState extends State<ContactUsFormScreen>
                   const SizedBox(
                     height: 35,
                   ),
-                  Text(LocaleKeys.getInTouch.tr(),
+                  Text(LocaleKeys.makeContact.tr(),
                       style: Theme.of(context)
                           .textTheme
                           .bodyText1!
-                          .copyWith(fontSize: 24, fontWeight: FontWeight.w700)),
+                          .copyWith(fontSize: 18, fontWeight: FontWeight.w700)),
                   const SizedBox(
                     height: 23,
                   ),
-                  _title(LocaleKeys.surName.tr()),
-                  sizedBox4,
-                  TextFormField(
-                      controller: _surNameController,
-                      decoration: InputDecoration(
-                        hintText: LocaleKeys.surName.tr(),
-                        hintStyle: fontStyle,
-                      ),
-                      validator: validateFieldEmpty),
-                  sizedBox6,
-                  _title(LocaleKeys.firstName.tr()),
                   sizedBox4,
                   TextFormField(
                       controller: _firstNameController,
                       decoration: InputDecoration(
-                        hintText: LocaleKeys.firstName.tr(),
+                        labelText: LocaleKeys.firstName.tr(),
                         hintStyle: fontStyle,
                       ),
                       validator: validateFieldEmpty),
-                  sizedBox6,
-                  _title(LocaleKeys.email.tr()),
-                  sizedBox4,
+                  sizedBox15,
+                  TextFormField(
+                      controller: _lastNameController,
+                      decoration: InputDecoration(
+                        labelText: LocaleKeys.lastName.tr(),
+                        hintStyle: fontStyle,
+                      ),
+                      validator: validateFieldEmpty),
+                  sizedBox15,
                   TextFormField(
                       controller: _emailController,
                       decoration: InputDecoration(
-                        hintText: LocaleKeys.email.tr(),
+                        labelText: LocaleKeys.emailAddress.tr().replaceAll("address", ""),
                         hintStyle: fontStyle,
                       ),
                       validator: validateEmail),
-                  sizedBox6,
-                  _title(LocaleKeys.subject.tr()),
-                  sizedBox4,
+                  sizedBox15,
                   TextFormField(
-                      controller: _subjectController,
+                      controller: _referenceController,
                       decoration: InputDecoration(
-                        hintText: LocaleKeys.subject.tr(),
+                        labelText: LocaleKeys.reference.tr(),
                         hintStyle: fontStyle,
                       ),
                       validator: validateFieldEmpty),
-                  sizedBox4,
-                  _title(LocaleKeys.phoneNo.tr()),
-                  sizedBox4,
+                  sizedBox15,
                   TextFormField(
                       controller: _phoneNoController,
                       decoration: InputDecoration(
-                        hintText: LocaleKeys.phoneNo.tr(),
+                        labelText: LocaleKeys.phoneNo.tr(),
                         hintStyle: fontStyle,
                       ),
                       validator: validatePhone),
-                  sizedBox4,
-                  _title(LocaleKeys.message.tr()),
-                  sizedBox4,
+                  sizedBox15,
                   SizedBox(
                     height: 5 * 24.0,
                     child: TextFormField(
-                        controller: _messageController,
-                        maxLines: 5,
+                        controller: _newsController,
                         decoration: InputDecoration(
-                            hintText: LocaleKeys.message.tr(),
+                            labelText: LocaleKeys.news.tr(),
                             hintStyle: fontStyle,
                             isDense: true),
                         validator: validateFieldEmpty),
@@ -164,14 +144,14 @@ class _ContactUsFormScreenState extends State<ContactUsFormScreen>
           onPressed: () async {
             if (_contactFormKey.currentState!.validate()) {
               PopupLoader.showLoadingDialog(context);
-              CommonResponseWrapper res = await _formsProvider
+              CommonResponseWrapper res = await _contactUsProvider
                   .submitContactUsForm(ContactUsFormDataCollector(
-                      _surNameController.text,
+                      _lastNameController.text,
                       _firstNameController.text,
                       _emailController.text,
-                      _subjectController.text,
+                      _referenceController.text,
                       _phoneNoController.text,
-                      _messageController.text));
+                      _newsController.text));
               PopupLoader.hideLoadingDialog(context);
               if (res.status!) {
                 _dialog();
@@ -182,13 +162,6 @@ class _ContactUsFormScreenState extends State<ContactUsFormScreen>
           },
         ),
       ),
-    );
-  }
-
-  TextComponent _title(String val) {
-    return TextComponent(
-      val,
-      style: FontStyles.fontRegular(fontSize: 14),
     );
   }
 }

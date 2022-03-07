@@ -75,17 +75,24 @@ class MyApp extends StatelessWidget {
   }
 
   InputDecorationTheme _inputDecorationTheme() {
-    const underlineInputBorder = UnderlineInputBorder(
-      borderSide: BorderSide(color: ColorConstants.veryLightPurple, width: 0.3),
-    );
+    underlineInputBorder({Color? color = ColorConstants.veryLightPurple}) =>
+        UnderlineInputBorder(
+          borderSide: BorderSide(color: color!, width: 0.3),
+        );
     return InputDecorationTheme(
         labelStyle: GoogleFonts.raleway(
-          fontSize: 15.0,
+          fontSize: 14.0,
           fontStyle: FontStyle.normal,
           color: ColorConstants.veryLightPurple,
         ),
-        enabledBorder: underlineInputBorder,
-        focusedBorder: underlineInputBorder,
+        floatingLabelStyle: GoogleFonts.raleway(
+          fontSize: 15.0,
+          fontStyle: FontStyle.normal,
+          color: ColorConstants.blue,
+        ),
+        enabledBorder: underlineInputBorder(color: ColorConstants.blue),
+        focusedBorder: underlineInputBorder(color: ColorConstants.blue),
+        border: underlineInputBorder(color: ColorConstants.blue),
         fillColor: ColorConstants.formFieldBackground);
   }
 

@@ -54,6 +54,9 @@ abstract class  LocaleKeys {
   static const promoCode = 'promoCode';
   static const applyNow = 'applyNow';
   static const contactForm = 'contactForm';
+  static const news = 'news';
+  static const reference = 'reference';
+  static const makeContact = 'makeContact';
   static const pricing = 'pricing';
   static const done = 'done';
   static const chooseTheRightPrice = 'chooseTheRightPrice';

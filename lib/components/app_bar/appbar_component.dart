@@ -20,6 +20,7 @@ class AppBarComponent extends StatelessWidget with PreferredSizeWidget {
   final bool? showBackButton;
   final bool? showPersonIcon;
   final bool? showBottomLine;
+  final bool? centerTitle;
   final PreferredSizeWidget? bottom;
   final double appBarHeight;
   const AppBarComponent(
@@ -34,6 +35,7 @@ class AppBarComponent extends StatelessWidget with PreferredSizeWidget {
     this.backText,
     this.bottom,
     this.appBarHeight = AppConstants.toolbarSize,
+    this.centerTitle = true,
   }) : super(key: key);
 
   @override
@@ -86,7 +88,7 @@ class AppBarComponent extends StatelessWidget with PreferredSizeWidget {
                 ),
               ),
             ),
-            centerTitle: true,
+            centerTitle: centerTitle,
             systemOverlayStyle: const SystemUiOverlayStyle(
                 statusBarColor: Colors.transparent,
                 statusBarIconBrightness: Brightness.dark),
@@ -133,7 +135,7 @@ class AppBarComponent extends StatelessWidget with PreferredSizeWidget {
           text ?? "",
           style: FontStyles.fontMedium(
               fontSize: (context.locale == const Locale('en')) ? 16 : 14,
-              fontWeight: FontWeight.w400),
+              fontWeight: FontWeight.w600),
         ),
       );
     });

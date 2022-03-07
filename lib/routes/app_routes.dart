@@ -33,6 +33,7 @@ import 'package:steuermachen/screens/profile/complete_profile_screen.dart';
 import 'package:steuermachen/screens/profile/order_overview_screen.dart';
 import 'package:steuermachen/screens/profile/profile_%20menu_screen.dart';
 import 'package:steuermachen/screens/profile/profile_screen.dart';
+import 'package:steuermachen/screens/profile/what_in_work_screen.dart';
 import 'package:steuermachen/screens/splash_screen.dart';
 import 'package:steuermachen/screens/sustainability/sustainability_screen.dart';
 import 'package:steuermachen/screens/tax/declaration_tax/declaration_tax_screen.dart';
@@ -235,6 +236,10 @@ onGenerateRoutes(RouteSettings settings) {
     case RouteConstants.orderOverviewScreen:
       return MaterialPageRoute(
         builder: (_) => const OrderOverviewScreen(),
+      );
+    case RouteConstants.whatInWorkScreen:
+      return MaterialPageRoute(
+        builder: (_) => const WhatInWorkScreen(),
       );
     default:
       return MaterialPageRoute(

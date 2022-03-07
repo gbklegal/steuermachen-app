@@ -61,6 +61,7 @@ dependencies:
   sign_in_with_apple: ^3.3.0
   crypto: ^3.0.1
   flutter_chat_ui: ^1.5.5
+  percent_indicator: ^3.4.0
   fdottedline:
     path: ./fdottedline
   

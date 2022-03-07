@@ -148,6 +148,7 @@ abstract class  LocaleKeys {
   static const signupWith = 'signupWith';
   static const emailUs = 'emailUs';
   static const password = 'password';
+  static const changePassword = 'changePassword';
   static const currentPassword = 'currentPassword';
   static const newPassword = 'newPassword';
   static const confirmNewPassword = 'confirmNewPassword';

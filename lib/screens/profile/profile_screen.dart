@@ -52,13 +52,17 @@ class _ProfileScreenState extends State<ProfileScreen>
           appBarHeight: kToolbarHeight + (kToolbarHeight / 1.1),
           bottom: TabBar(
             unselectedLabelColor: ColorConstants.mediumGrey,
-            unselectedLabelStyle: FontStyles.fontMedium(),
-            labelStyle: FontStyles.fontMedium(
-                color: ColorConstants.primary,
+            unselectedLabelStyle: FontStyles.fontMedium(
+                color: ColorConstants.black,
                 fontWeight: FontWeight.bold,
                 letterSpacing: 0.3,
                 fontSize: 14),
-            labelColor: ColorConstants.primary,
+            labelStyle: FontStyles.fontMedium(
+                color: ColorConstants.black,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 0.3,
+                fontSize: 14),
+            labelColor: ColorConstants.black,
             tabs: const [
               Tab(
                 child: TextComponent(
@@ -67,65 +71,18 @@ class _ProfileScreenState extends State<ProfileScreen>
               ),
               Tab(
                 child: TextComponent(
-                  LocaleKeys.chatContact,
+                  LocaleKeys.changePassword,
                 ),
               ),
-              // UserFormComponent(),
             ],
           ),
         ),
         body: TabBarView(
           children: [
             _userForm(),
-            Padding(
-              padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-              child: Column(
-                children: [
-                  const SizedBox(height: 15),
-                  TextFormField(
-                    // controller: _passwordController,
-                    decoration: InputDecoration(
-                      label: Text(LocaleKeys.currentPassword.tr()),
-                      // prefixIcon: TextFormFieldIcons(
-                      //   assetName: AssetConstants.icEye,
-                      //   icColor: ColorConstants.black,
-                      //   padding: 16,
-                      // ),
-                    ),
-                    obscureText: true,
-                    validator: validatePassword,
-                  ),
-                  const SizedBox(height: 15),
-                  TextFormField(
-                    // controller: _passwordController,
-                    decoration: InputDecoration(
-                      label: Text(LocaleKeys.newPassword.tr()),
-                      prefixIcon: TextFormFieldIcons(
-                        assetName: AssetConstants.icLock,
-                        icColor: ColorConstants.black,
-                        padding: 12,
-                      ),
-                    ),
-                    obscureText: true,
-                    validator: validatePassword,
-                  ),
-                  const SizedBox(height: 15),
-                  TextFormField(
-                    // controller: _passwordController,
-                    decoration: InputDecoration(
-                      label: Text(LocaleKeys.confirmNewPassword.tr()),
-                      prefixIcon: TextFormFieldIcons(
-                        assetName: AssetConstants.icLock,
-                        icColor: ColorConstants.black,
-                        padding: 12,
-                      ),
-                    ),
-                    obscureText: true,
-                    validator: validatePassword,
-                  ),
-                  const SizedBox(height: 15),
-                ],
-              ),
+            const Padding(
+              padding: EdgeInsets.only(left: 16.0, right: 16.0),
+              child: ChangePassword(),
             ),
           ],
         ),
@@ -156,7 +113,7 @@ class _ProfileScreenState extends State<ProfileScreen>
               return const ErrorComponent();
             } else {
               return const Padding(
-                padding: EdgeInsets.only(left: 16.0, right: 16.0),
+                padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 15),
                 child: UserFormComponent(),
               );
             }
@@ -192,6 +149,68 @@ class _ProfileScreenState extends State<ProfileScreen>
           // }
         },
       ),
+    );
+  }
+}
+
+class ChangePassword extends StatelessWidget with InputValidationUtil {
+  const ChangePassword({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        const SizedBox(height: 15),
+        TextFormField(
+          // controller: _passwordController,
+          decoration: InputDecoration(
+            label: Text(
+              LocaleKeys.currentPassword.tr(),
+            ),
+          ),
+          obscureText: true,
+          validator: validatePassword,
+        ),
+        const SizedBox(height: 15),
+        TextFormField(
+          // controller: _passwordController,
+          decoration: InputDecoration(
+            label: Text(LocaleKeys.newPassword.tr()),
+            prefixIcon: TextFormFieldIcons(
+              assetName: AssetConstants.icLock,
+              icColor: ColorConstants.black,
+              padding: 12,
+            ),
+            suffixIcon: TextFormFieldIcons(
+              assetName: AssetConstants.icEyeClose,
+              icColor: ColorConstants.black,
+              padding: 12,
+            ),
+          ),
+          obscureText: true,
+          validator: validatePassword,
+        ),
+        const SizedBox(height: 15),
+        TextFormField(
+          // controller: _passwordController,
+          decoration: InputDecoration(
+            label: Text(LocaleKeys.confirmNewPassword.tr()),
+            prefixIcon: TextFormFieldIcons(
+              assetName: AssetConstants.icLock,
+              icColor: ColorConstants.black,
+              padding: 12,
+            ),
+            suffixIcon: TextFormFieldIcons(
+              assetName: AssetConstants.icEyeClose,
+              icColor: ColorConstants.black,
+              padding: 12,
+            ),
+          ),
+          obscureText: true,
+          validator: validatePassword,
+        ),
+        const SizedBox(height: 15),
+      ],
     );
   }
 }

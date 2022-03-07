@@ -186,6 +186,12 @@ class CodegenLoader extends AssetLoader{
   "confirmOrder": "Confirm order",
   "billingAddress": "Billing address",
   "total": "Total",
+  "personalData": "Personal data",
+  "orderOverview": "Order overview",
+  "checkWhatInWorks": "Check what's in the works",
+  "chatContact": "Chat | Contact",
+  "quickCheckForYourRefund": "Quick check for your refund",
+  "deletingAnAccount": "Deleting an account",
   "logout": "Ausloggen"
 };
 static const Map<String,dynamic> en = {
@@ -358,6 +364,12 @@ static const Map<String,dynamic> en = {
   "confirmOrder": "Confirm order",
   "billingAddress": "Billing address",
   "total": "Total",
+  "personalData": "Personal data",
+  "orderOverview": "Order overview",
+  "checkWhatInWorks": "Check what's in the works",
+  "chatContact": "Chat | Contact",
+  "quickCheckForYourRefund": "Quick check for your refund",
+  "deletingAnAccount": "Deleting an account",
   "logout": "Logout"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"de": de, "en": en};

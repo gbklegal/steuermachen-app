@@ -29,6 +29,7 @@ import 'package:steuermachen/screens/payment/billing/select_billing_address_scre
 import 'package:steuermachen/screens/payment/card/card_method_screen.dart';
 import 'package:steuermachen/screens/payment/payment_terms_condition_screen.dart';
 import 'package:steuermachen/screens/profile/complete_profile_screen.dart';
+import 'package:steuermachen/screens/profile/profile_%20menu_screen.dart';
 import 'package:steuermachen/screens/profile/profile_screen.dart';
 import 'package:steuermachen/screens/splash_screen.dart';
 import 'package:steuermachen/screens/sustainability/sustainability_screen.dart';
@@ -220,6 +221,10 @@ onGenerateRoutes(RouteSettings settings) {
     case RouteConstants.moreScreen:
       return MaterialPageRoute(
         builder: (_) => const MoreScreen(),
+      );
+    case RouteConstants.profileMenuScreen:
+      return MaterialPageRoute(
+        builder: (_) => const ProfileMenuScreen(),
       );
     default:
       return MaterialPageRoute(

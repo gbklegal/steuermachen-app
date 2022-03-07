@@ -35,7 +35,7 @@ class HomeScreen extends StatelessWidget {
       _CardItemsModel(
           leadAsset: AssetConstants.icLegalAction,
           title: LocaleKeys.yourProfile.tr(),
-          action: RouteConstants.taxAdviceScreen),
+          action: RouteConstants.profileMenuScreen),
     ];
 
     return Scaffold(

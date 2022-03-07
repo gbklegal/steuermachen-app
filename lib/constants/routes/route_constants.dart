@@ -40,5 +40,6 @@ class RouteConstants {
   static const String completeProfileScreen = "CompleteProfileScreen";
   static const String calculatorScreen = "CalculatorScreen";
   static const String moreScreen = "MoreScreen";
+  static const String profileMenuScreen = "ProfileMenuScreen";
   static const String forgotPasswordScreen = "ForgotPasswordScreen";
 }

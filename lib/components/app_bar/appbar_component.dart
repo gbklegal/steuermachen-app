@@ -116,7 +116,7 @@ class AppBarComponent extends StatelessWidget with PreferredSizeWidget {
             Text(
               text ?? "",
               style: FontStyles.fontBold(
-                  fontSize: (context.locale == const Locale('en')) ? 24 : 20),
+                  fontSize: (context.locale == const Locale('en')) ? 20 : 20),
             )
           ],
         );

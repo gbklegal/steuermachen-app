@@ -172,6 +172,12 @@ abstract class  LocaleKeys {
   static const confirmOrder = 'confirmOrder';
   static const billingAddress = 'billingAddress';
   static const total = 'total';
+  static const personalData = 'personalData';
+  static const orderOverview = 'orderOverview';
+  static const checkWhatInWorks = 'checkWhatInWorks';
+  static const chatContact = 'chatContact';
+  static const quickCheckForYourRefund = 'quickCheckForYourRefund';
+  static const deletingAnAccount = 'deletingAnAccount';
   static const logout = 'logout';
 
 }

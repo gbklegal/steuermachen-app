@@ -168,6 +168,12 @@
     "confirmOrder" : "Confirm order",
     "billingAddress" : "Billing address",
     "total" : "Total",
+    "personalData" : "Personal data",
+    "orderOverview" : "Order overview",
+    "checkWhatInWorks" : "Check what's in the works",
+    "chatContact" : "Chat | Contact",
+    "quickCheckForYourRefund" : "Quick check for your refund",
+    "deletingAnAccount" : "Deleting an account",
     "logout" : "Logout"
 
 }

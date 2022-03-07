@@ -6,8 +6,14 @@ import 'package:steuermachen/components/app_bar/appbar_with_side_corner_circle_a
 import 'package:steuermachen/components/button_component.dart';
 import 'package:steuermachen/components/error_component.dart';
 import 'package:steuermachen/components/loading_component.dart';
+import 'package:steuermachen/components/text_component.dart';
+import 'package:steuermachen/components/textformfield_icon_component.dart';
 import 'package:steuermachen/components/user_form_component.dart';
 import 'package:steuermachen/constants/app_constants.dart';
+import 'package:steuermachen/constants/assets/asset_constants.dart';
+import 'package:steuermachen/constants/colors/color_constants.dart';
+import 'package:steuermachen/constants/strings/string_constants.dart';
+import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/providers/profile/profile_provider.dart';
 import 'package:steuermachen/utils/input_validation_util.dart';
@@ -34,48 +40,129 @@ class _ProfileScreenState extends State<ProfileScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const AppBarComponent(
-        "",
-        backgroundColor: Colors.transparent,
-        showBackButton: true,
-        showPersonIcon: false,
-        showBottomLine: false,
-      ),
-      body: SingleChildScrollView(
-        child: SizedBox(
-          height: MediaQuery.of(context).size.height,
-          child: Consumer<ProfileProvider>(
-            builder: (context, consumer, child) {
-              if (consumer.getBusyStateProfile || response == null) {
-                return const LoadingComponent();
-              } else if (!consumer.getBusyStateProfile && !response!.status!) {
-                return const ErrorComponent();
-              } else {
-                return _mainBody();
-              }
-            },
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBarComponent(
+          "",
+          backgroundColor: Colors.transparent,
+          showBackButton: true,
+          showPersonIcon: false,
+          showBottomLine: false,
+          appBarHeight: kToolbarHeight + (kToolbarHeight / 1.1),
+          bottom: TabBar(
+            unselectedLabelColor: ColorConstants.mediumGrey,
+            unselectedLabelStyle: FontStyles.fontMedium(),
+            labelStyle: FontStyles.fontMedium(
+                color: ColorConstants.primary,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 0.3,
+                fontSize: 14),
+            labelColor: ColorConstants.primary,
+            tabs: const [
+              Tab(
+                child: TextComponent(
+                  LocaleKeys.personalData,
+                ),
+              ),
+              Tab(
+                child: TextComponent(
+                  LocaleKeys.chatContact,
+                ),
+              ),
+              // UserFormComponent(),
+            ],
           ),
         ),
-      ),
-      bottomNavigationBar: Consumer<ProfileProvider>(
-        builder: (context, consumer, child) {
-          if (consumer.getBusyStateProfile || response == null) {
-            return const SizedBox();
-          } else if (!consumer.getBusyStateProfile && !response!.status!) {
-            return const SizedBox();
-          } else {
-            return _bottomBtn();
-          }
-        },
+        body: TabBarView(
+          children: [
+            _userForm(),
+            Padding(
+              padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+              child: Column(
+                children: [
+                  const SizedBox(height: 15),
+                  TextFormField(
+                    // controller: _passwordController,
+                    decoration: InputDecoration(
+                      label: Text(LocaleKeys.currentPassword.tr()),
+                      // prefixIcon: TextFormFieldIcons(
+                      //   assetName: AssetConstants.icEye,
+                      //   icColor: ColorConstants.black,
+                      //   padding: 16,
+                      // ),
+                    ),
+                    obscureText: true,
+                    validator: validatePassword,
+                  ),
+                  const SizedBox(height: 15),
+                  TextFormField(
+                    // controller: _passwordController,
+                    decoration: InputDecoration(
+                      label: Text(LocaleKeys.newPassword.tr()),
+                      prefixIcon: TextFormFieldIcons(
+                        assetName: AssetConstants.icLock,
+                        icColor: ColorConstants.black,
+                        padding: 12,
+                      ),
+                    ),
+                    obscureText: true,
+                    validator: validatePassword,
+                  ),
+                  const SizedBox(height: 15),
+                  TextFormField(
+                    // controller: _passwordController,
+                    decoration: InputDecoration(
+                      label: Text(LocaleKeys.confirmNewPassword.tr()),
+                      prefixIcon: TextFormFieldIcons(
+                        assetName: AssetConstants.icLock,
+                        icColor: ColorConstants.black,
+                        padding: 12,
+                      ),
+                    ),
+                    obscureText: true,
+                    validator: validatePassword,
+                  ),
+                  const SizedBox(height: 15),
+                ],
+              ),
+            ),
+          ],
+        ),
+        bottomNavigationBar: Consumer<ProfileProvider>(
+          builder: (context, consumer, child) {
+            if (consumer.getBusyStateProfile || response == null) {
+              return const SizedBox();
+            } else if (!consumer.getBusyStateProfile && !response!.status!) {
+              return const SizedBox();
+            } else {
+              return _bottomBtn();
+            }
+          },
+        ),
       ),
     );
   }
 
-  Padding _mainBody() {
-    return const Padding(
-      padding: EdgeInsets.only(left: 16.0, right: 16.0),
-      child: UserFormComponent(),
+  SingleChildScrollView _userForm() {
+    return SingleChildScrollView(
+      child: SizedBox(
+        height: MediaQuery.of(context).size.height,
+        child: Consumer<ProfileProvider>(
+          builder: (context, consumer, child) {
+            if (consumer.getBusyStateProfile || response == null) {
+              return const LoadingComponent();
+            } else if (!consumer.getBusyStateProfile && !response!.status!) {
+              return const ErrorComponent();
+            } else {
+              return const Padding(
+                padding: EdgeInsets.only(left: 16.0, right: 16.0),
+                child: UserFormComponent(),
+              );
+            }
+          },
+        ),
+      ),
     );
   }
 

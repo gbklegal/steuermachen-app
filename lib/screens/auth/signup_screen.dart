@@ -180,8 +180,7 @@ class _SignupScreenState extends State<SignupScreen> with InputValidationUtil {
               decoration: InputDecoration(
                 label: Text(LocaleKeys.password.tr()),
                 prefixIcon: TextFormFieldIcons(
-                  assetName: AssetConstants.icEmail,
-                  icColor: ColorConstants.white,
+                  assetName: AssetConstants.icEye,
                   padding: 16,
                 ),
               ),

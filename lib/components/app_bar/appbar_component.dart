@@ -20,6 +20,8 @@ class AppBarComponent extends StatelessWidget with PreferredSizeWidget {
   final bool? showBackButton;
   final bool? showPersonIcon;
   final bool? showBottomLine;
+  final PreferredSizeWidget? bottom;
+  final double appBarHeight;
   const AppBarComponent(
     this.text, {
     Key? key,
@@ -30,6 +32,8 @@ class AppBarComponent extends StatelessWidget with PreferredSizeWidget {
     this.showPersonIcon = true,
     this.showBottomLine = true,
     this.backText,
+    this.bottom,
+    this.appBarHeight = AppConstants.toolbarSize,
   }) : super(key: key);
 
   @override
@@ -41,8 +45,7 @@ class AppBarComponent extends StatelessWidget with PreferredSizeWidget {
           border: Border(
             bottom: BorderSide(
               width: showBottomLine! ? 0.2 : 0,
-              color: ColorConstants.black
-                  .withOpacity(showBottomLine! ? 1 : 0),
+              color: ColorConstants.black.withOpacity(showBottomLine! ? 1 : 0),
             ),
           ),
         ),
@@ -96,6 +99,7 @@ class AppBarComponent extends StatelessWidget with PreferredSizeWidget {
                 ),
               ),
             ],
+            bottom: bottom,
           );
         }),
       ),
@@ -136,5 +140,5 @@ class AppBarComponent extends StatelessWidget with PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(AppConstants.toolbarSize);
+  Size get preferredSize => Size.fromHeight(appBarHeight);
 }

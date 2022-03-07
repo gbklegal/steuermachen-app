@@ -6,6 +6,7 @@ import 'package:steuermachen/screens/auth/signup_screen.dart';
 import 'package:steuermachen/screens/bottom_nav_bar/bottom_nav_bar_screen.dart';
 import 'package:steuermachen/screens/bottom_nav_bar/more_screen.dart';
 import 'package:steuermachen/screens/calculator/calculator_screen.dart';
+import 'package:steuermachen/screens/contact_us/chat/chat_screen.dart';
 import 'package:steuermachen/screens/contact_us/contact_us_form_screen.dart';
 import 'package:steuermachen/screens/contact_us/contact_us_options_screen.dart';
 import 'package:steuermachen/screens/document/select_document_for_upload_screen.dart';
@@ -145,6 +146,10 @@ onGenerateRoutes(RouteSettings settings) {
     case RouteConstants.contactUsOptionScreen:
       return MaterialPageRoute(
         builder: (_) => const ContactUsOptionScreen(),
+      );
+    case RouteConstants.chatScreen:
+      return MaterialPageRoute(
+        builder: (_) => const ChatScreen(),
       );
     case RouteConstants.uploadedDocumentScreen:
       return MaterialPageRoute(

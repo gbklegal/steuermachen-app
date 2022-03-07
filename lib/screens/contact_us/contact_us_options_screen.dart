@@ -74,8 +74,8 @@ class _ContactUsOptionScreenState extends State<ContactUsOptionScreen> {
               width: 40,
             ),
             InkWell(
-              onTap: () async {
-                await _makePhoneCall("0911-80190910");
+              onTap: () {
+                Navigator.pushNamed(context, RouteConstants.chatScreen);
               },
               child: _contactOptions(
                   context, AssetConstants.icChat, LocaleKeys.chatWithExpert),

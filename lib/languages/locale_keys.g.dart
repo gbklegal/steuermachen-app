@@ -189,6 +189,7 @@ abstract class  LocaleKeys {
   static const emailToUs = 'emailToUs';
   static const chatWithExpert = 'chatWithExpert';
   static const useOurContactForm = 'useOurContactForm';
+  static const youHaveNoOrderSomething = 'youHaveNoOrderSomething';
   static const logout = 'logout';
 
 }

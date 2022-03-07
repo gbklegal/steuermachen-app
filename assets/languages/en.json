@@ -185,5 +185,6 @@
     "emailToUs": "email to us",
     "chatWithExpert": "chat with your tax expert",
     "useOurContactForm": "user our contact form",
+    "youHaveNoOrderSomething": "You have not ordered anything yet,\nPlease make an order to get access to this feature",
     "logout": "Logout"
 }

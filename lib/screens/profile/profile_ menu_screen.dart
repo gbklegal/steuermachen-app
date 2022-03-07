@@ -37,7 +37,8 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
       ),
       ProfileMenuOptions(
         leadingIcon: AssetConstants.icMoreDocument,
-        routeName: RouteConstants.selectDocumentForScreen,
+        // routeName: RouteConstants.selectDocumentForScreen,
+        routeName: RouteConstants.orderOverviewScreen,
         title: LocaleKeys.orderOverview,
         trailingIcon: AssetConstants.icForward,
       ),

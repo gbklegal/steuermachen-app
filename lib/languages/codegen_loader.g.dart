@@ -203,6 +203,7 @@ class CodegenLoader extends AssetLoader{
   "emailToUs": "email to us",
   "chatWithExpert": "chat with your tax expert",
   "useOurContactForm": "user our contact form",
+  "youHaveNoOrderSomething": "You have not ordered anything yet,\nPlease make an order to get access to this feature",
   "logout": "Ausloggen"
 };
 static const Map<String,dynamic> en = {
@@ -392,6 +393,7 @@ static const Map<String,dynamic> en = {
   "emailToUs": "email to us",
   "chatWithExpert": "chat with your tax expert",
   "useOurContactForm": "user our contact form",
+  "youHaveNoOrderSomething": "You have not ordered anything yet,\nPlease make an order to get access to this feature",
   "logout": "Logout"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"de": de, "en": en};

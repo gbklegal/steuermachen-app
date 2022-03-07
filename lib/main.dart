@@ -100,7 +100,7 @@ class MyApp extends StatelessWidget {
     return ElevatedButtonThemeData(
       style: TextButton.styleFrom(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(7),
+          borderRadius: BorderRadius.circular(10),
         ),
         elevation: 0.8,
         backgroundColor: ColorConstants.primary,

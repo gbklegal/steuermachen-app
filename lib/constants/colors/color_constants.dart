@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class ColorConstants {
   static const Color primary = Color(0xffFF6138);
   static const Color body = Color(0xffffffff);
+  static const Color bodyLight = Color(0xffFCFCFC);
   static const Color formFieldBackground = Color(0xffF1F6FC);
   static const Color mediumGrey = Color(0xffDEDEDE);
   static const Color greyBottomBar = Color(0x84787878);

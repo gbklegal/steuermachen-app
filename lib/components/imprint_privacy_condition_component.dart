@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:steuermachen/constants/colors/color_constants.dart';
+import 'package:steuermachen/components/text_component.dart';
+import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 
 class ImprintPrivacyConditionsComponent extends StatelessWidget {
   const ImprintPrivacyConditionsComponent({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    text(val) => Text(
+    text(val) => TextComponent(
           val,
-          style: Theme.of(context).textTheme.bodyText2?.copyWith(
-              fontSize: 15,
-              color: ColorConstants.black,
-              fontWeight: FontWeight.w500),
+          style: FontStyles.fontMedium(fontSize: 15),
         );
     return Flexible(
       fit: FlexFit.tight,

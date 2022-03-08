@@ -19,6 +19,25 @@ class TaxCalculatorComponent extends StatelessWidget {
     return Consumer<TaxCalculatorProvider>(builder: (context, consumer, child) {
       return Column(
         children: [
+          DropdownButtonFormField<int>(
+            decoration: const InputDecoration(
+              border: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.white),
+              ),
+            ),
+            value: 2,
+            items: const <DropdownMenuItem<int>>[
+              DropdownMenuItem<int>(
+                value: 1,
+                child: Text("Owner"),
+              ),
+              DropdownMenuItem<int>(
+                value: 2,
+                child: Text("Member"),
+              ),
+            ],
+            onChanged: (val) {},
+          ),
           TextFormField(
             keyboardType: TextInputType.number,
             textInputAction: TextInputAction.done,
@@ -33,21 +52,9 @@ class TaxCalculatorComponent extends StatelessWidget {
               ),
               label: Text(LocaleKeys.annualIncom.tr()),
               filled: false,
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(5.0),
-                borderSide: BorderSide(
-                  color: ColorConstants.black.withOpacity(0.5),
-                ),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(5.0),
-                borderSide: BorderSide(
-                  color: ColorConstants.black.withOpacity(0.5),
-                ),
-              ),
             ),
             onChanged: (val) {
-                consumer.calculateTax(val);
+              consumer.calculateTax(val);
               if (val != "") {
                 if (routeName == RouteConstants.currentIncomeScreen) {
                   Provider.of<TaxFileProvider>(context, listen: false)
@@ -84,7 +91,9 @@ class TaxCalculatorComponent extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    consumer.calculatedPrice == 0 ? 'x' : consumer.calculatedPrice.toString()+',00',
+                    consumer.calculatedPrice == 0
+                        ? 'x'
+                        : consumer.calculatedPrice.toString() + ',00',
                     style: Theme.of(context)
                         .textTheme
                         .headline6!

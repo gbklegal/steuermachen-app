@@ -22,14 +22,14 @@ import 'package:steuermachen/providers/tax/declaration_tax/declaration_tax_provi
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 import 'package:steuermachen/wrappers/declaration_tax_view_wrapper.dart';
 
-class DeclarationTaxScreen extends StatefulWidget {
-  const DeclarationTaxScreen({Key? key}) : super(key: key);
+class CurrentYearTaxScreen extends StatefulWidget {
+  const CurrentYearTaxScreen({Key? key}) : super(key: key);
 
   @override
-  _DeclarationTaxScreenState createState() => _DeclarationTaxScreenState();
+  _CurrentYearTaxScreenState createState() => _CurrentYearTaxScreenState();
 }
 
-class _DeclarationTaxScreenState extends State<DeclarationTaxScreen> {
+class _CurrentYearTaxScreenState extends State<CurrentYearTaxScreen> {
   late DeclarationTaxProvider provider;
   CommonResponseWrapper? response;
   @override

@@ -6,6 +6,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
 import 'package:steuermachen/components/button_component.dart';
+import 'package:steuermachen/components/empty_screen_loader_component.dart';
+import 'package:steuermachen/components/error_component%20copy.dart';
 import 'package:steuermachen/components/popup_loader_component.dart';
 import 'package:steuermachen/components/text_component.dart';
 import 'package:steuermachen/components/toast_component.dart';
@@ -19,6 +21,7 @@ import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/providers/document/document_provider.dart';
 import 'package:steuermachen/utils/image_picker/media_source_selection_utils.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
+import 'package:steuermachen/wrappers/document/document_option_wrapper.dart';
 
 class SelectDocumentForScreen extends StatefulWidget {
   const SelectDocumentForScreen(
@@ -39,15 +42,28 @@ class SelectDocumentForScreen extends StatefulWidget {
 }
 
 class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
+  CommonResponseWrapper? response;
   late List<String> selectImageList = [];
   late String selectPDF;
   User? user = FirebaseAuth.instance.currentUser;
   late DocumentsProvider _provider;
   int year = DateTime.now().year;
+  List<int> years = [];
   @override
   void initState() {
     super.initState();
+    _getYearList();
     _provider = Provider.of<DocumentsProvider>(context, listen: false);
+    WidgetsBinding.instance!.addPostFrameCallback((_) =>
+        _provider.getDocumentOptionsData().then((value) => response = value));
+  }
+
+  _getYearList() {
+    for (var i = 4; i >= 0; i--) {
+      int tempYear = year - i;
+      years.add(tempYear);
+    }
+    return years;
   }
 
   _openCameraGallerySelectionDialog() {
@@ -76,7 +92,7 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
     );
     if (result != null) {
       setState(() {
-        selectPDF= result.files.single.path!;
+        selectPDF = result.files.single.path!;
         // File file = File();
       });
       await uploadDocument();
@@ -86,7 +102,7 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
   }
 
   uploadDocument() async {
-    _provider.setFilesForUpload([ selectPDF, ...selectImageList]);
+    _provider.setFilesForUpload([selectPDF, ...selectImageList]);
     PopupLoader.showLoadingDialog(context);
     CommonResponseWrapper res = await _provider.uploadFiles();
     PopupLoader.hideLoadingDialog(context);
@@ -104,7 +120,31 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
         showPersonIcon: false,
         showBottomLine: true,
       ),
-      body: _mainBody(context),
+      body: Consumer<DocumentsProvider>(
+            builder: (context, consumer, child) {
+          if (consumer.getBusyStateDocument || response == null) {
+            return const EmptyScreenLoaderComponent();
+          } else if (!response!.status!) {
+            return ErrorComponent(
+              message: response!.message!,
+              onTap: () async {
+                consumer.setBusyStateDocument = true;
+                await _provider
+                    .getDocumentOptionsData()
+                    .then((value) => response = value);
+                consumer.setBusyStateDocument = false;
+              },
+            );
+          } else {
+            DocumentOptionsWrappers currentYearTaxViewWrapper =
+                response!.data as DocumentOptionsWrappers;
+            if (context.locale == const Locale('en')) {
+              return _mainBody(context);
+            } else {
+             return _mainBody(context);
+            }
+          }
+        }), 
       bottomNavigationBar: Visibility(
         visible: widget.showNextBtn! || widget.uploadBtnNow!,
         child: Padding(
@@ -150,15 +190,14 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
               style: FontStyles.fontMedium(
                   fontSize: 18, fontWeight: FontWeight.w600),
             ),
-            for (var i = 4; i >= 0; i--) _taxYears(i)
+            for (var i = 0; i < years.length; i++) _taxYears(years[i])
           ],
         ),
       ),
     );
   }
 
-  Padding _taxYears(int i) {
-    int tempYear = year - i;
+  Padding _taxYears(int year) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: InkWell(
@@ -177,7 +216,7 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               TextComponent(
-                "tax year $tempYear",
+                "tax year $year",
                 style: FontStyles.fontMedium(fontSize: 16),
               ),
               SvgPicture.asset(

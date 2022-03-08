@@ -19,7 +19,7 @@ import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/providers/document/document_provider.dart';
 import 'package:steuermachen/utils/utils.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
-import 'package:steuermachen/wrappers/documents_wrapper.dart';
+import 'package:steuermachen/wrappers/document/documents_wrapper.dart';
 
 class DocumentOverviewScreen extends StatefulWidget {
   const DocumentOverviewScreen(

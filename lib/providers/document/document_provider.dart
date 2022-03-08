@@ -7,11 +7,19 @@ import 'package:flutter/material.dart';
 import 'package:steuermachen/constants/strings/error_messages_constants.dart';
 import 'package:steuermachen/main.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
-import 'package:steuermachen/wrappers/documents_wrapper.dart';
+import 'package:steuermachen/wrappers/document/document_option_wrapper.dart';
+import 'package:steuermachen/wrappers/document/documents_wrapper.dart';
 
 class DocumentsProvider extends ChangeNotifier {
+    bool _busyStateDocument = true;
+  bool get getBusyStateDocument => _busyStateDocument;
+  set setBusyStateDocument(bool _isBusy) {
+    _busyStateDocument = _isBusy;
+    notifyListeners();
+  }
+
   List<String> _selectedFiles = [];
-  late String _signaturePath ="";
+  late String _signaturePath = "";
   setFilesForUpload(List<String> files) {
     _selectedFiles = files;
   }
@@ -50,8 +58,7 @@ class DocumentsProvider extends ChangeNotifier {
         }
       }
       _clearFields();
-      return CommonResponseWrapper(
-          status: true, message: "Documents uploaded");
+      return CommonResponseWrapper(status: true, message: "Documents uploaded");
     } catch (e) {
       return CommonResponseWrapper(
           status: true, message: ErrorMessagesConstants.somethingWentWrong);
@@ -103,9 +110,61 @@ class DocumentsProvider extends ChangeNotifier {
       print(e);
     }
   }
+    Future<CommonResponseWrapper> getDocumentOptionsData() async {
+    try {
+      setBusyStateDocument = true;
+      var res =
+          await firestore.collection("document").doc("document-options").get();
+      Map<String, dynamic> x = res.data() as Map<String, dynamic>;
+      DocumentOptionsWrappers declarationTaxWrapper = DocumentOptionsWrappers.fromJson(x);
+      setBusyStateDocument = false;
+      return CommonResponseWrapper(status: true, data: declarationTaxWrapper);
+    } catch (e) {
+      setBusyStateDocument = false;
+      return CommonResponseWrapper(
+          status: false, message: "Something went wrong");
+    }
+  }
 
+  //Execute this function for adding UI view in firestore
+  // JSON//filepath: document_upload_options.json
+  Future<CommonResponseWrapper> addDocumentOptionsData() async {
+    try {
+      await firestore.collection("document").doc("document-options").set(json);
+      return CommonResponseWrapper(
+          status: true, message: "addDocumentOptionsData view data added successfully");
+    } catch (e) {
+      return CommonResponseWrapper(
+          status: true, message: "Something went wrong");
+    }
+  }
   _clearFields() {
     _selectedFiles = [];
     _signaturePath = "";
   }
 }
+
+var json = {
+  "en": [
+    {
+      "option_type": "option_list",
+      "options": [
+        "Annual wage tax statement",
+        "Pension notice/certificate",
+        "invoice for additional costs"
+      ]
+    },
+    {"option_type": "years_list", "options": []}
+  ],
+  "du": [
+    {
+      "option_type": "option_list",
+      "options": [
+        "Annual wage tax statement",
+        "Pension notice/certificate",
+        "invoice for additional costs"
+      ]
+    },
+    {"option_type": "years_list", "options": []}
+  ]
+};

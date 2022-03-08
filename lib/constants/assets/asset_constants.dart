@@ -24,6 +24,7 @@ class AssetConstants {
   static String icReceipts = "assets/icons/receipts-icon.svg";
   static String icDocument = "assets/icons/document-icon.svg";
   static String icExclamation = "assets/icons/exclamation-icon.svg";
+  static String icCalendar = "assets/icons/calendar-icon.svg";
   static String icLegalAction = "assets/icons/legal-action-icon.svg";
   static String icPersons = "assets/icons/persons-icon.svg";
   static String icForward = "assets/icons/forward-icon.svg";

@@ -1,0 +1,48 @@
+{
+    "en": {
+        "title": "Your application on the subject of tax law",
+        "subtitle": "What is your goal?",
+        "options": [
+            {
+                "type": "checkbox",
+                "title": "I demand the change of the opposition decision in the lawsuit",
+                "isSelect": false
+            },
+            {
+                "type": "checkbox",
+                "title": "I would like to submit my income tax return during the legal proceedings",
+                "isSelect": false
+            },
+            {
+                "type": "checkbox",
+                "title": "I would like to have both options checked ",
+                "isSelect": false
+            }
+        ],
+        "thirdTitle": "Wann hast du die Einspruchsentscheidung erhalten? *?",
+        "show_bottom_nav": true
+    },
+    "du": {
+        "title": "Your application on the subject of tax law",
+        "subtitle": "What is your goal?",
+        "options": [
+            {
+                "type": "checkbox",
+                "title": "I demand the change of the opposition decision in the lawsuit",
+                "isSelect": false
+            },
+            {
+                "type": "checkbox",
+                "title": "I would like to submit my income tax return during the legal proceedings",
+                "isSelect": false
+            },
+            {
+                "type": "checkbox",
+                "title": "I would like to have both options checked ",
+                "isSelect": false
+            }
+        ],
+        "thirdTitle": "Wann hast du die Einspruchsentscheidung erhalten? *?",
+        "show_bottom_nav": true
+    }
+}

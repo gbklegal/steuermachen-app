@@ -1,68 +1,71 @@
 import 'package:flutter/material.dart';
 import 'package:steuermachen/components/button_component.dart';
 import 'package:steuermachen/components/imprint_privacy_condition_component.dart';
+import 'package:steuermachen/components/text_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
+import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 
 class TermsAndConditionComponent extends StatelessWidget {
-  const TermsAndConditionComponent({Key? key}) : super(key: key);
-
+  const TermsAndConditionComponent({Key? key, this.showCommissioning = false})
+      : super(key: key);
+  final bool showCommissioning;
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        SizedBox(
-          height: MediaQuery.of(context).size.height * 0.6,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
+        Visibility(
+          visible: showCommissioning,
+          child: const _CommissioningComponent(),
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TextComponent(
                 "Note: Release from confidentiality is urgently required for communication between steuermachen (GDF) and the commissioned tax office.",
                 textAlign: TextAlign.left,
-                style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 16,
-                    letterSpacing: -0.3),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              _checkBox(context, "* I agree to the release from "),
-              Transform.translate(
-                offset: const Offset(0, -15),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 60),
-                  child: Text(
-                    "non-disclosure ",
-                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 15,
-                        letterSpacing: -0.3,
-                        color: ColorConstants.primary),
-                  ),
+                style: FontStyles.fontMedium(
+                    fontSize: 16, letterSpacing: -0.3, lineSpacing: 1.1)),
+            const SizedBox(
+              height: 10,
+            ),
+            _checkBox(context, "* I agree to the release from "),
+            Transform.translate(
+              offset: const Offset(0, -15),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 60),
+                child: Text(
+                  "non-disclosure ",
+                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 15,
+                      letterSpacing: -0.3,
+                      color: ColorConstants.primary),
                 ),
               ),
-              _checkBox(context,
-                  "* I accept the terms and conditions and the information on data processing and the right of withdrawal from steuermachen."),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Image.asset(
-                  AssetConstants.trustShops,
-                  height: 50,
-                ),
+            ),
+            _checkBox(context,
+                "* I accept the terms and conditions and the information on data processing and the right of withdrawal from steuermachen."),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Image.asset(
+                AssetConstants.trustShops,
+                height: 50,
               ),
-            ],
-          ),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: showCommissioning ? 50 : 100,
         ),
         SizedBox(
           height: 90,
           child: Column(
             children: [
               ButtonComponent(
-                buttonText: "Order now".toUpperCase(),
-                color: ColorConstants.toxicGreen,
+                buttonText: "Order now",
                 onPressed: () {},
               ),
               const ImprintPrivacyConditionsComponent(),
@@ -87,16 +90,92 @@ class TermsAndConditionComponent extends StatelessWidget {
         Flexible(
           child: Padding(
             padding: const EdgeInsets.only(top: 12),
-            child: Text(
-              checkBoxTitle,
-              style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 15,
-                  letterSpacing: -0.3),
-            ),
+            child: Text(checkBoxTitle,
+                style: FontStyles.fontMedium(
+                    fontSize: 16, letterSpacing: -0.3, lineSpacing: 1.1)),
           ),
         ),
       ],
+    );
+  }
+}
+
+class _CommissioningComponent extends StatelessWidget {
+  const _CommissioningComponent({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        TextComponent(
+          "Commissioning *",
+          textAlign: TextAlign.left,
+          style: FontStyles.fontMedium(
+              fontSize: 20, letterSpacing: -0.3, lineSpacing: 1.1),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        _radios(),
+        const SizedBox(
+          height: 18,
+        ),
+        _radios(),
+        const SizedBox(
+          height: 18,
+        ),
+      ],
+    );
+  }
+
+  Container _radios() {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(width: 0.8),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      padding: const EdgeInsets.all(18),
+      child: InkWell(
+        onTap: () {},
+        child: Row(
+          children: [
+            Container(
+              height: 15,
+              width: 15,
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    width: 0.7,
+                  )),
+              padding: const EdgeInsets.all(2),
+              child: Container(
+                height: 12,
+                width: 12,
+                decoration: const BoxDecoration(
+                  color: ColorConstants.primary,
+                  shape: BoxShape.circle,
+                ),
+              ),
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            Flexible(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 5, right: 10),
+                child: TextComponent(
+                    "Legal protection insurance is available, please carry out a cover request",
+                    textAlign: TextAlign.left,
+                    style: FontStyles.fontMedium(
+                        fontSize: 16, letterSpacing: 0.3, lineSpacing: 1.1)),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

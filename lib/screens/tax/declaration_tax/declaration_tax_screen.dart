@@ -188,9 +188,14 @@ class _QuestionsViewState extends State<_QuestionsView> {
   InkWell _optionsWidget(int i, int x) {
     return InkWell(
       onTap: () {
-        pageController.animateToPage(i + 1,
-            duration: const Duration(milliseconds: 500),
-            curve: Curves.easeInToLinear);
+        int year = DateTime.now().year;
+        if (year.toString() == widget.declarationTaxData[i].options[x]) {
+          Navigator.pushNamed(context, RouteConstants.currentYearTaxScreen);
+        } else {
+          pageController.animateToPage(i + 1,
+              duration: const Duration(milliseconds: 500),
+              curve: Curves.easeInToLinear);
+        }
       },
       child: SelectionCardComponent(
         title: widget.declarationTaxData[i].options[x],

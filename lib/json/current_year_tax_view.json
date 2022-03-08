@@ -1,0 +1,24 @@
+{
+    "en": {
+        "title": "Unfortunately, you cannot yet submit a tax return for 2022. But secure your receipts for the current year now and don't give away any taxes ",
+        "subtitle": "Get access for only",
+        "price": 39.00,
+        "points": [
+            "You can securely upload and collect documents throughout the year",
+            "You will receive qualified tax advice from your tax expert for the current year",
+            "If you order a tax return from us, we will reimburse you for all costs already paid "
+        ],
+        "show_bottom_nav": false
+    },
+    "du": {
+        "title": "Unfortunately, you cannot yet submit a tax return for 2022. But secure your receipts for the current year now and don't give away any taxes ",
+        "subtitle": "Get access for only",
+        "price": 39.00,
+        "points": [
+            "You can securely upload and collect documents throughout the year",
+            "You will receive qualified tax advice from your tax expert for the current year",
+            "If you order a tax return from us, we will reimburse you for all costs already paid "
+        ],
+        "show_bottom_nav": false
+    }
+}

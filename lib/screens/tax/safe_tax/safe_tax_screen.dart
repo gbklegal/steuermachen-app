@@ -11,6 +11,7 @@ import 'package:steuermachen/components/terms_conditions_component.dart';
 import 'package:steuermachen/components/text_progress_bar_component.dart';
 import 'package:steuermachen/components/user_form_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
+import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/options_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
@@ -192,9 +193,14 @@ class _QuestionsViewState extends State<_QuestionsView> {
   InkWell _optionsWidget(int i, int x) {
     return InkWell(
       onTap: () {
-        pageController.animateToPage(i + 1,
-            duration: const Duration(milliseconds: 500),
-            curve: Curves.easeInToLinear);
+        int year = DateTime.now().year;
+        if (year.toString() == widget.safeTaxData[i].options[x]) {
+          Navigator.pushNamed(context, RouteConstants.currentYearTaxScreen);
+        } else {
+          pageController.animateToPage(i + 1,
+              duration: const Duration(milliseconds: 500),
+              curve: Curves.easeInToLinear);
+        }
       },
       child: SelectionCardComponent(
         title: widget.safeTaxData[i].options[x],

@@ -9,6 +9,7 @@ import 'package:steuermachen/screens/calculator/calculator_screen.dart';
 import 'package:steuermachen/screens/contact_us/chat/chat_screen.dart';
 import 'package:steuermachen/screens/contact_us/contact_us_form_screen.dart';
 import 'package:steuermachen/screens/contact_us/contact_us_options_screen.dart';
+import 'package:steuermachen/screens/document/document_overview_screen.dart';
 import 'package:steuermachen/screens/document/select_document_for_upload_screen.dart';
 import 'package:steuermachen/screens/document/uploaded_document_screen.dart';
 import 'package:steuermachen/screens/faq/faq_screen.dart';
@@ -93,6 +94,10 @@ onGenerateRoutes(RouteSettings settings) {
       }
       return MaterialPageRoute(
         builder: (_) => const SelectDocumentForScreen(),
+      );
+    case RouteConstants.documentOverviewScreen:
+      return MaterialPageRoute(
+        builder: (_) => const DocumentOverviewScreen(),
       );
     case RouteConstants.selectYearScreen:
       return MaterialPageRoute(

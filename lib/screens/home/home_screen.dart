@@ -130,7 +130,8 @@ class _CollectReceipts extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, RouteConstants.selectDocumentForScreen);
+        Navigator.pushNamed(context, RouteConstants.selectDocumentForScreen,
+            arguments: {"uploadBtn": false});
       },
       child: Container(
         decoration: BoxDecoration(

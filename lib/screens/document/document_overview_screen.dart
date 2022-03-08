@@ -1,25 +1,22 @@
 import 'dart:io';
 import 'package:easy_localization/src/public_ext.dart';
-import 'package:fdottedline/fdottedline.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
-import 'package:steuermachen/components/app_bar/appbar_with_side_corner_circle_and_body.dart';
 import 'package:steuermachen/components/button_component.dart';
 import 'package:steuermachen/components/popup_loader_component.dart';
 import 'package:steuermachen/components/toast_component.dart';
 import 'package:steuermachen/constants/app_constants.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
+import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:path/path.dart' as path;
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/providers/document/document_provider.dart';
-import 'package:steuermachen/utils/image_picker/media_source_selection_utils.dart';
 import 'package:steuermachen/utils/utils.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 import 'package:steuermachen/wrappers/documents_wrapper.dart';
@@ -51,23 +48,20 @@ class _DocumentOverviewScreenState extends State<DocumentOverviewScreen> {
   void initState() {
     super.initState();
     _provider = Provider.of<DocumentsProvider>(context, listen: false);
-
     _provider.getDocuments().then((value) => documents = value);
-  }
-
-  PreferredSizeWidget? _appBar() {
-    if (!widget.showRoundBody!) {
-      return AppBarComponent(
-        LocaleKeys.uplaodYourDocuments.tr(),
-        showPersonIcon: false,
-      );
-    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _appBar(),
+      appBar: const AppBarComponent(
+        StringConstants.appName,
+        imageTitle: AssetConstants.logo,
+        backgroundColor: Colors.transparent,
+        showBackButton: true,
+        showPersonIcon: false,
+        showBottomLine: true,
+      ),
       body: _mainBody(context),
       bottomNavigationBar: Visibility(
         visible: widget.showNextBtn! || widget.uploadBtnNow!,
@@ -260,9 +254,8 @@ class _DocumentOverviewScreenState extends State<DocumentOverviewScreen> {
       );
     }
   }
-
-
 }
+
 class _DocumentOverview extends StatelessWidget {
   const _DocumentOverview({
     Key? key,

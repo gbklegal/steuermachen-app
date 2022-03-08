@@ -324,12 +324,7 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
             onPressed: () {
               _openCameraGallerySelectionDialog();
             },
-            child: Text(
-              LocaleKeys.useCamera.tr(),
-              style: TextStyle(
-                  fontSize: (context.locale == const Locale('en')) ? 18 : 14,
-                  fontWeight: FontWeight.w500),
-            ),
+            child: const Icon(Icons.camera_alt_outlined, ),
           )
         ],
       ),

@@ -204,6 +204,10 @@ class CodegenLoader extends AssetLoader{
   "chatWithExpert": "chat with your tax expert",
   "useOurContactForm": "user our contact form",
   "youHaveNoOrderSomething": "You have not ordered anything yet,\nPlease make an order to get access to this feature",
+  "pleaseSelect": "Please select",
+  "selectTheTaxYear": "Select the tax year",
+  "selectReceiptAndInvoices": "Select your receipts or invoices that you want to upload",
+  "uploadMediaFromLibrary": "Upload from media library",
   "logout": "Ausloggen"
 };
 static const Map<String,dynamic> en = {
@@ -394,6 +398,10 @@ static const Map<String,dynamic> en = {
   "chatWithExpert": "chat with your tax expert",
   "useOurContactForm": "user our contact form",
   "youHaveNoOrderSomething": "You have not ordered anything yet,\nPlease make an order to get access to this feature",
+  "pleaseSelect": "Please select",
+  "selectTheTaxYear": "Select the tax year",
+  "selectReceiptAndInvoices": "Select your receipts or invoices that you want to upload",
+  "uploadMediaFromLibrary": "Upload from media library",
   "logout": "Logout"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"de": de, "en": en};

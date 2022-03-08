@@ -25,10 +25,6 @@ class HomeScreen extends StatelessWidget {
           title: LocaleKeys.taxEasyInitialTaxAdvice.tr(),
           action: RouteConstants.easyTaxScreen),
       _CardItemsModel(
-          leadAsset: AssetConstants.icLegalAction,
-          title: "reference screen documents",
-          action: RouteConstants.selectDocumentForScreen),
-      _CardItemsModel(
           leadAsset: AssetConstants.icPersons,
           title: LocaleKeys.objectionRejection.tr(),
           action: RouteConstants.financeCourtScreen),
@@ -132,34 +128,38 @@ class _CollectReceipts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(color: ColorConstants.primary, width: 1),
-        borderRadius: const BorderRadius.all(
-          Radius.circular(20.0),
+    return InkWell(
+      onTap: () {
+        Navigator.pushNamed(context, RouteConstants.selectDocumentForScreen);
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: ColorConstants.primary, width: 1),
+          borderRadius: const BorderRadius.all(
+            Radius.circular(20.0),
+          ),
         ),
-      ),
-      child: ListTile(
-        leading: SvgPicture.asset(
-          AssetConstants.icReceipts,
-          height: 18,
-          color: ColorConstants.black,
-        ),
-        title: Text(
-          LocaleKeys.collectReceipts.tr(),
-          textAlign: TextAlign.left,
-          style: Theme.of(context).textTheme.bodyText1!.copyWith(
-              fontWeight: FontWeight.w500, fontSize: 15, letterSpacing: -0.3),
-        ),
-        trailing: SvgPicture.asset(
-          AssetConstants.icForward,
-          height: 12,
+        child: ListTile(
+          leading: SvgPicture.asset(
+            AssetConstants.icReceipts,
+            height: 18,
+            color: ColorConstants.black,
+          ),
+          title: Text(
+            LocaleKeys.collectReceipts.tr(),
+            textAlign: TextAlign.left,
+            style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                fontWeight: FontWeight.w500, fontSize: 15, letterSpacing: -0.3),
+          ),
+          trailing: SvgPicture.asset(
+            AssetConstants.icForward,
+            height: 12,
+          ),
         ),
       ),
     );
   }
 }
-
 
 class _CardItemsModel {
   final String leadAsset, title, action;

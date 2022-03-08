@@ -116,9 +116,9 @@ class DocumentsProvider extends ChangeNotifier {
       var res =
           await firestore.collection("document").doc("document-options").get();
       Map<String, dynamic> x = res.data() as Map<String, dynamic>;
-      DocumentOptionsWrappers declarationTaxWrapper = DocumentOptionsWrappers.fromJson(x);
+      DocumentOptionsWrappers data = DocumentOptionsWrappers.fromJson(x);
       setBusyStateDocument = false;
-      return CommonResponseWrapper(status: true, data: declarationTaxWrapper);
+      return CommonResponseWrapper(status: true, data: data);
     } catch (e) {
       setBusyStateDocument = false;
       return CommonResponseWrapper(

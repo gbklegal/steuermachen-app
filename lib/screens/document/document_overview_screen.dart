@@ -6,10 +6,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
-import 'package:steuermachen/components/button_component.dart';
 import 'package:steuermachen/components/popup_loader_component.dart';
-import 'package:steuermachen/components/toast_component.dart';
-import 'package:steuermachen/constants/app_constants.dart';
+import 'package:steuermachen/components/text_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
@@ -18,7 +16,6 @@ import 'package:path/path.dart' as path;
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/providers/document/document_provider.dart';
 import 'package:steuermachen/utils/utils.dart';
-import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 import 'package:steuermachen/wrappers/document/documents_wrapper.dart';
 
 class DocumentOverviewScreen extends StatefulWidget {
@@ -63,91 +60,48 @@ class _DocumentOverviewScreenState extends State<DocumentOverviewScreen> {
         showBottomLine: true,
       ),
       body: _mainBody(context),
-      bottomNavigationBar: Visibility(
-        visible: widget.showNextBtn! || widget.uploadBtnNow!,
-        child: Padding(
-          padding: AppConstants.bottomBtnPadding,
-          child: ButtonComponent(
-            btnHeight: 56,
-            buttonText: widget.uploadBtnNow!
-                ? LocaleKeys.upload.tr()
-                : LocaleKeys.next.tr().toUpperCase(),
-            textStyle: FontStyles.fontRegular(
-                color: ColorConstants.white, fontSize: 18),
-            onPressed: () async {
-              _provider
-                  .setFilesForUpload([...selectPDFList, ...selectImageList]);
-              if (widget.uploadBtnNow!) {
-                PopupLoader.showLoadingDialog(context);
-                CommonResponseWrapper res = await _provider.uploadFiles();
-                PopupLoader.hideLoadingDialog(context);
-                ToastComponent.showToast(res.message!);
-              } else {
-                Navigator.pushNamed(context, widget.onNextBtnRoute!);
-              }
-            },
+    );
+  }
+
+  Padding _mainBody(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(
+            height: 20,
           ),
-        ),
+          TextComponent(
+            LocaleKeys.documentOverviewForTaxYear.tr()+ " 2018",
+            style: FontStyles.fontMedium(
+                fontSize: 16, fontWeight: FontWeight.w600, letterSpacing: 3),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Consumer<DocumentsProvider>(
+                      builder: (context, consumer, child) {
+                    return Column(
+                      children: [
+                        for (var i = 0; i < documents.length; i++)
+                          for (var x = 0; x < documents[i].url.length; x++)
+                            _selectedDocumentListTile(documents[i].url[x],
+                                Utils.getTimeAgo(DateTime.now()), i,
+                                isImage: false, isUrl: true, doc: documents[i])
+                      ],
+                    );
+                  }),
+                ],
+              ),
+            ),
+          )
+        ],
       ),
-    );
-  }
-
-  Column _mainBody(BuildContext context) {
-    return Column(
-      children: [
-        const SizedBox(
-          height: 40,
-        ),
-        _documentSelection(context),
-        const _DocumentOverview(),
-        Expanded(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Consumer<DocumentsProvider>(
-                    builder: (context, consumer, child) {
-                  return Column(
-                    children: [
-                      for (var i = 0; i < documents.length; i++)
-                        for (var x = 0; x < documents[i].url.length; x++)
-                          _selectedDocumentListTile(documents[i].url[x],
-                              Utils.getTimeAgo(DateTime.now()), i,
-                              isImage: false, isUrl: true, doc: documents[i])
-                    ],
-                  );
-                }),
-                if (selectImageList.isNotEmpty)
-                  for (var i = 0; i < selectImageList.length; i++)
-                    _selectedDocumentListTile(selectImageList[i],
-                        Utils.getTimeAgo(DateTime.now()), i),
-                if (selectPDFList.isNotEmpty)
-                  for (var i = 0; i < selectPDFList.length; i++)
-                    _selectedDocumentListTile(
-                        selectPDFList[i], Utils.getTimeAgo(DateTime.now()), i,
-                        isImage: false),
-              ],
-            ),
-          ),
-        )
-      ],
-    );
-  }
-
-  Column _documentSelection(BuildContext context) {
-    return Column(
-      children: [
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: Text(
-              LocaleKeys.selectDocument.tr(),
-              style: FontStyles.fontMedium(
-                  lineSpacing: 1.1, fontSize: 24, fontWeight: FontWeight.w600),
-            ),
-          ),
-        ),
-      ],
     );
   }
 
@@ -160,7 +114,7 @@ class _DocumentOverviewScreenState extends State<DocumentOverviewScreen> {
     bool isUrl = false,
   }) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+      padding: const EdgeInsets.symmetric(vertical: 10),
       child: Container(
         decoration: BoxDecoration(
           color: ColorConstants.formFieldBackground,
@@ -253,42 +207,5 @@ class _DocumentOverviewScreenState extends State<DocumentOverviewScreen> {
         File(imagePath),
       );
     }
-  }
-}
-
-class _DocumentOverview extends StatelessWidget {
-  const _DocumentOverview({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.centerLeft,
-      child: Padding(
-        padding: const EdgeInsets.only(left: 15, right: 15, bottom: 15),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              LocaleKeys.documentOverview.tr(),
-              style: FontStyles.fontMedium(
-                  fontSize: 24, fontWeight: FontWeight.w600),
-            ),
-            const SizedBox(
-              width: 5,
-            ),
-            const Padding(
-              padding: EdgeInsets.only(top: 5.0),
-              child: Icon(
-                Icons.file_upload_outlined,
-                color: ColorConstants.primary,
-                size: 22,
-              ),
-            )
-          ],
-        ),
-      ),
-    );
   }
 }

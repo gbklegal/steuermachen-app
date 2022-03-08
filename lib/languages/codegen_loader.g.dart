@@ -208,6 +208,7 @@ class CodegenLoader extends AssetLoader{
   "selectTheTaxYear": "Select the tax year",
   "selectReceiptAndInvoices": "Select your receipts or invoices that you want to upload",
   "uploadMediaFromLibrary": "Upload from media\nlibrary",
+  "documentOverviewForTaxYear": "Document overview for tax year",
   "logout": "Ausloggen"
 };
 static const Map<String,dynamic> en = {
@@ -402,6 +403,7 @@ static const Map<String,dynamic> en = {
   "selectTheTaxYear": "Select the tax year",
   "selectReceiptAndInvoices": "Select your receipts or invoices that you want to upload",
   "uploadMediaFromLibrary": "Upload from media\nlibrary",
+  "documentOverviewForTaxYear": "Document overview for tax year",
   "logout": "Logout"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"de": de, "en": en};

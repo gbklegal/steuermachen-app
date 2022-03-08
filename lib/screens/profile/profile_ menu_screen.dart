@@ -50,12 +50,6 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
         trailingIcon: AssetConstants.icForward,
       ),
       ProfileMenuOptions(
-        leadingIcon: AssetConstants.icEye,
-        routeName: RouteConstants.howItWorksScreen,
-        title: LocaleKeys.howItWorks,
-        trailingIcon: AssetConstants.icForward,
-      ),
-      ProfileMenuOptions(
         leadingIcon: AssetConstants.icSupport,
         routeName: RouteConstants.contactUsOptionScreen,
         title: LocaleKeys.chatContact,
@@ -63,7 +57,7 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
       ),
       ProfileMenuOptions(
         leadingIcon: AssetConstants.icSupport,
-        routeName: RouteConstants.contactUsOptionScreen,
+        routeName: RouteConstants.quickTaxScreen,
         title: LocaleKeys.quickCheckForYourRefund,
         trailingIcon: AssetConstants.icForward,
       ),
@@ -89,7 +83,8 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
                     decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.all(Radius.circular(35)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(35)),
                         color: ColorConstants.white,
                         boxShadow: [
                           BoxShadow(
@@ -133,7 +128,8 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
                   ),
                 ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 30),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 60, vertical: 30),
                 child: ButtonComponent(
                   buttonText: LocaleKeys.logout,
                   color: ColorConstants.primary,

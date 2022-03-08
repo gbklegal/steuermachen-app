@@ -15,6 +15,7 @@ import 'package:steuermachen/constants/app_constants.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
+import 'package:steuermachen/constants/strings/options_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
@@ -43,7 +44,7 @@ class SelectDocumentForScreen extends StatefulWidget {
 
 class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
   CommonResponseWrapper? response;
-  late List<String> selectImageList = [];
+  late String selectImageList;
   late String selectPDF;
   User? user = FirebaseAuth.instance.currentUser;
   late DocumentsProvider _provider;
@@ -77,8 +78,9 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
           onTapCamera: () {},
           onImagePath: (String imagePath) async {
             setState(() {
-              selectImageList.add(imagePath);
+              selectImageList = imagePath;
             });
+            await uploadDocument(imagePath);
           },
         );
       },
@@ -95,14 +97,14 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
         selectPDF = result.files.single.path!;
         // File file = File();
       });
-      await uploadDocument();
+      await uploadDocument(result.files.single.path!);
     } else {
       // User canceled the picker
     }
   }
 
-  uploadDocument() async {
-    _provider.setFilesForUpload([selectPDF, ...selectImageList]);
+  uploadDocument(String file) async {
+    _provider.setFilesForUpload([file]);
     PopupLoader.showLoadingDialog(context);
     CommonResponseWrapper res = await _provider.uploadFiles();
     PopupLoader.hideLoadingDialog(context);
@@ -120,31 +122,31 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
         showPersonIcon: false,
         showBottomLine: true,
       ),
-      body: Consumer<DocumentsProvider>(
-            builder: (context, consumer, child) {
-          if (consumer.getBusyStateDocument || response == null) {
-            return const EmptyScreenLoaderComponent();
-          } else if (!response!.status!) {
-            return ErrorComponent(
-              message: response!.message!,
-              onTap: () async {
-                consumer.setBusyStateDocument = true;
-                await _provider
-                    .getDocumentOptionsData()
-                    .then((value) => response = value);
-                consumer.setBusyStateDocument = false;
-              },
-            );
+      body: Consumer<DocumentsProvider>(builder: (context, consumer, child) {
+        if (consumer.getBusyStateDocument || response == null) {
+          return const EmptyScreenLoaderComponent();
+        } else if (!response!.status!) {
+          return ErrorComponent(
+            message: response!.message!,
+            onTap: () async {
+              consumer.setBusyStateDocument = true;
+              await _provider
+                  .getDocumentOptionsData()
+                  .then((value) => response = value);
+              consumer.setBusyStateDocument = false;
+            },
+          );
+        } else {
+          DocumentOptionsWrappers documentOptions =
+              response!.data as DocumentOptionsWrappers;
+
+          if (context.locale == const Locale('en')) {
+            return _mainBody(context, documentOptions.en);
           } else {
-            DocumentOptionsWrappers currentYearTaxViewWrapper =
-                response!.data as DocumentOptionsWrappers;
-            if (context.locale == const Locale('en')) {
-              return _mainBody(context);
-            } else {
-             return _mainBody(context);
-            }
+            return _mainBody(context, documentOptions.du);
           }
-        }), 
+        }
+      }),
       bottomNavigationBar: Visibility(
         visible: widget.showNextBtn! || widget.uploadBtnNow!,
         child: Padding(
@@ -174,7 +176,8 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
     );
   }
 
-  SingleChildScrollView _mainBody(BuildContext context) {
+  SingleChildScrollView _mainBody(
+      BuildContext context, List<DocumentOptionsData> data) {
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -184,7 +187,7 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
             const SizedBox(
               height: 40,
             ),
-            _documentSelection(context),
+            _documentSelection(context, data),
             TextComponent(
               LocaleKeys.documentOverview,
               style: FontStyles.fontMedium(
@@ -230,7 +233,8 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
     );
   }
 
-  Column _documentSelection(BuildContext context) {
+  Column _documentSelection(
+      BuildContext context, List<DocumentOptionsData> data) {
     return Column(
       children: [
         TextComponent(
@@ -238,55 +242,7 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
           style: FontStyles.fontMedium(
               lineSpacing: 1.1, fontSize: 18, fontWeight: FontWeight.w600),
         ),
-        DropdownButtonFormField<int>(
-          decoration: const InputDecoration(
-            border: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.white),
-            ),
-          ),
-          icon: SvgPicture.asset(
-            AssetConstants.icDown,
-            color: ColorConstants.black,
-            height: 10,
-          ),
-          value: 1,
-          items: <DropdownMenuItem<int>>[
-            DropdownMenuItem<int>(
-              value: 1,
-              child: TextComponent(
-                "Please select",
-                style: FontStyles.fontRegular(),
-              ),
-            ),
-          ],
-          onChanged: (val) {},
-        ),
-        const SizedBox(
-          height: 15,
-        ),
-        DropdownButtonFormField<int>(
-          decoration: const InputDecoration(
-            border: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.white),
-            ),
-          ),
-          icon: SvgPicture.asset(
-            AssetConstants.icDown,
-            color: ColorConstants.black,
-            height: 10,
-          ),
-          value: 1,
-          items: <DropdownMenuItem<int>>[
-            DropdownMenuItem<int>(
-              value: 1,
-              child: TextComponent(
-                "Please select",
-                style: FontStyles.fontRegular(),
-              ),
-            ),
-          ],
-          onChanged: (val) {},
-        ),
+        for (var i = 0; i < data.length; i++) _dropdowns(data, i),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 30),
           child: Row(
@@ -300,6 +256,52 @@ class _SelectDocumentForScreenState extends State<SelectDocumentForScreen> {
           ),
         ),
       ],
+    );
+  }
+
+  Padding _dropdowns(List<DocumentOptionsData> data, int i) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 10),
+      child: DropdownButtonFormField<String>(
+        decoration: const InputDecoration(
+          border: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.white),
+          ),
+        ),
+        icon: SvgPicture.asset(
+          AssetConstants.icDown,
+          color: ColorConstants.black,
+          height: 10,
+        ),
+        value: data[i].optionType == OptionConstants.yearsList
+            ? years[0].toString()
+            : data[i].options[0],
+        items: data[i].optionType == OptionConstants.yearsList
+            ? years
+                .map(
+                  (e) => DropdownMenuItem<String>(
+                    value: e.toString(),
+                    child: TextComponent(
+                      e.toString(),
+                      style: FontStyles.fontRegular(),
+                    ),
+                  ),
+                )
+                .toList()
+            : data[i]
+                .options
+                .map(
+                  (e) => DropdownMenuItem<String>(
+                    value: e,
+                    child: TextComponent(
+                      e,
+                      style: FontStyles.fontRegular(),
+                    ),
+                  ),
+                )
+                .toList(),
+        onChanged: (val) {},
+      ),
     );
   }
 

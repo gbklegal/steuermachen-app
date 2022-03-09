@@ -193,16 +193,14 @@ class _UserFormComponentState extends State<UserFormComponent>
                 validator: validateFieldEmpty,
               ),
               sizedBox4,
-              !widget.isAddNewAddress!
-                  ? TextFormField(
-                      controller: consumer.phoneController,
-                      decoration: InputDecoration(
-                        labelText: LocaleKeys.phone.tr() + "*",
-                        hintStyle: fontStyle,
-                      ),
-                      validator: validatePhone,
-                    )
-                  : const SizedBox(),
+              TextFormField(
+                controller: consumer.phoneController,
+                decoration: InputDecoration(
+                  labelText: LocaleKeys.phone.tr() + "*",
+                  hintStyle: fontStyle,
+                ),
+                validator: validatePhone,
+              ),
               sizedBox4,
               !widget.isAddNewAddress!
                   ? TextFormField(
@@ -224,7 +222,8 @@ class _UserFormComponentState extends State<UserFormComponent>
                         true, // optional. Shows phone code before the country name.
                     onSelect: (Country country) {
                       print('Select country: ${country.displayName}');
-                      consumer.countryController.text = country.displayName;
+                      consumer.countryController.text =
+                          country.displayNameNoCountryCode;
                     },
                   );
                 },

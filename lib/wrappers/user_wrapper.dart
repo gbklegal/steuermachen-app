@@ -47,5 +47,6 @@ class UserWrapper {
         "email": email,
         "country": land,
         "gender": gender,
+        "createdAt": DateTime.now(),
       };
 }

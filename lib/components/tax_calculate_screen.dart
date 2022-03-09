@@ -79,16 +79,17 @@ class TaxCalculatorComponent extends StatelessWidget {
             ),
           ),
           Container(
+            height: 48,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
               border: Border.all(color: Colors.green),
               borderRadius: BorderRadius.circular(10),
             ),
             child: Padding(
-              padding: const EdgeInsets.all(18.0),
+              padding: const EdgeInsets.all(5.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
                     consumer.calculatedPrice == 0
@@ -97,14 +98,17 @@ class TaxCalculatorComponent extends StatelessWidget {
                     style: Theme.of(context)
                         .textTheme
                         .headline6!
-                        .copyWith(fontWeight: FontWeight.w500, fontSize: 25),
+                        .copyWith(fontWeight: FontWeight.w500, fontSize: 24),
                   ),
-                  Text(
-                    "euros",
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText1!
-                        .copyWith(fontWeight: FontWeight.w500, fontSize: 17),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 3, left: 5),
+                    child: Text(
+                      "Euros",
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText1!
+                          .copyWith(fontWeight: FontWeight.w500, fontSize: 15),
+                    ),
                   ),
                 ],
               ),

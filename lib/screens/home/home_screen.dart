@@ -100,8 +100,19 @@ class HomeScreen extends StatelessWidget {
                               }
                             },
                             child: ShadowCardComponent(
+                              bgColor: i == 0
+                                  ? ColorConstants.primary
+                                  : ColorConstants.white,
+                              fontColor: i == 0
+                                  ? ColorConstants.white
+                                  : ColorConstants.black,
+                              iconColor: i == 0
+                                  ? ColorConstants.white
+                                  : ColorConstants.black,
                               leadingAsset: content[i].leadAsset,
                               title: content[i].title,
+                              fontSize: 15,
+                              trailingAsset: AssetConstants.icForward,
                             ),
                           ),
                         const SizedBox(

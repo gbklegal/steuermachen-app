@@ -205,9 +205,12 @@ class _SignInScreenState extends State<SignInScreen> with InputValidationUtil {
               label: Text(LocaleKeys.password.tr()),
               contentPadding: const EdgeInsets.only(left: 0),
               prefixIcon: TextFormFieldIcons(
-                assetName: AssetConstants.icEmail,
-                padding: 16,
-                icColor: ColorConstants.white,
+                assetName: AssetConstants.icLock,
+                padding: 12,
+              ),
+              suffixIcon: TextFormFieldIcons(
+                assetName: AssetConstants.icEyeClose,
+                padding: 12,
               ),
             ),
             obscureText: true,

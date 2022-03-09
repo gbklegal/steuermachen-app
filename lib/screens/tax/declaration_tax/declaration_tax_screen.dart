@@ -50,7 +50,6 @@ class _DeclarationTaxScreenState extends State<DeclarationTaxScreen> {
         showBackButton: true,
         showPersonIcon: false,
         showBottomLine: true,
-        backText: "",
       ),
       body: Padding(
         padding: const EdgeInsets.only(left: 16, right: 16, top: 25),
@@ -165,7 +164,7 @@ class _QuestionsViewState extends State<_QuestionsView> {
               ),
               if (widget.declarationTaxData[i].showBottomNav)
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 50),
+                  padding: const EdgeInsets.only(bottom: 80),
                   child: BackResetForwardBtnComponent(
                     onTapBack: () {
                       pageController.animateToPage(i - 1,

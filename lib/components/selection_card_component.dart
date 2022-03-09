@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 
@@ -30,8 +29,8 @@ class SelectionCardComponent extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const SizedBox(
-                width: 35,
+              SizedBox(
+                width: imagePath != null ? 30 : 10,
               ),
               Text(
                 title,

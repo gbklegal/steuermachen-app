@@ -125,7 +125,7 @@ class _ContactUsOptionScreenState extends State<ContactUsOptionScreen> {
           Flexible(
             child: TextComponent(
               btnName,
-              style: FontStyles.fontRegular(fontSize: 13),
+              style: FontStyles.fontMedium(fontSize: 13, lineSpacing: 1.1),
               // overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.center,
             ),

@@ -203,7 +203,7 @@ class _QuestionsViewState extends State<_QuestionsView> {
                   ),
                   if (widget.financeCourtViewData[i].showBottomNav)
                     Padding(
-                      padding: const EdgeInsets.only(bottom: 50),
+                      padding: const EdgeInsets.only(bottom: 80),
                       child: BackResetForwardBtnComponent(
                         onTapBack: () {
                           pageController.animateToPage(i - 1,

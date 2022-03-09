@@ -43,7 +43,6 @@ class _CurrentYearTaxScreenState extends State<CurrentYearTaxScreen> {
         showBackButton: true,
         showPersonIcon: false,
         showBottomLine: false,
-        backText: "",
       ),
       body: Padding(
         padding: const EdgeInsets.only(left: 16, right: 16, top: 25),

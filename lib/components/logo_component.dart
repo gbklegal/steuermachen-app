@@ -4,7 +4,7 @@ import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 
 class LogoComponent extends StatelessWidget {
-  const LogoComponent({Key? key, this.fontSize = 24}) : super(key: key);
+  const LogoComponent({Key? key, this.fontSize = 17}) : super(key: key);
   final double? fontSize;
   @override
   Widget build(BuildContext context) {
@@ -13,13 +13,13 @@ class LogoComponent extends StatelessWidget {
       children: [
         Image.asset(
           AssetConstants.logo,
-          height: fontSize != 24 ? fontSize : null,
+          height: 24,
         ),
         const SizedBox(
-          width: 8,
+          width: 2,
         ),
         Padding(
-          padding: const EdgeInsets.only(bottom: 4),
+          padding: const EdgeInsets.only(bottom: 0),
           child: TextComponent(
             StringConstants.appName,
             textAlign: TextAlign.start,

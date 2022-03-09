@@ -61,7 +61,7 @@ class _SignatureComponentState extends State<SignatureComponent> {
                 style: Theme.of(context)
                     .textTheme
                     .bodyText1!
-                    .copyWith(fontSize: 18, fontWeight: FontWeight.w500),
+                    .copyWith(fontSize: 18, fontWeight: FontWeight.w600),
               ),
             ),
           ],

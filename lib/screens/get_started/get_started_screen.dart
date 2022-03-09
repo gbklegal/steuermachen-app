@@ -5,6 +5,7 @@ import 'package:steuermachen/components/text_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
+import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 
 class GetStartedScreen extends StatelessWidget {
@@ -77,8 +78,11 @@ class GetStartedScreen extends StatelessWidget {
       color: backgroundColor,
       onPressed: onPressed,
       buttonText: btnText,
-      textStyle: Theme.of(context).textTheme.button!.copyWith(
-          color: backgroundColor != null ? ColorConstants.black : null),
+      textStyle: FontStyles.fontMedium(
+          fontSize: 15,
+          color: backgroundColor == null
+              ? ColorConstants.white
+              : ColorConstants.black),
     );
   }
 }

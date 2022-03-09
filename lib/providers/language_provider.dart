@@ -6,7 +6,7 @@ class LanguageProvider extends ChangeNotifier {
 
   changeLanguage(String newValue, BuildContext context) {
     value = newValue;
-    if (newValue == "DU") {
+    if (newValue == "DE") {
       context.setLocale(const Locale('de'));
     } else {
       context.setLocale(const Locale('en'));

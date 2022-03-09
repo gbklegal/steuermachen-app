@@ -51,7 +51,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 12, right: 12, bottom: 50),
+                  padding: const EdgeInsets.only(left: 18, right: 18, bottom: 50),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     // ignore: prefer_const_literals_to_create_immutables
@@ -72,7 +72,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                         ),
                       ),
                       const LogoComponent(
-                        fontSize: 20,
+                        fontSize: 17,
                       ),
                       const LanguageDropdownComponent(),
                     ],

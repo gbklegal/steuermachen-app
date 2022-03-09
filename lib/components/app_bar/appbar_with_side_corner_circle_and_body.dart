@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
+import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 
 class AppBarWithSideCornerCircleAndRoundBody extends StatelessWidget {
@@ -20,7 +21,7 @@ class AppBarWithSideCornerCircleAndRoundBody extends StatelessWidget {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBarComponent(
-        LocaleKeys.appName,
+        StringConstants.appName,
         imageTitle: AssetConstants.logo,
         backgroundColor: Colors.transparent,
         showBottomLine: false,

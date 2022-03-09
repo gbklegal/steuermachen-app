@@ -109,6 +109,7 @@ class ProfileProvider extends ChangeNotifier {
           );
         }
       } catch (e) {
+        setBusyStateProfile = false;
         return CommonResponseWrapper(
             status: false, message: "Something went wrong");
       }

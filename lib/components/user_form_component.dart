@@ -221,7 +221,6 @@ class _UserFormComponentState extends State<UserFormComponent>
                     showPhoneCode:
                         true, // optional. Shows phone code before the country name.
                     onSelect: (Country country) {
-                      print('Select country: ${country.displayName}');
                       consumer.countryController.text =
                           country.displayNameNoCountryCode;
                     },

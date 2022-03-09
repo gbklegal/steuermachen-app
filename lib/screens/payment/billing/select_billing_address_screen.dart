@@ -119,7 +119,7 @@ class SelectBillingAddressScreen extends StatelessWidget {
                     height: 5,
                   ),
                   Text(
-                    "${address.houseNumber} ${address.street}, ${address.location}, ${address.land}\n+${address.phone}",
+                    "${address.houseNumber} ${address.street}, ${address.location}, \n${address.land}\n+${address.phone}",
                     textAlign: TextAlign.left,
                     style: Theme.of(context).textTheme.bodyText1!.copyWith(
                         fontSize: 13, fontWeight: FontWeight.w500, height: 1.5),

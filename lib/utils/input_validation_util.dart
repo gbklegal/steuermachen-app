@@ -2,8 +2,10 @@ import 'package:email_validator/email_validator.dart';
 import 'package:steuermachen/constants/strings/error_messages_constants.dart';
 
 class InputValidationUtil {
-  static const patternName = r"^\s*([A-Za-z]{1,}([\.,] |[-']| ))+[A-Za-z]+\.?\s*$";
+  static const patternName =
+      r"^\s*([A-Za-z]{1,}([\.,] |[-']| ))+[A-Za-z]+\.?\s*$";
   static const patternPhone = r'^(?:[0]9)?[0-9]{11}$';
+  static const patternDigits = r'^[0-9]*$';
   static const Pattern passwordMinLen8withLowerCaseAndSpecialChar =
       r'^((?=.*\d)(?=.*[a-z])(?=.*[\W_]).{8,20})';
   static const Pattern passwordMinLenWithOneCharAndNumber =
@@ -21,6 +23,11 @@ class InputValidationUtil {
   bool _isValidName(String name) {
     RegExp regexName = RegExp(patternName);
     return regexName.hasMatch(name);
+  }
+
+  bool isValidateDigit(String digit) {
+    RegExp regexName = RegExp(patternDigits);
+    return regexName.hasMatch(digit);
   }
 
   isPasswordValid(String password, String pattern) {
@@ -80,7 +87,6 @@ class InputValidationUtil {
     }
   }
 
-
   String? validateEmail(String? email, {String? errorMessage}) {
     if (email!.isEmpty) {
       return ErrorMessagesConstants.errEmpty;
@@ -94,7 +100,6 @@ class InputValidationUtil {
       }
     }
   }
-
 
   String? validateName(String? name, {String? errorMessage}) {
     if (name!.isEmpty) {
@@ -112,6 +117,18 @@ class InputValidationUtil {
 
   String? validateFieldEmpty(String? input, {String? errorMessage}) {
     if (input!.isEmpty) {
+      if (errorMessage == null) {
+        return ErrorMessagesConstants.errEmpty;
+      } else {
+        return errorMessage;
+      }
+    } else {
+      return null;
+    }
+  }
+
+  String? validateDigit(String? input, {String? errorMessage}) {
+    if (isValidateDigit(input!)) {
       if (errorMessage == null) {
         return ErrorMessagesConstants.errEmpty;
       } else {

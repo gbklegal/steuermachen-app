@@ -38,6 +38,15 @@ class Utils {
         curve: Curves.easeInToLinear);
   }
 
+  static void hideKeyboard(context) {
+    FocusScopeNode currentFocus = FocusScope.of(context);
+
+    if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+      FocusManager.instance.primaryFocus!.unfocus();
+      currentFocus.dispose();
+    }
+  }
+
   static Future<bool> submitProfile(BuildContext context) async {
     ProfileProvider _provider =
         Provider.of<ProfileProvider>(context, listen: false);

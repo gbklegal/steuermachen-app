@@ -8,10 +8,12 @@ class BackResetForwardBtnComponent extends StatelessWidget {
     this.onTapBack,
     this.onTapContinue,
     this.onTapReset,
+    this.showContinueBtn = true,
   }) : super(key: key);
   final void Function()? onTapBack;
   final void Function()? onTapContinue;
   final void Function()? onTapReset;
+  final bool? showContinueBtn;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -21,8 +23,11 @@ class BackResetForwardBtnComponent extends StatelessWidget {
         children: [
           _iconText(AssetConstants.icBackNav, "Back", onTapBack, context),
           _iconText(AssetConstants.icReset, "Start new", onTapReset, context),
-          _iconText(
-              AssetConstants.icForwardNav, "Continue", onTapContinue, context),
+          Visibility(
+            visible: showContinueBtn!,
+            child: _iconText(AssetConstants.icForwardNav, "Continue",
+                onTapContinue, context),
+          ),
         ],
       ),
     );

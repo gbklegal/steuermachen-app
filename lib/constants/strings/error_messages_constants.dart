@@ -6,6 +6,7 @@ class ErrorMessagesConstants {
   static const String invalidName = 'Invalid Name.';
   static const String minName = 'Minimum name lenght is 3.';
   static const String email = 'Email field is required.';
+  static const String invalidInput = 'Invalid input.';
   static const String invalidEmail = 'Invalid Email.';
   static const String contact = 'Contact field is required.';
   static const String invalidContact = 'Invalid contact number.';

@@ -193,5 +193,10 @@
     "selectReceiptAndInvoices": "Select your receipts or invoices that you want to upload",
     "uploadMediaFromLibrary": "Upload from media\nlibrary",
     "documentOverviewForTaxYear": "Document overview for tax year",
+    "goodNews": "We have good news. Your estimated tax refund is:",
+    "to": "to",
+    "calculateTaxReturnCost": "Calculate your tax return costs",
+    "startNowWithTheTaxReturn": "Start now with the tax return",
+    "loginHere": "Login here",
     "logout": "Ausloggen"
 }

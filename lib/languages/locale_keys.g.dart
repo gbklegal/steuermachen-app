@@ -195,6 +195,11 @@ abstract class  LocaleKeys {
   static const selectReceiptAndInvoices = 'selectReceiptAndInvoices';
   static const uploadMediaFromLibrary = 'uploadMediaFromLibrary';
   static const documentOverviewForTaxYear = 'documentOverviewForTaxYear';
+  static const goodNews = 'goodNews';
+  static const to = 'to';
+  static const calculateTaxReturnCost = 'calculateTaxReturnCost';
+  static const startNowWithTheTaxReturn = 'startNowWithTheTaxReturn';
+  static const loginHere = 'loginHere';
   static const logout = 'logout';
 
 }

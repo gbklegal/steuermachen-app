@@ -9,6 +9,7 @@ import 'package:steuermachen/components/selection_card_component.dart';
 import 'package:steuermachen/components/text_progress_bar_component.dart';
 import 'package:steuermachen/components/toast_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
+import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/error_messages_constants.dart';
 import 'package:steuermachen/constants/strings/options_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
@@ -33,9 +34,20 @@ class _QuickTaxScreenState extends State<QuickTaxScreen> {
   @override
   void initState() {
     provider = Provider.of<QuickTaxProvider>(context, listen: false);
-    WidgetsBinding.instance!.addPostFrameCallback((_) =>
-        provider.getQuickTaxViewData().then((value) => response = value));
+    _getData();
     super.initState();
+  }
+
+  _getData() {
+    WidgetsBinding.instance!.addPostFrameCallback(
+      (_) => provider.getQuickTaxViewData().then(
+        (value) {
+          setState(() {
+            response = value;
+          });
+        },
+      ),
+    );
   }
 
   @override
@@ -51,35 +63,47 @@ class _QuickTaxScreenState extends State<QuickTaxScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.only(left: 16, right: 16, top: 25),
-        child: Consumer<QuickTaxProvider>(builder: (context, consumer, child) {
-          if (consumer.getBusyStateQuickTax || response == null) {
-            return const EmptyScreenLoaderComponent();
-          } else if (!response!.status!) {
-            return ErrorComponent(
-              message: response!.message!,
-              onTap: () async {
-                consumer.setBusyStateQuickTax = true;
-                await provider
-                    .getQuickTaxViewData()
-                    .then((value) => response = value);
-                consumer.setBusyStateQuickTax = false;
-              },
-            );
-          } else {
-            QuickTaxWrapper quickTaxWrapper = response!.data as QuickTaxWrapper;
-            if (context.locale == const Locale('en')) {
-              return _QuestionsView(
-                quickTaxData: quickTaxWrapper.en,
-              );
-            } else {
-              return _QuestionsView(
-                quickTaxData: quickTaxWrapper.du,
-              );
-            }
-          }
-        }),
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (provider.getBusyStateQuickTax || response == null)
+                const Center(child: EmptyScreenLoaderComponent())
+              else if (!response!.status!)
+                ErrorComponent(
+                  message: response!.message!,
+                  onTap: () async {
+                    await provider
+                        .getQuickTaxViewData()
+                        .then((value) => response = value);
+                  },
+                )
+              else
+                _questionsView()
+            ],
+          ),
+        ),
       ),
     );
+  }
+
+  Flexible _questionsView() {
+    QuickTaxWrapper quickTaxWrapper = response!.data as QuickTaxWrapper;
+    if (context.locale == const Locale('en')) {
+      return Flexible(
+        child: _QuestionsView(
+          quickTaxData: quickTaxWrapper.en,
+        ),
+      );
+    } else {
+      return Flexible(
+        child: _QuestionsView(
+          quickTaxData: quickTaxWrapper.du,
+        ),
+      );
+    }
   }
 }
 
@@ -97,14 +121,6 @@ class _QuestionsView extends StatefulWidget {
 class _QuestionsViewState extends State<_QuestionsView> {
   final pageController = PageController(initialPage: 0);
   int pageIndex = 0;
-  bool _validateInputField(String digit) {
-    if (InputValidationUtil().isValidateDigit(digit)) {
-      return true;
-    } else {
-      ToastComponent.showToast(ErrorMessagesConstants.invalidInput);
-      return false;
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -159,11 +175,8 @@ class _QuestionsViewState extends State<_QuestionsView> {
                                   x++)
                                 InkWell(
                                   onTap: () {
-                                    consumer.addPoint(
-                                        i,
-                                        widget
-                                            .quickTaxData[i].options[x].point);
-                                    Utils.animateToNextPage(pageController, i);
+                                    _selectionCardOnTap(
+                                        consumer, i, x, context);
                                   },
                                   child: SelectionCardComponent(
                                     title:
@@ -228,5 +241,25 @@ class _QuestionsViewState extends State<_QuestionsView> {
         ],
       ),
     );
+  }
+
+  bool _validateInputField(String digit) {
+    if (digit != "" && InputValidationUtil().isValidateDigit(digit)) {
+      return true;
+    } else {
+      ToastComponent.showToast(ErrorMessagesConstants.invalidInput);
+      return false;
+    }
+  }
+
+  void _selectionCardOnTap(
+      QuickTaxProvider consumer, int i, int x, BuildContext context) {
+    consumer.addPoint(i, widget.quickTaxData[i].options[x].point);
+    if (widget.quickTaxData[i].options[x].decision ==
+        OptionConstants.complete) {
+      Navigator.pushNamed(context, RouteConstants.quickTaxEstimatedValueScreen);
+    } else {
+      Utils.animateToNextPage(pageController, i);
+    }
   }
 }

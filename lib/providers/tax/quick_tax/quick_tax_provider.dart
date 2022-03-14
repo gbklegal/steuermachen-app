@@ -8,7 +8,6 @@ class QuickTaxProvider extends ChangeNotifier {
   Map<int, int> _sumPoints = {};
   Map<int, TextEditingController>? _inputFieldsController = {};
   Map<int, TextEditingController>? get controllers => _inputFieldsController;
-  // int get totalPoins => _sumPoints;
   bool _busyStateQuickTax = true;
   bool get getBusyStateQuickTax => _busyStateQuickTax;
   set setBusyStateQuickTax(bool _isBusy) {
@@ -52,5 +51,22 @@ class QuickTaxProvider extends ChangeNotifier {
 
   addPoint(int key, int points) {
     _sumPoints[key] = points;
+  }
+
+  String getTotalPoints() {
+    int _points = 0;
+    _sumPoints.forEach((key, value) {
+      _points += value;
+    });
+    if (_points >= 0 && _points <= 4) {
+      return "EUR 150 . EUR 450";
+    } else if (_points >= 5 && _points <= 8) {
+      return "EUR 451 . EUR 1026";
+    } else if (_points >= 8 && _points <= 11) {
+      return "EUR 1027 . EUR 1842";
+    } else {
+      // if (_points >= 8 && _points <= 11)
+      return "up to EUR 1843 and more";
+    }
   }
 }

@@ -42,6 +42,7 @@ import 'package:steuermachen/screens/tax/declaration_tax/declaration_tax_screen.
 import 'package:steuermachen/screens/tax/easy_tax/easy_tax_component/tax_advice_form_screen.dart';
 import 'package:steuermachen/screens/tax/easy_tax/easy_tax_screen.dart';
 import 'package:steuermachen/screens/tax/finance_court/finance_court_screen.dart';
+import 'package:steuermachen/screens/tax/quick_tax/quick_tax_estimated_value_screen.dart';
 import 'package:steuermachen/screens/tax/quick_tax/quick_tax_screen.dart';
 import 'package:steuermachen/screens/tax/safe_tax/safe_tax_screen.dart';
 import 'package:steuermachen/screens/tax/select_safe_or_quick_tax_screen.dart';
@@ -134,6 +135,10 @@ onGenerateRoutes(RouteSettings settings) {
     case RouteConstants.quickTaxScreen:
       return MaterialPageRoute(
         builder: (_) => const QuickTaxScreen(),
+      );
+    case RouteConstants.quickTaxEstimatedValueScreen:
+      return MaterialPageRoute(
+        builder: (_) => const QuickTaxEstimatedValueScreen(),
       );
     case RouteConstants.safeTaxScreen:
       return MaterialPageRoute(

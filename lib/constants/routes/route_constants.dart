@@ -47,4 +47,5 @@ class RouteConstants {
   static const String orderOverviewScreen = "OrderOverviewScreen";
   static const String whatInWorkScreen = "WhatInWorkScreen";
   static const String forgotPasswordScreen = "ForgotPasswordScreen";
+  static const String quickTaxEstimatedValueScreen = "QuickTaxEstimatedValueScreen";
 }

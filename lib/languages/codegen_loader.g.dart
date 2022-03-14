@@ -209,6 +209,11 @@ class CodegenLoader extends AssetLoader{
   "selectReceiptAndInvoices": "Select your receipts or invoices that you want to upload",
   "uploadMediaFromLibrary": "Upload from media\nlibrary",
   "documentOverviewForTaxYear": "Document overview for tax year",
+  "goodNews": "We have good news. Your estimated tax refund is:",
+  "to": "to",
+  "calculateTaxReturnCost": "Calculate your tax return costs",
+  "startNowWithTheTaxReturn": "Start now with the tax return",
+  "loginHere": "Login here",
   "logout": "Ausloggen"
 };
 static const Map<String,dynamic> en = {
@@ -404,6 +409,11 @@ static const Map<String,dynamic> en = {
   "selectReceiptAndInvoices": "Select your receipts or invoices that you want to upload",
   "uploadMediaFromLibrary": "Upload from media\nlibrary",
   "documentOverviewForTaxYear": "Document overview for tax year",
+  "goodNews": "We have good news. Your estimated tax refund is:",
+  "to": "to",
+  "calculateTaxReturnCost": "Calculate your tax return costs",
+  "startNowWithTheTaxReturn": "Start now with the tax return",
+  "loginHere": "Login here",
   "logout": "Logout"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"de": de, "en": en};

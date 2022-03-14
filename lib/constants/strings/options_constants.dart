@@ -10,4 +10,6 @@ class OptionConstants {
   static const String subjectTaxLaw = "subject_tax_law";
   static const String yearsList = "years_list";
   static const String optionsList = "option_list";
+  static const String next = "next";
+  static const String complete = "complete";
 }

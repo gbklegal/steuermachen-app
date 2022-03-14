@@ -146,22 +146,17 @@ class _QuestionsViewState extends State<_QuestionsView> {
                                     curve: Curves.easeInToLinear);
                               },
                               child: SelectionCardComponent(
-                                title: widget.quickTaxData[i].options[x],
+                                title: widget.quickTaxData[i].options[x].name,
                               ),
                             )
                         else
                           TextFormField(
                             // controller: _emailController,
-                            textAlign: TextAlign.center,
                             decoration: InputDecoration(
-                                label: Text(widget.quickTaxData[i].inputTitle),
-                                floatingLabelAlignment:
-                                    FloatingLabelAlignment.center,
-                                floatingLabelBehavior:
-                                    FloatingLabelBehavior.auto,
-                                focusedBorder: WidgetStyles.outlineInputBorder,
-                                enabledBorder: WidgetStyles.outlineInputBorder,
-                                filled: true),
+                              label: Text(widget.quickTaxData[i].inputTitle),
+                              focusedBorder: WidgetStyles.outlineBorder,
+                              enabledBorder: WidgetStyles.outlineBorder,
+                            ),
                             // validator: validateEmail,
                           ),
                       ],

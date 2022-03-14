@@ -14,8 +14,12 @@ class WidgetStyles {
   static const underlineInputBorder = UnderlineInputBorder(
     borderSide: BorderSide(color: ColorConstants.veryLightPurple, width: 0.3),
   );
-  static OutlineInputBorder outlineInputBorder = OutlineInputBorder(
+  static OutlineInputBorder filledWithNoBorder = OutlineInputBorder(
     borderRadius: BorderRadius.circular(5.0),
     borderSide: const BorderSide(color: ColorConstants.formFieldBackground),
+  );
+  static OutlineInputBorder outlineBorder = OutlineInputBorder(
+    borderRadius: BorderRadius.circular(5.0),
+    borderSide: const BorderSide(color: ColorConstants.grey, width: 0.5),
   );
 }

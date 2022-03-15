@@ -1,6 +1,7 @@
-import 'package:easy_localization/src/public_ext.dart';
+
 import 'package:flutter/material.dart';
 import 'package:steuermachen/components/button_component.dart';
+import 'package:steuermachen/components/text_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
@@ -23,8 +24,8 @@ class CompletedDialogComponent extends StatelessWidget {
           children: [
             Image.asset(AssetConstants.done),
             const SizedBox(height: 10),
-            Text(LocaleKeys.thankYou.tr()),
-            Text(LocaleKeys.weWillBeInTouchShortly.tr()),
+            const TextComponent(LocaleKeys.thankYou),
+            const TextComponent(LocaleKeys.weWillBeInTouchShortly),
             Row(
               children: [
                 Flexible(
@@ -32,7 +33,7 @@ class CompletedDialogComponent extends StatelessWidget {
                     padding: const EdgeInsets.only(right: 4, top: 10),
                     child: ButtonComponent(
                       btnHeight: 55,
-                      buttonText: LocaleKeys.goToHome.tr(),
+                      buttonText: LocaleKeys.goToHome,
                       textStyle: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w700,
@@ -50,7 +51,7 @@ class CompletedDialogComponent extends StatelessWidget {
                           padding: const EdgeInsets.only(left: 4, top: 10),
                           child: ButtonComponent(
                             btnHeight: 55,
-                            buttonText: LocaleKeys.back.tr(),
+                            buttonText: LocaleKeys.back,
                             textStyle: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w700,

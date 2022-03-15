@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
 import 'package:steuermachen/components/back_reset_forward_btn_component.dart';
+import 'package:steuermachen/components/dialogs/completed_dialog_component.dart';
 import 'package:steuermachen/components/empty_screen_loader_component.dart';
 import 'package:steuermachen/components/error_component%20copy.dart';
 import 'package:steuermachen/components/popup_loader_component.dart';
@@ -206,11 +207,11 @@ class _QuestionsViewState extends State<_QuestionsView> {
                                   CommonResponseWrapper res = await consumer
                                       .submitFinanceCourtData(context);
                                   PopupLoader.hideLoadingDialog(context);
-
-                                  ToastComponent.showToast(res.message!);
-                                  // if (res.status!) {
-                                  //   Toad
-                                  // }
+                                  if (res.status!) {
+                                    Utils.completedDialog(context);
+                                  } else {
+                                    ToastComponent.showToast(res.message!);
+                                  }
                                 },
                               )
                           ],

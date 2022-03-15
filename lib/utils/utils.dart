@@ -4,6 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:steuermachen/components/dialogs/completed_dialog_component.dart';
 import 'package:steuermachen/components/popup_loader_component.dart';
 import 'package:steuermachen/components/toast_component.dart';
 import 'package:steuermachen/constants/strings/error_messages_constants.dart';
@@ -49,6 +50,17 @@ class Utils {
     }
   }
 
+  static completedDialog(BuildContext context, {bool? backButton = false}) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return CompletedDialogComponent(
+          showBackBtn: backButton,
+        );
+      },
+    );
+  }
+
   static Future<bool> submitProfile(BuildContext context) async {
     ProfileProvider _provider =
         Provider.of<ProfileProvider>(context, listen: false);
@@ -65,7 +77,7 @@ class Utils {
     return false;
   }
 
- static Future<String> uploadToFirebaseStorage(String _file) async {
+  static Future<String> uploadToFirebaseStorage(String _file) async {
     File file = File(_file);
     String fileName = basename(file.path);
     var snapshot = FirebaseStorage.instance.ref().child("files/");

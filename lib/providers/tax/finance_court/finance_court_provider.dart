@@ -1,6 +1,13 @@
-import 'package:intl/intl.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:steuermachen/constants/strings/error_messages_constants.dart';
+import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/main.dart';
+import 'package:steuermachen/providers/signature/signature_provider.dart';
+import 'package:steuermachen/providers/terms_and_condition_provider.dart';
+import 'package:steuermachen/utils/utils.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 import 'package:steuermachen/wrappers/finance/finance_court_view_wrapper.dart';
 import 'package:steuermachen/wrappers/finance/finance_law_view_wrapper.dart';
@@ -92,5 +99,36 @@ class FinanceCourtProvider extends ChangeNotifier {
     financeLawWrapper.en = _data;
     financeLawWrapper.du = _data;
     notifyListeners();
+  }
+
+  Future<CommonResponseWrapper> submitFinanceCourtData(BuildContext context) async {
+    SignatureProvider _signature =
+        Provider.of<SignatureProvider>(context, listen: false);
+    TermsAndConditionProvider _termsAndContition =
+        Provider.of<TermsAndConditionProvider>(context, listen: false);
+    var checkedValue = _termsAndContition.getCommissionCheckedValue();
+    String signaturePath = await Utils.uploadToFirebaseStorage(
+        await _signature.getSignaturePath());
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      await firestore
+          .collection("user_orders")
+          .doc("${user?.uid}")
+          .collection("finance_court")
+          .add({
+        "subject_law_checks":
+            financeLawWrapper.en.options.map((e) => e.toJson()).toList(),
+        "selected_appeal_date": selectedDate,
+        "signature_path": signaturePath,
+        "checked_commission": checkedValue!.title.tr(),
+        "terms_and_condition_accepted": true,
+        "created_at": DateTime.now(),
+      });
+      return CommonResponseWrapper(
+          status: true, message: StringConstants.thankYouForOrder);
+    } catch (e) {
+      return CommonResponseWrapper(
+          status: false, message: ErrorMessagesConstants.somethingWentWrong);
+    }
   }
 }

@@ -1,5 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:io';
+import 'package:path/path.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/components/popup_loader_component.dart';
@@ -61,5 +63,16 @@ class Utils {
       return res.status!;
     }
     return false;
+  }
+
+ static Future<String> uploadToFirebaseStorage(String _file) async {
+    File file = File(_file);
+    String fileName = basename(file.path);
+    var snapshot = FirebaseStorage.instance.ref().child("files/");
+    var uploadedFile = await snapshot
+        .child(fileName + "-t-" + DateTime.now().toString())
+        .putFile(file);
+    String url = await uploadedFile.ref.getDownloadURL();
+    return url;
   }
 }

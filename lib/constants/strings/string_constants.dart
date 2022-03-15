@@ -66,7 +66,6 @@ class StringConstants {
   // static const String documentOverview = "Documents Overview";
   // static const String useCamera = "Use Camera";
 
-
   // Fill information
   // static const String initInfo = "Information for initial tax advice";
   // static const String fillInfo = "Fill out your information";
@@ -89,7 +88,6 @@ class StringConstants {
   // static const String uploadDocuments = "Upload documents";
   // static const String annualSlip = "Annual Slip";
 
-
   // FInal Step
   static const String finalStep = "";
   // static const String initAdvice = "Initial tax advice";
@@ -99,14 +97,12 @@ class StringConstants {
   // static const String or = "OR";
   // static const String orderNow = "Order Now";
 
-
   //Tax File Submit Dialog
   // static const String thankOrder = "Thank you for your order";
   // static const String youReceiveEmail =
   //     "IMPORTANT: You will receive an email with all the information on how to proceed.";
   // static const String goHome = "Go to Home";
   // static const String orderNew = "Order New";
-
 
   // Bottom Bar
   // static const String home = "Home";
@@ -124,6 +120,7 @@ class StringConstants {
   static const String taxTip = "Tax Tips";
   static const String support = "Support";
   static const String logout = "Log out";
+  static const String thankYouForOrder = "Thank you for your order";
   // static const String howCanWeHelpYou = "How can we help you?";
   // static const String getInTouchWithUs = "Get in touch with us";
   // static const String getInTouch = "Get in touch";

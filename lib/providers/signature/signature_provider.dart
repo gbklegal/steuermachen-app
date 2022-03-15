@@ -21,8 +21,12 @@ class SignatureProvider extends ChangeNotifier {
     return '${tempDir.path}/signature.png';
   }
 
+  Future<String> getSignaturePath() async {
+    var pngBytes = await controller.toPngBytes();
+    return await createTempPath(pngBytes!);
+  }
 
-  clearSignature(){
+  clearSignature() {
     controller.clear();
   }
 }

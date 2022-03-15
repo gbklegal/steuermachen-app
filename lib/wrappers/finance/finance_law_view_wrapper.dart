@@ -71,7 +71,6 @@ class Options {
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
-    _data['type'] = type;
     _data['title'] = title;
     _data['isSelect'] = isSelect;
     return _data;

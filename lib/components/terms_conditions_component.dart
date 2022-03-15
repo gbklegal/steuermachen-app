@@ -1,146 +1,128 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:steuermachen/components/button_component.dart';
 import 'package:steuermachen/components/imprint_privacy_condition_component.dart';
 import 'package:steuermachen/components/radio_component.dart';
 import 'package:steuermachen/components/text_component.dart';
+import 'package:steuermachen/components/toast_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
+import 'package:steuermachen/constants/strings/error_messages_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 
-class TermsAndConditionComponent extends StatefulWidget {
+import 'package:steuermachen/providers/terms_and_condition_provider.dart';
+
+class TermsAndConditionComponent extends StatelessWidget {
   const TermsAndConditionComponent(
       {Key? key, this.showCommissioning = false, this.onPressedOrderNow})
       : super(key: key);
   final bool showCommissioning;
-  final void Function()? onPressedOrderNow;
+  final void Function(bool value)? onPressedOrderNow;
 
-  @override
-  State<TermsAndConditionComponent> createState() =>
-      _TermsAndConditionComponentState();
-}
-
-class _TermsAndConditionComponentState
-    extends State<TermsAndConditionComponent> {
-  bool? commissioningRadio;
-  bool? termsAndConditionCheck;
-  final List<_TermsAndContionChecksData> commissioning = [
-    _TermsAndContionChecksData(
-        title: LocaleKeys.commissioningRadioTitle1, isSelected: false),
-    _TermsAndContionChecksData(
-        title: LocaleKeys.commissioningRadioTitle2, isSelected: false),
-  ];
-  final List<_TermsAndContionChecksData> termsAndConditionChecks = [
-    _TermsAndContionChecksData(
-        title: LocaleKeys.termsAndConditionCheck1, isSelected: false),
-    _TermsAndContionChecksData(
-        title: LocaleKeys.termsAndConditionCheck2, isSelected: false),
-  ];
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Visibility(
-          visible: widget.showCommissioning,
-          child: Column(
+    return Consumer<TermsAndConditionProvider>(
+        builder: (context, consumer, child) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Visibility(
+            visible: showCommissioning,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextComponent(
+                  LocaleKeys.commissioning,
+                  textAlign: TextAlign.left,
+                  style: FontStyles.fontMedium(
+                      fontSize: 20, letterSpacing: -0.3, lineSpacing: 1.1),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                for (var i = 0; i < consumer.commissioning.length; i++)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: RadioComponent(
+                      title: consumer.commissioning[i].title,
+                      isSelected: consumer.commissioning[i].isSelected,
+                      onTap: () => consumer.changeCommissionCheckState(i),
+                    ),
+                  ),
+                const SizedBox(
+                  height: 18,
+                ),
+              ],
+            ),
+          ),
+          Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TextComponent(
-                LocaleKeys.commissioning,
-                textAlign: TextAlign.left,
-                style: FontStyles.fontMedium(
-                    fontSize: 20, letterSpacing: -0.3, lineSpacing: 1.1),
-              ),
+              TextComponent(LocaleKeys.termsAndConditionNote,
+                  textAlign: TextAlign.left,
+                  style: FontStyles.fontMedium(
+                      fontSize: 16, letterSpacing: -0.3, lineSpacing: 1.1)),
               const SizedBox(
-                height: 20,
+                height: 10,
               ),
-              for (var i = 0; i < commissioning.length; i++)
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: RadioComponent(
-                    title: commissioning[i].title,
-                    isSelected: commissioning[i].isSelected,
-                    onTap: () {
-                      for (var item in commissioning) {
-                        item.isSelected = false;
-                      }
-                      setState(() {
-                        commissioning[i].isSelected = true;
-                      });
-                    },
-                  ),
-                ),
-              const SizedBox(
-                height: 18,
-              ),
-            ],
-          ),
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            TextComponent(LocaleKeys.termsAndConditionNote,
-                textAlign: TextAlign.left,
-                style: FontStyles.fontMedium(
-                    fontSize: 16, letterSpacing: -0.3, lineSpacing: 1.1)),
-            const SizedBox(
-              height: 10,
-            ),
-            for (var i = 0; i < termsAndConditionChecks.length; i++)
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _checkBox(context, termsAndConditionChecks[i].title,
-                      termsAndConditionChecks[i].isSelected, (value) {
-                    setState(() {
-                      termsAndConditionChecks[i].isSelected =
-                          !termsAndConditionChecks[i].isSelected;
-                    });
-                  }),
-                  Visibility(
-                    visible: i == 0,
-                    child: Transform.translate(
-                      offset: const Offset(0, -15),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 60),
-                        child: TextComponent(
-                          LocaleKeys.termsAndConditionCheckNonDisclosure,
-                          style: FontStyles.fontMedium(
-                              fontSize: 15, color: ColorConstants.primary),
+              for (var i = 0; i < consumer.termsAndConditionChecks.length; i++)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _checkBox(
+                        context,
+                        consumer.termsAndConditionChecks[i].title,
+                        consumer.termsAndConditionChecks[i].isSelected,
+                        (va) =>
+                            consumer.changeTermsAndConditionCheckedState(i)),
+                    Visibility(
+                      visible: i == 0,
+                      child: Transform.translate(
+                        offset: const Offset(0, -15),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 60),
+                          child: TextComponent(
+                            LocaleKeys.termsAndConditionCheckNonDisclosure,
+                            style: FontStyles.fontMedium(
+                                fontSize: 15, color: ColorConstants.primary),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Image.asset(
+                  AssetConstants.trustShops,
+                  height: 50,
+                ),
               ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Image.asset(
-                AssetConstants.trustShops,
-                height: 50,
-              ),
-            ),
-          ],
-        ),
-        SizedBox(
-          height: widget.showCommissioning ? 50 : 100,
-        ),
-        SizedBox(
-          height: 90,
-          child: Column(
-            children: [
-              ButtonComponent(
-                buttonText: "Order now",
-                onPressed: widget.onPressedOrderNow,
-              ),
-              const ImprintPrivacyConditionsComponent(),
             ],
           ),
-        )
-      ],
-    );
+          SizedBox(
+            height: showCommissioning ? 50 : 100,
+          ),
+          SizedBox(
+            height: 90,
+            child: Column(
+              children: [
+                ButtonComponent(
+                    buttonText: "Order now",
+                    onPressed: () {
+                      if (consumer.validateChecks(showCommissioning)) {
+                        onPressedOrderNow!(true);
+                      }
+                    }),
+                const ImprintPrivacyConditionsComponent(),
+              ],
+            ),
+          )
+        ],
+      );
+    });
   }
 
   Row _checkBox(BuildContext context, String checkBoxTitle, bool isSelected,
@@ -158,7 +140,7 @@ class _TermsAndConditionComponentState
         Flexible(
           child: Padding(
             padding: const EdgeInsets.only(top: 12),
-            child: Text(checkBoxTitle,
+            child: TextComponent(checkBoxTitle,
                 style: FontStyles.fontMedium(
                     fontSize: 16, letterSpacing: -0.3, lineSpacing: 1.1)),
           ),
@@ -166,10 +148,4 @@ class _TermsAndConditionComponentState
       ],
     );
   }
-}
-
-class _TermsAndContionChecksData {
-  late String title;
-  late bool isSelected;
-  _TermsAndContionChecksData({required this.title, required this.isSelected});
 }

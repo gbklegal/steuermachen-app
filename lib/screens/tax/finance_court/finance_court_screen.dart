@@ -5,6 +5,7 @@ import 'package:steuermachen/components/app_bar/appbar_component.dart';
 import 'package:steuermachen/components/back_reset_forward_btn_component.dart';
 import 'package:steuermachen/components/empty_screen_loader_component.dart';
 import 'package:steuermachen/components/error_component%20copy.dart';
+import 'package:steuermachen/components/popup_loader_component.dart';
 import 'package:steuermachen/components/signature_component.dart';
 import 'package:steuermachen/components/terms_conditions_component.dart';
 import 'package:steuermachen/components/text_progress_bar_component.dart';
@@ -15,6 +16,7 @@ import 'package:steuermachen/constants/strings/error_messages_constants.dart';
 import 'package:steuermachen/constants/strings/options_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
+import 'package:steuermachen/providers/signature/signature_provider.dart';
 import 'package:steuermachen/providers/tax/finance_court/finance_court_provider.dart';
 import 'package:steuermachen/screens/tax/finance_court/finance_law/finance_law_component.dart';
 import 'package:steuermachen/utils/utils.dart';
@@ -36,8 +38,12 @@ class _FinanceCourtScreenState extends State<FinanceCourtScreen> {
   @override
   void initState() {
     provider = Provider.of<FinanceCourtProvider>(context, listen: false);
-    WidgetsBinding.instance!.addPostFrameCallback((_) =>
-        provider.getFinanceCourtViewData().then((value) => response = value));
+    WidgetsBinding.instance!.addPostFrameCallback(
+        (_) => provider.getFinanceCourtViewData().then((value) {
+              setState(() {
+                response = value;
+              });
+            }));
     super.initState();
   }
 
@@ -54,36 +60,44 @@ class _FinanceCourtScreenState extends State<FinanceCourtScreen> {
         backText: "",
       ),
       body: Padding(
-        padding: const EdgeInsets.only(left: 16, right: 16, top: 25),
-        child:
-            Consumer<FinanceCourtProvider>(builder: (context, consumer, child) {
-          if (consumer.getBusyStateFinanceCourt || response == null) {
-            return const EmptyScreenLoaderComponent();
-          } else if (!response!.status!) {
-            return ErrorComponent(
-              message: response!.message!,
-              onTap: () async {
-                await provider
-                    .getFinanceCourtViewData()
-                    .then((value) => response = value);
-              },
-            );
-          } else {
-            FinanceCourtViewWrapper financeCourtViewWrapper =
-                response!.data as FinanceCourtViewWrapper;
-            if (context.locale == const Locale('en')) {
-              return _QuestionsView(
-                financeCourtViewData: financeCourtViewWrapper.en,
-              );
-            } else {
-              return _QuestionsView(
-                financeCourtViewData: financeCourtViewWrapper.du,
-              );
-            }
-          }
-        }),
-      ),
+          padding: const EdgeInsets.only(left: 16, right: 16, top: 25),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (provider.getBusyStateFinanceCourt || response == null)
+                const EmptyScreenLoaderComponent()
+              else if (!response!.status!)
+                ErrorComponent(
+                  message: response!.message!,
+                  onTap: () async {
+                    await provider
+                        .getFinanceCourtViewData()
+                        .then((value) => response = value);
+                  },
+                )
+              else
+                _getMainBody()
+            ],
+          )),
     );
+  }
+
+  Flexible _getMainBody() {
+    FinanceCourtViewWrapper financeCourtViewWrapper =
+        response!.data as FinanceCourtViewWrapper;
+    if (context.locale == const Locale('en')) {
+      return Flexible(
+        child: _QuestionsView(
+          financeCourtViewData: financeCourtViewWrapper.en,
+        ),
+      );
+    } else {
+      return Flexible(
+        child: _QuestionsView(
+          financeCourtViewData: financeCourtViewWrapper.du,
+        ),
+      );
+    }
   }
 }
 
@@ -126,8 +140,6 @@ class _QuestionsViewState extends State<_QuestionsView> {
           },
         );
       } else {
-        FinanceLawViewWrapper financeLawViewWrapper =
-            response!.data as FinanceLawViewWrapper;
         return PageView(
           controller: pageController,
           scrollDirection: Axis.horizontal,
@@ -187,8 +199,19 @@ class _QuestionsViewState extends State<_QuestionsView> {
                             else if (widget
                                     .financeCourtViewData[i].optionType ==
                                 OptionConstants.termsCondition)
-                              const TermsAndConditionComponent(
+                              TermsAndConditionComponent(
                                 showCommissioning: true,
+                                onPressedOrderNow: (value) async {
+                                  PopupLoader.showLoadingDialog(context);
+                                  CommonResponseWrapper res = await consumer
+                                      .submitFinanceCourtData(context);
+                                  PopupLoader.hideLoadingDialog(context);
+
+                                  ToastComponent.showToast(res.message!);
+                                  // if (res.status!) {
+                                  //   Toad
+                                  // }
+                                },
                               )
                           ],
                         ),

@@ -3,10 +3,10 @@ class FinanceLawViewWrapper {
     required this.en,
     required this.du,
   });
-  late final FinanceViewData en;
-  late final FinanceViewData du;
-  
-  FinanceLawViewWrapper.fromJson(Map<String, dynamic> json){
+  late FinanceViewData en;
+  late FinanceViewData du;
+
+  FinanceLawViewWrapper.fromJson(Map<String, dynamic> json) {
     en = FinanceViewData.fromJson(json['en']);
     du = FinanceViewData.fromJson(json['du']);
   }
@@ -32,11 +32,12 @@ class FinanceViewData {
   late final List<Options> options;
   late final String thirdTitle;
   late final bool showBottomNav;
-  
-  FinanceViewData.fromJson(Map<String, dynamic> json){
+
+  FinanceViewData.fromJson(Map<String, dynamic> json) {
     title = json['title'];
     subtitle = json['subtitle'];
-    options = List.from(json['options']).map((e)=>Options.fromJson(e)).toList();
+    options =
+        List.from(json['options']).map((e) => Options.fromJson(e)).toList();
     thirdTitle = json['thirdTitle'];
     showBottomNav = json['show_bottom_nav'];
   }
@@ -45,7 +46,7 @@ class FinanceViewData {
     final _data = <String, dynamic>{};
     _data['title'] = title;
     _data['subtitle'] = subtitle;
-    _data['options'] = options.map((e)=>e.toJson()).toList();
+    _data['options'] = options.map((e) => e.toJson()).toList();
     _data['thirdTitle'] = thirdTitle;
     _data['show_bottom_nav'] = showBottomNav;
     return _data;
@@ -60,9 +61,9 @@ class Options {
   });
   late final String type;
   late final String title;
-  late final bool isSelect;
-  
-  Options.fromJson(Map<String, dynamic> json){
+  late bool isSelect;
+
+  Options.fromJson(Map<String, dynamic> json) {
     type = json['type'];
     title = json['title'];
     isSelect = json['isSelect'];

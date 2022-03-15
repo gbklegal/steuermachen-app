@@ -257,7 +257,7 @@ class _QuestionsViewState extends State<_QuestionsView> {
     consumer.addPoint(i, widget.quickTaxData[i].options[x].point);
     if (widget.quickTaxData[i].options[x].decision ==
         OptionConstants.complete) {
-      Navigator.pushNamed(context, RouteConstants.quickTaxEstimatedValueScreen);
+      Navigator.pushReplacementNamed(context, RouteConstants.quickTaxEstimatedValueScreen);
     } else {
       Utils.animateToNextPage(pageController, i);
     }

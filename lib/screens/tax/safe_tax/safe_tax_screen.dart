@@ -16,6 +16,7 @@ import 'package:steuermachen/constants/strings/options_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/providers/tax/safe_tax/safe_tax_provider.dart';
+import 'package:steuermachen/utils/utils.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 import 'package:steuermachen/wrappers/safe_tax_wrapper.dart';
 
@@ -176,14 +177,10 @@ class _QuestionsViewState extends State<_QuestionsView> {
       padding: const EdgeInsets.only(bottom: 80),
       child: BackResetForwardBtnComponent(
         onTapBack: () {
-          pageController.animateToPage(i - 1,
-              duration: const Duration(milliseconds: 500),
-              curve: Curves.easeInOutBack);
+          Utils.animateToPreviousPage(pageController, i);
         },
         onTapContinue: () {
-          pageController.animateToPage(i + 1,
-              duration: const Duration(milliseconds: 500),
-              curve: Curves.easeInToLinear);
+          Utils.animateToNextPage(pageController, i);
         },
       ),
     );
@@ -196,9 +193,7 @@ class _QuestionsViewState extends State<_QuestionsView> {
         if (year.toString() == widget.safeTaxData[i].options[x]) {
           Navigator.pushNamed(context, RouteConstants.currentYearTaxScreen);
         } else {
-          pageController.animateToPage(i + 1,
-              duration: const Duration(milliseconds: 500),
-              curve: Curves.easeInToLinear);
+          Utils.animateToNextPage(pageController, i);
         }
       },
       child: SelectionCardComponent(

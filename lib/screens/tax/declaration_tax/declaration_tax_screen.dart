@@ -19,6 +19,7 @@ import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/providers/tax/declaration_tax/declaration_tax_provider.dart';
+import 'package:steuermachen/utils/utils.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 import 'package:steuermachen/wrappers/declaration_tax_view_wrapper.dart';
 
@@ -167,14 +168,10 @@ class _QuestionsViewState extends State<_QuestionsView> {
                   padding: const EdgeInsets.only(bottom: 80),
                   child: BackResetForwardBtnComponent(
                     onTapBack: () {
-                      pageController.animateToPage(i - 1,
-                          duration: const Duration(milliseconds: 500),
-                          curve: Curves.easeInOutBack);
+                         Utils.animateToPreviousPage(pageController, i);
                     },
                     onTapContinue: () {
-                      pageController.animateToPage(i + 1,
-                          duration: const Duration(milliseconds: 500),
-                          curve: Curves.easeInToLinear);
+                        Utils.animateToNextPage(pageController, i);
                     },
                   ),
                 )
@@ -191,9 +188,7 @@ class _QuestionsViewState extends State<_QuestionsView> {
         if (year.toString() == widget.declarationTaxData[i].options[x]) {
           Navigator.pushNamed(context, RouteConstants.currentYearTaxScreen);
         } else {
-          pageController.animateToPage(i + 1,
-              duration: const Duration(milliseconds: 500),
-              curve: Curves.easeInToLinear);
+           Utils.animateToNextPage(pageController, i);
         }
       },
       child: SelectionCardComponent(

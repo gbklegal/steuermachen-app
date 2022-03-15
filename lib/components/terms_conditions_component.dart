@@ -6,10 +6,20 @@ import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 
-class TermsAndConditionComponent extends StatelessWidget {
-  const TermsAndConditionComponent({Key? key, this.showCommissioning = false})
+class TermsAndConditionComponent extends StatefulWidget {
+  const TermsAndConditionComponent(
+      {Key? key, this.showCommissioning = false, this.onPressedOrderNow})
       : super(key: key);
   final bool showCommissioning;
+  final void Function()? onPressedOrderNow;
+
+  @override
+  State<TermsAndConditionComponent> createState() =>
+      _TermsAndConditionComponentState();
+}
+
+class _TermsAndConditionComponentState
+    extends State<TermsAndConditionComponent> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -17,7 +27,7 @@ class TermsAndConditionComponent extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Visibility(
-          visible: showCommissioning,
+          visible: widget.showCommissioning,
           child: const _CommissioningComponent(),
         ),
         Column(
@@ -58,7 +68,7 @@ class TermsAndConditionComponent extends StatelessWidget {
           ],
         ),
         SizedBox(
-          height: showCommissioning ? 50 : 100,
+          height: widget.showCommissioning ? 50 : 100,
         ),
         SizedBox(
           height: 90,
@@ -66,7 +76,7 @@ class TermsAndConditionComponent extends StatelessWidget {
             children: [
               ButtonComponent(
                 buttonText: "Order now",
-                onPressed: () {},
+                onPressed: widget.onPressedOrderNow,
               ),
               const ImprintPrivacyConditionsComponent(),
             ],

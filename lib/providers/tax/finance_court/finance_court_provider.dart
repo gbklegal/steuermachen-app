@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:steuermachen/main.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
@@ -5,6 +6,9 @@ import 'package:steuermachen/wrappers/finance/finance_court_view_wrapper.dart';
 import 'package:steuermachen/wrappers/finance/finance_law_view_wrapper.dart';
 
 class FinanceCourtProvider extends ChangeNotifier {
+  DateTime selectedDate = DateTime.now();
+  late FinanceLawViewWrapper financeLawWrapper;
+  final DateFormat formatDate = DateFormat('dd-MM-yyyy');
   bool _busyStateFinanceCourt = true;
   bool _busyStateFinanceLaw = true;
   bool get getBusyStateFinanceCourt => _busyStateFinanceCourt;
@@ -13,6 +17,7 @@ class FinanceCourtProvider extends ChangeNotifier {
     _busyStateFinanceCourt = _isBusy;
     notifyListeners();
   }
+
   set setBusyStateFinanceLaw(bool _isBusy) {
     _busyStateFinanceLaw = _isBusy;
     notifyListeners();
@@ -43,8 +48,7 @@ class FinanceCourtProvider extends ChangeNotifier {
           .doc("content-finance-law-v1")
           .get();
       Map<String, dynamic> x = res.data() as Map<String, dynamic>;
-      FinanceLawViewWrapper financeLawWrapper =
-          FinanceLawViewWrapper.fromJson(x);
+      financeLawWrapper = FinanceLawViewWrapper.fromJson(x);
       setBusyStateFinanceLaw = false;
       return CommonResponseWrapper(status: true, data: financeLawWrapper);
     } catch (e) {
@@ -71,10 +75,10 @@ class FinanceCourtProvider extends ChangeNotifier {
   // JSON//filepath: finance_court_view.json
   Future<CommonResponseWrapper> addFinanceLawViewData() async {
     try {
-      await firestore
-          .collection("finance_court")
-          .doc("content-finance-law-v1")
-          .set(json);
+      // await firestore
+      //     .collection("finance_court")
+      //     .doc("content-finance-law-v1")
+      //     .set(json);
       return CommonResponseWrapper(
           status: true, message: "easy tax view data added successfully");
     } catch (e) {
@@ -82,57 +86,11 @@ class FinanceCourtProvider extends ChangeNotifier {
           status: true, message: "Something went wrong");
     }
   }
-}
 
-var json = {
-  "en": {
-    "title": "Your application on the subject of tax law",
-    "subtitle": "What is your goal?",
-    "options": [
-      {
-        "type": "checkbox",
-        "title":
-            "I demand the change of the opposition decision in the lawsuit",
-        "isSelect": false
-      },
-      {
-        "type": "checkbox",
-        "title":
-            "I would like to submit my income tax return during the legal proceedings",
-        "isSelect": false
-      },
-      {
-        "type": "checkbox",
-        "title": "I would like to have both options checked ",
-        "isSelect": false
-      }
-    ],
-    "thirdTitle": "Wann hast du die Einspruchsentscheidung erhalten? *?",
-    "show_bottom_nav": true
-  },
-  "du": {
-    "title": "Your application on the subject of tax law",
-    "subtitle": "What is your goal?",
-    "options": [
-      {
-        "type": "checkbox",
-        "title":
-            "I demand the change of the opposition decision in the lawsuit",
-        "isSelect": false
-      },
-      {
-        "type": "checkbox",
-        "title":
-            "I would like to submit my income tax return during the legal proceedings",
-        "isSelect": false
-      },
-      {
-        "type": "checkbox",
-        "title": "I would like to have both options checked ",
-        "isSelect": false
-      }
-    ],
-    "thirdTitle": "Wann hast du die Einspruchsentscheidung erhalten? *?",
-    "show_bottom_nav": true
+  changeSubjectLawCheckBoxState(FinanceViewData _data, int index) {
+    _data.options[index].isSelect = !_data.options[index].isSelect;
+    financeLawWrapper.en = _data;
+    financeLawWrapper.du = _data;
+    notifyListeners();
   }
-};
+}

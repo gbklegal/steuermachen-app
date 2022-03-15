@@ -77,6 +77,7 @@ class ProfileProvider extends ChangeNotifier {
           .collection("user_profile")
           .doc("${user?.uid}")
           .set(userWrapper.toJson());
+      await getUserProfile();
       return CommonResponseWrapper(
           status: true, message: "Profile updated successfully");
     } catch (e) {
@@ -115,6 +116,21 @@ class ProfileProvider extends ChangeNotifier {
       }
     }
     return null;
+  }
+
+  UserWrapper getUserFromControllers() {
+    return UserWrapper(
+      gender: genderController.text,
+      firstName: firstNameController.text,
+      lastName: lastNameController.text,
+      street: streetController.text,
+      houseNumber: houseNumberController.text,
+      plz: postCodeController.text,
+      location: locationController.text,
+      phone: phoneController.text,
+      email: emailController.text,
+      land: countryController.text,
+    );
   }
 
   Future<CommonResponseWrapper> addUserAddresss() async {

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:steuermachen/constants/strings/error_messages_constants.dart';
 import 'package:steuermachen/main.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 import 'package:steuermachen/wrappers/user_wrapper.dart';
@@ -82,7 +83,7 @@ class ProfileProvider extends ChangeNotifier {
           status: true, message: "Profile updated successfully");
     } catch (e) {
       return CommonResponseWrapper(
-          status: true, message: "Something went wrong");
+          status: false, message: ErrorMessagesConstants.somethingWentWrong);
     }
   }
 
@@ -112,7 +113,7 @@ class ProfileProvider extends ChangeNotifier {
       } catch (e) {
         setBusyStateProfile = false;
         return CommonResponseWrapper(
-            status: false, message: "Something went wrong");
+            status: false, message: ErrorMessagesConstants.somethingWentWrong);
       }
     }
     return null;
@@ -156,7 +157,7 @@ class ProfileProvider extends ChangeNotifier {
           status: true, message: "Profile updated successfully");
     } catch (e) {
       return CommonResponseWrapper(
-          status: true, message: "Something went wrong");
+          status: false, message: ErrorMessagesConstants.somethingWentWrong);
     }
   }
 
@@ -188,7 +189,7 @@ class ProfileProvider extends ChangeNotifier {
     } catch (e) {
       setBusyStateProfile = false;
       return CommonResponseWrapper(
-          status: false, message: "Something went wrong");
+          status: false, message: ErrorMessagesConstants.somethingWentWrong);
     }
   }
 }

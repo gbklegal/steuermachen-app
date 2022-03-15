@@ -200,6 +200,13 @@ abstract class  LocaleKeys {
   static const calculateTaxReturnCost = 'calculateTaxReturnCost';
   static const startNowWithTheTaxReturn = 'startNowWithTheTaxReturn';
   static const loginHere = 'loginHere';
+  static const commissioning = 'commissioning';
+  static const commissioningRadioTitle1 = 'commissioningRadioTitle1';
+  static const commissioningRadioTitle2 = 'commissioningRadioTitle2';
+  static const termsAndConditionNote = 'termsAndConditionNote';
+  static const termsAndConditionCheck1 = 'termsAndConditionCheck1';
+  static const termsAndConditionCheckNonDisclosure = 'termsAndConditionCheckNonDisclosure';
+  static const termsAndConditionCheck2 = 'termsAndConditionCheck2';
   static const logout = 'logout';
 
 }

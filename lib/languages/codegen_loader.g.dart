@@ -214,6 +214,13 @@ class CodegenLoader extends AssetLoader{
   "calculateTaxReturnCost": "Calculate your tax return costs",
   "startNowWithTheTaxReturn": "Start now with the tax return",
   "loginHere": "Login here",
+  "commissioning": "Commissioning *",
+  "commissioningRadioTitle1": "Legal protection insurance is available, please carry out a cover request",
+  "commissioningRadioTitle2": "Act immediately, I'll cover the costs myself",
+  "termsAndConditionNote": "Note: Release from confidentiality is urgently required for communication between steuermachen (GDF) and the commissioned tax office.",
+  "termsAndConditionCheck1": "* I agree to the release from ",
+  "termsAndConditionCheckNonDisclosure": "non-disclosure ",
+  "termsAndConditionCheck2": "* I accept the terms and conditions and the information on data processing and the right of withdrawal from steuermachen.",
   "logout": "Ausloggen"
 };
 static const Map<String,dynamic> en = {
@@ -414,6 +421,13 @@ static const Map<String,dynamic> en = {
   "calculateTaxReturnCost": "Calculate your tax return costs",
   "startNowWithTheTaxReturn": "Start now with the tax return",
   "loginHere": "Login here",
+  "commissioning": "Commissioning *",
+  "commissioningRadioTitle1": "Legal protection insurance is available, please carry out a cover request",
+  "commissioningRadioTitle2": "Act immediately, I'll cover the costs myself",
+  "termsAndConditionNote": "Note: Release from confidentiality is urgently required for communication between steuermachen (GDF) and the commissioned tax office.",
+  "termsAndConditionCheck1": "* I agree to the release from ",
+  "termsAndConditionCheckNonDisclosure": "non-disclosure ",
+  "termsAndConditionCheck2": "* I accept the terms and conditions and the information on data processing and the right of withdrawal from steuermachen.",
   "logout": "Logout"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"de": de, "en": en};

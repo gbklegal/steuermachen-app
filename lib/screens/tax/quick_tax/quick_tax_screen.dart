@@ -173,15 +173,12 @@ class _QuestionsViewState extends State<_QuestionsView> {
                               for (var x = 0;
                                   x < widget.quickTaxData[i].options.length;
                                   x++)
-                                InkWell(
+                                SelectionCardComponent(
+                                  title: widget.quickTaxData[i].options[x].name,
                                   onTap: () {
                                     _selectionCardOnTap(
                                         consumer, i, x, context);
                                   },
-                                  child: SelectionCardComponent(
-                                    title:
-                                        widget.quickTaxData[i].options[x].name,
-                                  ),
                                 )
                             else
                               TextFormField(
@@ -257,7 +254,8 @@ class _QuestionsViewState extends State<_QuestionsView> {
     consumer.addPoint(i, widget.quickTaxData[i].options[x].point);
     if (widget.quickTaxData[i].options[x].decision ==
         OptionConstants.complete) {
-      Navigator.pushReplacementNamed(context, RouteConstants.quickTaxEstimatedValueScreen);
+      Navigator.pushReplacementNamed(
+          context, RouteConstants.quickTaxEstimatedValueScreen);
     } else {
       Utils.animateToNextPage(pageController, i);
     }

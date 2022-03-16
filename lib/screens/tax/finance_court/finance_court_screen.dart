@@ -38,11 +38,16 @@ class _FinanceCourtScreenState extends State<FinanceCourtScreen> {
   void initState() {
     provider = Provider.of<FinanceCourtProvider>(context, listen: false);
     WidgetsBinding.instance!.addPostFrameCallback(
-        (_) => provider.getFinanceCourtViewData().then((value) {
-              setState(() {
-                response = value;
-              });
-            }));
+      (_) => provider.getFinanceCourtViewData().then(
+        (value) {
+          setState(
+            () {
+              response = value;
+            },
+          );
+        },
+      ),
+    );
     super.initState();
   }
 

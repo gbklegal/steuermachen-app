@@ -2,8 +2,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:steuermachen/constants/enums/process_nums.dart';
 import 'package:steuermachen/constants/strings/error_messages_constants.dart';
+import 'package:steuermachen/constants/strings/process_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/main.dart';
 import 'package:steuermachen/providers/signature/signature_provider.dart';
@@ -125,7 +125,7 @@ class FinanceCourtProvider extends ChangeNotifier {
         "checked_commission": checkedValue!.title.tr(),
         "terms_and_condition_accepted": true,
         "created_at": DateTime.now(),
-        "status": ProcessStatus.pending,
+           "status": ProcessConstants.pending,
         "approved_by": null,
       });
       return CommonResponseWrapper(

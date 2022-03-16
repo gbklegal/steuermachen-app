@@ -5,10 +5,12 @@ import 'package:steuermachen/components/app_bar/appbar_component.dart';
 import 'package:steuermachen/components/back_reset_forward_btn_component.dart';
 import 'package:steuermachen/components/empty_screen_loader_component.dart';
 import 'package:steuermachen/components/error_component.dart';
+import 'package:steuermachen/components/popup_loader_component.dart';
 import 'package:steuermachen/components/selection_card_component.dart';
 import 'package:steuermachen/components/signature_component.dart';
 import 'package:steuermachen/components/terms_conditions_component.dart';
 import 'package:steuermachen/components/text_progress_bar_component.dart';
+import 'package:steuermachen/components/toast_component.dart';
 import 'package:steuermachen/components/user_form_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
@@ -34,7 +36,14 @@ class _SafeTaxScreenState extends State<SafeTaxScreen> {
   void initState() {
     provider = Provider.of<SafeTaxProvider>(context, listen: false);
     WidgetsBinding.instance!.addPostFrameCallback(
-        (_) => provider.getSafeTaxViewData().then((value) => response = value));
+      (_) => provider.getSafeTaxViewData().then(
+        (value) {
+          setState(() {
+            response = value;
+          });
+        },
+      ),
+    );
     super.initState();
   }
 
@@ -51,35 +60,45 @@ class _SafeTaxScreenState extends State<SafeTaxScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.only(left: 16, right: 16, top: 25),
-        child: Consumer<SafeTaxProvider>(builder: (context, consumer, child) {
-          if (consumer.getBusyStateSafeTax || response == null) {
-            return const EmptyScreenLoaderComponent();
-          } else if (!response!.status!) {
-            return ErrorComponent(
-              message: response!.message!,
-              onTap: () async {
-                consumer.setBusyStateSafeTax = true;
-                await provider
-                    .getSafeTaxViewData()
-                    .then((value) => response = value);
-                consumer.setBusyStateSafeTax = false;
-              },
-            );
-          } else {
-            SafeTaxWrapper safeTaxWrapper = response!.data as SafeTaxWrapper;
-            if (context.locale == const Locale('en')) {
-              return _QuestionsView(
-                safeTaxData: safeTaxWrapper.en,
-              );
-            } else {
-              return _QuestionsView(
-                safeTaxData: safeTaxWrapper.du,
-              );
-            }
-          }
-        }),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (provider.getBusyStateSafeTax || response == null)
+              const EmptyScreenLoaderComponent()
+            else if (!response!.status!)
+              ErrorComponent(
+                message: response!.message!,
+                onTap: () async {
+                  provider.setBusyStateSafeTax = true;
+                  await provider
+                      .getSafeTaxViewData()
+                      .then((value) => response = value);
+                  provider.setBusyStateSafeTax = false;
+                },
+              )
+            else
+              _getMainBody()
+          ],
+        ),
       ),
     );
+  }
+
+  Flexible _getMainBody() {
+    SafeTaxWrapper safeTaxWrapper = response!.data as SafeTaxWrapper;
+    if (context.locale == const Locale('en')) {
+      return Flexible(
+        child: _QuestionsView(
+          safeTaxData: safeTaxWrapper.en,
+        ),
+      );
+    } else {
+      return Flexible(
+        child: _QuestionsView(
+          safeTaxData: safeTaxWrapper.du,
+        ),
+      );
+    }
   }
 }
 
@@ -135,34 +154,40 @@ class _QuestionsViewState extends State<_QuestionsView> {
               ),
               Expanded(
                 child: SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 25),
-                    child: Column(
-                      children: [
-                        if (widget.safeTaxData[i].optionType ==
-                            OptionConstants.singleSelect)
-                          for (var x = 0;
-                              x < widget.safeTaxData[i].options.length;
-                              x++)
-                            _optionsWidget(i, x)
-                        else if (widget.safeTaxData[i].optionType ==
-                            OptionConstants.userForm)
-                          const UserFormComponent()
-                        else if (widget.safeTaxData[i].optionType ==
-                            OptionConstants.signature)
-                          Transform.translate(
-                            offset: const Offset(0, -20),
-                            child: const SignatureComponent(),
-                          )
-                        else if (widget.safeTaxData[i].optionType ==
-                            OptionConstants.termsCondition)
-                          Transform.translate(
-                            offset: const Offset(0, -20),
-                            child: const TermsAndConditionComponent(),
-                          ),
-                      ],
-                    ),
-                  ),
+                  child: Consumer<SafeTaxProvider>(
+                      builder: (context, consumer, child) {
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 25),
+                      child: Column(
+                        children: [
+                          if (widget.safeTaxData[i].optionType ==
+                              OptionConstants.singleSelect)
+                            for (var x = 0;
+                                x < widget.safeTaxData[i].options.length;
+                                x++)
+                              _optionsWidget(consumer, i, x)
+                          else if (widget.safeTaxData[i].optionType ==
+                              OptionConstants.userForm)
+                            const UserFormComponent()
+                          else if (widget.safeTaxData[i].optionType ==
+                              OptionConstants.signature)
+                            Transform.translate(
+                              offset: const Offset(0, -20),
+                              child: const SignatureComponent(),
+                            )
+                          else if (widget.safeTaxData[i].optionType ==
+                              OptionConstants.termsCondition)
+                            Transform.translate(
+                              offset: const Offset(0, -20),
+                              child: TermsAndConditionComponent(
+                                  onPressedOrderNow: (value) async {
+                                await _submitData(consumer);
+                              }),
+                            ),
+                        ],
+                      ),
+                    );
+                  }),
                 ),
               ),
               if (widget.safeTaxData[i].showBottomNav) _bottomBtns(i)
@@ -176,6 +201,8 @@ class _QuestionsViewState extends State<_QuestionsView> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 80),
       child: BackResetForwardBtnComponent(
+        showContinueBtn:
+            widget.safeTaxData[i].optionType != OptionConstants.singleSelect,
         onTapBack: () {
           Utils.animateToPreviousPage(pageController, i);
         },
@@ -193,23 +220,37 @@ class _QuestionsViewState extends State<_QuestionsView> {
     );
   }
 
-  InkWell _optionsWidget(int i, int x) {
-    return InkWell(
+  SelectionCardComponent _optionsWidget(
+      SafeTaxProvider consumer, int i, int x) {
+    return SelectionCardComponent(
+      title: widget.safeTaxData[i].options[x],
+      imagePath: widget.safeTaxData[i].optionImgPath.isNotEmpty
+          ? widget.safeTaxData[i].optionImgPath[x]
+          : null,
       onTap: () {
         int year = DateTime.now().year;
         if (year.toString() == widget.safeTaxData[i].options[x]) {
           Navigator.pushNamed(context, RouteConstants.currentYearTaxScreen);
         } else {
-          
+          if (i == 0) {
+            consumer.setTaxYear(widget.safeTaxData[i].options[x]);
+          } else if (i == 1) {
+            consumer.setMartialStatus(widget.safeTaxData[i].options[x]);
+          }
           Utils.animateToNextPage(pageController, i);
         }
       },
-      child: SelectionCardComponent(
-        title: widget.safeTaxData[i].options[x],
-        imagePath: widget.safeTaxData[i].optionImgPath.isNotEmpty
-            ? widget.safeTaxData[i].optionImgPath[x]
-            : null,
-      ),
     );
+  }
+
+  _submitData(SafeTaxProvider consumer) async {
+    PopupLoader.showLoadingDialog(context);
+    CommonResponseWrapper res = await consumer.submitSafeTaxData(context);
+    PopupLoader.hideLoadingDialog(context);
+    if (res.status!) {
+      Utils.completedDialog(context);
+    } else {
+      ToastComponent.showToast(res.message!);
+    }
   }
 }

@@ -1,14 +1,14 @@
 class SafeTaxDataCollectorWrapper {
   SafeTaxDataCollectorWrapper({
-    required this.taxYear,
-    required this.martialStatus,
-    required this.signaturePath,
-    required this.termsAndConditionChecked,
+     this.taxYear,
+     this.martialStatus,
+     this.signaturePath,
+     this.termsAndConditionChecked,
   });
-  late final String taxYear;
-  late final String martialStatus;
-  late final String signaturePath;
-  late final String termsAndConditionChecked;
+   String? taxYear;
+   String? martialStatus;
+   String? signaturePath;
+   bool? termsAndConditionChecked;
   SafeTaxDataCollectorWrapper.fromJson(Map<String, dynamic> json) {
     taxYear = json['tax_year'];
     martialStatus = json['martial_status'];

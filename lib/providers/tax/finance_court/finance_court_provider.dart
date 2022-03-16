@@ -44,7 +44,7 @@ class FinanceCourtProvider extends ChangeNotifier {
     } catch (e) {
       setBusyStateFinanceCourt = false;
       return CommonResponseWrapper(
-          status: false, message: "Something went wrong");
+          status: false, message: ErrorMessagesConstants.somethingWentWrong);
     }
   }
 
@@ -62,7 +62,7 @@ class FinanceCourtProvider extends ChangeNotifier {
     } catch (e) {
       setBusyStateFinanceLaw = false;
       return CommonResponseWrapper(
-          status: false, message: "Something went wrong");
+          status: false, message: ErrorMessagesConstants.somethingWentWrong);
     }
   }
 
@@ -75,7 +75,7 @@ class FinanceCourtProvider extends ChangeNotifier {
           status: true, message: "easy tax view data added successfully");
     } catch (e) {
       return CommonResponseWrapper(
-          status: true, message: "Something went wrong");
+          status: true, message:ErrorMessagesConstants.somethingWentWrong);
     }
   }
 
@@ -91,7 +91,7 @@ class FinanceCourtProvider extends ChangeNotifier {
           status: true, message: "easy tax view data added successfully");
     } catch (e) {
       return CommonResponseWrapper(
-          status: true, message: "Something went wrong");
+          status: true, message: ErrorMessagesConstants.somethingWentWrong);
     }
   }
 

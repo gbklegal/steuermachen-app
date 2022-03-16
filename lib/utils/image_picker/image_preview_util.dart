@@ -1,11 +1,9 @@
 import 'dart:io';
-
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
-import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 class CustomImagePreview extends StatefulWidget {
   // final PickedFile image;
@@ -110,7 +108,7 @@ class _CustomImagePreviewState extends State<CustomImagePreview> {
     return path;
   }
 
-  Future<Null> _cropImage(String path) async {
+  Future<void> _cropImage(String path) async {
     File? croppedFile = await ImageCropper().cropImage(
         sourcePath: path,
         compressQuality: 70,

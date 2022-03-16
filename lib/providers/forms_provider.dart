@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:steuermachen/constants/strings/error_messages_constants.dart';
 import 'package:steuermachen/main.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 
@@ -18,7 +19,7 @@ class FormsProvider extends ChangeNotifier {
           status: true, message: "Form submitted successfully");
     } catch (e) {
       return CommonResponseWrapper(
-          status: true, message: "Something went wrong");
+          status: true, message: ErrorMessagesConstants.somethingWentWrong);
     }
   }
 
@@ -35,7 +36,7 @@ class FormsProvider extends ChangeNotifier {
           status: true, message: "Form submitted successfully");
     } catch (e) {
       return CommonResponseWrapper(
-          status: true, message: "Something went wrong");
+          status: true, message: ErrorMessagesConstants.somethingWentWrong);
     }
   }
 
@@ -51,7 +52,7 @@ class FormsProvider extends ChangeNotifier {
           status: true, message: "Profile updated successfully");
     } catch (e) {
       return CommonResponseWrapper(
-          status: true, message: "Something went wrong");
+          status: true, message: ErrorMessagesConstants.somethingWentWrong);
     }
   }
 
@@ -73,7 +74,7 @@ class FormsProvider extends ChangeNotifier {
       }
     } catch (e) {
       return CommonResponseWrapper(
-          status: false, message: "Something went wrong");
+          status: false, message: ErrorMessagesConstants.somethingWentWrong);
     }
   }
 }

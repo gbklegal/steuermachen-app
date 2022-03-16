@@ -2,8 +2,6 @@ import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
-
-import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/utils/image_picker/image_preview_util.dart';
 
@@ -65,6 +63,7 @@ class _MediaSourceSelectionWidgetState
     );
   }
 
+  // ignore: prefer_typing_uninitialized_variables
   var pickedImage;
   Future getImage(BuildContext context) async {
     pickedImage = await _picker.pickImage(
@@ -89,6 +88,7 @@ class _MediaSourceSelectionWidgetState
       imagePath = pickedImage.path;
       showCustomImageView(context, true);
     } else {
+      // ignore: avoid_print
       print('No image selected.');
     }
   }
@@ -123,6 +123,7 @@ class _MediaSourceSelectionWidgetState
       final file = File(path);
       await file.delete();
     } catch (e) {
+      // ignore: avoid_print
       print(e);
     }
   }

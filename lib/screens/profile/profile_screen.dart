@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
 import 'package:steuermachen/components/button_component.dart';
-import 'package:steuermachen/components/error_component.dart';
 import 'package:steuermachen/components/loading_component.dart';
+import 'package:steuermachen/components/simple_error_text_component.dart';
 import 'package:steuermachen/components/text_component.dart';
 import 'package:steuermachen/components/textformfield_icon_component.dart';
 import 'package:steuermachen/components/user_form_component.dart';
@@ -93,7 +93,7 @@ class _ProfileScreenState extends State<ProfileScreen>
               return const LoadingComponent();
             } else if (!consumer.getBusyStateProfile &&
                 consumer.userData == null) {
-              return const ErrorComponent();
+              return const SimpleErrorTextComponent();
             } else {
               return Padding(
                 padding:

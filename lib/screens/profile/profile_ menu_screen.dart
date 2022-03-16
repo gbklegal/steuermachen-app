@@ -2,7 +2,6 @@ import 'package:easy_localization/src/public_ext.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:provider/provider.dart';
 import 'package:steuermachen/components/app_bar/custom_appbar_component.dart';
 import 'package:steuermachen/components/button_component.dart';
 import 'package:steuermachen/components/imprint_privacy_condition_component.dart';
@@ -13,7 +12,6 @@ import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
-import 'package:steuermachen/providers/language_provider.dart';
 
 class ProfileMenuScreen extends StatefulWidget {
   const ProfileMenuScreen({Key? key}) : super(key: key);

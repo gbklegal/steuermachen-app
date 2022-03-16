@@ -11,7 +11,6 @@ import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
-import 'package:steuermachen/main.dart';
 import 'package:steuermachen/providers/auth/auth_provider.dart';
 import 'package:steuermachen/providers/tax/quick_tax/quick_tax_provider.dart';
 

@@ -2,8 +2,8 @@ import 'package:easy_localization/src/public_ext.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:steuermachen/components/button_component.dart';
-import 'package:steuermachen/components/error_component.dart';
 import 'package:steuermachen/components/loading_component.dart';
+import 'package:steuermachen/components/simple_error_text_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
@@ -58,7 +58,7 @@ class InitialEasyTaxComponent extends StatelessWidget {
             ],
           );
         } else if (snapshot.hasError) {
-          return const ErrorComponent();
+          return const SimpleErrorTextComponent();
         } else {
           return const LoadingComponent();
         }

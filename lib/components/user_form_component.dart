@@ -8,6 +8,7 @@ import 'package:steuermachen/components/loading_component.dart';
 import 'package:steuermachen/components/text_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
+import 'package:steuermachen/constants/strings/error_messages_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/providers/profile/profile_provider.dart';
@@ -52,7 +53,12 @@ class _UserFormComponentState extends State<UserFormComponent>
         if (consumer.getBusyStateProfile || consumer.userData == null) {
           return const LoadingComponent();
         } else if (!consumer.getBusyStateProfile && consumer.userData == null) {
-          return const ErrorComponent();
+          return ErrorComponent(
+            message: ErrorMessagesConstants.somethingWentWrong,
+            onTap: () async {
+              await _profileProvider.getUserProfile();
+            },
+          );
         } else {
           return _mainBody(consumer, context);
         }

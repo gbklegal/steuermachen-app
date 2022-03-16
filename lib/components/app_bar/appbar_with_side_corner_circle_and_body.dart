@@ -4,7 +4,6 @@ import 'package:steuermachen/components/app_bar/appbar_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
-import 'package:steuermachen/languages/locale_keys.g.dart';
 
 class AppBarWithSideCornerCircleAndRoundBody extends StatelessWidget {
   const AppBarWithSideCornerCircleAndRoundBody({

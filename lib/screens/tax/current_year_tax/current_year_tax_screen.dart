@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
 import 'package:steuermachen/components/button_component.dart';
 import 'package:steuermachen/components/empty_screen_loader_component.dart';
-import 'package:steuermachen/components/error_component%20copy.dart';
+import 'package:steuermachen/components/error_component.dart';
 import 'package:steuermachen/components/payment/payment_methods_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';

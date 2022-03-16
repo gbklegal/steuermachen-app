@@ -1,11 +1,7 @@
-import 'dart:convert';
-import 'dart:ui';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:steuermachen/components/app_bar/appbar_with_side_corner_circle_and_body.dart';
 import 'package:steuermachen/components/error_component.dart';
 import 'package:steuermachen/components/loading_component.dart';
@@ -46,7 +42,10 @@ class SustainabilityScreen extends StatelessWidget {
                   ],
                 );
               } else if (snapshot.hasError) {
-                return const ErrorComponent();
+                return ErrorComponent(
+                  message: '',
+                  onTap: () {},
+                );
               } else {
                 return const LoadingComponent();
               }

@@ -2,11 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:steuermachen/components/app_bar/appbar_with_side_corner_circle_and_body.dart';
-import 'package:steuermachen/components/error_component.dart';
 import 'package:steuermachen/components/loading_component.dart';
+import 'package:steuermachen/components/simple_error_text_component.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
-import 'package:steuermachen/constants/routes/route_constants.dart';
-import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/main.dart';
 import 'package:steuermachen/screens/tax_tips/tax_tips_detail_screen.dart';
 import 'package:steuermachen/screens/tax_tips/tax_tips_top_component.dart';
@@ -105,7 +103,7 @@ class TaxTipsScreen extends StatelessWidget {
                         ],
                       );
                     } else if (snapshot.hasError) {
-                      return const ErrorComponent();
+                      return const SimpleErrorTextComponent();
                     } else {
                       return const LoadingComponent();
                     }

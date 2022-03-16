@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
 import 'package:steuermachen/components/button_component.dart';
 import 'package:steuermachen/components/empty_screen_loader_component.dart';
-import 'package:steuermachen/components/error_component%20copy.dart';
+import 'package:steuermachen/components/error_component.dart';
 import 'package:steuermachen/components/popup_loader_component.dart';
 import 'package:steuermachen/components/text_component.dart';
 import 'package:steuermachen/components/toast_component.dart';

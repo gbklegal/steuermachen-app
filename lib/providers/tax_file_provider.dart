@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:steuermachen/constants/strings/error_messages_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/main.dart';
 import 'package:steuermachen/providers/document/document_provider.dart';
@@ -42,7 +43,7 @@ class TaxFileProvider extends ChangeNotifier {
       CommonResponseWrapper _fileRes = await documentsProvider.uploadFiles();
       if (!_fileRes.status!) {
         return CommonResponseWrapper(
-            status: true, message: "Something went wrong");
+            status: true, message: ErrorMessagesConstants.somethingWentWrong);
       }
       await firestore
           .collection("forms_data")
@@ -53,7 +54,7 @@ class TaxFileProvider extends ChangeNotifier {
           status: true, message: "Tax filed successfully");
     } catch (e) {
       return CommonResponseWrapper(
-          status: true, message: "Something went wrong");
+          status: true, message: ErrorMessagesConstants.somethingWentWrong);
     }
   }
 }

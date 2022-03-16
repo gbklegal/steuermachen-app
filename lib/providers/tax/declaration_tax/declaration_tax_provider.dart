@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:steuermachen/constants/strings/error_messages_constants.dart';
 import 'package:steuermachen/main.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 import 'package:steuermachen/wrappers/declaration_tax_view_wrapper.dart';
@@ -23,7 +24,7 @@ class DeclarationTaxProvider extends ChangeNotifier {
     } catch (e) {
       setBusyStateDeclarationTax = false;
       return CommonResponseWrapper(
-          status: false, message: "Something went wrong");
+          status: false, message: ErrorMessagesConstants.somethingWentWrong);
     }
   }
 
@@ -36,7 +37,7 @@ class DeclarationTaxProvider extends ChangeNotifier {
           status: true, message: "easy tax view data added successfully");
     } catch (e) {
       return CommonResponseWrapper(
-          status: true, message: "Something went wrong");
+          status: true, message: ErrorMessagesConstants.somethingWentWrong);
     }
   }
 }

@@ -55,7 +55,7 @@ class AuthProvider extends ChangeNotifier {
           status: true, message: "Signin successfully");
     } catch (e) {
       return CommonResponseWrapper(
-          status: false, message: 'something went wrong');
+          status: false, message: ErrorMessagesConstants.somethingWentWrong);
     }
   }
 
@@ -123,7 +123,7 @@ class AuthProvider extends ChangeNotifier {
             message: 'The account already exists for that email.');
       }
       return CommonResponseWrapper(
-          status: false, message: 'something went wrong');
+          status: false, message: ErrorMessagesConstants.somethingWentWrong);
     } catch (e) {
       return CommonResponseWrapper(status: false, message: e.toString());
     }
@@ -151,7 +151,7 @@ class AuthProvider extends ChangeNotifier {
             status: false, message: 'Wrong password provided for that user.');
       }
       return CommonResponseWrapper(
-          status: false, message: 'Something went wrong');
+          status: false, message: ErrorMessagesConstants.somethingWentWrong);
     }
   }
 
@@ -163,7 +163,7 @@ class AuthProvider extends ChangeNotifier {
           message: 'Check your email for the reset password link');
     } on FirebaseAuthException catch (e) {
       return CommonResponseWrapper(
-          status: false, message: 'Something went wrong');
+          status: false, message: ErrorMessagesConstants.somethingWentWrong);
     }
   }
 

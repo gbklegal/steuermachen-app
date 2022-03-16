@@ -11,7 +11,7 @@ import 'package:steuermachen/wrappers/document/document_option_wrapper.dart';
 import 'package:steuermachen/wrappers/document/documents_wrapper.dart';
 
 class DocumentsProvider extends ChangeNotifier {
-    bool _busyStateDocument = true;
+  bool _busyStateDocument = true;
   bool get getBusyStateDocument => _busyStateDocument;
   set setBusyStateDocument(bool _isBusy) {
     _busyStateDocument = _isBusy;
@@ -110,7 +110,8 @@ class DocumentsProvider extends ChangeNotifier {
       print(e);
     }
   }
-    Future<CommonResponseWrapper> getDocumentOptionsData() async {
+
+  Future<CommonResponseWrapper> getDocumentOptionsData() async {
     try {
       setBusyStateDocument = true;
       var res =
@@ -122,7 +123,7 @@ class DocumentsProvider extends ChangeNotifier {
     } catch (e) {
       setBusyStateDocument = false;
       return CommonResponseWrapper(
-          status: false, message: "Something went wrong");
+          status: false, message: ErrorMessagesConstants.somethingWentWrong);
     }
   }
 
@@ -132,12 +133,14 @@ class DocumentsProvider extends ChangeNotifier {
     try {
       await firestore.collection("document").doc("document-options").set(json);
       return CommonResponseWrapper(
-          status: true, message: "addDocumentOptionsData view data added successfully");
+          status: true,
+          message: "addDocumentOptionsData view data added successfully");
     } catch (e) {
       return CommonResponseWrapper(
-          status: true, message: "Something went wrong");
+          status: true, message: ErrorMessagesConstants.somethingWentWrong);
     }
   }
+
   _clearFields() {
     _selectedFiles = [];
     _signaturePath = "";

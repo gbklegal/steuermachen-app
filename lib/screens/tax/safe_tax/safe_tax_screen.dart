@@ -17,6 +17,7 @@ import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/options_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
+import 'package:steuermachen/providers/signature/signature_provider.dart';
 import 'package:steuermachen/providers/tax/safe_tax/safe_tax_provider.dart';
 import 'package:steuermachen/utils/utils.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
@@ -209,6 +210,14 @@ class _QuestionsViewState extends State<_QuestionsView> {
         onTapContinue: () async {
           if (widget.safeTaxData[i].optionType == OptionConstants.userForm) {
             bool status = await Utils.submitProfile(context);
+            if (status) {
+              Utils.animateToNextPage(pageController, i);
+            }
+          }
+          if (widget.safeTaxData[i].optionType == OptionConstants.signature) {
+            bool status =
+                await Provider.of<SignatureProvider>(context, listen: false)
+                    .checkSignatureIsPresent();
             if (status) {
               Utils.animateToNextPage(pageController, i);
             }

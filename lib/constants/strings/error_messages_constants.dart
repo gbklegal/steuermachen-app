@@ -12,6 +12,7 @@ class ErrorMessagesConstants {
   static const String invalidContact = 'Invalid contact number.';
   static const String phoneNumber = 'Invalid phone number.';
   static const String address = 'Address field is required.';
+  static const String signatureRequired = 'Signature is required.';
   static const String designation = 'Designation field is required.';
   static const String password = 'Password field is required.';
   static const String invalidPassword =

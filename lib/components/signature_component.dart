@@ -53,7 +53,7 @@ class _SignatureComponentState extends State<SignatureComponent> {
                   .copyWith(fontSize: 18, fontWeight: FontWeight.w500),
             ),
             InkWell(
-              onTap: (){
+              onTap: () {
                 signatureProvider.clearSignature();
               },
               child: Text(

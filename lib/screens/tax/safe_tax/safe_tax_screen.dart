@@ -18,7 +18,7 @@ import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/providers/tax/safe_tax/safe_tax_provider.dart';
 import 'package:steuermachen/utils/utils.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
-import 'package:steuermachen/wrappers/safe_tax_wrapper.dart';
+import 'package:steuermachen/wrappers/safe_tax/safe_tax_wrapper.dart';
 
 class SafeTaxScreen extends StatefulWidget {
   const SafeTaxScreen({Key? key}) : super(key: key);
@@ -179,8 +179,15 @@ class _QuestionsViewState extends State<_QuestionsView> {
         onTapBack: () {
           Utils.animateToPreviousPage(pageController, i);
         },
-        onTapContinue: () {
-          Utils.animateToNextPage(pageController, i);
+        onTapContinue: () async {
+          if (widget.safeTaxData[i].optionType == OptionConstants.userForm) {
+            bool status = await Utils.submitProfile(context);
+            if (status) {
+              Utils.animateToNextPage(pageController, i);
+            }
+          } else {
+            Utils.animateToNextPage(pageController, i);
+          }
         },
       ),
     );
@@ -193,6 +200,7 @@ class _QuestionsViewState extends State<_QuestionsView> {
         if (year.toString() == widget.safeTaxData[i].options[x]) {
           Navigator.pushNamed(context, RouteConstants.currentYearTaxScreen);
         } else {
+          
           Utils.animateToNextPage(pageController, i);
         }
       },

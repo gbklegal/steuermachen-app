@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:steuermachen/constants/strings/error_messages_constants.dart';
 import 'package:steuermachen/main.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
-import 'package:steuermachen/wrappers/safe_tax_wrapper.dart';
+import 'package:steuermachen/wrappers/safe_tax/safe_tax_wrapper.dart';
 
 class SafeTaxProvider extends ChangeNotifier {
   bool _busyStateSafeTax = true;
@@ -31,7 +31,7 @@ class SafeTaxProvider extends ChangeNotifier {
   // JSON//filepath: safe_tax_view.json
   Future<CommonResponseWrapper> addSafeTaxViewData() async {
     try {
-      await firestore.collection("safe_tax").doc("content").set(json);
+      // await firestore.collection("safe_tax").doc("content").set(json);
       return CommonResponseWrapper(
           status: true, message: "safe tax view data added successfully");
     } catch (e) {
@@ -40,112 +40,3 @@ class SafeTaxProvider extends ChangeNotifier {
     }
   }
 }
-
-var json = {
-    "en": [
-        {
-            "title": "Select the appropriate tax year",
-            "option_type": "single_select",
-            "options": [
-                "2018",
-                "2019",
-                "2020",
-                "2021",
-                "2022"
-            ],
-            "option_img_path": [],
-            "show_bottom_nav": false
-        },
-        {
-            "title": "Choose your marital status",
-            "option_type": "single_select",
-            "options": [
-                "Single",
-                "Married",
-                "Divorced",
-                "Widowed"
-            ],
-            "option_img_path": [
-                "",
-                "",
-                "",
-                ""
-            ],
-            "show_bottom_nav": false
-        },
-        {
-            "title": "Check your personal information\nsalutation",
-            "option_type": "user_form",
-            "options": [],
-            "option_img_path": [],
-            "show_bottom_nav": true
-        },
-        {
-            "title": "",
-            "option_type": "signature",
-            "options": [],
-            "option_img_path": [],
-            "show_bottom_nav": true
-        },
-        {
-            "title": "",
-            "option_type": "terms_and_condition",
-            "options": [],
-            "option_img_path": [],
-            "show_bottom_nav": false
-        }
-    ],
-    "du": [
-        {
-            "title": "Select the appropriate tax year",
-            "option_type": "single_select",
-            "options": [
-                "2018",
-                "2019",
-                "2020",
-                "2021",
-                "2022"
-            ],
-            "option_img_path": [],
-            "show_bottom_nav": false
-        },
-        {
-            "title": "Choose your marital status",
-            "option_type": "single_select",
-            "options": [
-                "Single",
-                "Married",
-                "Divorced",
-                "Widowed"
-            ],
-            "option_img_path": [
-                "",
-                "",
-                "",
-                ""
-            ],
-            "show_bottom_nav": false
-        },
-        {
-            "title": "Check your personal information\nsalutation",
-            "option_type": "user_form",
-            "options": [],
-            "option_img_path": [],
-            "show_bottom_nav": true
-        },
-        {
-            "title": "",
-            "option_type": "signature",
-            "options": [],
-            "option_img_path": [],
-            "show_bottom_nav": true
-        },
-        {
-            "title": "",
-            "option_type": "terms_and_condition",
-            "options": [],
-            "option_img_path": [],
-            "show_bottom_nav": false
-        }
-    ]
-};

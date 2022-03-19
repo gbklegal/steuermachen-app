@@ -1,6 +1,6 @@
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:steuermachen/components/back_reset_forward_btn_component.dart';
 import 'package:steuermachen/components/payment/payment_methods_component.dart';
 import 'package:steuermachen/components/selection_card_component.dart';
@@ -9,9 +9,11 @@ import 'package:steuermachen/components/user_form_component.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/options_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
+import 'package:steuermachen/providers/signature/signature_provider.dart';
+import 'package:steuermachen/providers/tax/declaration_tax/declaration_tax_provider.dart';
 import 'package:steuermachen/screens/tax/declaration_tax/declaration_tax_components/declaration_tax_calculation_component.dart';
 import 'package:steuermachen/utils/utils.dart';
-import 'package:steuermachen/wrappers/declaration_tax_view_wrapper.dart';
+import 'package:steuermachen/wrappers/declaration_tax/declaration_tax_view_wrapper.dart';
 
 class DeclarationQuestionsViewComponent extends StatefulWidget {
   const DeclarationQuestionsViewComponent({
@@ -21,10 +23,12 @@ class DeclarationQuestionsViewComponent extends StatefulWidget {
   final List<DeclarationTaxViewData> declarationTaxData;
 
   @override
-  State<DeclarationQuestionsViewComponent> createState() => _DeclarationQuestionsViewComponentState();
+  State<DeclarationQuestionsViewComponent> createState() =>
+      _DeclarationQuestionsViewComponentState();
 }
 
-class _DeclarationQuestionsViewComponentState extends State<DeclarationQuestionsViewComponent> {
+class _DeclarationQuestionsViewComponentState
+    extends State<DeclarationQuestionsViewComponent> {
   final pageController = PageController(initialPage: 0);
   int pageIndex = 0;
   @override
@@ -64,64 +68,93 @@ class _DeclarationQuestionsViewComponentState extends State<DeclarationQuestions
               ),
               Expanded(
                 child: SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 25),
-                    child: Column(
-                      children: [
-                        if (widget.declarationTaxData[i].optionType ==
-                            OptionConstants.singleSelect)
-                          for (var x = 0;
-                              x < widget.declarationTaxData[i].options.length;
-                              x++)
-                            _optionsWidget(i, x)
-                        else if (widget.declarationTaxData[i].optionType ==
-                            OptionConstants.grossIncome)
-                          const DeclarationTaxCalculationComponent()
-                        else if (widget.declarationTaxData[i].optionType ==
-                            OptionConstants.userForm)
-                          const UserFormComponent()
-                        else if (widget.declarationTaxData[i].optionType ==
-                            OptionConstants.paymentMethods)
-                          const PaymentMethodsComponent()
-                      ],
-                    ),
-                  ),
+                  child: Consumer<DeclarationTaxProvider>(
+                      builder: (context, consumer, child) {
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 25),
+                      child: Column(
+                        children: [
+                          if (widget.declarationTaxData[i].optionType ==
+                              OptionConstants.singleSelect)
+                            for (var x = 0;
+                                x < widget.declarationTaxData[i].options.length;
+                                x++)
+                              _optionsWidget(consumer, i, x)
+                          else if (widget.declarationTaxData[i].optionType ==
+                              OptionConstants.grossIncome)
+                            const DeclarationTaxCalculationComponent()
+                          else if (widget.declarationTaxData[i].optionType ==
+                              OptionConstants.userForm)
+                            const UserFormComponent()
+                          else if (widget.declarationTaxData[i].optionType ==
+                              OptionConstants.paymentMethods)
+                            const PaymentMethodsComponent()
+                        ],
+                      ),
+                    );
+                  }),
                 ),
               ),
-              if (widget.declarationTaxData[i].showBottomNav)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 80),
-                  child: BackResetForwardBtnComponent(
-                    onTapBack: () {
-                         Utils.animateToPreviousPage(pageController, i);
-                    },
-                    onTapContinue: () {
-                        Utils.animateToNextPage(pageController, i);
-                    },
-                  ),
-                )
+              if (widget.declarationTaxData[i].showBottomNav) _bottomBtns(i)
             ],
           ),
       ],
     );
   }
 
-  InkWell _optionsWidget(int i, int x) {
-    return InkWell(
+  Padding _bottomBtns(int i) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 80),
+      child: BackResetForwardBtnComponent(
+        showContinueBtn: widget.declarationTaxData[i].optionType !=
+            OptionConstants.singleSelect,
+        onTapBack: () {
+          Utils.animateToPreviousPage(pageController, i);
+        },
+        onTapContinue: () async {
+          if (widget.declarationTaxData[i].optionType ==
+              OptionConstants.userForm) {
+            bool status = await Utils.submitProfile(context);
+            if (status) {
+              Utils.animateToNextPage(pageController, i);
+            }
+          }
+          if (widget.declarationTaxData[i].optionType ==
+              OptionConstants.signature) {
+            bool status =
+                await Provider.of<SignatureProvider>(context, listen: false)
+                    .checkSignatureIsPresent();
+            if (status) {
+              Utils.animateToNextPage(pageController, i);
+            }
+          } else {
+            Utils.animateToNextPage(pageController, i);
+          }
+        },
+      ),
+    );
+  }
+
+  SelectionCardComponent _optionsWidget(
+      DeclarationTaxProvider consumer, int i, int x) {
+    return SelectionCardComponent(
+      title: widget.declarationTaxData[i].options[x],
+      imagePath: widget.declarationTaxData[i].optionImgPath.isNotEmpty
+          ? widget.declarationTaxData[i].optionImgPath[x]
+          : null,
       onTap: () {
         int year = DateTime.now().year;
         if (year.toString() == widget.declarationTaxData[i].options[x]) {
           Navigator.pushNamed(context, RouteConstants.currentYearTaxScreen);
         } else {
-           Utils.animateToNextPage(pageController, i);
+          if (i == 0) {
+            consumer.setTaxYear(widget.declarationTaxData[i].options[x]);
+          } else if (i == 1) {
+            consumer.setMartialStatus(widget.declarationTaxData[i].options[x]);
+          }
+          Utils.animateToNextPage(pageController, i);
         }
       },
-      child: SelectionCardComponent(
-        title: widget.declarationTaxData[i].options[x],
-        imagePath: widget.declarationTaxData[i].optionImgPath.isNotEmpty
-            ? widget.declarationTaxData[i].optionImgPath[x]
-            : null,
-      ),
     );
   }
 }

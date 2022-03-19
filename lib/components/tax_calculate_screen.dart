@@ -31,16 +31,14 @@ class TaxCalculatorComponent extends StatelessWidget {
             ),
             icon: SvgPicture.asset(
               AssetConstants.icDown,
-              color: ColorConstants.grey,
+              color: ColorConstants.black,
             ),
             value: consumer.selectedPrice,
             items: consumer.taxPrices
-                .map(
-                  (e) => DropdownMenuItem<String>(
-                    value: e,
-                    child: Text(e),
-                  ),
-                )
+                .map((e) => DropdownMenuItem<String>(
+                      value: e,
+                      child: Text(e),
+                    ))
                 .toList(),
             onChanged: (val) {
               consumer.calculateTax(val!);

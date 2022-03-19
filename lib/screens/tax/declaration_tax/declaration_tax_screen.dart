@@ -9,7 +9,7 @@ import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/providers/tax/declaration_tax/declaration_tax_provider.dart';
 import 'package:steuermachen/screens/tax/declaration_tax/declaration_tax_components/declaration_question_view_component.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
-import 'package:steuermachen/wrappers/declaration_tax_view_wrapper.dart';
+import 'package:steuermachen/wrappers/declaration_tax/declaration_tax_view_wrapper.dart';
 
 class DeclarationTaxScreen extends StatefulWidget {
   const DeclarationTaxScreen({Key? key}) : super(key: key);
@@ -24,9 +24,22 @@ class _DeclarationTaxScreenState extends State<DeclarationTaxScreen> {
   @override
   void initState() {
     provider = Provider.of<DeclarationTaxProvider>(context, listen: false);
-    WidgetsBinding.instance!.addPostFrameCallback((_) =>
-        provider.getDeclarationTaxViewData().then((value) => response = value));
+    _getDeclarationTaxViewData();
     super.initState();
+  }
+
+  void _getDeclarationTaxViewData() {
+    WidgetsBinding.instance!.addPostFrameCallback(
+      (_) => provider.getDeclarationTaxViewData().then(
+        (value) {
+          setState(
+            () {
+              response = value;
+            },
+          );
+        },
+      ),
+    );
   }
 
   @override
@@ -42,36 +55,45 @@ class _DeclarationTaxScreenState extends State<DeclarationTaxScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.only(left: 16, right: 16, top: 25),
-        child: Consumer<DeclarationTaxProvider>(
-            builder: (context, consumer, child) {
-          if (consumer.getBusyStateDeclarationTax || response == null) {
-            return const EmptyScreenLoaderComponent();
-          } else if (!response!.status!) {
-            return ErrorComponent(
-              message: response!.message!,
-              onTap: () async {
-                consumer.setBusyStateDeclarationTax = true;
-                await provider
-                    .getDeclarationTaxViewData()
-                    .then((value) => response = value);
-                consumer.setBusyStateDeclarationTax = false;
-              },
-            );
-          } else {
-            DeclarationTaxViewWrapper declarationTaxViewWrapper =
-                response!.data as DeclarationTaxViewWrapper;
-            if (context.locale == const Locale('en')) {
-              return DeclarationQuestionsViewComponent(
-                declarationTaxData: declarationTaxViewWrapper.en,
-              );
-            } else {
-              return DeclarationQuestionsViewComponent(
-                declarationTaxData: declarationTaxViewWrapper.du,
-              );
-            }
-          }
-        }),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (provider.getBusyStateDeclarationTax || response == null)
+              const EmptyScreenLoaderComponent()
+            else if (!response!.status!)
+              ErrorComponent(
+                message: response!.message!,
+                onTap: () async {
+                  provider.setBusyStateDeclarationTax = true;
+                  await provider
+                      .getDeclarationTaxViewData()
+                      .then((value) => response = value);
+                  provider.setBusyStateDeclarationTax = false;
+                },
+              )
+            else
+              _getMainBody()
+          ],
+        ),
       ),
     );
+  }
+
+  Flexible _getMainBody() {
+    DeclarationTaxViewWrapper declarationTaxViewWrapper =
+        response!.data as DeclarationTaxViewWrapper;
+    if (context.locale == const Locale('en')) {
+      return Flexible(
+        child: DeclarationQuestionsViewComponent(
+          declarationTaxData: declarationTaxViewWrapper.en,
+        ),
+      );
+    } else {
+      return Flexible(
+        child: DeclarationQuestionsViewComponent(
+          declarationTaxData: declarationTaxViewWrapper.du,
+        ),
+      );
+    }
   }
 }

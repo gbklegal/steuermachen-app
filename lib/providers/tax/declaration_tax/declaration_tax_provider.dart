@@ -2,9 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:steuermachen/constants/strings/error_messages_constants.dart';
 import 'package:steuermachen/main.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
-import 'package:steuermachen/wrappers/declaration_tax_view_wrapper.dart';
+import 'package:steuermachen/wrappers/declaration_tax/declaration_tax_data_collector_wrapper.dart';
+import 'package:steuermachen/wrappers/declaration_tax/declaration_tax_view_wrapper.dart';
 
 class DeclarationTaxProvider extends ChangeNotifier {
+  final DeclarationTaxDataCollectorWrapper?
+      _declarationTaxDataCollectorWrapper =
+      DeclarationTaxDataCollectorWrapper();
+  DeclarationTaxDataCollectorWrapper? get dataCollectorWrapper =>
+      _declarationTaxDataCollectorWrapper;
   bool _busyStateDeclarationTax = true;
   bool get getBusyStateDeclarationTax => _busyStateDeclarationTax;
   set setBusyStateDeclarationTax(bool _isBusy) {
@@ -18,7 +24,8 @@ class DeclarationTaxProvider extends ChangeNotifier {
       var res =
           await firestore.collection("declaration_tax").doc("content").get();
       Map<String, dynamic> x = res.data() as Map<String, dynamic>;
-      DeclarationTaxViewWrapper declarationTaxWrapper = DeclarationTaxViewWrapper.fromJson(x);
+      DeclarationTaxViewWrapper declarationTaxWrapper =
+          DeclarationTaxViewWrapper.fromJson(x);
       setBusyStateDeclarationTax = false;
       return CommonResponseWrapper(status: true, data: declarationTaxWrapper);
     } catch (e) {
@@ -39,6 +46,14 @@ class DeclarationTaxProvider extends ChangeNotifier {
       return CommonResponseWrapper(
           status: true, message: ErrorMessagesConstants.somethingWentWrong);
     }
+  }
+
+  setTaxYear(String year) {
+    _declarationTaxDataCollectorWrapper?.taxYear = year;
+  }
+
+  setMartialStatus(String status) {
+    _declarationTaxDataCollectorWrapper?.martialStatus = status;
   }
 }
 

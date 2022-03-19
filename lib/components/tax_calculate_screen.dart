@@ -1,8 +1,12 @@
+import 'dart:math';
+
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
@@ -19,42 +23,27 @@ class TaxCalculatorComponent extends StatelessWidget {
     return Consumer<TaxCalculatorProvider>(builder: (context, consumer, child) {
       return Column(
         children: [
-          DropdownButtonFormField<int>(
+          DropdownButtonFormField<String>(
             decoration: const InputDecoration(
               border: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.white),
               ),
             ),
-            value: 2,
-            items: const <DropdownMenuItem<int>>[
-              DropdownMenuItem<int>(
-                value: 1,
-                child: Text("Owner"),
-              ),
-              DropdownMenuItem<int>(
-                value: 2,
-                child: Text("Member"),
-              ),
-            ],
-            onChanged: (val) {},
-          ),
-          TextFormField(
-            keyboardType: TextInputType.number,
-            textInputAction: TextInputAction.done,
-            inputFormatters: [
-              FilteringTextInputFormatter.digitsOnly,
-            ],
-            decoration: InputDecoration(
-              labelStyle: GoogleFonts.raleway(
-                fontSize: 16.0,
-                fontStyle: FontStyle.normal,
-                color: ColorConstants.black.withOpacity(0.4),
-              ),
-              label: Text(LocaleKeys.annualIncom.tr()),
-              filled: false,
+            icon: SvgPicture.asset(
+              AssetConstants.icDown,
+              color: ColorConstants.grey,
             ),
+            value: consumer.selectedPrice,
+            items: consumer.taxPrices
+                .map(
+                  (e) => DropdownMenuItem<String>(
+                    value: e,
+                    child: Text(e),
+                  ),
+                )
+                .toList(),
             onChanged: (val) {
-              consumer.calculateTax(val);
+              consumer.calculateTax(val!);
               if (val != "") {
                 if (routeName == RouteConstants.currentIncomeScreen) {
                   Provider.of<TaxFileProvider>(context, listen: false)

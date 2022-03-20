@@ -16,7 +16,7 @@ class TaxCalculatorProvider extends ChangeNotifier {
     ">250000",
   ];
   List<int> prices = [89, 99, 129, 169, 189, 229, 299, 319, 369, 429, 0];
-  late int calculatedPrice = 0;
+  late int calculatedPrice = 89;
   void calculateTax(String val) {
     int priceIndex = 0;
     if (val == "<8000") {

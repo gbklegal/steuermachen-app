@@ -207,6 +207,9 @@ abstract class  LocaleKeys {
   static const termsAndConditionCheck1 = 'termsAndConditionCheck1';
   static const termsAndConditionCheckNonDisclosure = 'termsAndConditionCheckNonDisclosure';
   static const termsAndConditionCheck2 = 'termsAndConditionCheck2';
+  static const creditCard = 'creditCard';
+  static const bill = 'bill';
+  static const choosePaymentMethod = 'choosePaymentMethod';
   static const logout = 'logout';
 
 }

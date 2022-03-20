@@ -2,8 +2,11 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/components/back_reset_forward_btn_component.dart';
+import 'package:steuermachen/components/payment/confirm_billing_component.dart';
 import 'package:steuermachen/components/payment/payment_methods_component.dart';
 import 'package:steuermachen/components/selection_card_component.dart';
+import 'package:steuermachen/components/signature_component.dart';
+import 'package:steuermachen/components/terms_conditions_component.dart';
 import 'package:steuermachen/components/text_progress_bar_component.dart';
 import 'package:steuermachen/components/user_form_component.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
@@ -55,13 +58,16 @@ class _DeclarationQuestionsViewComponentState
               const SizedBox(
                 height: 20,
               ),
-              Text(
-                widget.declarationTaxData[i].title,
-                textAlign: TextAlign.left,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyText1!
-                    .copyWith(fontWeight: FontWeight.w600, fontSize: 16),
+              Visibility(
+                visible: widget.declarationTaxData[i].title != "",
+                child: Text(
+                  widget.declarationTaxData[i].title,
+                  textAlign: TextAlign.left,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText1!
+                      .copyWith(fontWeight: FontWeight.w600, fontSize: 16),
+                ),
               ),
               const SizedBox(
                 height: 15,
@@ -87,8 +93,24 @@ class _DeclarationQuestionsViewComponentState
                               OptionConstants.userForm)
                             const UserFormComponent()
                           else if (widget.declarationTaxData[i].optionType ==
+                              OptionConstants.signature)
+                            const SignatureComponent()
+                          else if (widget.declarationTaxData[i].optionType ==
                               OptionConstants.paymentMethods)
-                            const PaymentMethodsComponent()
+                            PaymentMethodsComponent(
+                              decisionTap: () {
+                                Utils.animateToNextPage(pageController, i);
+                              },
+                            )
+                          else if (widget.declarationTaxData[i].optionType ==
+                              OptionConstants.confirmBilling)
+                            ConfirmBillingComponent(
+                              onTapOrder: () =>
+                                  Utils.animateToNextPage(pageController, i),
+                            )
+                          else if (widget.declarationTaxData[i].optionType ==
+                              OptionConstants.termsCondition)
+                            const TermsAndConditionComponent()
                         ],
                       ),
                     );
@@ -127,7 +149,17 @@ class _DeclarationQuestionsViewComponentState
             if (status) {
               Utils.animateToNextPage(pageController, i);
             }
-          } else {
+          }
+          //Pending for promo code
+          // if (widget.declarationTaxData[i].optionType ==
+          //     OptionConstants.grossIncome) {
+          //   bool status =
+          //       await Provider.of<TaxCalculatorProvider>(context, listen: false);
+          //   if (status) {
+          //     Utils.animateToNextPage(pageController, i);
+          //   }
+          // }
+          else {
             Utils.animateToNextPage(pageController, i);
           }
         },

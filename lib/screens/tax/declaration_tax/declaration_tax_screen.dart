@@ -25,6 +25,7 @@ class _DeclarationTaxScreenState extends State<DeclarationTaxScreen> {
   void initState() {
     provider = Provider.of<DeclarationTaxProvider>(context, listen: false);
     _getDeclarationTaxViewData();
+    // provider.addDeclarationTaxViewData();
     super.initState();
   }
 

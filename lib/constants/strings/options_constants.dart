@@ -6,6 +6,7 @@ class OptionConstants {
   static const String signature = "signature";
   static const String initialScreen = "initial_screen";
   static const String paymentMethods = "payment_methods";
+  static const String confirmBilling = "confirm_billing";
   static const String grossIncome = "gross_income";
   static const String subjectTaxLaw = "subject_tax_law";
   static const String yearsList = "years_list";

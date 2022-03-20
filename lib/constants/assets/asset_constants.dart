@@ -50,6 +50,8 @@ class AssetConstants {
   static String icCamera = "assets/icons/camera-icon.svg";
   static String icActiveCheck = "assets/icons/active-check-icon.svg";
   static String icInActiveCheck = "assets/icons/inactive-check-icon.svg";
+  static String icCreditCard = "assets/icons/credit-card-icon.svg";
+  static String icBill = "assets/icons/bill-icon.svg";
 
   //More
   static String icMoreDocument = "assets/icons/more/document-icon.png";

@@ -108,7 +108,9 @@ class _CurrentYearTaxViewState extends State<_CurrentYearTaxView> {
       },
       children: [
         _initialView(context),
-         const PaymentMethodsComponent()
+        PaymentMethodsComponent(
+          decisionTap: () {},
+        )
       ],
     );
   }
@@ -164,12 +166,12 @@ class _CurrentYearTaxViewState extends State<_CurrentYearTaxView> {
         const SizedBox(
           height: 80,
         ),
-         ButtonComponent(
+        ButtonComponent(
           buttonText: LocaleKeys.powerOfAttorney,
-          onPressed: (){
-             pageController.animateToPage(pageIndex + 1,
-              duration: const Duration(milliseconds: 500),
-              curve: Curves.easeInToLinear);
+          onPressed: () {
+            pageController.animateToPage(pageIndex + 1,
+                duration: const Duration(milliseconds: 500),
+                curve: Curves.easeInToLinear);
           },
         )
       ],

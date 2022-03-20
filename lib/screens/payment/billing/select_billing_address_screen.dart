@@ -10,6 +10,7 @@ import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
+import 'package:steuermachen/providers/payment_method_provider.dart';
 import 'package:steuermachen/providers/profile/profile_provider.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 import 'package:steuermachen/wrappers/user_wrapper.dart';
@@ -130,8 +131,12 @@ class SelectBillingAddressScreen extends StatelessWidget {
               width: 15,
             ),
             InkWell(
-              onTap: () => Navigator.pushNamed(
-                  context, RouteConstants.confirmBillingScreen),
+              onTap: () {
+                var provider =
+                    Provider.of<PaymentMethodProvider>(context, listen: false);
+                provider.setSelectedAddress = address;
+                Navigator.pop(context, true);
+              },
               child: Container(
                 decoration: BoxDecoration(
                   color: ColorConstants.primary,

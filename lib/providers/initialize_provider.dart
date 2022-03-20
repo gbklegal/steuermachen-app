@@ -4,6 +4,7 @@ import 'package:steuermachen/providers/contact/contact_us_provider.dart';
 import 'package:steuermachen/providers/forms_provider.dart';
 import 'package:steuermachen/providers/language_provider.dart';
 import 'package:steuermachen/providers/document/document_provider.dart';
+import 'package:steuermachen/providers/payment_method_provider.dart';
 import 'package:steuermachen/providers/profile/profile_provider.dart';
 import 'package:steuermachen/providers/signature/signature_provider.dart';
 import 'package:steuermachen/providers/tax/current_year_tax/current_year_tax_provider.dart';
@@ -65,6 +66,9 @@ providerList(context) {
     ),
     ChangeNotifierProvider(
       create: (context) => TermsAndConditionProvider(),
+    ),
+    ChangeNotifierProvider(
+      create: (context) => PaymentMethodProvider(),
     ),
   ];
 }

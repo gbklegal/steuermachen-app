@@ -154,7 +154,9 @@ class _QuestionsViewState extends State<_QuestionsView> {
                           )
                         else if (widget.easyTaxData[i].optionType ==
                             OptionConstants.paymentMethods)
-                          const PaymentMethodsComponent()
+                          PaymentMethodsComponent(
+                            decisionTap: () {},
+                          )
                       ],
                     ),
                   ),

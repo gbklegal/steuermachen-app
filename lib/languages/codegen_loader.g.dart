@@ -221,6 +221,9 @@ class CodegenLoader extends AssetLoader{
   "termsAndConditionCheck1": "* I agree to the release from ",
   "termsAndConditionCheckNonDisclosure": "non-disclosure ",
   "termsAndConditionCheck2": "* I accept the terms and conditions and the information on data processing and the right of withdrawal from steuermachen.",
+  "creditCard": "Credit card",
+  "bill": "bill",
+  "choosePaymentMethod": "Choose pay method",
   "logout": "Ausloggen"
 };
 static const Map<String,dynamic> en = {
@@ -428,6 +431,9 @@ static const Map<String,dynamic> en = {
   "termsAndConditionCheck1": "* I agree to the release from ",
   "termsAndConditionCheckNonDisclosure": "non-disclosure ",
   "termsAndConditionCheck2": "* I accept the terms and conditions and the information on data processing and the right of withdrawal from steuermachen.",
+  "creditCard": "Credit card",
+  "bill": "bill",
+  "choosePaymentMethod": "Choose pay method",
   "logout": "Logout"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"de": de, "en": en};

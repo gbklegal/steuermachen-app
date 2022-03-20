@@ -133,7 +133,7 @@ class SelectBillingAddressScreen extends StatelessWidget {
             InkWell(
               onTap: () {
                 var provider =
-                    Provider.of<PaymentMethodProvider>(context, listen: false);
+                    Provider.of<ProfileProvider>(context, listen: false);
                 provider.setSelectedAddress = address;
                 Navigator.pop(context, true);
               },

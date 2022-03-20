@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 class TaxCalculatorProvider extends ChangeNotifier {
   String selectedPrice = "<8000";
+  List<int> prices = [89, 99, 129, 169, 189, 229, 299, 319, 369, 429, 0];
+  late int calculatedPrice = 89;
   List<String> taxPrices = [
     "<8000",
     "8001 - 16000",
@@ -15,10 +17,10 @@ class TaxCalculatorProvider extends ChangeNotifier {
     "200001 - 250000",
     ">250000",
   ];
-  List<int> prices = [89, 99, 129, 169, 189, 229, 299, 319, 369, 429, 0];
-  late int calculatedPrice = 89;
+
   void calculateTax(String val) {
     int priceIndex = 0;
+    selectedPrice = val;
     if (val == "<8000") {
       priceIndex = 0;
     } else if (val == "8001 - 16000") {

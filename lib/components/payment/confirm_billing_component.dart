@@ -7,6 +7,7 @@ import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/providers/payment_method_provider.dart';
+import 'package:steuermachen/providers/profile/profile_provider.dart';
 
 class ConfirmBillingComponent extends StatelessWidget {
   const ConfirmBillingComponent({
@@ -16,7 +17,7 @@ class ConfirmBillingComponent extends StatelessWidget {
   final void Function()? onTapOrder;
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<PaymentMethodProvider>(context, listen: false);
+    final provider = Provider.of<ProfileProvider>(context, listen: false);
     return SizedBox(
       height: MediaQuery.of(context).size.height * 0.75,
       child: Column(

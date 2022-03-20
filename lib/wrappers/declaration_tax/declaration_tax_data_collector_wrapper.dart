@@ -5,7 +5,7 @@ class DeclarationTaxDataCollectorWrapper {
     this.taxYear,
     this.martialStatus,
     this.grossIncome,
-    this.isPromoApplied,
+    this.isPromoApplied = false,
     this.userInfo,
     this.userAddress,
     this.signaturePath,

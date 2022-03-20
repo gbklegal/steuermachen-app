@@ -97,4 +97,5 @@ class _DeclarationTaxScreenState extends State<DeclarationTaxScreen> {
       );
     }
   }
+
 }

@@ -1,10 +1,6 @@
-import 'dart:math';
-
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
@@ -14,9 +10,10 @@ import 'package:steuermachen/providers/tax_calculator_provider.dart';
 import 'package:steuermachen/providers/tax_file_provider.dart';
 
 class TaxCalculatorComponent extends StatelessWidget {
-  const TaxCalculatorComponent(
-      {Key? key, this.routeName = RouteConstants.calculatorScreen})
-      : super(key: key);
+  const TaxCalculatorComponent({
+    Key? key,
+    this.routeName = RouteConstants.calculatorScreen,
+  }) : super(key: key);
   final String routeName;
   @override
   Widget build(BuildContext context) {
@@ -33,6 +30,7 @@ class TaxCalculatorComponent extends StatelessWidget {
               AssetConstants.icDown,
               color: ColorConstants.black,
             ),
+            
             value: consumer.selectedPrice,
             items: consumer.taxPrices
                 .map((e) => DropdownMenuItem<String>(

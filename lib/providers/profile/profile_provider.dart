@@ -9,10 +9,17 @@ import 'package:steuermachen/wrappers/user_wrapper.dart';
 class ProfileProvider extends ChangeNotifier {
   UserWrapper? userData;
   bool _busyStateProfile = true;
+  UserWrapper? _selectedAddress;
   bool get getBusyStateProfile => _busyStateProfile;
   set setBusyStateProfile(bool _isBusy) {
     _busyStateProfile = _isBusy;
     notifyListeners();
+  }
+
+  UserWrapper? get getSelectedAddress => _selectedAddress;
+
+  set setSelectedAddress(UserWrapper? selectedAddress) {
+    _selectedAddress = selectedAddress;
   }
 
   final TextEditingController genderController = TextEditingController();

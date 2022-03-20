@@ -4,10 +4,12 @@ import 'package:provider/provider.dart';
 import 'package:steuermachen/components/back_reset_forward_btn_component.dart';
 import 'package:steuermachen/components/payment/confirm_billing_component.dart';
 import 'package:steuermachen/components/payment/payment_methods_component.dart';
+import 'package:steuermachen/components/popup_loader_component.dart';
 import 'package:steuermachen/components/selection_card_component.dart';
 import 'package:steuermachen/components/signature_component.dart';
 import 'package:steuermachen/components/terms_conditions_component.dart';
 import 'package:steuermachen/components/text_progress_bar_component.dart';
+import 'package:steuermachen/components/toast_component.dart';
 import 'package:steuermachen/components/user_form_component.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/options_constants.dart';
@@ -16,6 +18,7 @@ import 'package:steuermachen/providers/signature/signature_provider.dart';
 import 'package:steuermachen/providers/tax/declaration_tax/declaration_tax_provider.dart';
 import 'package:steuermachen/screens/tax/declaration_tax/declaration_tax_components/declaration_tax_calculation_component.dart';
 import 'package:steuermachen/utils/utils.dart';
+import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 import 'package:steuermachen/wrappers/declaration_tax/declaration_tax_view_wrapper.dart';
 
 class DeclarationQuestionsViewComponent extends StatefulWidget {
@@ -110,7 +113,11 @@ class _DeclarationQuestionsViewComponentState
                             )
                           else if (widget.declarationTaxData[i].optionType ==
                               OptionConstants.termsCondition)
-                            const TermsAndConditionComponent()
+                            TermsAndConditionComponent(
+                              onPressedOrderNow: (value) async {
+                                await _submitData(consumer);
+                              },
+                            )
                         ],
                       ),
                     );
@@ -188,5 +195,17 @@ class _DeclarationQuestionsViewComponentState
         }
       },
     );
+  }
+
+  _submitData(DeclarationTaxProvider consumer) async {
+    PopupLoader.showLoadingDialog(context);
+    CommonResponseWrapper res =
+        await consumer.submitDeclarationTaxData(context);
+    PopupLoader.hideLoadingDialog(context);
+    if (res.status!) {
+      Utils.completedDialog(context);
+    } else {
+      ToastComponent.showToast(res.message!);
+    }
   }
 }

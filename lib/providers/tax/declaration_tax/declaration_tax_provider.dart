@@ -5,7 +5,6 @@ import 'package:steuermachen/constants/strings/error_messages_constants.dart';
 import 'package:steuermachen/constants/strings/process_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/main.dart';
-import 'package:steuermachen/providers/payment_method_provider.dart';
 import 'package:steuermachen/providers/profile/profile_provider.dart';
 import 'package:steuermachen/providers/signature/signature_provider.dart';
 import 'package:steuermachen/providers/tax_calculator_provider.dart';
@@ -48,7 +47,7 @@ class DeclarationTaxProvider extends ChangeNotifier {
   // JSON//filepath: declaration_tax_view.json
   Future<CommonResponseWrapper> addDeclarationTaxViewData() async {
     try {
-      await firestore.collection("declaration_tax").doc("content").set(json);
+      // await firestore.collection("declaration_tax").doc("content").set(json);
       return CommonResponseWrapper(
           status: true,
           message: "declaration tax view data added successfully");
@@ -72,20 +71,7 @@ class DeclarationTaxProvider extends ChangeNotifier {
 
   Future<CommonResponseWrapper> submitDeclarationTaxData(
       BuildContext context) async {
-    SignatureProvider _signature =
-        Provider.of<SignatureProvider>(context, listen: false);
-    ProfileProvider _user =
-        Provider.of<ProfileProvider>(context, listen: false);
-    TaxCalculatorProvider _tax =
-        Provider.of<TaxCalculatorProvider>(context, listen: false);
-    String signaturePath = await Utils.uploadToFirebaseStorage(
-        await _signature.getSignaturePath());
-    _declarationTaxDataCollectorWrapper?.signaturePath = signaturePath;
-    _declarationTaxDataCollectorWrapper?.userInfo =
-        _user.getUserFromControllers();
-    _declarationTaxDataCollectorWrapper?.userAddress = _user.getSelectedAddress;
-    _declarationTaxDataCollectorWrapper?.termsAndConditionChecked = true;
-    _declarationTaxDataCollectorWrapper?.grossIncome= _tax.selectedPrice;
+    await _setData(context);
     try {
       User? user = FirebaseAuth.instance.currentUser;
       await firestore
@@ -105,133 +91,21 @@ class DeclarationTaxProvider extends ChangeNotifier {
           status: false, message: ErrorMessagesConstants.somethingWentWrong);
     }
   }
-}
 
-var json = {
-  "en": [
-    {
-      "title": "Select the appropriate tax year",
-      "option_type": "single_select",
-      "options": ["2018", "2019", "2020", "2021", "2022"],
-      "option_img_path": [],
-      "show_bottom_nav": true
-    },
-    {
-      "title": "Choose your marital status",
-      "option_type": "single_select",
-      "options": ["Single", "Married", "Divorced", "Widowed"],
-      "option_img_path": [
-        "https://firebasestorage.googleapis.com/v0/b/steuermachen.appspot.com/o/assets%2Fprocess%2Fstickman.png?alt=media&token=e8ec4b68-8c56-40a9-9d3e-63bc58e76598",
-        "https://firebasestorage.googleapis.com/v0/b/steuermachen.appspot.com/o/assets%2Fprocess%2Fwedding-rings.png?alt=media&token=cfc82be7-113c-46d6-bbdd-40ae8a841caa",
-        "https://firebasestorage.googleapis.com/v0/b/steuermachen.appspot.com/o/assets%2Fprocess%2Fbroken.png?alt=media&token=44b2e7c8-f85b-4eef-a3f7-31367e8d544d",
-        "https://firebasestorage.googleapis.com/v0/b/steuermachen.appspot.com/o/assets%2Fprocess%2Fwidowed.png?alt=media&token=3ca6e379-7055-47fa-89d6-722151ff016d"
-      ],
-      "show_bottom_nav": true
-    },
-    {
-      "title": "",
-      "option_type": "gross_income",
-      "options": [],
-      "option_img_path": [],
-      "show_bottom_nav": true
-    },
-    {
-      "title": "Check your personal information",
-      "option_type": "user_form",
-      "options": [],
-      "option_img_path": [],
-      "show_bottom_nav": true
-    },
-    {
-      "title": "",
-      "option_type": "payment_methods",
-      "options": [],
-      "option_img_path": [],
-      "show_bottom_nav": false
-    },
-    {
-      "title": "",
-      "option_type": "confirm_billing",
-      "options": [],
-      "option_img_path": [],
-      "show_bottom_nav": false
-    },
-    {
-      "title": "",
-      "option_type": "signature",
-      "options": [],
-      "option_img_path": [],
-      "show_bottom_nav": true
-    },
-    {
-      "title": "",
-      "option_type": "terms_and_condition",
-      "options": [],
-      "option_img_path": [],
-      "show_bottom_nav": false
-    }
-  ],
-  "du": [
-    {
-      "title": "Select the appropriate tax year",
-      "option_type": "single_select",
-      "options": ["2018", "2019", "2020", "2021", "2022"],
-      "option_img_path": [],
-      "show_bottom_nav": false
-    },
-    {
-      "title": "Choose your marital status",
-      "option_type": "single_select",
-      "options": ["Single", "Married", "Divorced", "Widowed"],
-      "option_img_path": [
-        "https://firebasestorage.googleapis.com/v0/b/steuermachen.appspot.com/o/assets%2Fprocess%2Fstickman.png?alt=media&token=e8ec4b68-8c56-40a9-9d3e-63bc58e76598",
-        "https://firebasestorage.googleapis.com/v0/b/steuermachen.appspot.com/o/assets%2Fprocess%2Fwedding-rings.png?alt=media&token=cfc82be7-113c-46d6-bbdd-40ae8a841caa",
-        "https://firebasestorage.googleapis.com/v0/b/steuermachen.appspot.com/o/assets%2Fprocess%2Fbroken.png?alt=media&token=44b2e7c8-f85b-4eef-a3f7-31367e8d544d",
-        "https://firebasestorage.googleapis.com/v0/b/steuermachen.appspot.com/o/assets%2Fprocess%2Fwidowed.png?alt=media&token=3ca6e379-7055-47fa-89d6-722151ff016d"
-      ],
-      "show_bottom_nav": false
-    },
-    {
-      "title": "",
-      "option_type": "gross_income",
-      "options": [],
-      "option_img_path": [],
-      "show_bottom_nav": true
-    },
-    {
-      "title": "Check your personal information",
-      "option_type": "user_form",
-      "options": [],
-      "option_img_path": [],
-      "show_bottom_nav": true
-    },
-    {
-      "title": "",
-      "option_type": "payment_methods",
-      "options": [],
-      "option_img_path": [],
-      "show_bottom_nav": false
-    },
-    {
-      "title": "",
-      "option_type": "confirm_billing",
-      "options": [],
-      "option_img_path": [],
-      "show_bottom_nav": false
-    },
-    {
-      "title": "",
-      "option_type": "signature",
-      "options": [],
-      "option_img_path": [],
-      "show_bottom_nav": true
-    },
-    {
-      "title": "",
-      "option_type": "terms_and_condition",
-      "options": [],
-      "option_img_path": [],
-      "show_bottom_nav": false
-    }
-  ]
-};
+  Future<void> _setData(BuildContext context) async {
+    SignatureProvider _signature =
+        Provider.of<SignatureProvider>(context, listen: false);
+    ProfileProvider _user =
+        Provider.of<ProfileProvider>(context, listen: false);
+    TaxCalculatorProvider _tax =
+        Provider.of<TaxCalculatorProvider>(context, listen: false);
+    String signaturePath = await Utils.uploadToFirebaseStorage(
+        await _signature.getSignaturePath());
+    _declarationTaxDataCollectorWrapper?.signaturePath = signaturePath;
+    _declarationTaxDataCollectorWrapper?.userInfo =
+        _user.getUserFromControllers();
+    _declarationTaxDataCollectorWrapper?.userAddress = _user.getSelectedAddress;
+    _declarationTaxDataCollectorWrapper?.termsAndConditionChecked = true;
+    _declarationTaxDataCollectorWrapper?.grossIncome = _tax.selectedPrice;
+  }
+}

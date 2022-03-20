@@ -131,6 +131,7 @@ class CodegenLoader extends AssetLoader{
   "thankYouForOrder": "Vielen Dank für Ihren Auftrag",
   "impRecEmail": "WICHTIG: Sie erhalten eine E-Mail mit allen Informationen zum weiteren Vorgehen.",
   "weWillBeInTouchShortly": "Wir melden uns in Kürze",
+  "emailReceive": "WICHTIG: Du erhältst eine Email, mit allen Informationen über das weitere Vorgehen.Damit es noch schneller geht, kannst du hier gleich die erforderlichen  Belege hochladen.",
   "applyNowForAfee": "Jetzt kostenpflichtig bewerben",
   "signHere": "Hier unterschreiben",
   "initialTaxAdvice": "Steuerliche Erstberatung",
@@ -228,7 +229,7 @@ class CodegenLoader extends AssetLoader{
 };
 static const Map<String,dynamic> en = {
   "appName": "make tax",
-  "onboardingTitle": "Welcome to tax making!\nGet your tax refund back now",
+  "onboardingTitle": "Welcome to tax making!\nGet your tax refund back nowe",
   "onboardingOne": "1047 euros average tax refund for taxpayers",
   "onboardingTwo": "100% time and nerves saved",
   "onboardingThree": "Don't lose money due to incorrect tax assessments",
@@ -342,6 +343,7 @@ static const Map<String,dynamic> en = {
   "thankYouForOrder": "Thank you for your order",
   "impRecEmail": "IMPORTANT: You will receive an email with all the information on how to proceed.",
   "weWillBeInTouchShortly": "We’ll be in touch shortly",
+  "emailReceive": "IMPORTANT: You will receive an email with all the information about how to proceed. To make it even faster, you can upload the required receipts here.",
   "applyNowForAfee": "Apply now for a fee",
   "signHere": "Sign here",
   "clear": "Clear",

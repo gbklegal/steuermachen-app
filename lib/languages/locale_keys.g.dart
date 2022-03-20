@@ -117,6 +117,7 @@ abstract class  LocaleKeys {
   static const thankYouForOrder = 'thankYouForOrder';
   static const impRecEmail = 'impRecEmail';
   static const weWillBeInTouchShortly = 'weWillBeInTouchShortly';
+  static const emailReceive = 'emailReceive';
   static const applyNowForAfee = 'applyNowForAfee';
   static const signHere = 'signHere';
   static const initialTaxAdvice = 'initialTaxAdvice';

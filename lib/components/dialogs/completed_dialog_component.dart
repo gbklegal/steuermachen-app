@@ -25,7 +25,7 @@ class CompletedDialogComponent extends StatelessWidget {
             Image.asset(AssetConstants.done),
             const SizedBox(height: 10),
             const TextComponent(LocaleKeys.thankYou),
-            const TextComponent(LocaleKeys.weWillBeInTouchShortly),
+            const TextComponent(LocaleKeys.emailReceive),
             Row(
               children: [
                 Flexible(

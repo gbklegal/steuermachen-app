@@ -1,6 +1,6 @@
 {
     "appName": "make tax",
-    "onboardingTitle": "Welcome to tax making!\nGet your tax refund back now",
+    "onboardingTitle": "Welcome to tax making!\nGet your tax refund back nowe",
     "onboardingOne": "1047 euros average tax refund for taxpayers",
     "onboardingTwo": "100% time and nerves saved",
     "onboardingThree": "Don't lose money due to incorrect tax assessments",
@@ -114,6 +114,7 @@
     "thankYouForOrder": "Thank you for your order",
     "impRecEmail": "IMPORTANT: You will receive an email with all the information on how to proceed.",
     "weWillBeInTouchShortly": "We’ll be in touch shortly",
+    "emailReceive": "IMPORTANT: You will receive an email with all the information about how to proceed. To make it even faster, you can upload the required receipts here.",
     "applyNowForAfee": "Apply now for a fee",
     "signHere": "Sign here",
     "clear": "Clear",

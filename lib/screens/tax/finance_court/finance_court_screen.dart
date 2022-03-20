@@ -16,6 +16,7 @@ import 'package:steuermachen/constants/strings/error_messages_constants.dart';
 import 'package:steuermachen/constants/strings/options_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
+import 'package:steuermachen/providers/signature/signature_provider.dart';
 import 'package:steuermachen/providers/tax/finance_court/finance_court_provider.dart';
 import 'package:steuermachen/screens/tax/finance_court/finance_law/finance_law_component.dart';
 import 'package:steuermachen/utils/utils.dart';
@@ -249,6 +250,13 @@ class _QuestionsViewState extends State<_QuestionsView> {
     } else if (widget.financeCourtViewData[i].optionType ==
         OptionConstants.subjectTaxLaw) {
       _validateSubjectLawData(i);
+    } else if (widget.financeCourtViewData[i].optionType ==
+        OptionConstants.signature) {
+      bool status = await Provider.of<SignatureProvider>(context, listen: false)
+          .checkSignatureIsPresent();
+      if (status) {
+        Utils.animateToNextPage(pageController, i);
+      }
     } else {
       Utils.animateToNextPage(pageController, i);
     }

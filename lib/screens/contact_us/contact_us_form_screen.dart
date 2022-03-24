@@ -98,7 +98,9 @@ class _ContactUsFormScreenState extends State<ContactUsFormScreen>
                   TextFormField(
                       controller: _emailController,
                       decoration: InputDecoration(
-                        labelText: LocaleKeys.emailAddress.tr().replaceAll("address", ""),
+                        labelText: LocaleKeys.emailAddress
+                            .tr()
+                            .replaceAll("address", ""),
                         hintStyle: fontStyle,
                       ),
                       validator: validateEmail),

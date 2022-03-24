@@ -35,12 +35,7 @@ class FAQContentWrapper {
 }
 
 class FAQContent {
-  FAQContent({
-    this.question,
-    this.title,
-    this.answer,
-    this.isActive
-  });
+  FAQContent({this.question, this.title, this.answer, this.isActive});
 
   String? question;
   String? title;

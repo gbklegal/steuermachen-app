@@ -171,9 +171,9 @@ class _ChatScreenState extends State<ChatScreen> {
         child: Chat(
           messages: _messages,
           onAttachmentPressed: _handleAtachmentPressed,
-          onMessageTap: (context, me)=>{},
+          onMessageTap: (context, me) => {},
           onPreviewDataFetched: _handlePreviewDataFetched,
-          onSendPressed: (val)=>{},
+          onSendPressed: (val) => {},
           user: _user,
         ),
       ),

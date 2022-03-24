@@ -63,8 +63,7 @@ class TaxTipsContent {
         subtitle: json["subtitle"],
         articleBy: json["article_by"],
         readTime: json["read_time"],
-        publishedDate:
-            json["published_date"].toDate(),
+        publishedDate: json["published_date"].toDate(),
         image: json["image"],
         content: json["content"],
       );

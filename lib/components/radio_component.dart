@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:steuermachen/components/text_component.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';

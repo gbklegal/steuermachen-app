@@ -110,7 +110,9 @@ class _FDottedLineState extends State<FDottedLine> {
 
   @override
   Widget build(BuildContext context) {
-    if (_isEmpty(widget.width) && _isEmpty(widget.height) && widget.child == null) return Container();
+    if (_isEmpty(widget.width) &&
+        _isEmpty(widget.height) &&
+        widget.child == null) return Container();
     if (widget.child != null) {
       tryToGetChildSize();
       List<Widget> children = [];
@@ -145,7 +147,8 @@ class _FDottedLineState extends State<FDottedLine> {
   void tryToGetChildSize() {
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       try {
-        RenderBox box = childKey.currentContext!.findRenderObject() as RenderBox;
+        RenderBox box =
+            childKey.currentContext!.findRenderObject() as RenderBox;
         double tempWidth = box.size.width;
         double tempHeight = box.size.height;
         bool needUpdate = tempWidth != childWidth || tempHeight != childHeight;
@@ -227,7 +230,8 @@ class _DottedLinePainter extends CustomPainter {
         size.width,
         size.height,
         topLeft: Radius.circular(corner != null ? corner!.leftTopCorner : 0.0),
-        topRight: Radius.circular(corner != null ? corner!.rightTopCorner : 0.0),
+        topRight:
+            Radius.circular(corner != null ? corner!.rightTopCorner : 0.0),
         bottomLeft:
             Radius.circular(corner != null ? corner!.leftBottomCorner : 0.0),
         bottomRight:

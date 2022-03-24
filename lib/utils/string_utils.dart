@@ -6,5 +6,6 @@ extension CapExtension on String {
       .split(" ")
       .map((str) => str.inCaps)
       .join(" ");
-  String get onlyFirstInCaps =>  length > 0 ? '${this[0].toUpperCase()}${substring(1).toLowerCase()}' : '';
+  String get onlyFirstInCaps =>
+      length > 0 ? '${this[0].toUpperCase()}${substring(1).toLowerCase()}' : '';
 }

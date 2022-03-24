@@ -73,7 +73,7 @@ class _DocumentOverviewScreenState extends State<DocumentOverviewScreen> {
             height: 20,
           ),
           TextComponent(
-            LocaleKeys.documentOverviewForTaxYear.tr()+ " 2018",
+            LocaleKeys.documentOverviewForTaxYear.tr() + " 2018",
             style: FontStyles.fontMedium(
                 fontSize: 16, fontWeight: FontWeight.w600, letterSpacing: 3),
           ),

@@ -56,14 +56,14 @@ class _TaxFileMaritalStatusScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:  AppBarComponent(
+      appBar: AppBarComponent(
         LocaleKeys.areSingle.tr(),
         showPersonIcon: false,
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-           Padding(
+          Padding(
             padding: const EdgeInsets.only(left: 16, right: 16, top: 25),
             child: TextProgressBarComponent(
               title: "${LocaleKeys.step.tr()} 1/5",
@@ -92,7 +92,7 @@ class _TaxFileMaritalStatusScreenState
         ],
       ),
       bottomNavigationBar: Padding(
-         padding: AppConstants.bottomBtnPadding,
+        padding: AppConstants.bottomBtnPadding,
         child: ButtonComponent(
           btnHeight: 56,
           buttonText: LocaleKeys.next.tr().toUpperCase(),

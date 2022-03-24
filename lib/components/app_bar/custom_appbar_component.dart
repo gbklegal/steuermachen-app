@@ -22,7 +22,7 @@ class CustomAppBarComponent extends StatelessWidget {
             Navigator.pop(context);
           },
           child: Row(
-            children:  [
+            children: [
               const Padding(
                 padding: EdgeInsets.only(left: 8.0),
                 child: Icon(

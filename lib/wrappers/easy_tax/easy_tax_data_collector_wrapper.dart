@@ -1,12 +1,11 @@
 import 'package:steuermachen/wrappers/user_wrapper.dart';
 
 class EasyTaxDataCollectorWrapper {
-  EasyTaxDataCollectorWrapper({
-    this.userInfo,
-    this.userAddress,
-    this.termsAndConditionChecked,
-    this.subscriptionPrice
-  });
+  EasyTaxDataCollectorWrapper(
+      {this.userInfo,
+      this.userAddress,
+      this.termsAndConditionChecked,
+      this.subscriptionPrice});
   bool? termsAndConditionChecked;
   double? subscriptionPrice;
   UserWrapper? userInfo;

@@ -177,7 +177,6 @@ class ProfileMenuOptions {
       required this.trailingIcon});
 }
 
-
 //  if (moreOptions.routeName ==
 //                                   RouteConstants.splashScreen) {
 //                                 PopupLoader.showLoadingDialog(context);

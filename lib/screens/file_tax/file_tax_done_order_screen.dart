@@ -16,7 +16,7 @@ class FileTaxDoneOrderScreen extends StatelessWidget {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-        appBar:  AppBarComponent(
+        appBar: AppBarComponent(
           LocaleKeys.done.tr(),
           showBackButton: false,
           showPersonIcon: false,
@@ -26,7 +26,7 @@ class FileTaxDoneOrderScreen extends StatelessWidget {
           child: Column(
             children: [
               const SizedBox(height: 16),
-               TextProgressBarComponent(
+              TextProgressBarComponent(
                 title: "${LocaleKeys.step.tr()} 5/5",
                 progress: 1,
               ),
@@ -45,15 +45,15 @@ class FileTaxDoneOrderScreen extends StatelessWidget {
                   children: [
                     Image.asset(AssetConstants.done),
                     const SizedBox(height: 10),
-                     Text(
+                    Text(
                       LocaleKeys.thankYouForOrder.tr(),
-                      style:const TextStyle(
+                      style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                     const SizedBox(height: 20),
-                     Text(
+                    Text(
                       LocaleKeys.impRecEmail.tr(),
                       textAlign: TextAlign.center,
                       style: const TextStyle(

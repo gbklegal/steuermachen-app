@@ -29,8 +29,8 @@ class _LanguageDropdownComponentState extends State<LanguageDropdownComponent> {
         onChanged: (String? newValue) {
           consumer.changeLanguage(newValue!, context);
         },
-        items: <String>['EN', 'DE']
-            .map<DropdownMenuItem<String>>((String value) {
+        items:
+            <String>['EN', 'DE'].map<DropdownMenuItem<String>>((String value) {
           return DropdownMenuItem<String>(
             value: value,
             child: Text(

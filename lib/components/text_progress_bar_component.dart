@@ -15,7 +15,9 @@ class TextProgressBarComponent extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        TextComponent(title, style: FontStyles.fontMedium(fontSize: 16, color: ColorConstants.black)),
+        TextComponent(title,
+            style: FontStyles.fontMedium(
+                fontSize: 16, color: ColorConstants.black)),
         const SizedBox(height: 5),
         LinearProgressIndicator(
           // value: progress,

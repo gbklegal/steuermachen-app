@@ -28,6 +28,7 @@ class ErrorMessagesConstants {
   static const String errEmpty = "Field is empty";
   static const String errMinLength = "Minimum Length will be";
   static const String errPasswordsSame = "Passwords must be same";
-  static const String pleaseCheckTheAboveFields = "Please check the above fields";
+  static const String pleaseCheckTheAboveFields =
+      "Please check the above fields";
   static String selectGender = "Select ${LocaleKeys.salutation.tr()}";
 }

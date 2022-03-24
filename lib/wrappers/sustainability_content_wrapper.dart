@@ -16,15 +16,21 @@ class SustainabilityContentWrapper {
 
   factory SustainabilityContentWrapper.fromJson(Map<String, dynamic> json) =>
       SustainabilityContentWrapper(
-        du: json["du"] == null ? null: List<SustainContent>.from(json["du"].map((x) => SustainContent.fromJson(x))),
+        du: json["du"] == null
+            ? null
+            : List<SustainContent>.from(
+                json["du"].map((x) => SustainContent.fromJson(x))),
         en: json["en"] == null
             ? null
-            : List<SustainContent>.from(json["en"].map((x) => SustainContent.fromJson(x))),
+            : List<SustainContent>.from(
+                json["en"].map((x) => SustainContent.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
-        "du": du == null ? null : List<dynamic>.from(du!.map((x) => x.toJson())),
-        "en": en == null ? null : List<dynamic>.from(en!.map((x) => x.toJson())),
+        "du":
+            du == null ? null : List<dynamic>.from(du!.map((x) => x.toJson())),
+        "en":
+            en == null ? null : List<dynamic>.from(en!.map((x) => x.toJson())),
       };
 }
 
@@ -37,7 +43,8 @@ class SustainContent {
   String? title;
   String? text;
 
-  factory SustainContent.fromRawJson(String str) => SustainContent.fromJson(json.decode(str));
+  factory SustainContent.fromRawJson(String str) =>
+      SustainContent.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 

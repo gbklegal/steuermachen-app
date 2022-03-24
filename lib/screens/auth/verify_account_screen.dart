@@ -15,7 +15,7 @@ class VerifyAccountScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarComponent( 
+      appBar: const AppBarComponent(
         StringConstants.appName,
         // LocaleKeys.appName.tr(),
         imageTitle: AssetConstants.logo,

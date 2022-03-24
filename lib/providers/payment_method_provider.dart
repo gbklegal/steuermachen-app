@@ -9,5 +9,4 @@ class PaymentMethodProvider extends ChangeNotifier {
   set setSelectedAddress(UserWrapper? selectedAddress) {
     _selectedAddress = selectedAddress;
   }
-
 }

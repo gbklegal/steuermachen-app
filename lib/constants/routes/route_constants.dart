@@ -12,10 +12,12 @@ class RouteConstants {
   static const String currentIncomeScreen = "currentIncomScreen";
   static const String fileTaxInfoScreen = "fileTaxInfo";
   static const String fileTaxUploadDocScreen = "fileTaxUploadDocScreen";
-  static const String fileTaxFinalSubmissionScreen = "fileTaxFinalSubmissionScreen";
+  static const String fileTaxFinalSubmissionScreen =
+      "fileTaxFinalSubmissionScreen";
   static const String fileTaxDoneOrderScreen = "FileTaxDoneOrderScreen";
   static const String bottomNavBarScreen = "BottomNavBarScreen";
-  static const String selectSafeAndQuickTaxScreen = "SelectSafeAndQuickTaxScreen";
+  static const String selectSafeAndQuickTaxScreen =
+      "SelectSafeAndQuickTaxScreen";
   static const String quickTaxScreen = "QuickTaxScreen";
   static const String safeTaxScreen = "SafeTaxScreen";
   static const String easyTaxScreen = "EasyTaxScreen";
@@ -33,7 +35,8 @@ class RouteConstants {
   static const String selectBillingAddressScreen = "SelectBillingAddressScreen";
   static const String addNewBillingAddressScreen = "AddNewBillingAddressScreen";
   static const String confirmBillingScreen = "ConfirmBillingScreen";
-  static const String paymentTermsConditionScreen = "PaymentTermsConditionScreen";
+  static const String paymentTermsConditionScreen =
+      "PaymentTermsConditionScreen";
   static const String taxTipsScreen = "TaxTipsScreen";
   static const String taxTipsDetailScreen = "TaxTipsDetailScreen";
   static const String legalAction2Screen = "LegalAction2Screen";
@@ -47,5 +50,6 @@ class RouteConstants {
   static const String orderOverviewScreen = "OrderOverviewScreen";
   static const String whatInWorkScreen = "WhatInWorkScreen";
   static const String forgotPasswordScreen = "ForgotPasswordScreen";
-  static const String quickTaxEstimatedValueScreen = "QuickTaxEstimatedValueScreen";
+  static const String quickTaxEstimatedValueScreen =
+      "QuickTaxEstimatedValueScreen";
 }

@@ -1,4 +1,3 @@
-
 class UserWrapper {
   final String? firstName,
       lastName,
@@ -11,20 +10,18 @@ class UserWrapper {
       gender,
       land;
 
-  UserWrapper({
-    this.firstName,
-    this.lastName,
-    this.street,
-    this.email,
-    this.phone,
-    this.land,
-    this.houseNumber,
-    this.plz,
-    this.location,
-    this.gender
-  });
-  factory UserWrapper.fromJson(Map<String, dynamic> json) =>
-      UserWrapper(
+  UserWrapper(
+      {this.firstName,
+      this.lastName,
+      this.street,
+      this.email,
+      this.phone,
+      this.land,
+      this.houseNumber,
+      this.plz,
+      this.location,
+      this.gender});
+  factory UserWrapper.fromJson(Map<String, dynamic> json) => UserWrapper(
         firstName: json["firstName"],
         lastName: json["lastName"],
         street: json["street"],

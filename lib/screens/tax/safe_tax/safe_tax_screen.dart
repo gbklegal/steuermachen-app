@@ -213,8 +213,8 @@ class _QuestionsViewState extends State<_QuestionsView> {
             if (status) {
               Utils.animateToNextPage(pageController, i);
             }
-          }
-        else  if (widget.safeTaxData[i].optionType == OptionConstants.signature) {
+          } else if (widget.safeTaxData[i].optionType ==
+              OptionConstants.signature) {
             bool status =
                 await Provider.of<SignatureProvider>(context, listen: false)
                     .checkSignatureIsPresent();

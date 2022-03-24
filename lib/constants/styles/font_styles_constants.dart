@@ -9,7 +9,7 @@ class FontStyles {
     double letterSpacing = 0.0,
     double fontSize = 22.0,
   }) =>
-       GoogleFonts.raleway(
+      GoogleFonts.raleway(
           color: color,
           fontWeight: FontWeight.w700,
           fontStyle: FontStyle.normal,
@@ -25,7 +25,7 @@ class FontStyles {
           double lineSpacing = 1.5,
           FontWeight fontWeight = FontWeight.w500,
           bool underLine = false}) =>
-       GoogleFonts.raleway(
+      GoogleFonts.raleway(
           fontSize: fontSize,
           color: color,
           fontWeight: bold ? FontWeight.bold : fontWeight,

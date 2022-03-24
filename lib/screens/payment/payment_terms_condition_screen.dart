@@ -3,6 +3,7 @@ import 'package:steuermachen/components/app_bar/appbar_component.dart';
 import 'package:steuermachen/components/terms_conditions_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
+
 class PaymentTermsConditionScreen extends StatelessWidget {
   const PaymentTermsConditionScreen({
     Key? key,

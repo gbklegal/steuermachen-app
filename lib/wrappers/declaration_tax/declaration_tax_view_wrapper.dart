@@ -5,16 +5,20 @@ class DeclarationTaxViewWrapper {
   });
   late final List<DeclarationTaxViewData> en;
   late final List<DeclarationTaxViewData> du;
-  
-  DeclarationTaxViewWrapper.fromJson(Map<String, dynamic> json){
-    en = List.from(json['en']).map((e)=>DeclarationTaxViewData.fromJson(e)).toList();
-    du = List.from(json['du']).map((e)=>DeclarationTaxViewData.fromJson(e)).toList();
+
+  DeclarationTaxViewWrapper.fromJson(Map<String, dynamic> json) {
+    en = List.from(json['en'])
+        .map((e) => DeclarationTaxViewData.fromJson(e))
+        .toList();
+    du = List.from(json['du'])
+        .map((e) => DeclarationTaxViewData.fromJson(e))
+        .toList();
   }
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
-    _data['en'] = en.map((e)=>e.toJson()).toList();
-    _data['du'] = du.map((e)=>e.toJson()).toList();
+    _data['en'] = en.map((e) => e.toJson()).toList();
+    _data['du'] = du.map((e) => e.toJson()).toList();
     return _data;
   }
 }
@@ -32,8 +36,8 @@ class DeclarationTaxViewData {
   late final List<String> options;
   late final List<String> optionImgPath;
   late final bool showBottomNav;
-  
-  DeclarationTaxViewData.fromJson(Map<String, dynamic> json){
+
+  DeclarationTaxViewData.fromJson(Map<String, dynamic> json) {
     title = json['title'];
     optionType = json['option_type'];
     options = List.castFrom<dynamic, String>(json['options']);
@@ -51,4 +55,3 @@ class DeclarationTaxViewData {
     return _data;
   }
 }
-

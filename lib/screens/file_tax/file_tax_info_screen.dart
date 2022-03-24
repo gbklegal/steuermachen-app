@@ -22,22 +22,14 @@ class FileTaxInfoScreen extends StatefulWidget {
 
 class _FileTaxInfoScreenState extends State<FileTaxInfoScreen>
     with InputValidationUtil {
-  final TextEditingController _firstNameController =
-      TextEditingController();
-  final TextEditingController _surNameController =
-      TextEditingController();
-  final TextEditingController _emailController =
-      TextEditingController();
-  final TextEditingController _roadController =
-      TextEditingController();
-  final TextEditingController _phoneNoController =
-      TextEditingController();
-  final TextEditingController _houseNoController =
-      TextEditingController();
-  final TextEditingController _postalCodeController =
-      TextEditingController();
-  final TextEditingController _placeController =
-      TextEditingController();
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _surNameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _roadController = TextEditingController();
+  final TextEditingController _phoneNoController = TextEditingController();
+  final TextEditingController _houseNoController = TextEditingController();
+  final TextEditingController _postalCodeController = TextEditingController();
+  final TextEditingController _placeController = TextEditingController();
   final GlobalKey<FormState> _userInfoFormKey = GlobalKey<FormState>();
   late TaxFileProvider taxFileProvider;
   @override
@@ -56,7 +48,7 @@ class _FileTaxInfoScreenState extends State<FileTaxInfoScreen>
     );
     final fontStyle = FontStyles.fontRegular(fontSize: 14);
     return Scaffold(
-      appBar:  AppBarComponent(
+      appBar: AppBarComponent(
         LocaleKeys.fillInfo.tr(),
         showPersonIcon: false,
       ),
@@ -68,7 +60,7 @@ class _FileTaxInfoScreenState extends State<FileTaxInfoScreen>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                 TextProgressBarComponent(
+                TextProgressBarComponent(
                   title: "${LocaleKeys.step.tr()} 4/5",
                   progress: 0.8,
                 ),
@@ -219,11 +211,12 @@ class _FileTaxInfoScreenState extends State<FileTaxInfoScreen>
                 _houseNoController.text,
               ));
               Navigator.pushNamed(
-                  context, RouteConstants.selectDocumentForScreen, arguments: {
-                "showNextBtn": true,
-                "nextRoute": RouteConstants.fileTaxFinalSubmissionScreen,
-                "roundBody": false
-              });
+                  context, RouteConstants.selectDocumentForScreen,
+                  arguments: {
+                    "showNextBtn": true,
+                    "nextRoute": RouteConstants.fileTaxFinalSubmissionScreen,
+                    "roundBody": false
+                  });
             }
           },
         ),

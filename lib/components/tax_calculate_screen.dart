@@ -30,7 +30,6 @@ class TaxCalculatorComponent extends StatelessWidget {
               AssetConstants.icDown,
               color: ColorConstants.black,
             ),
-            
             value: consumer.selectedPrice,
             items: consumer.taxPrices
                 .map((e) => DropdownMenuItem<String>(

@@ -47,7 +47,8 @@ class SelectSafeAndQuickTaxScreen extends StatelessWidget {
             ButtonComponent(
                 buttonText: LocaleKeys.taxReturnAtAGuaranteedfixedPrice.tr(),
                 onPressed: () {
-                  Navigator.pushNamed(context, RouteConstants.declarationTaxScreen);
+                  Navigator.pushNamed(
+                      context, RouteConstants.declarationTaxScreen);
                 }),
             sizedBox,
             Text(

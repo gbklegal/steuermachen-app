@@ -70,51 +70,50 @@ class _EasyTaxQuestionsViewComponentState
               ),
               Expanded(
                 child: Consumer<EasyTaxProvider>(
-                  builder: (context, consumer, child) {
-                    return SingleChildScrollView(
-                      child: Padding(
-                        padding: const EdgeInsets.only(bottom: 25),
-                        child: Column(
-                          children: [
-                            if (widget.easyTaxData[i].optionType ==
-                                OptionConstants.initialScreen)
-                              InitialEasyTaxComponent(
-                                onPressed: () {
-                                  Utils.animateToNextPage(pageController, i);
-                                },
-                              )
-                            else if (widget.easyTaxData[i].optionType ==
-                                OptionConstants.userForm)
-                              const Padding(
-                                padding: EdgeInsets.only(top: 10),
-                                child: UserFormComponent(),
-                              )
-                            else if (widget.easyTaxData[i].optionType ==
-                                OptionConstants.paymentMethods)
-                              PaymentMethodsComponent(
-                                decisionTap: () {
-                                  Utils.animateToNextPage(pageController, i);
-                                },
-                              )
-                            else if (widget.easyTaxData[i].optionType ==
-                                OptionConstants.confirmBilling)
-                              ConfirmBillingComponent(
-                                onTapOrder: () =>
-                                    Utils.animateToNextPage(pageController, i),
-                              )
-                            else if (widget.easyTaxData[i].optionType ==
-                                OptionConstants.termsCondition)
-                              TermsAndConditionComponent(
-                                onPressedOrderNow: (value) async {
-                                  await _submitData(consumer);
-                                },
-                              )
-                          ],
-                        ),
+                    builder: (context, consumer, child) {
+                  return SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 25),
+                      child: Column(
+                        children: [
+                          if (widget.easyTaxData[i].optionType ==
+                              OptionConstants.initialScreen)
+                            InitialEasyTaxComponent(
+                              onPressed: () {
+                                Utils.animateToNextPage(pageController, i);
+                              },
+                            )
+                          else if (widget.easyTaxData[i].optionType ==
+                              OptionConstants.userForm)
+                            const Padding(
+                              padding: EdgeInsets.only(top: 10),
+                              child: UserFormComponent(),
+                            )
+                          else if (widget.easyTaxData[i].optionType ==
+                              OptionConstants.paymentMethods)
+                            PaymentMethodsComponent(
+                              decisionTap: () {
+                                Utils.animateToNextPage(pageController, i);
+                              },
+                            )
+                          else if (widget.easyTaxData[i].optionType ==
+                              OptionConstants.confirmBilling)
+                            ConfirmBillingComponent(
+                              onTapOrder: () =>
+                                  Utils.animateToNextPage(pageController, i),
+                            )
+                          else if (widget.easyTaxData[i].optionType ==
+                              OptionConstants.termsCondition)
+                            TermsAndConditionComponent(
+                              onPressedOrderNow: (value) async {
+                                await _submitData(consumer);
+                              },
+                            )
+                        ],
                       ),
-                    );
-                  }
-                ),
+                    ),
+                  );
+                }),
               ),
               if (widget.easyTaxData[i].showBottomNav)
                 Padding(
@@ -142,6 +141,7 @@ class _EasyTaxQuestionsViewComponentState
       Utils.animateToNextPage(pageController, i);
     }
   }
+
   _submitData(EasyTaxProvider consumer) async {
     PopupLoader.showLoadingDialog(context);
     CommonResponseWrapper res =

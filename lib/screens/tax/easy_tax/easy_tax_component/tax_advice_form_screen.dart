@@ -23,18 +23,12 @@ class TaxAdviceFormScreen extends StatefulWidget {
 
 class _TaxAdviceFormScreenState extends State<TaxAdviceFormScreen>
     with InputValidationUtil {
-  final TextEditingController _firstNameController =
-      TextEditingController();
-  final TextEditingController _surNameController =
-      TextEditingController();
-  final TextEditingController _emailController =
-      TextEditingController();
-  final TextEditingController _subjectController =
-      TextEditingController();
-  final TextEditingController _phoneNoController =
-      TextEditingController();
-  final TextEditingController _messageController =
-      TextEditingController();
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _surNameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _subjectController = TextEditingController();
+  final TextEditingController _phoneNoController = TextEditingController();
+  final TextEditingController _messageController = TextEditingController();
   final GlobalKey<FormState> _contactFormKey = GlobalKey<FormState>();
 
   late FormsProvider _formsProvider;
@@ -63,7 +57,7 @@ class _TaxAdviceFormScreenState extends State<TaxAdviceFormScreen>
     );
     final fontStyle = FontStyles.fontRegular(fontSize: 14);
     return Scaffold(
-      appBar:  AppBarComponent(
+      appBar: AppBarComponent(
         LocaleKeys.initInfo.tr(),
         showPersonIcon: false,
       ),

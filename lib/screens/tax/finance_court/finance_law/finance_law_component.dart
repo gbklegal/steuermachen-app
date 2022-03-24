@@ -16,14 +16,13 @@ class FinanceLawComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<FinanceCourtProvider>(
-        builder: (context, consumer, child) {
-          if (context.locale == const Locale('en')) {
-            return _mainBody(consumer.financeLawWrapper.en);
-          } else {
-            return _mainBody(consumer.financeLawWrapper.du);
-          }
-        });
+    return Consumer<FinanceCourtProvider>(builder: (context, consumer, child) {
+      if (context.locale == const Locale('en')) {
+        return _mainBody(consumer.financeLawWrapper.en);
+      } else {
+        return _mainBody(consumer.financeLawWrapper.du);
+      }
+    });
   }
 
   Future<void> _selectDate(BuildContext context, DateTime selectedDate) async {

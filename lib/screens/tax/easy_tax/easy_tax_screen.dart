@@ -62,15 +62,14 @@ class _EasyTaxScreenState extends State<EasyTaxScreen> {
               const EmptyScreenLoaderComponent()
             else if (!response!.status!)
               ErrorComponent(
-                message: response!.message!,
-                onTap: () async {
-                  provider.setBusyStateEasyTax = true;
-                  await provider
-                      .addEasyTaxViewData()
-                      .then((value) => response = value);
-                  provider.setBusyStateEasyTax = false;
-                },
-              )
+                  message: response!.message!,
+                  onTap: () async {
+                    provider.setBusyStateEasyTax = true;
+                    await provider
+                        .addEasyTaxViewData()
+                        .then((value) => response = value);
+                    provider.setBusyStateEasyTax = false;
+                  })
             else
               _getMainBody(),
           ],

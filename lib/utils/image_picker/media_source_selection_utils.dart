@@ -32,14 +32,14 @@ class _MediaSourceSelectionWidgetState
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title:  Text(LocaleKeys.chooseOption.tr()),
+      title: Text(LocaleKeys.chooseOption.tr()),
       content: SingleChildScrollView(
         child: ListBody(
           children: <Widget>[
             InkWell(
               enableFeedback: true,
-              child:  ListTile(
-                leading:const Icon(Icons.photo),
+              child: ListTile(
+                leading: const Icon(Icons.photo),
                 title: Text(LocaleKeys.gallery.tr()),
               ),
               onTap: () async {
@@ -49,11 +49,11 @@ class _MediaSourceSelectionWidgetState
             const Padding(padding: EdgeInsets.all(8.0)),
             InkWell(
               enableFeedback: true,
-              child:  ListTile(
+              child: ListTile(
                 leading: const Icon(Icons.camera),
                 title: Text(LocaleKeys.camera.tr()),
               ),
-              onTap: () async{
+              onTap: () async {
                 await getImageCamera(context);
               },
             ),

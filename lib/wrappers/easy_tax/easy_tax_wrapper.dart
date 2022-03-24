@@ -5,16 +5,16 @@ class EasyTaxWrapper {
   });
   late final List<EasyTaxData> en;
   late final List<EasyTaxData> du;
-  
-  EasyTaxWrapper.fromJson(Map<String, dynamic> json){
-    en = List.from(json['en']).map((e)=>EasyTaxData.fromJson(e)).toList();
-    du = List.from(json['du']).map((e)=>EasyTaxData.fromJson(e)).toList();
+
+  EasyTaxWrapper.fromJson(Map<String, dynamic> json) {
+    en = List.from(json['en']).map((e) => EasyTaxData.fromJson(e)).toList();
+    du = List.from(json['du']).map((e) => EasyTaxData.fromJson(e)).toList();
   }
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
-    _data['en'] = en.map((e)=>e.toJson()).toList();
-    _data['du'] = du.map((e)=>e.toJson()).toList();
+    _data['en'] = en.map((e) => e.toJson()).toList();
+    _data['du'] = du.map((e) => e.toJson()).toList();
     return _data;
   }
 }
@@ -32,8 +32,8 @@ class EasyTaxData {
   late final List<dynamic> options;
   late final List<dynamic> optionImgPath;
   late final bool showBottomNav;
-  
-  EasyTaxData.fromJson(Map<String, dynamic> json){
+
+  EasyTaxData.fromJson(Map<String, dynamic> json) {
     title = json['title'];
     optionType = json['option_type'];
     options = List.castFrom<dynamic, String>(json['options']);

@@ -24,4 +24,3 @@ class PopupLoader {
     Navigator.pop(context);
   }
 }
-

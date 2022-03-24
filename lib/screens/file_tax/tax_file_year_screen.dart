@@ -48,14 +48,14 @@ class _TaxFileYearScreenState extends State<TaxFileYearScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:  AppBarComponent(
+      appBar: AppBarComponent(
         LocaleKeys.selectYear.tr(),
         showPersonIcon: false,
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-           Padding(
+          Padding(
             padding: const EdgeInsets.only(left: 16, right: 16, top: 25),
             child: TextProgressBarComponent(
               title: "${LocaleKeys.step.tr()} 2/5",

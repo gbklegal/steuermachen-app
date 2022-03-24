@@ -27,7 +27,7 @@ class _FileTaxFinalSubmissionScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:  AppBarComponent(
+      appBar: AppBarComponent(
         LocaleKeys.curStatus.tr(),
         showPersonIcon: false,
       ),
@@ -37,7 +37,7 @@ class _FileTaxFinalSubmissionScreenState
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             const SizedBox(height: 16),
-             TextProgressBarComponent(
+            TextProgressBarComponent(
               title: "${LocaleKeys.step.tr()} 5/5",
               progress: 1,
             ),

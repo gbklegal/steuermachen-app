@@ -75,7 +75,7 @@ class FinanceCourtProvider extends ChangeNotifier {
           status: true, message: "easy tax view data added successfully");
     } catch (e) {
       return CommonResponseWrapper(
-          status: true, message:ErrorMessagesConstants.somethingWentWrong);
+          status: true, message: ErrorMessagesConstants.somethingWentWrong);
     }
   }
 
@@ -125,7 +125,7 @@ class FinanceCourtProvider extends ChangeNotifier {
         "checked_commission": checkedValue!.title.tr(),
         "terms_and_condition_accepted": true,
         "created_at": DateTime.now(),
-           "status": ProcessConstants.pending,
+        "status": ProcessConstants.pending,
         "approved_by": null,
       });
       return CommonResponseWrapper(

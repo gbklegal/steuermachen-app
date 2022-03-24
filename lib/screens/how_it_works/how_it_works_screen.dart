@@ -71,7 +71,7 @@ class HowItWorksScreen extends StatelessWidget {
               Navigator.pushNamedAndRemoveUntil(
                   context, RouteConstants.bottomNavBarScreen, (val) => false);
             },
-            child:  Text(
+            child: Text(
               LocaleKeys.applyNow.tr(),
             ),
           ),

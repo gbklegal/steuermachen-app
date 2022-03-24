@@ -7,5 +7,4 @@ class MaritalStatusModel {
     this.title,
     this.isSelected,
   });
-  
 }

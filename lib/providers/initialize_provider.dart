@@ -15,6 +15,7 @@ import 'package:steuermachen/providers/tax/quick_tax/quick_tax_provider.dart';
 import 'package:steuermachen/providers/tax/safe_tax/safe_tax_provider.dart';
 import 'package:steuermachen/providers/tax_calculator_provider.dart';
 import 'package:steuermachen/providers/tax_file_provider.dart';
+import 'package:steuermachen/providers/tax_tips_provider.dart';
 import 'package:steuermachen/providers/terms_and_condition_provider.dart';
 
 providerList(context) {
@@ -69,6 +70,9 @@ providerList(context) {
     ),
     ChangeNotifierProvider(
       create: (context) => PaymentMethodProvider(),
+    ),
+    ChangeNotifierProvider(
+      create: (context) => TaxTipsProvider(),
     ),
   ];
 }

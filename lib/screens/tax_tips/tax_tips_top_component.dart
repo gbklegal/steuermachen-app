@@ -1,5 +1,6 @@
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
+import 'package:steuermachen/components/text_component.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/utils/utils.dart';
 
@@ -21,7 +22,7 @@ class TaxTipTopComponent extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.only(top: 50, left: 15),
-          child: Text(
+          child: TextComponent(
             LocaleKeys.featuredArticle.tr(),
             textAlign: TextAlign.left,
             style: Theme.of(context).textTheme.headline5!.copyWith(
@@ -32,7 +33,7 @@ class TaxTipTopComponent extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.only(top: 10, left: 15),
-          child: Text(
+          child: TextComponent(
             title!,
             textAlign: TextAlign.left,
             style: Theme.of(context).textTheme.headline5!.copyWith(

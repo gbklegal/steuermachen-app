@@ -1,14 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:steuermachen/components/app_bar/appbar_with_side_corner_circle_and_body.dart';
 import 'package:steuermachen/components/loading_component.dart';
 import 'package:steuermachen/components/simple_error_text_component.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/main.dart';
+import 'package:steuermachen/providers/tax_tips_provider.dart';
 import 'package:steuermachen/screens/tax_tips/tax_tips_detail_screen.dart';
 import 'package:steuermachen/screens/tax_tips/tax_tips_top_component.dart';
 import 'package:steuermachen/utils/utils.dart';
+import 'package:steuermachen/wrappers/faq_wp_wrapper.dart';
 import 'package:steuermachen/wrappers/tax_tips_wrapper.dart';
 
 class TaxTipsScreen extends StatelessWidget {
@@ -16,6 +19,8 @@ class TaxTipsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TaxTipsProvider provider =
+        Provider.of<TaxTipsProvider>(context, listen: false);
     return AppBarWithSideCornerCircleAndRoundBody(
       body: SingleChildScrollView(
         child: SizedBox(
@@ -23,84 +28,114 @@ class TaxTipsScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              FutureBuilder<DocumentSnapshot>(
-                  future: firestore
-                      .collection("featured_article")
-                      .doc("content")
-                      .get(),
+              // FutureBuilder<DocumentSnapshot>(
+              FutureBuilder<List<TaxTipsWrapper>?>(
+                  future: provider.fetchTaxTips(),
+
+                  //    future: firestore
+                  //     .collection("featured_article")
+                  //     .doc("content")
+                  //     .get(),
                   builder: (context, AsyncSnapshot snapshot) {
                     if (snapshot.hasData) {
-                      Map<String, dynamic> x =
-                          snapshot.data.data() as Map<String, dynamic>;
-                      TaxTipsContentWrapper res =
-                          TaxTipsContentWrapper.fromJson(x);
-                      return Column(
-                        children: [
-                          if (context.locale == const Locale('en'))
-                            for (var i = 0; i < res.en!.length; i++)
-                              if (i == 0)
-                                InkWell(
-                                  onTap: () {
-                                    _navigateToDetail(context, res.en![i]);
-                                  },
-                                  child: TaxTipTopComponent(
-                                    title: res.en![i].title,
-                                    subtitle: res.en![i].subtitle,
-                                    publishedDate:
-                                        res.en![i].publishedDate.toString(),
-                                    articleBy: res.en![i].articleBy,
-                                    image: res.en![i].image,
-                                    readTime: res.en![i].readTime,
-                                  ),
-                                )
-                              else
-                                InkWell(
-                                  onTap: () {
-                                    _navigateToDetail(context, res.en![i]);
-                                  },
-                                  child: _ListItems(
-                                    title: res.en![i].title,
-                                    subtitle: res.en![i].subtitle,
-                                    publishedDate:
-                                        res.en![i].publishedDate.toString(),
-                                    articleBy: res.en![i].articleBy,
-                                    image: res.en![i].image,
-                                    readTime: res.en![i].readTime,
-                                  ),
-                                )
-                          else
-                            for (var i = 0; i < res.du!.length; i++)
-                              if (i == 0)
-                                InkWell(
-                                  onTap: () {
-                                    _navigateToDetail(context, res.du![i]);
-                                  },
-                                  child: TaxTipTopComponent(
-                                    title: res.du![i].title,
-                                    subtitle: res.du![i].subtitle,
-                                    publishedDate:
-                                        res.du![i].publishedDate.toString(),
-                                    articleBy: res.du![i].articleBy,
-                                    image: res.du![i].image,
-                                    readTime: res.du![i].readTime,
-                                  ),
-                                )
-                              else
-                                InkWell(
-                                  onTap: () {
-                                    _navigateToDetail(context, res.du![i]);
-                                  },
-                                  child: _ListItems(
-                                    title: res.du![i].title,
-                                    subtitle: res.du![i].subtitle,
-                                    publishedDate:
-                                        res.du![i].publishedDate.toString(),
-                                    articleBy: res.du![i].articleBy,
-                                    image: res.du![i].image,
-                                    readTime: res.du![i].readTime,
-                                  ),
-                                )
-                        ],
+                      // Map<String, dynamic> x =
+                      //     snapshot.data.data() as Map<String, dynamic>;
+                      // TaxTipsContentWrapper res =
+                      //     TaxTipsContentWrapper.fromJson(x);
+                      List<TaxTipsWrapper>? tips = snapshot.data;
+                      return SizedBox(
+                        height: MediaQuery.of(context).size.height,
+                        child: ListView.builder(
+                            itemCount: tips!.length,
+                            itemBuilder: (context, i) {
+                              return Column(
+                                children: [
+                                  // if (context.locale == const Locale('en'))
+                                  if (i == 0)
+                                    InkWell(
+                                      onTap: () {
+                                        _navigateToDetail(context, tips[i]);
+                                      },
+                                      child: TaxTipTopComponent(
+                                        title: tips[i].title!.rendered,
+                                        subtitle: tips[i]
+                                            .embedded!
+                                            .wpFeaturedmedia![0]
+                                            .altText,
+                                        publishedDate: tips[i]
+                                            .embedded!
+                                            .wpFeaturedmedia![0]
+                                            .date
+                                            .toString(),
+                                        articleBy:
+                                            tips[i].embedded!.author![0].name,
+                                        image: tips[i]
+                                            .embedded!
+                                            .wpFeaturedmedia![0]
+                                            .sourceUrl,
+                                        readTime: "",
+                                      ),
+                                    )
+                                  else
+                                    InkWell(
+                                      onTap: () {
+                                        _navigateToDetail(context, tips[i]);
+                                      },
+                                      child: _ListItems(
+                                        title: tips[i].title!.rendered,
+                                        subtitle: tips[i]
+                                            .embedded!
+                                            .wpFeaturedmedia![0]
+                                            .altText,
+                                        publishedDate: tips[i]
+                                            .embedded!
+                                            .wpFeaturedmedia![0]
+                                            .date
+                                            .toString(),
+                                        articleBy:
+                                            tips[i].embedded!.author![0].name,
+                                        image: tips[i]
+                                            .embedded!
+                                            .wpFeaturedmedia![0]
+                                            .sourceUrl,
+                                        readTime: "",
+                                      ),
+                                    )
+                                  // else
+                                  //   for (var i = 0; i < res.du!.length; i++)
+                                  //     if (i == 0)
+                                  //       InkWell(
+                                  //         onTap: () {
+                                  //           _navigateToDetail(context, res.du![i]);
+                                  //         },
+                                  //         child: TaxTipTopComponent(
+                                  //           title: res.du![i].title,
+                                  //           subtitle: res.du![i].subtitle,
+                                  //           publishedDate:
+                                  //               res.du![i].publishedDate.toString(),
+                                  //           articleBy: res.du![i].articleBy,
+                                  //           image: res.du![i].image,
+                                  //           readTime: res.du![i].readTime,
+                                  //         ),
+                                  //       )
+                                  //     else
+                                  //       InkWell(
+                                  //         onTap: () {
+                                  //           _navigateToDetail(context, res.du![i]);
+                                  //         },
+                                  //         child: _ListItems(
+                                  //           title: res.du![i].title,
+                                  //           subtitle: res.du![i].subtitle,
+                                  //           publishedDate:
+                                  //               res.du![i].publishedDate.toString(),
+                                  //           articleBy: res.du![i].articleBy,
+                                  //           image: res.du![i].image,
+                                  //           readTime: res.du![i].readTime,
+                                  //         ),
+                                  //       )
+                                ],
+                              );
+                            }),
                       );
                     } else if (snapshot.hasError) {
                       return const SimpleErrorTextComponent();
@@ -115,7 +150,7 @@ class TaxTipsScreen extends StatelessWidget {
     );
   }
 
-  _navigateToDetail(context, TaxTipsContent content) {
+  _navigateToDetail(context, TaxTipsWrapper content) {
     Navigator.push(
       context,
       MaterialPageRoute(

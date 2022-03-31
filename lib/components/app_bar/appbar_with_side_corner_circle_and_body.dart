@@ -11,57 +11,46 @@ class AppBarWithSideCornerCircleAndRoundBody extends StatelessWidget {
     required this.body,
     this.showNotificationIcon = false,
     this.showCircle = false,
+    this.showBackButton = true,
   }) : super(key: key);
   final Widget body;
   final bool? showNotificationIcon;
   final bool showCircle;
+  final bool? showBackButton;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true,
       appBar: AppBarComponent(
         StringConstants.appName,
         imageTitle: AssetConstants.logo,
         backgroundColor: Colors.transparent,
         showBottomLine: false,
         showPersonIcon: showNotificationIcon,
+        showBackButton: showBackButton,
       ),
-      body: Stack(
-        children: [
-          Align(
-            alignment: Alignment.topRight,
-            child: Visibility(
-                visible: showCircle,
-                child: SvgPicture.asset(AssetConstants.topRightRoundCircle)),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 110),
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                color: ColorConstants.white,
-                boxShadow: [
-                  BoxShadow(
-                    blurRadius: 1,
-                    spreadRadius: 1,
-                    color: ColorConstants.black.withOpacity(0.05),
-                  ),
-                ],
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(50),
-                  topRight: Radius.circular(50),
-                ),
-              ),
-              child: ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(50),
-                  topRight: Radius.circular(50),
-                ),
-                child: body,
-              ),
+      body: Container(
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+          color: ColorConstants.white,
+          boxShadow: [
+            BoxShadow(
+              blurRadius: 1,
+              spreadRadius: 1,
+              color: ColorConstants.black.withOpacity(0.1),
             ),
+          ],
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(50),
+            topRight: Radius.circular(50),
           ),
-        ],
+        ),
+        child: ClipRRect(
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(50),
+            topRight: Radius.circular(50),
+          ),
+          child: body,
+        ),
       ),
     );
   }

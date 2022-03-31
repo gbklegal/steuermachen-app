@@ -93,7 +93,8 @@ class _EasyTaxQuestionsViewComponentState
                           else if (widget.easyTaxData[i].optionType ==
                               OptionConstants.paymentMethods)
                             PaymentMethodsComponent(
-                              amount: "widget.easyTaxData[i].",
+                              amount:
+                                  "${widget.easyTaxData[0].content!.price.toString()} ${widget.easyTaxData[0].content!.currencySymbol}",
                               decisionTap: () {
                                 Utils.animateToNextPage(pageController, i);
                               },

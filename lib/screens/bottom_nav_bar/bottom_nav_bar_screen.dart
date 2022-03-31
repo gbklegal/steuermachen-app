@@ -8,9 +8,9 @@ import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/providers/language_provider.dart';
-import 'package:steuermachen/screens/bottom_nav_bar/more_screen.dart';
-import 'package:steuermachen/screens/calculator/calculator_screen.dart';
+import 'package:steuermachen/screens/faq/faq_screen.dart';
 import 'package:steuermachen/screens/home/home_screen.dart';
+import 'package:steuermachen/screens/tax_tips/tax_tips_screen.dart';
 
 class BottomNavBarScreen extends StatefulWidget {
   const BottomNavBarScreen({Key? key}) : super(key: key);
@@ -23,8 +23,8 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
   int _currentIndex = 0;
   static const List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
-    CalculatorScreen(),
-    SizedBox(),
+    TaxTipsScreen(),
+    FaqScreen(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -39,30 +39,30 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
           unselectedItemColor: ColorConstants.greyBottomBar,
           selectedFontSize: 14,
           unselectedFontSize: 14,
-          selectedLabelStyle: FontStyles.fontBold(fontSize: 14),
-          unselectedLabelStyle: FontStyles.fontRegular(fontSize: 14),
+          selectedLabelStyle: FontStyles.fontMedium(fontSize: 10),
+          unselectedLabelStyle: FontStyles.fontRegular(fontSize: 10),
           onTap: (value) {
             // Respond to item press.
-            if (value == 2) {
-              Navigator.pushNamed(context, RouteConstants.moreScreen);
-            } else {
+            // if (value == 2) {
+            //   Navigator.pushNamed(context, RouteConstants.moreScreen);
+            // } else {
               setState(() {
                 _currentIndex = value;
               });
-            }
+            // }
           },
           items: [
             BottomNavigationBarItem(
-              label: LocaleKeys.home.tr(),
+              label: LocaleKeys.overView.tr(),
               icon: CustomIcon(AssetConstants.icHome),
             ),
             BottomNavigationBarItem(
               label: LocaleKeys.calc.tr(),
-              icon: CustomIcon(AssetConstants.icCal),
+              icon: CustomIcon(AssetConstants.icLightBulb),
             ),
             BottomNavigationBarItem(
               label: LocaleKeys.more.tr(),
-              icon: CustomIcon(AssetConstants.icMore),
+              icon: CustomIcon(AssetConstants.icQuestion),
             ),
           ],
         ),

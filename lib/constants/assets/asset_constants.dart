@@ -86,6 +86,8 @@ class AssetConstants {
 
   //home
   static String icHome = "assets/icons/home/home-icon.svg";
+  static String icLightBulb = "assets/icons/home/light-bulb-icon.svg";
+  static String icQuestion = "assets/icons/home/question-icon.svg";
   static String icCal = "assets/icons/home/cal-icon.svg";
   static String icMore = "assets/icons/home/more-icon.svg";
 }

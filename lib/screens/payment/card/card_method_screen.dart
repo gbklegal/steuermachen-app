@@ -8,12 +8,14 @@ import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
+import 'package:sumup/sumup.dart';
 
 class CardPaymentMethodScreen extends StatelessWidget {
   const CardPaymentMethodScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    const String affiliateKey = '544e0f03-28e7-46a1-881e-a1a7158abc33';
     final fontStyle = FontStyles.fontRegular(fontSize: 14);
     const sizedBoxH12 = SizedBox(
       height: 12,
@@ -93,8 +95,29 @@ class CardPaymentMethodScreen extends StatelessWidget {
         padding: AppConstants.bottomBtnPadding,
         child: ButtonComponent(
           buttonText: LocaleKeys.continueWord.tr(),
-          onPressed: () =>
-              Navigator.pushNamed(context, RouteConstants.confirmBillingScreen),
+          onPressed: () async {
+            await Sumup.init(affiliateKey);
+            
+            SumupPluginResponse a = await Sumup.login();
+            print(a);
+            var payment = SumupPayment(
+              title: 'Test payment',
+              total: 1.2,
+              currency: 'EUR',
+              saleItemsCount: 0,
+              skipSuccessScreen: false,
+              tip: .0,
+            );
+
+            var request = SumupPaymentRequest(payment, info: {
+              'AccountId': 'taxi0334',
+              'From': 'Paris',
+              'To': 'Berlin',
+            });
+            var x = await Sumup.checkout(request);
+            print(x);
+            // Navigator.pushNamed(context, RouteConstants.confirmBillingScreen);
+          },
         ),
       ),
     );

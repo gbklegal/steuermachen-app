@@ -15,12 +15,12 @@ class FaqScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBarWithSideCornerCircleAndRoundBody(
+      showBackButton: false,
       body: SingleChildScrollView(
           child: SizedBox(
         height: MediaQuery.of(context).size.height,
         child: FutureBuilder<DocumentSnapshot>(
             future: firestore.collection("faq").doc("content").get(),
-       
             builder: (context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
                 Map<String, dynamic> x =

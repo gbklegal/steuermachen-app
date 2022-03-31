@@ -18,10 +18,11 @@ class TaxTipTopComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(top: 50, left: 15),
+          padding: const EdgeInsets.only(left: 15),
           child: TextComponent(
             LocaleKeys.featuredArticle.tr(),
             textAlign: TextAlign.left,

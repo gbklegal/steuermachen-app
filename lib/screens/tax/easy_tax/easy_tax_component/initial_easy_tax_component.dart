@@ -1,68 +1,41 @@
 import 'package:easy_localization/src/public_ext.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:steuermachen/components/button_component.dart';
-import 'package:steuermachen/components/loading_component.dart';
-import 'package:steuermachen/components/simple_error_text_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
-import 'package:steuermachen/main.dart';
 import 'package:steuermachen/wrappers/easy_tax/easy_tax_initial_view_wrapper.dart';
 
 class InitialEasyTaxComponent extends StatelessWidget {
-  const InitialEasyTaxComponent({Key? key, this.onPressed}) : super(key: key);
+  const InitialEasyTaxComponent({Key? key, this.onPressed, required this.data})
+      : super(key: key);
   final void Function()? onPressed;
+  final EasyTaxInitialViewData data;
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<DocumentSnapshot>(
-      future:
-          firestore.collection("easy_tax").doc("initial_view_content").get(),
-      builder: (context, AsyncSnapshot snapshot) {
-        if (snapshot.hasData) {
-          Map<String, dynamic> x = snapshot.data.data() as Map<String, dynamic>;
-          EasyTaxInitialViewWrapper res = EasyTaxInitialViewWrapper.fromJson(x);
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 15),
-              Text(
-                context.locale == const Locale('en')
-                    ? res.en.pageTitle
-                    : res.du.pageTitle,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyText1!
-                    .copyWith(fontSize: 16, fontWeight: FontWeight.w600),
-              ),
-              const SizedBox(height: 15),
-              if (context.locale == const Locale('en'))
-                _adviceCard(
-                    context, res.en.title, res.en.subtitle, res.en.price)
-              else
-                _adviceCard(
-                    context, res.du.title, res.du.subtitle, res.du.price),
-              const SizedBox(height: 25),
-              if (context.locale == const Locale('en'))
-                for (var i = 0; i < res.en.advicePoints.length; i++)
-                  _advicePoints(context, res.en.advicePoints[i])
-              else
-                for (var i = 0; i < res.du.advicePoints.length; i++)
-                  _advicePoints(context, res.du.advicePoints[i]),
-              const SizedBox(height: 45),
-              ButtonComponent(
-                buttonText: LocaleKeys.applyNowForAfee.tr(),
-                onPressed: onPressed,
-              ),
-              const SizedBox(height: 25),
-            ],
-          );
-        } else if (snapshot.hasError) {
-          return const SimpleErrorTextComponent();
-        } else {
-          return const LoadingComponent();
-        }
-      },
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: 15),
+        Text(
+          data.pageTitle,
+          style: Theme.of(context)
+              .textTheme
+              .bodyText1!
+              .copyWith(fontSize: 16, fontWeight: FontWeight.w600),
+        ),
+        const SizedBox(height: 15),
+        _adviceCard(context, data.title, data.subtitle, "${data.price.toString()} ${data.currencySymbol}"),
+        const SizedBox(height: 25),
+        for (var i = 0; i < data.advicePoints.length; i++)
+          _advicePoints(context, data.advicePoints[i]),
+        const SizedBox(height: 45),
+        ButtonComponent(
+          buttonText: LocaleKeys.applyNowForAfee.tr(),
+          onPressed: onPressed,
+        ),
+        const SizedBox(height: 25),
+      ],
     );
   }
 

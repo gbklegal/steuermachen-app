@@ -109,6 +109,7 @@ class _CurrentYearTaxViewState extends State<_CurrentYearTaxView> {
       children: [
         _initialView(context),
         PaymentMethodsComponent(
+          amount: ":asdasd",
           decisionTap: () {},
         )
       ],

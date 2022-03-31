@@ -79,6 +79,7 @@ class _EasyTaxQuestionsViewComponentState
                           if (widget.easyTaxData[i].optionType ==
                               OptionConstants.initialScreen)
                             InitialEasyTaxComponent(
+                              data: widget.easyTaxData[i].content!,
                               onPressed: () {
                                 Utils.animateToNextPage(pageController, i);
                               },
@@ -92,6 +93,7 @@ class _EasyTaxQuestionsViewComponentState
                           else if (widget.easyTaxData[i].optionType ==
                               OptionConstants.paymentMethods)
                             PaymentMethodsComponent(
+                              amount: "widget.easyTaxData[i].",
                               decisionTap: () {
                                 Utils.animateToNextPage(pageController, i);
                               },

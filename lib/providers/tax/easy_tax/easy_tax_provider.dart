@@ -27,7 +27,7 @@ class EasyTaxProvider extends ChangeNotifier {
   Future<CommonResponseWrapper> getEasyTaxViewData() async {
     try {
       setBusyStateEasyTax = true;
-      var res = await firestore.collection("easy_tax").doc("content").get();
+      var res = await firestore.collection("easy_tax").doc("content-v1").get();
       Map<String, dynamic> x = res.data() as Map<String, dynamic>;
       EasyTaxWrapper easyTaxWrapper = EasyTaxWrapper.fromJson(x);
       setBusyStateEasyTax = false;
@@ -43,7 +43,7 @@ class EasyTaxProvider extends ChangeNotifier {
   // JSON//filepath: easy_tax_view.json
   Future<CommonResponseWrapper> addEasyTaxViewData() async {
     try {
-      // await firestore.collection("easy_tax").doc("content").set(json);
+      await firestore.collection("easy_tax").doc("content-v1").set(json);
       return CommonResponseWrapper(
           status: true, message: "easy tax view data added successfully");
     } catch (e) {
@@ -103,6 +103,19 @@ var json = {
       "option_type": "initial_screen",
       "options": [],
       "option_img_path": [],
+      "content": {
+        "page_title": "Your price for an initial consultation",
+        "title": "Inexpensive initial consultation - order taxEASY now!",
+        "price": 25.00,
+        "currency_symbol": "€",
+        "subtitle": "only for initial tax advice",
+        "buttonText": "Order now for a fee",
+        "advice_points": [
+          "Individually to your tax question",
+          "Modern digital from anywhere ",
+          "Guaranteed security"
+        ]
+      },
       "show_bottom_nav": false
     },
     {
@@ -140,6 +153,19 @@ var json = {
       "option_type": "initial_screen",
       "options": [],
       "option_img_path": [],
+      "content": {
+        "page_title": "Dein Preis für eine Erstberatung",
+        "title": "Kostengünstige Erstberatung - jetzt taxEASY bestellen!",
+        "price": 25.00,
+        "currency_symbol": "€",
+        "subtitle": "nur für steuerliche Erstberatung",
+        "buttonText": "Jetzt kostenpflichtig beauftragen",
+        "advice_points": [
+          "Individuell auf deine Steuerfrage",
+          "Modern digital von überall ",
+          "Garantierte Sicherheit"
+        ]
+      },
       "show_bottom_nav": false
     },
     {

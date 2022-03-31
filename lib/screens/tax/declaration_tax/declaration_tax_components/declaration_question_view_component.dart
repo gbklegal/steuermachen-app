@@ -101,6 +101,7 @@ class _DeclarationQuestionsViewComponentState
                           else if (widget.declarationTaxData[i].optionType ==
                               OptionConstants.paymentMethods)
                             PaymentMethodsComponent(
+                              amount: "asdasd",
                               decisionTap: () {
                                 Utils.animateToNextPage(pageController, i);
                               },

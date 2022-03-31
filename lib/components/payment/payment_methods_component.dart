@@ -7,9 +7,10 @@ import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 
 class PaymentMethodsComponent extends StatelessWidget {
-  const PaymentMethodsComponent({Key? key, required this.decisionTap})
+  const PaymentMethodsComponent({Key? key, required this.decisionTap, required this.amount})
       : super(key: key);
   final void Function() decisionTap;
+  final String amount;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -69,7 +70,7 @@ class PaymentMethodsComponent extends StatelessWidget {
                   .copyWith(fontSize: 16, fontWeight: FontWeight.w600),
             ),
             TextComponent(
-              "129 euros",
+              amount,
               style: Theme.of(context)
                   .textTheme
                   .bodyText1!

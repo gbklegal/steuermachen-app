@@ -38,6 +38,13 @@ class TaxTipsDetailScreen extends StatelessWidget {
                         horizontal: 15, vertical: 20),
                     child: Html(
                       data: taxTipsContent.content!.rendered.toString(),
+                      // onMathError: (String parsedTex, String error,
+                      //     String errorWithType) {
+                      //   //your logic here. A Widget must be returned from this function:
+                      //   return Text(error);
+                      //   //you can also try and fix the parsing yourself:
+                      //   // return Math.tex(correctedParsedTex);
+                      // },
                     )
 
                     // Text(

@@ -1,3 +1,5 @@
+import 'easy_tax_initial_view_wrapper.dart';
+
 class EasyTaxWrapper {
   EasyTaxWrapper({
     required this.en,
@@ -29,6 +31,7 @@ class EasyTaxData {
   });
   late final String title;
   late final String optionType;
+  late final EasyTaxInitialViewData? content;
   late final List<dynamic> options;
   late final List<dynamic> optionImgPath;
   late final bool showBottomNav;
@@ -36,6 +39,9 @@ class EasyTaxData {
   EasyTaxData.fromJson(Map<String, dynamic> json) {
     title = json['title'];
     optionType = json['option_type'];
+    content = json['content'] != null
+        ? EasyTaxInitialViewData.fromJson(json['content'])
+        : null;
     options = List.castFrom<dynamic, String>(json['options']);
     optionImgPath = List.castFrom<dynamic, String>(json['option_img_path']);
     showBottomNav = json['show_bottom_nav'];

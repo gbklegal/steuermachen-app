@@ -2,7 +2,8 @@
     "en": {
         "page_title": "Your price for an initial consultation",
         "title": "Inexpensive initial consultation - order taxEASY now!",
-        "price": "25.00€",
+        "price": 25.00,
+        "currency_symbol": "€",
         "subtitle": "only for initial tax advice",
         "buttonText": "Order now for a fee",
         "advice_points": [
@@ -14,7 +15,8 @@
     "du": {
         "page_title": "Dein Preis für eine Erstberatung",
         "title": "Kostengünstige Erstberatung - jetzt taxEASY bestellen!",
-        "price": "25.00€",
+        "price": 25.00,
+        "currency_symbol": "€",
         "subtitle": "nur für steuerliche Erstberatung",
         "buttonText": "Jetzt kostenpflichtig beauftragen",
         "advice_points": [

@@ -30,7 +30,8 @@ class EasyTaxInitialViewData {
   });
   late final String pageTitle;
   late final String title;
-  late final String price;
+  late final double price;
+  late final String currencySymbol;
   late final String subtitle;
   late final String buttonText;
   late final List<String> advicePoints;
@@ -39,6 +40,7 @@ class EasyTaxInitialViewData {
     pageTitle = json['page_title'];
     title = json['title'];
     price = json['price'];
+    currencySymbol = json['currency_symbol'];
     subtitle = json['subtitle'];
     buttonText = json['buttonText'];
     advicePoints = List.castFrom<dynamic, String>(json['advice_points']);
@@ -49,6 +51,7 @@ class EasyTaxInitialViewData {
     _data['page_title'] = pageTitle;
     _data['title'] = title;
     _data['price'] = price;
+    _data['currency_symbol'] = currencySymbol;
     _data['subtitle'] = subtitle;
     _data['buttonText'] = buttonText;
     _data['advice_points'] = advicePoints;

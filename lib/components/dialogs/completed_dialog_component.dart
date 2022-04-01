@@ -10,8 +10,11 @@ class CompletedDialogComponent extends StatelessWidget {
   const CompletedDialogComponent({
     Key? key,
     this.showBackBtn = false,
+    this.title,
+    this.text,
   }) : super(key: key);
   final bool? showBackBtn;
+  final String? title, text;
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -23,8 +26,8 @@ class CompletedDialogComponent extends StatelessWidget {
           children: [
             Image.asset(AssetConstants.done),
             const SizedBox(height: 10),
-            const TextComponent(LocaleKeys.thankYou),
-            const TextComponent(LocaleKeys.emailReceive),
+            TextComponent(title ?? LocaleKeys.thankYou),
+            TextComponent(text ?? LocaleKeys.emailReceive),
             Row(
               children: [
                 Flexible(

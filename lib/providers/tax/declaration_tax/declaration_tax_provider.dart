@@ -1,9 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/constants/strings/error_messages_constants.dart';
 import 'package:steuermachen/constants/strings/process_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
+import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/main.dart';
 import 'package:steuermachen/providers/profile/profile_provider.dart';
 import 'package:steuermachen/providers/signature/signature_provider.dart';
@@ -107,5 +109,24 @@ class DeclarationTaxProvider extends ChangeNotifier {
     _declarationTaxDataCollectorWrapper?.userAddress = _user.getSelectedAddress;
     _declarationTaxDataCollectorWrapper?.termsAndConditionChecked = true;
     _declarationTaxDataCollectorWrapper?.grossIncome = _tax.selectedPrice;
+  }
+
+  Future<CommonResponseWrapper?> checkTaxIsAlreadySubmit() async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      var res = await firestore
+          .collection("user_orders")
+          .doc("${user?.uid}")
+          .collection("declaration_tax")
+          .get();
+      if (res.docs.isNotEmpty) {
+        return CommonResponseWrapper(
+            status: true, message: LocaleKeys.alreadySubmittedTax.tr());
+      }
+      return null;
+    } catch (e) {
+      checkTaxIsAlreadySubmit();
+      return null;
+    }
   }
 }

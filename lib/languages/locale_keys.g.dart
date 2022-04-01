@@ -1,6 +1,6 @@
 // DO NOT EDIT. This is code generated via package:easy_localization/generate.dart
 
-abstract class LocaleKeys {
+abstract class  LocaleKeys {
   static const appName = 'appName';
   static const onboardingTitle = 'onboardingTitle';
   static const onboardingOne = 'onboardingOne';
@@ -102,13 +102,11 @@ abstract class LocaleKeys {
   static const orUseOur = 'orUseOur';
   static const callUs = 'callUs';
   static const contactUs = 'contactUs';
-  static const howWouldYouLikeToMoveForwardWithUs =
-      'howWouldYouLikeToMoveForwardWithUs';
+  static const howWouldYouLikeToMoveForwardWithUs = 'howWouldYouLikeToMoveForwardWithUs';
   static const howWouldYouLikeToProceed = 'howWouldYouLikeToProceed';
   static const inCaseOf20Percent = 'inCaseOf20Percent';
   static const safeTax = 'safeTax';
-  static const taxReturnAtAGuaranteedfixedPrice =
-      'taxReturnAtAGuaranteedfixedPrice';
+  static const taxReturnAtAGuaranteedfixedPrice = 'taxReturnAtAGuaranteedfixedPrice';
   static const getInTouchWithUs = 'getInTouchWithUs';
   static const howCanWeHelpYou = 'howCanWeHelpYou';
   static const whatCanWeDoForYou = 'whatCanWeDoForYou';
@@ -120,6 +118,7 @@ abstract class LocaleKeys {
   static const impRecEmail = 'impRecEmail';
   static const weWillBeInTouchShortly = 'weWillBeInTouchShortly';
   static const emailReceive = 'emailReceive';
+  static const alreadySubmittedTax = 'alreadySubmittedTax';
   static const applyNowForAfee = 'applyNowForAfee';
   static const signHere = 'signHere';
   static const initialTaxAdvice = 'initialTaxAdvice';
@@ -208,11 +207,11 @@ abstract class LocaleKeys {
   static const commissioningRadioTitle2 = 'commissioningRadioTitle2';
   static const termsAndConditionNote = 'termsAndConditionNote';
   static const termsAndConditionCheck1 = 'termsAndConditionCheck1';
-  static const termsAndConditionCheckNonDisclosure =
-      'termsAndConditionCheckNonDisclosure';
+  static const termsAndConditionCheckNonDisclosure = 'termsAndConditionCheckNonDisclosure';
   static const termsAndConditionCheck2 = 'termsAndConditionCheck2';
   static const creditCard = 'creditCard';
   static const bill = 'bill';
   static const choosePaymentMethod = 'choosePaymentMethod';
   static const logout = 'logout';
+
 }

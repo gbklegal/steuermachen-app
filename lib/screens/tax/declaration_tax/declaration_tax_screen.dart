@@ -10,6 +10,7 @@ import 'package:steuermachen/providers/tax/declaration_tax/declaration_tax_provi
 import 'package:steuermachen/screens/tax/declaration_tax/declaration_tax_components/declaration_question_view_component.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 import 'package:steuermachen/wrappers/declaration_tax/declaration_tax_view_wrapper.dart';
+import '../../../utils/utils.dart';
 
 class DeclarationTaxScreen extends StatefulWidget {
   const DeclarationTaxScreen({Key? key}) : super(key: key);
@@ -24,9 +25,17 @@ class _DeclarationTaxScreenState extends State<DeclarationTaxScreen> {
   @override
   void initState() {
     provider = Provider.of<DeclarationTaxProvider>(context, listen: false);
+    checkAlreadySubmittedTax();
     _getDeclarationTaxViewData();
-    // provider.addDeclarationTaxViewData();
+
     super.initState();
+  }
+
+  checkAlreadySubmittedTax() async {
+    CommonResponseWrapper? res = await provider.checkTaxIsAlreadySubmit();
+    if (res != null) {
+      Utils.completedDialog(context, title: "", text: res.message);
+    }
   }
 
   void _getDeclarationTaxViewData() {
@@ -65,11 +74,8 @@ class _DeclarationTaxScreenState extends State<DeclarationTaxScreen> {
               ErrorComponent(
                 message: response!.message!,
                 onTap: () async {
-                  provider.setBusyStateDeclarationTax = true;
-                  await provider
-                      .getDeclarationTaxViewData()
-                      .then((value) => response = value);
-                  provider.setBusyStateDeclarationTax = false;
+                  var res = await provider.getDeclarationTaxViewData();
+                  response = res;
                 },
               )
             else

@@ -2,6 +2,7 @@ import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/components/app_bar/appbar_with_side_corner_circle_and_body.dart';
+import 'package:steuermachen/components/error_component.dart';
 import 'package:steuermachen/components/loading_component.dart';
 import 'package:steuermachen/components/simple_error_text_component.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
@@ -11,68 +12,72 @@ import 'package:steuermachen/screens/tax_tips/tax_tips_top_component.dart';
 import 'package:steuermachen/utils/utils.dart';
 import 'package:steuermachen/wrappers/faq_wp_wrapper.dart';
 
+import '../../services/networks/api_response_states.dart';
+
 class TaxTipsScreen extends StatelessWidget {
   const TaxTipsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final TaxTipsProvider provider =
-        Provider.of<TaxTipsProvider>(context, listen: false);
     return AppBarWithSideCornerCircleAndRoundBody(
       showBackButton: false,
-      body: FutureBuilder<List<TaxTipsWrapper>?>(
-        future: provider.fetchTaxTips(),
-        builder: (context, AsyncSnapshot snapshot) {
-          if (snapshot.hasData) {
-            List<TaxTipsWrapper>? tips = snapshot.data;
-            return Padding(
-              padding: const EdgeInsets.only(top: 15),
-              child: ListView.builder(
-                  itemCount: tips!.length,
-                  itemBuilder: (context, i) {
-                    if (i == 0) {
-                      return InkWell(
-                        onTap: () {
-                          _navigateToDetail(context, tips[i]);
-                        },
+      body: Consumer<TaxTipsProvider>(
+        builder: (context, consumer, child) {
+          if (consumer.taxTips.status == Status.loading) {
+            return const LoadingComponent();
+          } else if (consumer.taxTips.status == Status.error) {
+            return ErrorComponent(
+              onTap: () async => await consumer.fetchTaxTips(),
+              message: consumer.taxTips.message!,
+            );
+          } else {
+            List<TaxTipsWrapper>? tips = consumer.taxTips.data;
+            return ListView.builder(
+                itemCount: tips!.length,
+                itemBuilder: (context, i) {
+                  if (i == 0) {
+                    return InkWell(
+                      onTap: () {
+                        _navigateToDetail(context, tips[i]);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 30),
                         child: TaxTipTopComponent(
                           title: tips[i].title!.rendered,
-                          subtitle: tips[i].embedded!.wpFeaturedmedia![0].altText,
+                          subtitle:
+                              tips[i].embedded!.wpFeaturedmedia![0].altText,
                           publishedDate: tips[i]
                               .embedded!
                               .wpFeaturedmedia![0]
                               .date
                               .toString(),
                           articleBy: tips[i].embedded!.author![0].name,
-                          image: tips[i].embedded!.wpFeaturedmedia![0].sourceUrl,
+                          image:
+                              tips[i].embedded!.wpFeaturedmedia![0].sourceUrl,
                           readTime: "",
                         ),
-                      );
-                    } else {
-                      return InkWell(
-                        onTap: () {
-                          _navigateToDetail(context, tips[i]);
-                        },
-                        child: _ListItems(
-                          title: tips[i].title!.rendered,
-                          subtitle: tips[i].embedded!.wpFeaturedmedia![0].altText,
-                          publishedDate: tips[i]
-                              .embedded!
-                              .wpFeaturedmedia![0]
-                              .date
-                              .toString(),
-                          articleBy: tips[i].embedded!.author![0].name,
-                          image: tips[i].embedded!.wpFeaturedmedia![0].sourceUrl,
-                          readTime: "",
-                        ),
-                      );
-                    }
-                  }),
-            );
-          } else if (snapshot.hasError) {
-            return const SimpleErrorTextComponent();
-          } else {
-            return const LoadingComponent();
+                      ),
+                    );
+                  } else {
+                    return InkWell(
+                      onTap: () {
+                        _navigateToDetail(context, tips[i]);
+                      },
+                      child: _ListItems(
+                        title: tips[i].title!.rendered,
+                        subtitle: tips[i].embedded!.wpFeaturedmedia![0].altText,
+                        publishedDate: tips[i]
+                            .embedded!
+                            .wpFeaturedmedia![0]
+                            .date
+                            .toString(),
+                        articleBy: tips[i].embedded!.author![0].name,
+                        image: tips[i].embedded!.wpFeaturedmedia![0].sourceUrl,
+                        readTime: "",
+                      ),
+                    );
+                  }
+                });
           }
         },
       ),

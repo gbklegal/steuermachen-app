@@ -12,6 +12,8 @@ import 'package:steuermachen/screens/faq/faq_screen.dart';
 import 'package:steuermachen/screens/home/home_screen.dart';
 import 'package:steuermachen/screens/tax_tips/tax_tips_screen.dart';
 
+import '../../providers/tax_tips_provider.dart';
+
 class BottomNavBarScreen extends StatefulWidget {
   const BottomNavBarScreen({Key? key}) : super(key: key);
 
@@ -21,6 +23,17 @@ class BottomNavBarScreen extends StatefulWidget {
 
 class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
   int _currentIndex = 0;
+  late TaxTipsProvider provider;
+  @override
+  void initState() {
+    provider = Provider.of<TaxTipsProvider>(context, listen: false);
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      provider.fetchTaxTips();
+    });
+
+    super.initState();
+  }
+
   static const List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
     TaxTipsScreen(),
@@ -46,9 +59,9 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
             // if (value == 2) {
             //   Navigator.pushNamed(context, RouteConstants.moreScreen);
             // } else {
-              setState(() {
-                _currentIndex = value;
-              });
+            setState(() {
+              _currentIndex = value;
+            });
             // }
           },
           items: [

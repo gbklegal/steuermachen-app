@@ -1,40 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:steuermachen/constants/strings/http_constants.dart';
+import 'package:steuermachen/main.dart';
+import 'package:steuermachen/services/networks/api_response_states.dart';
+import 'package:steuermachen/services/networks/dio_api_services.dart';
 import 'package:steuermachen/wrappers/faq_wp_wrapper.dart';
-import 'dart:convert' as convert;
-import 'package:http/http.dart' as http;
 
 class TaxTipsProvider extends ChangeNotifier {
-  List<TaxTipsWrapper>? _taxTipsWrapper;
+  ApiResponse _taxTips = ApiResponse.loading();
 
-  List<TaxTipsWrapper>? get taxTipsWrapper => _taxTipsWrapper;
+  ApiResponse get taxTips => _taxTips;
 
-  set setTaxTipsWrapper(List<TaxTipsWrapper> taxTipsWrapper) {
-    _taxTipsWrapper = taxTipsWrapper;
+  set setTaxTipsWrapper(ApiResponse taxTips) {
+    _taxTips = taxTips;
   }
 
-  Future<List<TaxTipsWrapper>?> fetchTaxTips() async {
+  Future<void> fetchTaxTips() async {
     try {
-      var url = Uri.https('steuermachen.de', '/wp-json/wp/v2/posts', {
+      setTaxTipsWrapper = ApiResponse.loading();
+      notifyListeners();
+      var response = await serviceLocatorInstance<DioApiServices>()
+          .getRequest(HTTPConstants.taxTips, queryParameters: {
         'page': '1',
         '_embed': null,
         '_fields': 'id,date,link,title,content,_links,_embedded',
       });
-
-      var response = await http.get(url);
-      if (response.statusCode == 200) {
-        var jsonResponse = convert.jsonDecode(response.body) as List<dynamic>;
-        List<TaxTipsWrapper> _tips = [];
-        for (var e in jsonResponse) {
-          _tips.add(TaxTipsWrapper.fromJson(e));
-        }
-        print('Number of books about http: $_taxTipsWrapper');
-        return setTaxTipsWrapper = _tips;
-      } else {
-        return null;
+      List<TaxTipsWrapper> _tips = [];
+      for (var e in response as List<dynamic>) {
+        _tips.add(TaxTipsWrapper.fromJson(e));
       }
+      setTaxTipsWrapper = ApiResponse.completed(_tips);
     } catch (e) {
-      print(e);
-      return null;
+      setTaxTipsWrapper = ApiResponse.error(e.toString());
     }
+    notifyListeners();
   }
 }

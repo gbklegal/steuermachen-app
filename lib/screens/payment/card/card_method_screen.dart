@@ -1,20 +1,28 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
 import 'package:steuermachen/components/button_component.dart';
+import 'package:steuermachen/components/toast_component.dart';
 import 'package:steuermachen/constants/app_constants.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
+import 'package:steuermachen/services/networks/api_response_states.dart';
 import 'package:sumup/sumup.dart';
+import '../../../providers/payment_gateway/payment_gateway_provider.dart';
+import '../../../wrappers/payment_gateway/sumpup_access_token_wrapper.dart';
+import '../../../wrappers/payment_gateway/sumup_checkout_wrapper.dart';
 
 class CardPaymentMethodScreen extends StatelessWidget {
   const CardPaymentMethodScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final PaymentGateWayProvider provider =
+        Provider.of<PaymentGateWayProvider>(context, listen: false);
     const String affiliateKey = '544e0f03-28e7-46a1-881e-a1a7158abc33';
     final fontStyle = FontStyles.fontRegular(fontSize: 14);
     const sizedBoxH12 = SizedBox(
@@ -96,26 +104,16 @@ class CardPaymentMethodScreen extends StatelessWidget {
         child: ButtonComponent(
           buttonText: LocaleKeys.continueWord.tr(),
           onPressed: () async {
-            await Sumup.init(affiliateKey);
-            
-            SumupPluginResponse a = await Sumup.login();
-            print(a);
-            var payment = SumupPayment(
-              title: 'Test payment',
-              total: 1.2,
-              currency: 'EUR',
-              saleItemsCount: 0,
-              skipSuccessScreen: false,
-              tip: .0,
-            );
-
-            var request = SumupPaymentRequest(payment, info: {
-              'AccountId': 'taxi0334',
-              'From': 'Paris',
-              'To': 'Berlin',
-            });
-            var x = await Sumup.checkout(request);
-            print(x);
+            ApiResponse accessTokenRes = await provider.fetchAccessToken();
+            if (accessTokenRes.status == Status.error) {
+              ToastComponent.showToast(accessTokenRes.message!);
+            } else {
+              SumpupAccessTokenWrapper accessTokenWrapper =
+                  accessTokenRes.data as SumpupAccessTokenWrapper;
+              ApiResponse createCheckoutRes = await provider.createCheckout(
+                  accessTokenWrapper.accessToken, 10);
+              print(createCheckoutRes);
+            }
             // Navigator.pushNamed(context, RouteConstants.confirmBillingScreen);
           },
         ),

@@ -18,6 +18,8 @@ import 'package:steuermachen/providers/tax_file_provider.dart';
 import 'package:steuermachen/providers/tax_tips_provider.dart';
 import 'package:steuermachen/providers/terms_and_condition_provider.dart';
 
+import 'payment_gateway/payment_gateway_provider.dart';
+
 providerList(context) {
   return [
     ChangeNotifierProvider(
@@ -73,6 +75,9 @@ providerList(context) {
     ),
     ChangeNotifierProvider(
       create: (context) => TaxTipsProvider(),
+    ),
+    ChangeNotifierProvider(
+      create: (context) => PaymentGateWayProvider(),
     ),
   ];
 }

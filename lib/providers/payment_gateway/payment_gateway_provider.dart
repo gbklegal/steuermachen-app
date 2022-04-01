@@ -11,8 +11,8 @@ import '../../wrappers/payment_gateway/sumpup_access_token_wrapper.dart';
 
 class PaymentGateWayProvider extends ChangeNotifier {
   final String _clientSecret =
-      "cc_sk_classic_9EzSNuTJGPXEMvV0x6oUVf6BHXYsXSHnyLjbAf0PJVD8BvwYOV";
-  final String _clientId = "cc_classic_1ILMHC5QQEkd4ZK4jkVKIhRuJHHXP";
+      "cc_sk_classic_HGg5OT0Wt7H9pdeii0xcJtQc8HEu0bbQzUQwcGyf96mIjgtUQv";
+  final String _clientId = "cc_classic_1g0OhhPjpXX3msXUvIg35qLTlO3zy";
   final _chars =
       'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
   final Random _rnd = Random();
@@ -21,12 +21,31 @@ class PaymentGateWayProvider extends ChangeNotifier {
     try {
       serviceLocatorInstance<DioClientNetwork>().dio.options.baseUrl =
           HTTPConstants.sumpBaseUrl;
+      // var codeRes = await serviceLocatorInstance<DioApiServices>()
+      //     .getRequest(HTTPConstants.authorize, queryParameters: {
+      //   "response_type": "code",
+      //   'client_id': _clientId,
+      //   'redirect_uri': 'https://steuermachen.de/deeplink?url=steuermachen://',
+      //   'scopes': [
+      //     'payments',
+      //     'transactions.history',
+      //     'user.app-settings',
+      //     'user.profile_readonly'
+      //   ],
+      // });
       var response = await serviceLocatorInstance<DioApiServices>()
           .postRequest(HTTPConstants.sumupAccessToken, data: {
         'grant_type': 'client_credentials',
         'client_id': _clientId,
         'client_secret': _clientSecret,
+        'scopes': 'payments'
       });
+      // [
+      //   'payments',
+      //   'transactions.history',
+      //   'user.app-settings',
+      //   'user.profile_readonly'
+      // ]
       return ApiResponse.completed(SumpupAccessTokenWrapper.fromJson(response));
     } catch (e) {
       print(e);

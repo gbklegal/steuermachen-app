@@ -5,5 +5,6 @@ class HTTPConstants {
   //SUMUP
   static const String sumpBaseUrl = "https://api.sumup.com/";
   static const String sumupAccessToken = "token";
+  static const String authorize = "authorize";
   static const String sumupCheckOuts = "v0.1/checkouts";
 }

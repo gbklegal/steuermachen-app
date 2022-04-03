@@ -10,7 +10,6 @@ import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
-import 'package:steuermachen/providers/payment_method_provider.dart';
 import 'package:steuermachen/providers/profile/profile_provider.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 import 'package:steuermachen/wrappers/user_wrapper.dart';
@@ -35,7 +34,7 @@ class SelectBillingAddressScreen extends StatelessWidget {
         showBottomLine: true,
       ),
       body: Padding(
-        padding: const EdgeInsets.only(left: 16, right: 16, top: 25),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Consumer<ProfileProvider>(builder: (context, consumer, child) {
           if (consumer.getBusyStateProfile || response == null) {
             return const EmptyScreenLoaderComponent();
@@ -66,28 +65,37 @@ class SelectBillingAddressScreen extends StatelessWidget {
     );
   }
 
-  Column _mainBody(BuildContext context, List<UserWrapper> addresses) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          LocaleKeys.selectBillingAddress.tr(),
-          textAlign: TextAlign.left,
-          style: Theme.of(context)
-              .textTheme
-              .bodyText1!
-              .copyWith(fontWeight: FontWeight.w600, fontSize: 16),
-        ),
-        const SizedBox(
-          height: 15,
-        ),
-        for (var i = 0; i < addresses.length; i++)
-          _addressWidget(context, addresses[i]),
-        const SizedBox(
-          height: 15,
-        ),
-        const _AddNewAddress()
-      ],
+  SingleChildScrollView _mainBody(
+      BuildContext context, List<UserWrapper> addresses) {
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(
+            height: 35,
+          ),
+          Text(
+            LocaleKeys.selectBillingAddress.tr(),
+            textAlign: TextAlign.left,
+            style: Theme.of(context)
+                .textTheme
+                .bodyText1!
+                .copyWith(fontWeight: FontWeight.w600, fontSize: 16),
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          for (var i = 0; i < addresses.length; i++)
+            _addressWidget(context, addresses[i]),
+          const SizedBox(
+            height: 15,
+          ),
+          const _AddNewAddress(),
+          const SizedBox(
+            height: 35,
+          ),
+        ],
+      ),
     );
   }
 

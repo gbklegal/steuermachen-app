@@ -109,6 +109,7 @@ class _DeclarationQuestionsViewComponentState
                           else if (widget.declarationTaxData[i].optionType ==
                               OptionConstants.confirmBilling)
                             ConfirmBillingComponent(
+                                 amount: "39.00",
                               onTapOrder: () =>
                                   Utils.animateToNextPage(pageController, i),
                             )

@@ -1,7 +1,7 @@
 import 'package:steuermachen/wrappers/user_wrapper.dart';
 
-class DeclarationTaxDataCollectorWrapper {
-  DeclarationTaxDataCollectorWrapper({
+class SafeAndDeclarationTaxDataCollectorWrapper {
+  SafeAndDeclarationTaxDataCollectorWrapper({
     this.taxYear,
     this.martialStatus,
     this.grossIncome,
@@ -19,7 +19,7 @@ class DeclarationTaxDataCollectorWrapper {
   bool? termsAndConditionChecked;
   UserWrapper? userInfo;
   UserWrapper? userAddress;
-  DeclarationTaxDataCollectorWrapper.fromJson(Map<String, dynamic> json) {
+  SafeAndDeclarationTaxDataCollectorWrapper.fromJson(Map<String, dynamic> json) {
     taxYear = json['tax_year'];
     martialStatus = json['martial_status'];
     grossIncome = json['grossIncome'];

@@ -23,7 +23,7 @@ class ConfirmBillingScreen extends StatelessWidget {
         showPersonIcon: false,
         showBottomLine: true,
       ),
-      body: const ConfirmBillingComponent(),
+      body: const ConfirmBillingComponent(amount: "",),
       bottomNavigationBar: Padding(
         padding: AppConstants.bottomBtnPadding,
         child: ButtonComponent(

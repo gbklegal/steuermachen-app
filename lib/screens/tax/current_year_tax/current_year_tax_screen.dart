@@ -12,8 +12,12 @@ import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/providers/tax/current_year_tax/current_year_tax_provider.dart';
+import 'package:steuermachen/utils/utils.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 import 'package:steuermachen/wrappers/current_year_view_wrapper.dart';
+
+import '../../../components/payment/confirm_billing_component.dart';
+import '../../../components/terms_conditions_component.dart';
 
 class CurrentYearTaxScreen extends StatefulWidget {
   const CurrentYearTaxScreen({Key? key}) : super(key: key);
@@ -109,8 +113,19 @@ class _CurrentYearTaxViewState extends State<_CurrentYearTaxView> {
       children: [
         _initialView(context),
         PaymentMethodsComponent(
-          amount: ":asdasd",
-          decisionTap: () {},
+          amount: "39.00 euros",
+          decisionTap: () {
+            Utils.animateToNextPage(pageController, pageIndex);
+          },
+        ),
+        ConfirmBillingComponent(
+          amount: "39.00 euros",
+          onTapOrder: () => Utils.animateToNextPage(pageController, pageIndex),
+        ),
+        TermsAndConditionComponent(
+          onPressedOrderNow: (value) async {
+            // await _submitData(consumer);
+          },
         )
       ],
     );
@@ -168,11 +183,9 @@ class _CurrentYearTaxViewState extends State<_CurrentYearTaxView> {
           height: 80,
         ),
         ButtonComponent(
-          buttonText: LocaleKeys.powerOfAttorney,
+          buttonText: LocaleKeys.pay,
           onPressed: () {
-            pageController.animateToPage(pageIndex + 1,
-                duration: const Duration(milliseconds: 500),
-                curve: Curves.easeInToLinear);
+            Utils.animateToNextPage(pageController, pageIndex);
           },
         )
       ],

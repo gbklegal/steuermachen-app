@@ -8,13 +8,17 @@ import 'package:steuermachen/main.dart';
 import 'package:steuermachen/providers/signature/signature_provider.dart';
 import 'package:steuermachen/utils/utils.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
-import 'package:steuermachen/wrappers/safe_tax/safe_tax_data_collector_wrapper.dart';
 import 'package:steuermachen/wrappers/safe_tax/safe_tax_wrapper.dart';
+import 'package:steuermachen/wrappers/tax_steps_wrapper.dart';
+
+import '../../../wrappers/declaration_tax/declaration_tax_data_collector_wrapper.dart';
+import '../../profile/profile_provider.dart';
 
 class SafeTaxProvider extends ChangeNotifier {
-  final SafeTaxDataCollectorWrapper? _safeTaxDataCollectorWrapper =
-      SafeTaxDataCollectorWrapper();
-  SafeTaxDataCollectorWrapper? get dataCollectorWrapper =>
+  final SafeAndDeclarationTaxDataCollectorWrapper?
+      _safeTaxDataCollectorWrapper =
+      SafeAndDeclarationTaxDataCollectorWrapper();
+  SafeAndDeclarationTaxDataCollectorWrapper? get dataCollectorWrapper =>
       _safeTaxDataCollectorWrapper;
   bool _busyStateSafeTax = true;
   bool get getBusyStateSafeTax => _busyStateSafeTax;
@@ -62,19 +66,25 @@ class SafeTaxProvider extends ChangeNotifier {
   Future<CommonResponseWrapper> submitSafeTaxData(BuildContext context) async {
     SignatureProvider _signature =
         Provider.of<SignatureProvider>(context, listen: false);
+    ProfileProvider _user =
+        Provider.of<ProfileProvider>(context, listen: false);
     String signaturePath = await Utils.uploadToFirebaseStorage(
         await _signature.getSignaturePath());
     _safeTaxDataCollectorWrapper?.signaturePath = signaturePath;
+    _safeTaxDataCollectorWrapper?.userInfo = _user.getUserFromControllers();
+    _safeTaxDataCollectorWrapper?.userAddress = _user.getSelectedAddress;
     _safeTaxDataCollectorWrapper?.termsAndConditionChecked = true;
     try {
       User? user = FirebaseAuth.instance.currentUser;
       await firestore
           .collection("user_orders")
           .doc("${user?.uid}")
-          .collection("safe_tax")
+          .collection("safe_or_declaration_tax")
           .add({
         ..._safeTaxDataCollectorWrapper!.toJson(),
+        "tax_name": "safeTax",
         "created_at": DateTime.now(),
+        "steps": taxSteps.map((e) => e.toJson()).toList(),
         "status": ProcessConstants.pending,
         "approved_by": null,
       });

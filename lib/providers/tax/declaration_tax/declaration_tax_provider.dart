@@ -14,12 +14,13 @@ import 'package:steuermachen/utils/utils.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 import 'package:steuermachen/wrappers/declaration_tax/declaration_tax_data_collector_wrapper.dart';
 import 'package:steuermachen/wrappers/declaration_tax/declaration_tax_view_wrapper.dart';
+import 'package:steuermachen/wrappers/tax_steps_wrapper.dart';
 
 class DeclarationTaxProvider extends ChangeNotifier {
-  final DeclarationTaxDataCollectorWrapper?
+  final SafeAndDeclarationTaxDataCollectorWrapper?
       _declarationTaxDataCollectorWrapper =
-      DeclarationTaxDataCollectorWrapper();
-  DeclarationTaxDataCollectorWrapper? get dataCollectorWrapper =>
+      SafeAndDeclarationTaxDataCollectorWrapper();
+  SafeAndDeclarationTaxDataCollectorWrapper? get dataCollectorWrapper =>
       _declarationTaxDataCollectorWrapper;
   bool _busyStateDeclarationTax = true;
   bool get getBusyStateDeclarationTax => _busyStateDeclarationTax;
@@ -79,10 +80,12 @@ class DeclarationTaxProvider extends ChangeNotifier {
       await firestore
           .collection("user_orders")
           .doc("${user?.uid}")
-          .collection("declaration_tax")
+          .collection("safe_or_declaration_tax")
           .add({
         ..._declarationTaxDataCollectorWrapper!.toJson(),
         "created_at": DateTime.now(),
+        "tax_name": "declarationTax",
+        "steps": taxSteps.map((e) => e.toJson()).toList(),
         "status": ProcessConstants.pending,
         "approved_by": null,
       });

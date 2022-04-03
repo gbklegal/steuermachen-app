@@ -4,17 +4,17 @@ import 'package:provider/provider.dart';
 import 'package:steuermachen/components/button_component.dart';
 import 'package:steuermachen/constants/app_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
-import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
-import 'package:steuermachen/providers/payment_method_provider.dart';
 import 'package:steuermachen/providers/profile/profile_provider.dart';
 
 class ConfirmBillingComponent extends StatelessWidget {
   const ConfirmBillingComponent({
     Key? key,
     this.onTapOrder,
+    required this.amount,
   }) : super(key: key);
   final void Function()? onTapOrder;
+  final String amount;
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<ProfileProvider>(context, listen: false);
@@ -85,7 +85,7 @@ class ConfirmBillingComponent extends StatelessWidget {
                     .copyWith(fontSize: 16, fontWeight: FontWeight.w600),
               ),
               Text(
-                "129 euros",
+                amount,
                 style: Theme.of(context)
                     .textTheme
                     .bodyText1!

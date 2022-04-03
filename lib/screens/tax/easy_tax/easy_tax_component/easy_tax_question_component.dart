@@ -102,6 +102,8 @@ class _EasyTaxQuestionsViewComponentState
                           else if (widget.easyTaxData[i].optionType ==
                               OptionConstants.confirmBilling)
                             ConfirmBillingComponent(
+                              amount:
+                                  "${widget.easyTaxData[0].content!.price.toString()} ${widget.easyTaxData[0].content!.currencySymbol}",
                               onTapOrder: () =>
                                   Utils.animateToNextPage(pageController, i),
                             )

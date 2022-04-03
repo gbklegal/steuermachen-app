@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
 import 'package:steuermachen/components/button_component.dart';
+import 'package:steuermachen/components/text_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
@@ -35,7 +36,7 @@ class SelectSafeAndQuickTaxScreen extends StatelessWidget {
                 height: 120,
               ),
             ),
-            Text(
+            TextComponent(
               LocaleKeys.howWouldYouLikeToProceed.tr(),
               textAlign: TextAlign.left,
               style: Theme.of(context)
@@ -51,7 +52,7 @@ class SelectSafeAndQuickTaxScreen extends StatelessWidget {
                       context, RouteConstants.declarationTaxScreen);
                 }),
             sizedBox,
-            Text(
+            TextComponent(
               LocaleKeys.or.tr().toLowerCase(),
               textAlign: TextAlign.left,
               style: Theme.of(context)
@@ -71,14 +72,17 @@ class SelectSafeAndQuickTaxScreen extends StatelessWidget {
                 Navigator.pushNamed(context, RouteConstants.safeTaxScreen);
               },
             ),
-            sizedBox,
-            Text(
-              LocaleKeys.inCaseOf20Percent.tr(),
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14,
-                  color: ColorConstants.black.withOpacity(0.7)),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+              child: TextComponent(
+                LocaleKeys.inCaseOf20Percent,
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14,
+                      color: ColorConstants.black.withOpacity(0.7),
+                    ),
+              ),
             ),
           ],
         ),

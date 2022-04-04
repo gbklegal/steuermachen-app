@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -80,7 +81,7 @@ class DeclarationTaxProvider extends ChangeNotifier {
       await firestore
           .collection("user_orders")
           .doc("${user?.uid}")
-          .collection("safe_or_declaration_tax")
+          .collection("declaration_tax")
           .add({
         ..._declarationTaxDataCollectorWrapper!.toJson(),
         "created_at": DateTime.now(),
@@ -124,11 +125,13 @@ class DeclarationTaxProvider extends ChangeNotifier {
           .get();
       if (res.docs.isNotEmpty) {
         return CommonResponseWrapper(
-            status: true, message: LocaleKeys.alreadySubmittedTax.tr());
+          status: true,
+          data: res.docs,
+          message: LocaleKeys.alreadySubmittedTax.tr(),
+        );
       }
       return null;
     } catch (e) {
-      checkTaxIsAlreadySubmit();
       return null;
     }
   }

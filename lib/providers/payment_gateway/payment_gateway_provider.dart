@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:steuermachen/services/networks/api_response_states.dart';
 import 'package:steuermachen/wrappers/payment_gateway/sumup_checkout_wrapper.dart';
@@ -21,25 +22,20 @@ class PaymentGateWayProvider extends ChangeNotifier {
     try {
       serviceLocatorInstance<DioClientNetwork>().dio.options.baseUrl =
           HTTPConstants.sumpBaseUrl;
-      // var codeRes = await serviceLocatorInstance<DioApiServices>()
-      //     .getRequest(HTTPConstants.authorize, queryParameters: {
-      //   "response_type": "code",
-      //   'client_id': _clientId,
-      //   'redirect_uri': 'https://steuermachen.de/deeplink?url=steuermachen://',
-      //   'scopes': [
-      //     'payments',
-      //     'transactions.history',
-      //     'user.app-settings',
-      //     'user.profile_readonly'
-      //   ],
-      // });
-      var response = await serviceLocatorInstance<DioApiServices>()
-          .postRequest(HTTPConstants.sumupAccessToken, data: {
-        'grant_type': 'client_credentials',
-        'client_id': _clientId,
-        'client_secret': _clientSecret,
-        'scopes': 'payments'
-      });
+      var response = await serviceLocatorInstance<DioApiServices>().postRequest(
+          HTTPConstants.sumupAccessToken,
+          options: Options(contentType: 'application/x-www-form-urlencoded'),
+          data: {
+            'grant_type': 'client_credentials',
+            'client_id': _clientId,
+            'client_secret': _clientSecret,
+            'scopes': [
+              'payments',
+              'transactions.history',
+              'user.app-settings',
+              'user.profile_readonly'
+            ],
+          });
       // [
       //   'payments',
       //   'transactions.history',
@@ -55,6 +51,10 @@ class PaymentGateWayProvider extends ChangeNotifier {
 
   Future<ApiResponse> createCheckout(String accessToken, int amount) async {
     try {
+      print(serviceLocatorInstance<DioClientNetwork>()
+          .dio
+          .options
+          .headers["Authorization"]);
       serviceLocatorInstance<DioClientNetwork>()
           .dio
           .options
@@ -63,7 +63,7 @@ class PaymentGateWayProvider extends ChangeNotifier {
           HTTPConstants.sumpBaseUrl;
       var response = await serviceLocatorInstance<DioApiServices>()
           .postRequest(HTTPConstants.sumupCheckOuts, data: {
-        'checkout_reference': getCheckoutReference(15),
+        'checkout_reference': getCheckoutReference(10),
         'amount': amount,
         'currency': "EUR",
         "pay_to_email": "dialog@steuermachen.de",

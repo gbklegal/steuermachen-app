@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,12 +23,12 @@ import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 import 'package:steuermachen/wrappers/declaration_tax/declaration_tax_view_wrapper.dart';
 
 class DeclarationQuestionsViewComponent extends StatefulWidget {
-  const DeclarationQuestionsViewComponent({
-    Key? key,
-    required this.declarationTaxData,
-  }) : super(key: key);
+  const DeclarationQuestionsViewComponent(
+      {Key? key, required this.declarationTaxData, this.checkSubmittedTaxYears})
+      : super(key: key);
   final List<DeclarationTaxViewData> declarationTaxData;
-
+  final List<QueryDocumentSnapshot<Map<String, dynamic>>>?
+      checkSubmittedTaxYears;
   @override
   State<DeclarationQuestionsViewComponent> createState() =>
       _DeclarationQuestionsViewComponentState();
@@ -109,7 +110,7 @@ class _DeclarationQuestionsViewComponentState
                           else if (widget.declarationTaxData[i].optionType ==
                               OptionConstants.confirmBilling)
                             ConfirmBillingComponent(
-                                 amount: "39.00",
+                              amount: "39.00",
                               onTapOrder: () =>
                                   Utils.animateToNextPage(pageController, i),
                             )
@@ -196,6 +197,7 @@ class _DeclarationQuestionsViewComponentState
           Utils.animateToNextPage(pageController, i);
         }
       },
+      enabled: _checkYearAlreadyExist(widget.declarationTaxData[i].options[x])
     );
   }
 
@@ -209,5 +211,17 @@ class _DeclarationQuestionsViewComponentState
     } else {
       ToastComponent.showToast(res.message!);
     }
+  }
+
+  bool _checkYearAlreadyExist(String year) {
+    Map<String, dynamic> data;
+    bool status = true;
+    widget.checkSubmittedTaxYears?.forEach((element) {
+      data = element.data();
+      if (data["tax_year"] == year) {
+        status = false;
+      }
+    });
+    return status;
   }
 }

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -10,7 +11,7 @@ import 'package:steuermachen/providers/tax/declaration_tax/declaration_tax_provi
 import 'package:steuermachen/screens/tax/declaration_tax/declaration_tax_components/declaration_question_view_component.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 import 'package:steuermachen/wrappers/declaration_tax/declaration_tax_view_wrapper.dart';
-import '../../../utils/utils.dart';
+
 
 class DeclarationTaxScreen extends StatefulWidget {
   const DeclarationTaxScreen({Key? key}) : super(key: key);
@@ -22,21 +23,24 @@ class DeclarationTaxScreen extends StatefulWidget {
 class _DeclarationTaxScreenState extends State<DeclarationTaxScreen> {
   late DeclarationTaxProvider provider;
   CommonResponseWrapper? response;
+  CommonResponseWrapper? checkSubmittedTaxYears;
   @override
   void initState() {
     provider = Provider.of<DeclarationTaxProvider>(context, listen: false);
-    checkAlreadySubmittedTax();
-    _getDeclarationTaxViewData();
+    provider.checkTaxIsAlreadySubmit().then((va) {
+      checkSubmittedTaxYears = va;
+      _getDeclarationTaxViewData();
+    });
 
     super.initState();
   }
 
-  checkAlreadySubmittedTax() async {
-    CommonResponseWrapper? res = await provider.checkTaxIsAlreadySubmit();
-    if (res != null) {
-      Utils.completedDialog(context, title: "", text: res.message);
-    }
-  }
+  // checkAlreadySubmittedTax() async {
+  //   CommonResponseWrapper? res = await provider.checkTaxIsAlreadySubmit();
+  //   if (res != null) {
+  //     Utils.completedDialog(context, title: "", text: res.message);
+  //   }
+  // }
 
   void _getDeclarationTaxViewData() {
     WidgetsBinding.instance!.addPostFrameCallback(
@@ -93,12 +97,14 @@ class _DeclarationTaxScreenState extends State<DeclarationTaxScreen> {
       return Flexible(
         child: DeclarationQuestionsViewComponent(
           declarationTaxData: declarationTaxViewWrapper.en,
+          checkSubmittedTaxYears: checkSubmittedTaxYears?.data,
         ),
       );
     } else {
       return Flexible(
         child: DeclarationQuestionsViewComponent(
           declarationTaxData: declarationTaxViewWrapper.du,
+          checkSubmittedTaxYears: checkSubmittedTaxYears?.data,
         ),
       );
     }

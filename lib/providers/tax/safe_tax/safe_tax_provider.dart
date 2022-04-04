@@ -79,7 +79,7 @@ class SafeTaxProvider extends ChangeNotifier {
       await firestore
           .collection("user_orders")
           .doc("${user?.uid}")
-          .collection("safe_or_declaration_tax")
+          .collection("safe_tax")
           .add({
         ..._safeTaxDataCollectorWrapper!.toJson(),
         "tax_name": "safeTax",

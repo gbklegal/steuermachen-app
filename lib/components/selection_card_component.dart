@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:steuermachen/components/toast_component.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 
 class SelectionCardComponent extends StatelessWidget {
@@ -7,23 +8,35 @@ class SelectionCardComponent extends StatelessWidget {
     required this.title,
     this.imagePath,
     this.onTap,
+    this.enabled = true,
   }) : super(key: key);
   final String title;
   final String? imagePath;
   final void Function()? onTap;
+  final bool enabled;
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: InkWell(
-        onTap: onTap,
+        onTap: enabled
+            ? onTap
+            : () => {
+                  ToastComponent.showToast(
+                      "You already submitted the tax of this year")
+                },
         child: Container(
           width: MediaQuery.of(context).size.width,
           height: 68,
           decoration: BoxDecoration(
-            color: ColorConstants.toxicGreen.withOpacity(0.1),
+            color: enabled
+                ? ColorConstants.toxicGreen.withOpacity(0.1)
+                : ColorConstants.grey,
             borderRadius: BorderRadius.circular(10),
-            border: Border.all(width: 0.5, color: ColorConstants.toxicGreen),
+            border: Border.all(
+                width: 0.5,
+                color:
+                    enabled ? ColorConstants.toxicGreen : ColorConstants.grey),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Row(

@@ -119,6 +119,7 @@ abstract class  LocaleKeys {
   static const weWillBeInTouchShortly = 'weWillBeInTouchShortly';
   static const emailReceive = 'emailReceive';
   static const alreadySubmittedTax = 'alreadySubmittedTax';
+  static const alreadySubmittedTaxOfThisYear = 'alreadySubmittedTaxOfThisYear';
   static const applyNowForAfee = 'applyNowForAfee';
   static const signHere = 'signHere';
   static const initialTaxAdvice = 'initialTaxAdvice';

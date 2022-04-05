@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:steuermachen/components/toast_component.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
+import 'package:steuermachen/languages/locale_keys.g.dart';
 
 class SelectionCardComponent extends StatelessWidget {
   const SelectionCardComponent({
@@ -23,7 +25,7 @@ class SelectionCardComponent extends StatelessWidget {
             ? onTap
             : () => {
                   ToastComponent.showToast(
-                      "You already submitted the tax of this year")
+                      LocaleKeys.alreadySubmittedTaxOfThisYear.tr())
                 },
         child: Container(
           width: MediaQuery.of(context).size.width,

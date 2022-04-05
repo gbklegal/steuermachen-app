@@ -67,7 +67,10 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
           items: [
             BottomNavigationBarItem(
               label: LocaleKeys.overView.tr(),
-              icon: CustomIcon(AssetConstants.icHome),
+              icon: CustomIcon(
+                AssetConstants.icHome,
+                size: 24,
+              ),
             ),
             BottomNavigationBarItem(
               label: LocaleKeys.calc.tr(),

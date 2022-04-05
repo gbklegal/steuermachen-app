@@ -1,10 +1,6 @@
-import 'package:easy_localization/src/public_ext.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
-import 'package:steuermachen/components/button_component.dart';
-import 'package:steuermachen/components/loading_component.dart';
-import 'package:steuermachen/components/simple_error_text_component.dart';
 import 'package:steuermachen/components/text_component.dart';
 import 'package:steuermachen/components/textformfield_icon_component.dart';
 import 'package:steuermachen/components/user_form_component.dart';
@@ -12,7 +8,6 @@ import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
-import 'package:steuermachen/providers/profile/profile_provider.dart';
 import 'package:steuermachen/utils/input_validation_util.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 

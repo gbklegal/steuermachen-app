@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:steuermachen/components/tax_calculate_screen.dart';
 import 'package:steuermachen/components/text_component.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
-import 'package:steuermachen/providers/tax/declaration_tax/declaration_tax_provider.dart';
 
 class DeclarationTaxCalculationComponent extends StatelessWidget {
   const DeclarationTaxCalculationComponent({

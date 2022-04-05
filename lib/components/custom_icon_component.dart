@@ -19,8 +19,9 @@ class CustomIcon extends StatelessWidget {
     final double? iconOpacity = iconTheme.opacity;
     Color? iconColor = color ?? iconTheme.color;
 
-    if (iconOpacity != 1.0)
+    if (iconOpacity != 1.0) {
       iconColor = iconColor!.withOpacity(iconColor.opacity * iconOpacity!);
+    }
     return SvgPicture.asset(
       name,
       color: iconColor,

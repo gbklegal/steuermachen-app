@@ -61,6 +61,7 @@ class AuthProvider extends ChangeNotifier {
 
   Future<CommonResponseWrapper> signInWithGoogle() async {
     FirebaseAuth auth = FirebaseAuth.instance;
+    // ignore: unused_local_variable
     User? user;
 
     final GoogleSignIn googleSignIn = GoogleSignIn();

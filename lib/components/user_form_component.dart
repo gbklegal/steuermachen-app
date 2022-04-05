@@ -5,7 +5,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/components/error_component.dart';
 import 'package:steuermachen/components/loading_component.dart';
+import 'package:steuermachen/components/popup_loader_component.dart';
 import 'package:steuermachen/components/text_component.dart';
+import 'package:steuermachen/components/toast_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/strings/error_messages_constants.dart';
@@ -13,12 +15,15 @@ import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/providers/profile/profile_provider.dart';
 import 'package:steuermachen/utils/input_validation_util.dart';
+import '../wrappers/common_response_wrapper.dart';
+import 'button_component.dart';
 
 class UserFormComponent extends StatefulWidget {
-  const UserFormComponent({Key? key, this.isAddNewAddress = false})
+  const UserFormComponent(
+      {Key? key, this.isAddNewAddress = false, this.showSaveBtn = false})
       : super(key: key);
   final bool? isAddNewAddress;
-
+  final bool showSaveBtn;
   @override
   State<UserFormComponent> createState() => _UserFormComponentState();
 }
@@ -250,6 +255,25 @@ class _UserFormComponentState extends State<UserFormComponent>
               ),
               sizedBox4,
             ],
+          ),
+        ),
+        Visibility(
+          visible: widget.showSaveBtn,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 30),
+            child: ButtonComponent(
+              btnHeight: 56,
+              buttonText: LocaleKeys.save.tr(),
+              onPressed: () async {
+                if (consumer.userFormKey.currentState!.validate()) {
+                  PopupLoader.showLoadingDialog(context);
+                  CommonResponseWrapper res =
+                      await consumer.submitUserProfile();
+                  PopupLoader.hideLoadingDialog(context);
+                  ToastComponent.showToast(res.message!, long: true);
+                }
+              },
+            ),
           ),
         ),
       ],

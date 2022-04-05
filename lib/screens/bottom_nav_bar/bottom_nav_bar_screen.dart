@@ -73,11 +73,11 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
               ),
             ),
             BottomNavigationBarItem(
-              label: LocaleKeys.calc.tr(),
+              label: LocaleKeys.taxAdvisor.tr(),
               icon: CustomIcon(AssetConstants.icLightBulb),
             ),
             BottomNavigationBarItem(
-              label: LocaleKeys.more.tr(),
+              label: LocaleKeys.faq.tr(),
               icon: CustomIcon(AssetConstants.icQuestion),
             ),
           ],

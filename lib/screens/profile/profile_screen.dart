@@ -86,54 +86,13 @@ class _ProfileScreenState extends State<ProfileScreen>
   SingleChildScrollView _userForm() {
     return SingleChildScrollView(
       child: SizedBox(
-        height: MediaQuery.of(context).size.height,
-        child: Consumer<ProfileProvider>(
-          builder: (context, consumer, child) {
-            if (consumer.getBusyStateProfile || consumer.userData == null) {
-              return const LoadingComponent();
-            } else if (!consumer.getBusyStateProfile &&
-                consumer.userData == null) {
-              return const SimpleErrorTextComponent();
-            } else {
-              return Padding(
-                padding:
-                    const EdgeInsets.only(left: 16.0, right: 16.0, top: 15),
-                child: Column(
-                  children: [
-                    const UserFormComponent(),
-                    const SizedBox(
-                      height: 25,
-                    ),
-                    ButtonComponent(
-                      btnHeight: 56,
-                      buttonText: LocaleKeys.save.tr(),
-                      onPressed: () async {
-                        // if (_userFormKey.currentState!.validate()) {
-                        //   PopupLoader.showLoadingDialog(context);
-                        //   CommonResponseWrapper res =
-                        //       await _formsProvider.submitUserProfile(UserProfileDataCollector(
-                        //     firstName: _firstNameController.text,
-                        //     lastName: _lastNameController.text,
-                        //     street: _streetController.text,
-                        //     houseNumber: _houseNumberController.text,
-                        //     plz: _plzController.text,
-                        //     location: _locationController.text,
-                        //     phone: _phoneController.text,
-                        //     email: _emailController.text,
-                        //     land: _landController.text,
-                        //   ));
-                        //   PopupLoader.hideLoadingDialog(context);
-                        //   ToastComponent.showToast(res.message!, long: true);
-                        // }
-                      },
-                    ),
-                  ],
-                ),
-              );
-            }
-          },
-        ),
-      ),
+          height: MediaQuery.of(context).size.height,
+          child: const Padding(
+            padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 15),
+            child: UserFormComponent(
+              showSaveBtn: true,
+            ),
+          )),
     );
   }
 }

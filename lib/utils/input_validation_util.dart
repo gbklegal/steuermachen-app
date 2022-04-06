@@ -2,9 +2,11 @@ import 'package:email_validator/email_validator.dart';
 import 'package:steuermachen/constants/strings/error_messages_constants.dart';
 
 class InputValidationUtil {
+  // static const patternName =
+  //     r"^\s*([A-Za-z]{1,}([\.,] |[-']| ))+[A-Za-z]+\.?\s*$";
   static const patternName =
-      r"^\s*([A-Za-z]{1,}([\.,] |[-']| ))+[A-Za-z]+\.?\s*$";
-  static const patternPhone = r'^(?:[0]9)?[0-9]{11}$';
+      r"^(?=.{1,40}$)[a-zA-Z]+(?:[-'\s][a-zA-Z]+)*$";
+  static const patternPhone = r'^\+(?:[0-9]●?){6,14}[0-9]$';
   static const patternDigits = r'^[0-9]*$';
   static const Pattern passwordMinLen8withLowerCaseAndSpecialChar =
       r'^((?=.*\d)(?=.*[a-z])(?=.*[\W_]).{8,20})';

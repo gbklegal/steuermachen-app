@@ -139,7 +139,9 @@ class _DeclarationQuestionsViewComponentState
       padding: const EdgeInsets.only(bottom: 80),
       child: BackResetForwardBtnComponent(
         showContinueBtn: widget.declarationTaxData[i].optionType !=
-            OptionConstants.singleSelect,
+                OptionConstants.singleSelect &&
+            widget.declarationTaxData[i].optionType !=
+                OptionConstants.paymentMethods,
         onTapBack: () {
           Utils.animateToPreviousPage(pageController, i);
         },
@@ -150,8 +152,7 @@ class _DeclarationQuestionsViewComponentState
             if (status) {
               Utils.animateToNextPage(pageController, i);
             }
-          }
-          if (widget.declarationTaxData[i].optionType ==
+          } else if (widget.declarationTaxData[i].optionType ==
               OptionConstants.signature) {
             bool status =
                 await Provider.of<SignatureProvider>(context, listen: false)
@@ -180,25 +181,26 @@ class _DeclarationQuestionsViewComponentState
   SelectionCardComponent _optionsWidget(
       DeclarationTaxProvider consumer, int i, int x) {
     return SelectionCardComponent(
-      title: widget.declarationTaxData[i].options[x],
-      imagePath: widget.declarationTaxData[i].optionImgPath.isNotEmpty
-          ? widget.declarationTaxData[i].optionImgPath[x]
-          : null,
-      onTap: () {
-        int year = DateTime.now().year;
-        if (year.toString() == widget.declarationTaxData[i].options[x]) {
-          Navigator.pushNamed(context, RouteConstants.currentYearTaxScreen);
-        } else {
-          if (i == 0) {
-            consumer.setTaxYear(widget.declarationTaxData[i].options[x]);
-          } else if (i == 1) {
-            consumer.setMartialStatus(widget.declarationTaxData[i].options[x]);
+        title: widget.declarationTaxData[i].options[x],
+        imagePath: widget.declarationTaxData[i].optionImgPath.isNotEmpty
+            ? widget.declarationTaxData[i].optionImgPath[x]
+            : null,
+        onTap: () {
+          int year = DateTime.now().year;
+          if (year.toString() == widget.declarationTaxData[i].options[x]) {
+            Navigator.pushNamed(context, RouteConstants.currentYearTaxScreen);
+          } else {
+            if (i == 0) {
+              consumer.setTaxYear(widget.declarationTaxData[i].options[x]);
+            } else if (i == 1) {
+              consumer
+                  .setMartialStatus(widget.declarationTaxData[i].options[x]);
+            }
+            Utils.animateToNextPage(pageController, i);
           }
-          Utils.animateToNextPage(pageController, i);
-        }
-      },
-      enabled: _checkYearAlreadyExist(widget.declarationTaxData[i].options[x])
-    );
+        },
+        enabled:
+            _checkYearAlreadyExist(widget.declarationTaxData[i].options[x]));
   }
 
   _submitData(DeclarationTaxProvider consumer) async {

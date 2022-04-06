@@ -209,6 +209,7 @@ class _UserFormComponentState extends State<UserFormComponent>
                 decoration: InputDecoration(
                   labelText: LocaleKeys.phone.tr() + "*",
                   hintStyle: fontStyle,
+                  hintText: "+4912341234567"
                 ),
                 validator: validatePhone,
               ),

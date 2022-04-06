@@ -32,14 +32,6 @@ class _DeclarationTaxScreenState extends State<DeclarationTaxScreen> {
 
     super.initState();
   }
-
-  // checkAlreadySubmittedTax() async {
-  //   CommonResponseWrapper? res = await provider.checkTaxIsAlreadySubmit();
-  //   if (res != null) {
-  //     Utils.completedDialog(context, title: "", text: res.message);
-  //   }
-  // }
-
   void _getDeclarationTaxViewData() {
     WidgetsBinding.instance!.addPostFrameCallback(
       (_) => provider.getDeclarationTaxViewData().then(

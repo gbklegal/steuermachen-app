@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -11,6 +12,7 @@ import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 import 'package:steuermachen/wrappers/safe_tax/safe_tax_wrapper.dart';
 import 'package:steuermachen/wrappers/tax_steps_wrapper.dart';
 
+import '../../../languages/locale_keys.g.dart';
 import '../../../wrappers/declaration_tax/declaration_tax_data_collector_wrapper.dart';
 import '../../profile/profile_provider.dart';
 
@@ -79,7 +81,7 @@ class SafeTaxProvider extends ChangeNotifier {
       await firestore
           .collection("user_orders")
           .doc("${user?.uid}")
-          .collection("safe_tax")
+          .collection("safe_and_declaration_tax")
           .add({
         ..._safeTaxDataCollectorWrapper!.toJson(),
         "tax_name": "safeTax",
@@ -93,6 +95,27 @@ class SafeTaxProvider extends ChangeNotifier {
     } catch (e) {
       return CommonResponseWrapper(
           status: false, message: ErrorMessagesConstants.somethingWentWrong);
+    }
+  }
+
+  Future<CommonResponseWrapper?> checkTaxIsAlreadySubmit() async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      var res = await firestore
+          .collection("user_orders")
+          .doc("${user?.uid}")
+          .collection("safe_and_declaration_tax")
+          .get();
+      if (res.docs.isNotEmpty) {
+        return CommonResponseWrapper(
+          status: true,
+          data: res.docs,
+          message: LocaleKeys.alreadySubmittedTax.tr(),
+        );
+      }
+      return null;
+    } catch (e) {
+      return null;
     }
   }
 }

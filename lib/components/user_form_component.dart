@@ -55,7 +55,7 @@ class _UserFormComponentState extends State<UserFormComponent>
   Widget build(BuildContext context) {
     return Consumer<ProfileProvider>(
       builder: (context, consumer, child) {
-        if (consumer.getBusyStateProfile || consumer.userData == null) {
+        if (consumer.getBusyStateProfile && consumer.userData == null) {
           return const LoadingComponent();
         } else if (!consumer.getBusyStateProfile && consumer.userData == null) {
           return ErrorComponent(

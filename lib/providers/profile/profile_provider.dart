@@ -112,8 +112,9 @@ class ProfileProvider extends ChangeNotifier {
               status: true, message: "", data: userData);
         } else {
           setBusyStateProfile = false;
+          userData = UserWrapper();
           return CommonResponseWrapper(
-            status: true,
+            status: false,
             message: "",
           );
         }

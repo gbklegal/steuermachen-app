@@ -824,13 +824,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0"
-  sumup:
-    dependency: "direct main"
-    description:
-      name: sumup
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.3.1"
   syncfusion_flutter_core:
     dependency: transitive
     description:

@@ -10,7 +10,6 @@ import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/services/networks/api_response_states.dart';
-import 'package:sumup/sumup.dart';
 import '../../../providers/payment_gateway/payment_gateway_provider.dart';
 import '../../../wrappers/payment_gateway/sumpup_access_token_wrapper.dart';
 import '../../../wrappers/payment_gateway/sumup_checkout_wrapper.dart';

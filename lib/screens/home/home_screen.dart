@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
 import 'package:steuermachen/components/shadow_card_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
@@ -8,6 +9,7 @@ import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
+import 'package:steuermachen/providers/profile/profile_provider.dart';
 import 'package:steuermachen/utils/string_utils.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -41,7 +43,7 @@ class HomeScreen extends StatelessWidget {
         imageTitle: AssetConstants.logo,
         backgroundColor: Colors.transparent,
         showBackButton: false,
-        showPersonIcon: true,
+        showPersonIcon: false,
         showBottomLine: false,
       ),
       body: SafeArea(
@@ -62,14 +64,17 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                Text(
-                  LocaleKeys.hello.tr().onlyFirstInCaps + " OSAMA",
-                  textAlign: TextAlign.left,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText1!
-                      .copyWith(fontWeight: FontWeight.w600, fontSize: 20),
-                ),
+                Consumer<ProfileProvider>(builder: (context, consumer, child) {
+                  return Text(
+                    LocaleKeys.hello.tr().onlyFirstInCaps +
+                        " ${consumer.userData?.firstName ?? ""}",
+                    textAlign: TextAlign.left,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText1!
+                        .copyWith(fontWeight: FontWeight.w600, fontSize: 20),
+                  );
+                }),
                 const SizedBox(height: 5),
                 Text(
                   LocaleKeys.howCanWeHelpYou.tr(),

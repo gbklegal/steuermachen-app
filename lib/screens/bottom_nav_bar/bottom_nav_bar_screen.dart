@@ -11,6 +11,7 @@ import 'package:steuermachen/screens/faq/faq_screen.dart';
 import 'package:steuermachen/screens/home/home_screen.dart';
 import 'package:steuermachen/screens/tax_tips/tax_tips_screen.dart';
 
+import '../../providers/profile/profile_provider.dart';
 import '../../providers/tax_tips_provider.dart';
 
 class BottomNavBarScreen extends StatefulWidget {
@@ -23,11 +24,14 @@ class BottomNavBarScreen extends StatefulWidget {
 class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
   int _currentIndex = 0;
   late TaxTipsProvider provider;
+  late ProfileProvider profileProvider;
   @override
   void initState() {
+    profileProvider = Provider.of<ProfileProvider>(context, listen: false);
     provider = Provider.of<TaxTipsProvider>(context, listen: false);
     WidgetsBinding.instance!.addPostFrameCallback((_) {
       provider.fetchTaxTips();
+      profileProvider.getUserProfile();
     });
 
     super.initState();

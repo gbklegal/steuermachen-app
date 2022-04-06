@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -14,6 +16,7 @@ class TaxTipsDetailScreen extends StatelessWidget {
   final TaxTipsWrapper taxTipsContent;
   @override
   Widget build(BuildContext context) {
+    log(taxTipsContent.content!.rendered.toString());
     return Scaffold(
       body: AppBarWithSideCornerCircleAndRoundBody(
         body: SizedBox(
@@ -22,6 +25,9 @@ class TaxTipsDetailScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                const SizedBox(
+                  height: 21,
+                ),
                 TaxTipTopComponent(
                   title: taxTipsContent.title!.rendered,
                   subtitle:

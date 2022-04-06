@@ -62,7 +62,6 @@ class _FinanceCourtScreenState extends State<FinanceCourtScreen> {
         showBackButton: true,
         showPersonIcon: false,
         showBottomLine: true,
-        backText: "",
       ),
       body: Padding(
           padding: const EdgeInsets.only(left: 16, right: 16, top: 25),

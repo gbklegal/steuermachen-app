@@ -11,7 +11,6 @@ import 'package:steuermachen/screens/tax/declaration_tax/declaration_tax_compone
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 import 'package:steuermachen/wrappers/declaration_tax/declaration_tax_view_wrapper.dart';
 
-
 class DeclarationTaxScreen extends StatefulWidget {
   const DeclarationTaxScreen({Key? key}) : super(key: key);
 

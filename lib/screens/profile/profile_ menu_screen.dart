@@ -42,7 +42,7 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
       ProfileMenuOptions(
         leadingIcon: AssetConstants.icFaq,
         // routeName: RouteConstants.faqScreen,
-        routeName: RouteConstants.whatInWorkScreen,
+        routeName: RouteConstants.whatInWorkYearSelectionScreen,
         title: LocaleKeys.checkWhatInWorks,
         trailingIcon: AssetConstants.icForward,
       ),

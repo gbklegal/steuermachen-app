@@ -66,8 +66,8 @@ class TaxStepsWrapper {
         titleEn: json["titleEn"],
         titleDe: json["titleDe"],
         status: json["status"],
-        createdAt: json["createdAt"],
-        updatedAt: json["updatedAt"],
+        createdAt: json["createdAt"]?.toDate(),
+        updatedAt: json["updatedAt"]?.toDate(),
         updatedBy: json["updatedBy"],
       );
 

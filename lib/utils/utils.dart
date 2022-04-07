@@ -65,6 +65,16 @@ class Utils {
     );
   }
 
+  static customDialog(BuildContext context, Widget child) {
+    showDialog(
+      barrierDismissible: true,
+      context: context,
+      builder: (BuildContext context) {
+        return child;
+      },
+    );
+  }
+
   static Future<bool> submitProfile(BuildContext context) async {
     ProfileProvider _provider =
         Provider.of<ProfileProvider>(context, listen: false);

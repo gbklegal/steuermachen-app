@@ -260,7 +260,7 @@ onGenerateRoutes(RouteSettings settings) {
       );
     case RouteConstants.whatInWorkScreen:
       return MaterialPageRoute(
-        builder: (_) => const WhatInWorkScreen(),
+        builder: (_) => const WhatInWorkStepsComponent(),
       );
     default:
       return MaterialPageRoute(

@@ -100,7 +100,7 @@ class WhatInWorkStepsComponent extends StatelessWidget {
                                             fontSize: 16),
                                       ),
                                     TextComponent(
-                                      taxSteps[i].updatedAt ?? "----",
+                                      taxSteps[i].updatedAt?.toString() ?? "----",
                                       style:
                                           FontStyles.fontRegular(fontSize: 12),
                                     ),

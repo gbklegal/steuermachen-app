@@ -53,8 +53,8 @@ class TaxStepsWrapper {
   String titleDe;
   String status;
   DateTime createdAt;
-  String? updatedAt;
-  DateTime? updatedBy;
+  DateTime? updatedAt;
+  String? updatedBy;
 
   factory TaxStepsWrapper.fromRawJson(String str) =>
       TaxStepsWrapper.fromJson(json.decode(str));

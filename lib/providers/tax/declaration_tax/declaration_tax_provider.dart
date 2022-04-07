@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/constants/strings/error_messages_constants.dart';
+import 'package:steuermachen/constants/strings/http_constants.dart';
 import 'package:steuermachen/constants/strings/process_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
@@ -10,6 +11,8 @@ import 'package:steuermachen/main.dart';
 import 'package:steuermachen/providers/profile/profile_provider.dart';
 import 'package:steuermachen/providers/signature/signature_provider.dart';
 import 'package:steuermachen/providers/tax_calculator_provider.dart';
+import 'package:steuermachen/services/networks/dio_api_services.dart';
+import 'package:steuermachen/services/networks/dio_client_network.dart';
 import 'package:steuermachen/utils/utils.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 import 'package:steuermachen/wrappers/declaration_tax/declaration_tax_data_collector_wrapper.dart';
@@ -95,6 +98,24 @@ class DeclarationTaxProvider extends ChangeNotifier {
       return CommonResponseWrapper(
           status: false, message: ErrorMessagesConstants.somethingWentWrong);
     }
+  }
+
+  sendMail() async {
+    serviceLocatorInstance<DioClientNetwork>()
+            .dio
+            .options
+            .headers["Authorization"] =
+        "Bearer " + HTTPConstants.defaultAccessToken;
+    serviceLocatorInstance<DioClientNetwork>().dio.options.baseUrl =
+        HTTPConstants.sumpBaseUrl;
+    var response = await serviceLocatorInstance<DioApiServices>()
+        .postRequest(HTTPConstants.sumupCheckOuts, data: {
+      // 'checkout_reference': getCheckoutReference(10),
+      // 'amount': amount,
+      // 'currency': "EUR",
+      // "pay_to_email": "dialog@steuermachen.de",
+      // "description": "Sample one-time payment"
+    });
   }
 
   Future<void> _setData(BuildContext context) async {

@@ -116,7 +116,7 @@ class HomeScreen extends StatelessWidget {
                                   : ColorConstants.black,
                               leadingAsset: content[i].leadAsset,
                               title: content[i].title,
-                              fontSize: 15,
+                              fontSize: 13.3,
                               trailingAsset: AssetConstants.icForward,
                             ),
                           ),
@@ -162,11 +162,14 @@ class _CollectReceipts extends StatelessWidget {
             height: 18,
             color: ColorConstants.black,
           ),
-          title: Text(
-            LocaleKeys.collectReceipts.tr(),
-            textAlign: TextAlign.left,
-            style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                fontWeight: FontWeight.w500, fontSize: 15, letterSpacing: -0.3),
+          title: Padding(
+            padding: const EdgeInsets.only(bottom: 5),
+            child: Text(
+              LocaleKeys.collectReceipts.tr(),
+              textAlign: TextAlign.left,
+              style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                  fontWeight: FontWeight.w500, fontSize: 14, letterSpacing: -0.3),
+            ),
           ),
           trailing: SvgPicture.asset(
             AssetConstants.icForward,

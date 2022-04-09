@@ -1,11 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/constants/strings/error_messages_constants.dart';
 import 'package:steuermachen/constants/strings/http_constants.dart';
-import 'package:steuermachen/constants/strings/process_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/data/repositories/remote/safe_and_declaration_tax_repository.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
@@ -13,6 +11,7 @@ import 'package:steuermachen/main.dart';
 import 'package:steuermachen/data/view_models/profile/profile_provider.dart';
 import 'package:steuermachen/data/view_models/signature/signature_provider.dart';
 import 'package:steuermachen/data/view_models/tax_calculator_provider.dart';
+import 'package:steuermachen/services/networks/api_response_states.dart';
 import 'package:steuermachen/services/networks/dio_api_services.dart';
 import 'package:steuermachen/services/networks/dio_client_network.dart';
 import 'package:steuermachen/utils/utils.dart';
@@ -22,43 +21,46 @@ import 'package:steuermachen/wrappers/declaration_tax/declaration_tax_view_wrapp
 import 'package:steuermachen/wrappers/tax_steps_wrapper.dart';
 
 class DeclarationTaxViewModel extends ChangeNotifier {
+  late ApiResponse _viewData = ApiResponse.loading();
+  ApiResponse get viewData => _viewData;
+  set setViewData(ApiResponse viewData) {
+    _viewData = viewData;
+  }
+
+  late ApiResponse _taxFiledYears = ApiResponse.loading();
+  ApiResponse get taxFiledYears => _taxFiledYears;
+  set setTaxFiledYears(ApiResponse taxFiledYears) {
+    _taxFiledYears = taxFiledYears;
+  }
+
   final SafeAndDeclarationTaxDataCollectorWrapper?
       _declarationTaxDataCollectorWrapper =
       SafeAndDeclarationTaxDataCollectorWrapper();
   SafeAndDeclarationTaxDataCollectorWrapper? get dataCollectorWrapper =>
       _declarationTaxDataCollectorWrapper;
-  bool _busyStateDeclarationTax = true;
-  bool get getBusyStateDeclarationTax => _busyStateDeclarationTax;
-  set setBusyStateDeclarationTax(bool _isBusy) {
-    _busyStateDeclarationTax = _isBusy;
-    notifyListeners();
-  }
 
-  Future<CommonResponseWrapper> getDeclarationTaxViewData() async {
+  Future<void> fetchDeclarationTaxViewData() async {
     try {
-      setBusyStateDeclarationTax = true;
-      var res =
-          await firestore.collection("declaration_tax").doc("content").get();
+      setViewData = ApiResponse.loading();
+      notifyListeners();
+      var res = await serviceLocatorInstance<SafeAndDeclarationTaxRepository>()
+          .fetchDeclarationTaxViewData();
       Map<String, dynamic> x = res.data() as Map<String, dynamic>;
       DeclarationTaxViewWrapper declarationTaxWrapper =
           DeclarationTaxViewWrapper.fromJson(x);
-      setBusyStateDeclarationTax = false;
-      return CommonResponseWrapper(status: true, data: declarationTaxWrapper);
+      setViewData = ApiResponse.completed(declarationTaxWrapper);
     } catch (e) {
-      setBusyStateDeclarationTax = false;
-      return CommonResponseWrapper(
-          status: false, message: ErrorMessagesConstants.somethingWentWrong);
+      setViewData = ApiResponse.error(e.toString());
     }
+    notifyListeners();
   }
 
-  //Execute this function for adding UI view in firestore
-  // JSON//filepath: declaration_tax_view.json
   Future<CommonResponseWrapper> addDeclarationTaxViewData() async {
     try {
-      // await firestore.collection("declaration_tax").doc("content").set(json);
+      await serviceLocatorInstance<SafeAndDeclarationTaxRepository>()
+          .addDeclarationTaxViewData();
       return CommonResponseWrapper(
-          status: true,
-          message: "declaration tax view data added successfully");
+          status: true, message: StringConstants.success);
     } catch (e) {
       return CommonResponseWrapper(
           status: true, message: ErrorMessagesConstants.somethingWentWrong);
@@ -81,19 +83,8 @@ class DeclarationTaxViewModel extends ChangeNotifier {
       BuildContext context) async {
     await _setData(context);
     try {
-      User? user = FirebaseAuth.instance.currentUser;
-      await firestore
-          .collection("user_orders")
-          .doc("${user?.uid}")
-          .collection("safe_and_declaration_tax")
-          .add({
-        ..._declarationTaxDataCollectorWrapper!.toJson(),
-        "created_at": DateTime.now(),
-        "tax_name": "declarationTax",
-        "steps": taxSteps.map((e) => e.toJson()).toList(),
-        "status": ProcessConstants.pending,
-        "approved_by": null,
-      });
+      await serviceLocatorInstance<SafeAndDeclarationTaxRepository>()
+          .submitDeclarationTax(_declarationTaxDataCollectorWrapper!, taxSteps);
       return CommonResponseWrapper(
           status: true, message: StringConstants.thankYouForOrder);
     } catch (e) {
@@ -140,20 +131,21 @@ class DeclarationTaxViewModel extends ChangeNotifier {
     _declarationTaxDataCollectorWrapper?.grossIncome = _tax.selectedPrice;
   }
 
-  Future<CommonResponseWrapper?> checkTaxIsAlreadySubmit() async {
+  Future<void> fetchTaxFiledYears() async {
     try {
+      setTaxFiledYears = ApiResponse.loading();
+      notifyListeners();
       var res = await serviceLocatorInstance<SafeAndDeclarationTaxRepository>()
           .fetchTaxFiledYears();
       if (res.docs.isNotEmpty) {
-        return CommonResponseWrapper(
-          status: true,
-          data: res.docs,
-          message: LocaleKeys.alreadySubmittedTax.tr(),
-        );
+        setTaxFiledYears = ApiResponse.completed(res.docs);
+      } else {
+        setTaxFiledYears =
+            ApiResponse.error(ErrorMessagesConstants.noRecordFound);
       }
-      return null;
     } catch (e) {
-      return null;
+      setTaxFiledYears = ApiResponse.error(e.toString());
     }
+    notifyListeners();
   }
 }

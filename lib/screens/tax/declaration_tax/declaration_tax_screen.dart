@@ -8,7 +8,7 @@ import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/data/view_models/tax/declaration_tax/declaration_tax_view_model.dart';
 import 'package:steuermachen/screens/tax/declaration_tax/declaration_tax_components/declaration_question_view_component.dart';
-import 'package:steuermachen/wrappers/common_response_wrapper.dart';
+import 'package:steuermachen/services/networks/api_response_states.dart';
 import 'package:steuermachen/wrappers/declaration_tax/declaration_tax_view_wrapper.dart';
 
 class DeclarationTaxScreen extends StatefulWidget {
@@ -20,31 +20,24 @@ class DeclarationTaxScreen extends StatefulWidget {
 
 class _DeclarationTaxScreenState extends State<DeclarationTaxScreen> {
   late DeclarationTaxViewModel provider;
-  CommonResponseWrapper? response;
-  CommonResponseWrapper? checkSubmittedTaxYears;
   @override
   void initState() {
     provider = Provider.of<DeclarationTaxViewModel>(context, listen: false);
-    provider.checkTaxIsAlreadySubmit().then((va) {
-      checkSubmittedTaxYears = va;
-      _getDeclarationTaxViewData();
-      provider.sendMail();
-    });
-
+    _getDeclarationTaxViewData();
     super.initState();
   }
+
   void _getDeclarationTaxViewData() {
-    WidgetsBinding.instance!.addPostFrameCallback(
-      (_) => provider.getDeclarationTaxViewData().then(
-        (value) {
-          setState(
-            () {
-              response = value;
-            },
-          );
+    if (provider.taxFiledYears.status != Status.completed ||
+        provider.viewData.status != Status.completed) {
+      WidgetsBinding.instance!.addPostFrameCallback(
+        (_) => {
+          provider
+              .fetchTaxFiledYears()
+              .then((_) => provider.fetchDeclarationTaxViewData())
         },
-      ),
-    );
+      );
+    }
   }
 
   @override
@@ -60,42 +53,42 @@ class _DeclarationTaxScreenState extends State<DeclarationTaxScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.only(left: 16, right: 16, top: 25),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (provider.getBusyStateDeclarationTax || response == null)
-              const EmptyScreenLoaderComponent()
-            else if (!response!.status!)
-              ErrorComponent(
-                message: response!.message!,
-                onTap: () async {
-                  var res = await provider.getDeclarationTaxViewData();
-                  response = res;
-                },
-              )
-            else
-              _getMainBody()
-          ],
-        ),
+        child: Consumer<DeclarationTaxViewModel>(
+            builder: (context, consumer, child) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (consumer.taxFiledYears.status == Status.loading ||
+                  consumer.viewData.status == Status.loading)
+                const EmptyScreenLoaderComponent()
+              else if (consumer.taxFiledYears.status == Status.error ||
+                  consumer.viewData.status == Status.error)
+                ErrorComponent(
+                  message: consumer.viewData.message!,
+                  onTap: _getDeclarationTaxViewData,
+                )
+              else
+                _getMainBody(consumer.viewData.data)
+            ],
+          );
+        }),
       ),
     );
   }
 
-  Flexible _getMainBody() {
-    DeclarationTaxViewWrapper declarationTaxViewWrapper =
-        response!.data as DeclarationTaxViewWrapper;
+  Flexible _getMainBody(DeclarationTaxViewWrapper declarationTaxViewWrapper) {
     if (context.locale == const Locale('en')) {
       return Flexible(
         child: DeclarationQuestionsViewComponent(
           declarationTaxData: declarationTaxViewWrapper.en,
-          checkSubmittedTaxYears: checkSubmittedTaxYears?.data,
+          checkSubmittedTaxYears: provider.taxFiledYears.data,
         ),
       );
     } else {
       return Flexible(
         child: DeclarationQuestionsViewComponent(
           declarationTaxData: declarationTaxViewWrapper.du,
-          checkSubmittedTaxYears: checkSubmittedTaxYears?.data,
+          checkSubmittedTaxYears: provider.taxFiledYears.data,
         ),
       );
     }

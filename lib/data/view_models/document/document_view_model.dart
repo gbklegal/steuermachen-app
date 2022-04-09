@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:steuermachen/constants/strings/error_messages_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/data/repositories/remote/documents_repository.dart';
-import 'package:steuermachen/data/repositories/remote/safe_and_declaration_tax_repository.dart';
 import 'package:steuermachen/main.dart';
 import 'package:steuermachen/services/networks/api_response_states.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';

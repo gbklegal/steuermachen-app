@@ -1,4 +1,4 @@
-{
+var declarationTaxViewJson =  {
     "en": [
         {
             "title": "Select the appropriate tax year",
@@ -147,4 +147,4 @@
             "show_bottom_nav": false
         }
     ]
-}
+};

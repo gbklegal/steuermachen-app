@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:steuermachen/components/empty_screen_loader_component.dart';
+import 'package:steuermachen/components/error_component.dart';
 import 'package:steuermachen/components/loading_component.dart';
 import 'package:steuermachen/components/selection_card_component.dart';
 import 'package:steuermachen/components/tax_year_component.dart';
@@ -12,6 +14,7 @@ import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/data/view_models/tax/declaration_tax/declaration_tax_view_model.dart';
 import 'package:steuermachen/components/no_order_component.dart';
 import 'package:steuermachen/screens/profile/what_in_works/what_in_work_screen.dart';
+import 'package:steuermachen/services/networks/api_response_states.dart';
 import 'package:steuermachen/utils/utils.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 
@@ -30,7 +33,16 @@ class _WhatInWorkYearSelectionScreenState
   @override
   void initState() {
     provider = Provider.of<DeclarationTaxViewModel>(context, listen: false);
+    _fetchTaxFiledYears();
     super.initState();
+  }
+
+  void _fetchTaxFiledYears() {
+    if (provider.taxFiledYears.status != Status.completed) {
+      WidgetsBinding.instance!.addPostFrameCallback(
+        (_) => {provider.fetchTaxFiledYears()},
+      );
+    }
   }
 
   final pageController = PageController(initialPage: 0);
@@ -62,44 +74,48 @@ class _WhatInWorkYearSelectionScreenState
       ),
       body: SizedBox(
         width: MediaQuery.of(context).size.width,
-        child: FutureBuilder<CommonResponseWrapper?>(
-          future: provider.checkTaxIsAlreadySubmit(),
-          builder: (context, snapshot) {
-            if (!snapshot.hasError && snapshot.hasData) {
-              List<QueryDocumentSnapshot<Map<String, dynamic>>>?
-                  submittedTaxYears = snapshot.data?.data;
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 15),
-                child: ListView.builder(
-                  itemCount: submittedTaxYears?.length,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                      child: TaxYearComponent(
-                        year: submittedTaxYears?[index]["tax_year"],
-                        onTap: () {
-                          Utils.customDialog(
-                            context,
-                            WhatInWorkStepsComponent(
-                              submittedTaxYears: submittedTaxYears?[index],
-                            ),
-                          );
-                        },
-                      ),
-                    );
-                  },
-                ),
-              );
-            } else if (snapshot.hasError) {
-              return const Center(
-                child: TextComponent(ErrorMessagesConstants.somethingWentWrong),
-              );
-            } else if (snapshot.connectionState == ConnectionState.done &&
-                !snapshot.hasData) {
-              return const NoOrderComponent();
-            } else {
-              return const LoadingComponent();
-            }
+        child: Consumer<DeclarationTaxViewModel>(
+            builder: (context, consumer, child) {
+          if (consumer.taxFiledYears.status == Status.loading) {
+            return const EmptyScreenLoaderComponent();
+          } else if (consumer.taxFiledYears.status == Status.error) {
+            return ErrorComponent(
+              message: consumer.taxFiledYears.message!,
+              onTap: () async {
+                await consumer.fetchTaxFiledYears();
+              },
+            );
+          } else {
+            return _getMainBody(consumer.taxFiledYears.data);
+          }
+        }),
+      ),
+    );
+  }
+
+  _getMainBody(
+      List<QueryDocumentSnapshot<Map<String, dynamic>>>? submittedTaxYears) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 15),
+      child: RefreshIndicator(
+        onRefresh: () => provider.fetchTaxFiledYears(),
+        child: ListView.builder(
+          itemCount: submittedTaxYears?.length,
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: TaxYearComponent(
+                year: submittedTaxYears?[index]["tax_year"],
+                onTap: () {
+                  Utils.customDialog(
+                    context,
+                    WhatInWorkStepsComponent(
+                      submittedTaxYears: submittedTaxYears?[index],
+                    ),
+                  );
+                },
+              ),
+            );
           },
         ),
       ),

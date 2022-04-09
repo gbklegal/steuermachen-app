@@ -34,7 +34,7 @@ import 'package:steuermachen/screens/profile/complete_profile_screen.dart';
 import 'package:steuermachen/screens/profile/order_overview_screen.dart';
 import 'package:steuermachen/screens/profile/profile_%20menu_screen.dart';
 import 'package:steuermachen/screens/profile/profile_screen.dart';
-import 'package:steuermachen/screens/profile/what_in_works/what_in_work_screen.dart';
+import 'package:steuermachen/screens/profile/what_in_works/what_in_work_steps_component.dart';
 import 'package:steuermachen/screens/splash_screen.dart';
 import 'package:steuermachen/screens/sustainability/sustainability_screen.dart';
 import 'package:steuermachen/screens/tax/current_year_tax/current_year_tax_screen.dart';
@@ -47,6 +47,7 @@ import 'package:steuermachen/screens/tax/quick_tax/quick_tax_screen.dart';
 import 'package:steuermachen/screens/tax/safe_tax/safe_tax_screen.dart';
 import 'package:steuermachen/screens/tax/select_safe_or_quick_tax_screen.dart';
 import 'package:steuermachen/screens/tax_tips/tax_tips_screen.dart';
+import 'package:steuermachen/wrappers/declaration_tax/declaration_tax_data_collector_wrapper.dart';
 
 import '../screens/profile/what_in_works/what_in_work_year_selection_screen.dart';
 
@@ -85,14 +86,8 @@ onGenerateRoutes(RouteSettings settings) {
       );
     case RouteConstants.documentOverviewScreen:
       if (settings.arguments != null) {
-        Map obj = settings.arguments as Map;
         return MaterialPageRoute(
-          builder: (_) => DocumentOverviewScreen(
-            showNextBtn: obj["showNextBtn"] ?? false,
-            onNextBtnRoute: obj["nextRoute"] ?? "",
-            uploadBtnNow: obj["uploadBtn"] ?? false,
-            showRoundBody: obj["roundBody"] ?? true,
-          ),
+          builder: (_) => const DocumentOverviewScreen(),
         );
       }
       return MaterialPageRoute(
@@ -258,10 +253,7 @@ onGenerateRoutes(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (_) => const WhatInWorkYearSelectionScreen(),
       );
-    case RouteConstants.whatInWorkScreen:
-      return MaterialPageRoute(
-        builder: (_) => const WhatInWorkStepsComponent(),
-      );
+
     default:
       return MaterialPageRoute(
         builder: (_) => const Scaffold(

@@ -1,5 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
@@ -11,49 +9,43 @@ import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
+import 'package:steuermachen/data/view_models/tax/declaration_tax/declaration_tax_view_model.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/data/view_models/document/document_view_model.dart';
-import 'package:steuermachen/wrappers/document/document_option_wrapper.dart';
+import 'package:steuermachen/services/networks/api_response_states.dart';
+import 'package:steuermachen/wrappers/declaration_tax/declaration_tax_data_collector_wrapper.dart';
 
 class DocumentOverviewScreen extends StatefulWidget {
-  const DocumentOverviewScreen(
-      {Key? key,
-      this.showNextBtn = false,
-      this.onNextBtnRoute,
-      this.uploadBtnNow = false,
-      this.showRoundBody = true})
-      : super(key: key);
+  const DocumentOverviewScreen({
+    Key? key,
+  }) : super(key: key);
 
-  final bool? showNextBtn;
-  final bool? uploadBtnNow;
-  final String? onNextBtnRoute;
-  final bool? showRoundBody;
   @override
   State<DocumentOverviewScreen> createState() => _DocumentOverviewScreenState();
 }
 
 class _DocumentOverviewScreenState extends State<DocumentOverviewScreen> {
-  late String selectImageList;
-  late String selectPDF;
-  User? user = FirebaseAuth.instance.currentUser;
-  late DocumentsViewModel _provider;
-  int year = DateTime.now().year;
-  List<int> years = [];
+  late DocumentsViewModel documentViewModel;
+  late DeclarationTaxViewModel declarationTaxViewModel;
   @override
   void initState() {
     super.initState();
-    _getYearList();
-    _provider = Provider.of<DocumentsViewModel>(context, listen: false);
-    WidgetsBinding.instance!
-        .addPostFrameCallback((_) => _provider.fetchDocumentOptionsData());
+    documentViewModel = Provider.of<DocumentsViewModel>(context, listen: false);
+    declarationTaxViewModel =
+        Provider.of<DeclarationTaxViewModel>(context, listen: false);
+    _fetchTaxFiledYears();
   }
 
-  _getYearList() {
-    for (var i = 4; i >= 0; i--) {
-      int tempYear = year - i;
-      years.add(tempYear);
+  void _fetchTaxFiledYears() {
+    if (declarationTaxViewModel.taxFiledYears.status != Status.completed ||
+        documentViewModel.documentOptions.status != Status.completed) {
+      WidgetsBinding.instance!.addPostFrameCallback(
+        (_) => {
+          documentViewModel.fetchDocumentOptionsData(),
+          declarationTaxViewModel.fetchTaxFiledYears(),
+        },
+      );
     }
-    return years;
   }
 
   @override
@@ -67,16 +59,34 @@ class _DocumentOverviewScreenState extends State<DocumentOverviewScreen> {
         showPersonIcon: false,
         showBottomLine: true,
       ),
-      body: Consumer<DocumentsViewModel>(
-        builder: (context, consumer, child) {
-          return _mainBody();
-        },
-      ),
+      body: Consumer<DeclarationTaxViewModel>(
+          builder: (context, consumer, child) {
+        if (consumer.taxFiledYears.status == Status.loading) {
+          return const EmptyScreenLoaderComponent();
+        } else if (consumer.taxFiledYears.status == Status.error) {
+          return ErrorComponent(
+            message: consumer.taxFiledYears.message!,
+            onTap: () async {
+              await consumer.fetchTaxFiledYears();
+            },
+          );
+        } else {
+          return _mainBody(consumer.taxFiledYears.data);
+        }
+      }),
     );
   }
 
-  SingleChildScrollView _mainBody() {
-    return SingleChildScrollView(
+  SizedBox _mainBody(var submittedTaxYears) {
+    List<SafeAndDeclarationTaxDataCollectorWrapper> data =
+        List<SafeAndDeclarationTaxDataCollectorWrapper>.from(
+      submittedTaxYears.map(
+        (e) =>
+            SafeAndDeclarationTaxDataCollectorWrapper.fromJson(e.data(), e.id),
+      ),
+    );
+    return SizedBox(
+      height: MediaQuery.of(context).size.height,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: Column(
@@ -90,14 +100,27 @@ class _DocumentOverviewScreenState extends State<DocumentOverviewScreen> {
               style: FontStyles.fontMedium(
                   fontSize: 18, fontWeight: FontWeight.w600),
             ),
-            for (var i = 0; i < years.length; i++)
-              TaxYearComponent(
-                year: years[i].toString(),
-                onTap: () {
-                  Navigator.pushNamed(
-                      context, RouteConstants.documentOverviewDetailScreen);
-                },
-              )
+            const SizedBox(
+              height: 10,
+            ),
+            Expanded(
+              child: RefreshIndicator(
+                onRefresh: () => declarationTaxViewModel.fetchTaxFiledYears(),
+                child: ListView.builder(
+                  itemCount: data.length,
+                  itemBuilder: (context, index) {
+                    return TaxYearComponent(
+                      year: data[index].taxYear!,
+                      onTap: () {
+                        documentViewModel.selectedTax = data[index];
+                        Navigator.pushNamed(context,
+                            RouteConstants.documentOverviewDetailScreen);
+                      },
+                    );
+                  },
+                ),
+              ),
+            ),
           ],
         ),
       ),

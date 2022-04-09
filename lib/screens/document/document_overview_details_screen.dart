@@ -22,25 +22,16 @@ import 'package:steuermachen/wrappers/document/documents_wrapper.dart';
 import 'documents_components/document_upload_component.dart';
 
 class DocumentOverviewDetailScreen extends StatefulWidget {
-  const DocumentOverviewDetailScreen(
-      {Key? key,
-      this.showNextBtn = false,
-      this.onNextBtnRoute,
-      this.uploadBtnNow = false,
-      this.showRoundBody = true})
-      : super(key: key);
-
-  final bool? showNextBtn;
-  final bool? uploadBtnNow;
-  final String? onNextBtnRoute;
-  final bool? showRoundBody;
+  const DocumentOverviewDetailScreen({
+    Key? key,
+  }) : super(key: key);
   @override
-  State<DocumentOverviewDetailScreen> createState() => _DocumentOverviewDetailScreenState();
+  State<DocumentOverviewDetailScreen> createState() =>
+      _DocumentOverviewDetailScreenState();
 }
 
-class _DocumentOverviewDetailScreenState extends State<DocumentOverviewDetailScreen> {
-  late List<String> selectImageList = [];
-  late List<String> selectPDFList = [];
+class _DocumentOverviewDetailScreenState
+    extends State<DocumentOverviewDetailScreen> {
   User? user = FirebaseAuth.instance.currentUser;
   late DocumentsViewModel _provider;
   List<DocumentsWrapper> documents = [];
@@ -144,24 +135,14 @@ class _DocumentOverviewDetailScreenState extends State<DocumentOverviewDetailScr
           subtitle: Text(time.toString()),
           trailing: InkWell(
               onTap: () async {
-                if (isUrl) {
-                  PopupLoader.showLoadingDialog(context);
-                  await _provider.deleteDocuments(doc!, fileName);
-                  var x = await _provider.getDocuments();
-                  setState(() {
-                    documents = [];
-                    documents = x;
-                  });
-                  PopupLoader.hideLoadingDialog(context);
-                } else {
-                  setState(() {
-                    if (isImage) {
-                      selectImageList.removeAt(index);
-                    } else {
-                      selectPDFList.removeAt(index);
-                    }
-                  });
-                }
+                PopupLoader.showLoadingDialog(context);
+                await _provider.deleteDocuments(doc!, fileName);
+                var x = await _provider.getDocuments();
+                setState(() {
+                  documents = [];
+                  documents = x;
+                });
+                PopupLoader.hideLoadingDialog(context);
               },
               child: SvgPicture.asset(AssetConstants.icCross)),
         ),

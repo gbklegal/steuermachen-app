@@ -15,7 +15,6 @@ import 'package:steuermachen/wrappers/declaration_tax/declaration_tax_data_colle
 import 'package:steuermachen/wrappers/safe_tax/safe_tax_wrapper.dart';
 import 'package:steuermachen/wrappers/tax_steps_wrapper.dart';
 
-
 class SafeTaxProvider extends ChangeNotifier {
   final SafeAndDeclarationTaxDataCollectorWrapper?
       _safeTaxDataCollectorWrapper =
@@ -82,14 +81,7 @@ class SafeTaxProvider extends ChangeNotifier {
           .collection("user_orders")
           .doc("${user?.uid}")
           .collection("safe_and_declaration_tax")
-          .add({
-        ..._safeTaxDataCollectorWrapper!.toJson(),
-        "tax_name": "safeTax",
-        "created_at": DateTime.now(),
-        "steps": taxSteps.map((e) => e.toJson()).toList(),
-        "status": ProcessConstants.pending,
-        "approved_by": null,
-      });
+          .add(_safeTaxDataCollectorWrapper!.toJson("safeTax", taxSteps));
       return CommonResponseWrapper(
           status: true, message: StringConstants.thankYouForOrder);
     } catch (e) {

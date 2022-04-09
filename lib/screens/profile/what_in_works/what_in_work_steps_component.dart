@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -8,19 +7,16 @@ import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/strings/process_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
+import 'package:steuermachen/wrappers/declaration_tax/declaration_tax_data_collector_wrapper.dart';
 import 'package:steuermachen/wrappers/tax_steps_wrapper.dart';
 
 class WhatInWorkStepsComponent extends StatelessWidget {
-  const WhatInWorkStepsComponent({Key? key, this.submittedTaxYears})
+  const WhatInWorkStepsComponent({Key? key, required this.submittedTaxYears})
       : super(key: key);
-  final QueryDocumentSnapshot<Map<String, dynamic>>? submittedTaxYears;
+  final SafeAndDeclarationTaxDataCollectorWrapper submittedTaxYears;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    List<TaxStepsWrapper> taxSteps = [];
-    for (var item in submittedTaxYears?["steps"]) {
-      taxSteps.add(TaxStepsWrapper.fromJson(item));
-    }
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -55,9 +51,9 @@ class WhatInWorkStepsComponent extends StatelessWidget {
                     animation: true,
                     lineHeight: 20.0,
                     animationDuration: 2000,
-                    percent: calculatePercent(taxSteps),
+                    percent: calculatePercent(submittedTaxYears.steps!),
                     center: TextComponent(
-                      "${(calculatePercent(taxSteps) * 100).toStringAsFixed(0)}%",
+                      "${(calculatePercent(submittedTaxYears.steps!) * 100).toStringAsFixed(0)}%",
                       style:
                           FontStyles.fontRegular(color: ColorConstants.white),
                     ),
@@ -70,16 +66,17 @@ class WhatInWorkStepsComponent extends StatelessWidget {
                       const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                   child: Column(
                     children: [
-                      for (var i = 0; i < taxSteps.length; i++)
+                      for (var i = 0; i < submittedTaxYears.steps!.length; i++)
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
                               children: [
-                                SvgPicture.asset(taxSteps[i].status ==
-                                        ProcessConstants.approved
-                                    ? AssetConstants.icActiveCheck
-                                    : AssetConstants.icInActiveCheck),
+                                SvgPicture.asset(
+                                    submittedTaxYears.steps![i].status ==
+                                            ProcessConstants.approved
+                                        ? AssetConstants.icActiveCheck
+                                        : AssetConstants.icInActiveCheck),
                                 const SizedBox(
                                   width: 8,
                                 ),
@@ -88,18 +85,19 @@ class WhatInWorkStepsComponent extends StatelessWidget {
                                   children: [
                                     if (context.locale == const Locale('en'))
                                       TextComponent(
-                                        taxSteps[i].titleEn,
+                                        submittedTaxYears.steps![i].titleEn,
                                         style: FontStyles.fontRegular(
                                             fontSize: 16),
                                       )
                                     else
                                       TextComponent(
-                                        taxSteps[i].titleDe,
+                                        submittedTaxYears.steps![i].titleDe,
                                         style: FontStyles.fontRegular(
                                             fontSize: 16),
                                       ),
                                     TextComponent(
-                                      taxSteps[i].updatedAt?.toString() ??
+                                      submittedTaxYears.steps![i].updatedAt
+                                              ?.toString() ??
                                           "----",
                                       style:
                                           FontStyles.fontRegular(fontSize: 12),
@@ -109,7 +107,7 @@ class WhatInWorkStepsComponent extends StatelessWidget {
                               ],
                             ),
                             Visibility(
-                              visible: i != taxSteps.length - 1,
+                              visible: i != submittedTaxYears.steps!.length - 1,
                               child: Padding(
                                 padding: const EdgeInsets.only(left: 16),
                                 child: Container(

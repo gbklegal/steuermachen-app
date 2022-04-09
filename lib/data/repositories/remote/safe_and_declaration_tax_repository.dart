@@ -48,14 +48,10 @@ class SafeAndDeclarationTaxRepository {
           .collection("user_orders")
           .doc("${user?.uid}")
           .collection("safe_and_declaration_tax")
-          .add({
-        ..._declarationTaxDataCollectorWrapper.toJson(),
-        "created_at": DateTime.now(),
-        "tax_name": "declarationTax",
-        "steps": taxSteps.map((e) => e.toJson()).toList(),
-        "status": ProcessConstants.pending,
-        "approved_by": null,
-      });
+          .add(
+            _declarationTaxDataCollectorWrapper.toJson(
+                "declarationTax", taxSteps),
+          );
     } catch (e) {
       rethrow;
     }

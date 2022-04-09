@@ -1,16 +1,23 @@
+import 'package:steuermachen/constants/strings/process_constants.dart';
+import 'package:steuermachen/wrappers/tax_steps_wrapper.dart';
 import 'package:steuermachen/wrappers/user_wrapper.dart';
 
 class SafeAndDeclarationTaxDataCollectorWrapper {
-  SafeAndDeclarationTaxDataCollectorWrapper({
-    this.taxYear,
-    this.martialStatus,
-    this.grossIncome,
-    this.isPromoApplied = false,
-    this.userInfo,
-    this.userAddress,
-    this.signaturePath,
-    this.termsAndConditionChecked,
-  });
+  SafeAndDeclarationTaxDataCollectorWrapper(
+      {this.taxYear,
+      this.martialStatus,
+      this.grossIncome,
+      this.isPromoApplied = false,
+      this.userInfo,
+      this.userAddress,
+      this.signaturePath,
+      this.termsAndConditionChecked,
+      this.steps,
+      this.approveAt,
+      this.approvedBy,
+      this.createdAt,
+      this.status,
+      this.taxName});
   String? taxYear;
   String? martialStatus;
   String? grossIncome;
@@ -19,16 +26,37 @@ class SafeAndDeclarationTaxDataCollectorWrapper {
   bool? termsAndConditionChecked;
   UserWrapper? userInfo;
   UserWrapper? userAddress;
-  SafeAndDeclarationTaxDataCollectorWrapper.fromJson(Map<String, dynamic> json) {
+  List<TaxStepsWrapper>? steps;
+  List<String>? invoices;
+  List<String>? documentsPath;
+  DateTime? createdAt;
+  DateTime? approveAt;
+  String? taxName;
+  String? status;
+  String? approvedBy;
+  String? keyId;
+
+  SafeAndDeclarationTaxDataCollectorWrapper.fromJson(
+      Map<String, dynamic> json, String documentId) {
     taxYear = json['tax_year'];
     martialStatus = json['martial_status'];
     grossIncome = json['grossIncome'];
     isPromoApplied = json['is_promo_applied'];
     signaturePath = json['signature_path'];
     termsAndConditionChecked = json['terms_and_condition_checked'];
+    createdAt = json['created_at'].toDate();
+    approveAt = json['approve_at']?.toDate();
+    approvedBy = json['approved_by'];
+    taxName = json['tax_name'];
+    steps = List<TaxStepsWrapper>.from(
+        json['steps'].map((x) => TaxStepsWrapper.fromJson(x)));
+    status = json['status'];
+    invoices = json['invoices'];
+    documentsPath = json['documents_path'];
+    keyId = documentId;
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson(String taxName, List<TaxStepsWrapper> _steps) {
     final _data = <String, dynamic>{};
     _data['tax_year'] = taxYear;
     _data['martial_status'] = martialStatus;
@@ -38,6 +66,14 @@ class SafeAndDeclarationTaxDataCollectorWrapper {
     _data['user_address'] = userAddress?.toJson();
     _data['user_info'] = userInfo?.toJson();
     _data['terms_and_condition_checked'] = termsAndConditionChecked;
+    _data['invoices'] = invoices;
+    _data['documents_path'] = documentsPath;
+    _data['created_at'] = DateTime.now();
+    _data['approve_at'] = null;
+    _data['tax_name'] = taxName;
+    _data['steps'] = _steps.map((e) => e.toJson()).toList();
+    _data['status'] = ProcessConstants.pending;
+    _data['approved_by'] = null;
 
     return _data;
   }

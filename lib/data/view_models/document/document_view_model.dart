@@ -10,16 +10,17 @@ import 'package:steuermachen/data/repositories/remote/documents_repository.dart'
 import 'package:steuermachen/main.dart';
 import 'package:steuermachen/services/networks/api_response_states.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
+import 'package:steuermachen/wrappers/declaration_tax/declaration_tax_data_collector_wrapper.dart';
 import 'package:steuermachen/wrappers/document/document_option_wrapper.dart';
 import 'package:steuermachen/wrappers/document/documents_wrapper.dart';
 
 class DocumentsViewModel extends ChangeNotifier {
+  late SafeAndDeclarationTaxDataCollectorWrapper selectedTax;
   late ApiResponse _documentOptions = ApiResponse.loading();
   ApiResponse get documentOptions => _documentOptions;
   set setDocumentOptions(ApiResponse documentsOptions) {
     _documentOptions = documentsOptions;
   }
-
 
   List<String> _selectedFiles = [];
   late String _signaturePath = "";
@@ -128,8 +129,7 @@ class DocumentsViewModel extends ChangeNotifier {
 
   Future<void> fetchDocumentOptionsData() async {
     try {
-      if (documentOptions.status == Status.loading ||
-          documentOptions.data == null) {
+      if (documentOptions.status != Status.completed) {
         setDocumentOptions = ApiResponse.loading();
         notifyListeners();
         var res = await serviceLocatorInstance<DocumentsRepository>()

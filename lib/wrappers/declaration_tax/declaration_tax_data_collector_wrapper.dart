@@ -50,7 +50,9 @@ class SafeAndDeclarationTaxDataCollectorWrapper {
     approvedBy = json['approved_by'];
     taxName = json['tax_name'];
     userInfo = UserWrapper.fromJson(json['user_info']);
-    userAddress = UserWrapper.fromJson(json['user_address']);
+    userAddress = json['user_address'] != null
+        ? UserWrapper.fromJson(json['user_address'])
+        : null;
     steps = List<TaxStepsWrapper>.from(
         json['steps'].map((x) => TaxStepsWrapper.fromJson(x)));
     status = json['status'];

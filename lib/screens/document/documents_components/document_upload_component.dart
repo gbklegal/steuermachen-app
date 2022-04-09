@@ -8,6 +8,7 @@ import 'package:steuermachen/components/toast_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
+import 'package:steuermachen/data/view_models/tax/declaration_tax/declaration_tax_view_model.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/data/view_models/document/document_view_model.dart';
 import 'package:steuermachen/utils/image_picker/media_source_selection_utils.dart';
@@ -25,9 +26,13 @@ class DocumentUploadComponent extends StatefulWidget {
 
 class _DocumentUploadComponentState extends State<DocumentUploadComponent> {
   late DocumentsViewModel _provider;
+  String documentTitle = "";
+  late DeclarationTaxViewModel declarationTaxViewModel;
   @override
   void initState() {
     _provider = Provider.of<DocumentsViewModel>(context, listen: false);
+    declarationTaxViewModel =
+        Provider.of<DeclarationTaxViewModel>(context, listen: false);
     super.initState();
   }
 
@@ -70,7 +75,11 @@ class _DocumentUploadComponentState extends State<DocumentUploadComponent> {
   uploadDocument(String file) async {
     _provider.setFilesForUpload([file]);
     PopupLoader.showLoadingDialog(context);
-    CommonResponseWrapper res = await _provider.uploadFiles();
+    CommonResponseWrapper res =
+        await _provider.uploadFiles(documentTitle, _provider.selectedTax);
+    if (res.status!) {
+      await declarationTaxViewModel.fetchTaxFiledYears();
+    }
     PopupLoader.hideLoadingDialog(context);
     ToastComponent.showToast(res.message!);
   }
@@ -106,6 +115,9 @@ class _DocumentUploadComponentState extends State<DocumentUploadComponent> {
   }
 
   Padding _dropdowns(List<DocumentOptionsData> data, int i) {
+    if (documentTitle == "") {
+      documentTitle = data[i].options[0];
+    }
     return Padding(
       padding: const EdgeInsets.only(top: 10),
       child: DropdownButtonFormField<String>(
@@ -119,7 +131,7 @@ class _DocumentUploadComponentState extends State<DocumentUploadComponent> {
           color: ColorConstants.black,
           height: 10,
         ),
-        value: data[i].options[0],
+        value: documentTitle,
         items: data[i]
             .options
             .map(
@@ -132,7 +144,9 @@ class _DocumentUploadComponentState extends State<DocumentUploadComponent> {
               ),
             )
             .toList(),
-        onChanged: (val) {},
+        onChanged: (val) {
+          documentTitle = val!;
+        },
       ),
     );
   }

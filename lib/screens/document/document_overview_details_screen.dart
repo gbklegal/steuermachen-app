@@ -15,10 +15,7 @@ import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:path/path.dart' as path;
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/data/view_models/document/document_view_model.dart';
-import 'package:steuermachen/utils/utils.dart';
 import 'package:steuermachen/wrappers/document/document_option_wrapper.dart';
-import 'package:steuermachen/wrappers/document/documents_wrapper.dart';
-
 import 'documents_components/document_upload_component.dart';
 
 class DocumentOverviewDetailScreen extends StatefulWidget {
@@ -33,13 +30,12 @@ class DocumentOverviewDetailScreen extends StatefulWidget {
 class _DocumentOverviewDetailScreenState
     extends State<DocumentOverviewDetailScreen> {
   User? user = FirebaseAuth.instance.currentUser;
-  late DocumentsViewModel _provider;
-  List<DocumentsWrapper> documents = [];
+  late DocumentsViewModel documentViewModel;
+
   @override
   void initState() {
     super.initState();
-    _provider = Provider.of<DocumentsViewModel>(context, listen: false);
-    _provider.getDocuments().then((value) => documents = value);
+    documentViewModel = Provider.of<DocumentsViewModel>(context, listen: false);
   }
 
   @override
@@ -59,7 +55,7 @@ class _DocumentOverviewDetailScreenState
 
   Padding _mainBody(BuildContext context) {
     DocumentOptionsWrappers documentOptions =
-        _provider.documentOptions.data as DocumentOptionsWrappers;
+        documentViewModel.documentOptions.data as DocumentOptionsWrappers;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
       child: Column(
@@ -76,7 +72,8 @@ class _DocumentOverviewDetailScreenState
             height: 20,
           ),
           TextComponent(
-            LocaleKeys.documentOverviewForTaxYear.tr() + " 2018",
+            LocaleKeys.documentOverviewForTaxYear.tr() +
+                "${documentViewModel.selectedTax.taxYear}",
             style: FontStyles.fontMedium(
                 fontSize: 16, fontWeight: FontWeight.w600, letterSpacing: 3),
           ),
@@ -90,14 +87,16 @@ class _DocumentOverviewDetailScreenState
                   Consumer<DocumentsViewModel>(
                       builder: (context, consumer, child) {
                     return Column(
-                      children: [
-                        for (var i = 0; i < documents.length; i++)
-                          for (var x = 0; x < documents[i].url.length; x++)
-                            _selectedDocumentListTile(documents[i].url[x],
-                                Utils.getTimeAgo(DateTime.now()), i,
-                                isImage: false, isUrl: true, doc: documents[i])
-                      ],
-                    );
+                        children: consumer.selectedTax.documentsPath!.isNotEmpty
+                            ? consumer.selectedTax.documentsPath!
+                                .map((e) => _selectedDocumentListTile(
+                                      e.url,
+                                      e.documentTitle,
+                                      isImage: false,
+                                      isUrl: true,
+                                    ))
+                                .toList()
+                            : [const TextComponent(LocaleKeys.noDocuments)]);
                   }),
                 ],
               ),
@@ -110,9 +109,7 @@ class _DocumentOverviewDetailScreenState
 
   Padding _selectedDocumentListTile(
     String fileName,
-    String time,
-    int index, {
-    DocumentsWrapper? doc,
+    String documentTitle, {
     bool isImage = true,
     bool isUrl = false,
   }) {
@@ -132,16 +129,13 @@ class _DocumentOverviewDetailScreenState
             style:
                 Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 18),
           ),
-          subtitle: Text(time.toString()),
+          subtitle: Text(documentTitle.toString()),
           trailing: InkWell(
               onTap: () async {
                 PopupLoader.showLoadingDialog(context);
-                await _provider.deleteDocuments(doc!, fileName);
-                var x = await _provider.getDocuments();
-                setState(() {
-                  documents = [];
-                  documents = x;
-                });
+                await documentViewModel.deleteDocuments(
+                    documentViewModel.selectedTax, fileName);
+
                 PopupLoader.hideLoadingDialog(context);
               },
               child: SvgPicture.asset(AssetConstants.icCross)),
@@ -169,8 +163,11 @@ class _DocumentOverviewDetailScreenState
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => PhotoView(
-              imageProvider: _getImageProvider(imagePath, isUrl: isUrl),
+            builder: (context) => Scaffold(
+              appBar: AppBar(),
+              body: PhotoView(
+                imageProvider: _getImageProvider(imagePath, isUrl: isUrl),
+              ),
             ),
           ),
         );

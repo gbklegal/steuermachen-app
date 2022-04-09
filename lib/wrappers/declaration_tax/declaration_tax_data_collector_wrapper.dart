@@ -1,4 +1,5 @@
 import 'package:steuermachen/constants/strings/process_constants.dart';
+import 'package:steuermachen/wrappers/document/documents_wrapper.dart';
 import 'package:steuermachen/wrappers/tax_steps_wrapper.dart';
 import 'package:steuermachen/wrappers/user_wrapper.dart';
 
@@ -28,7 +29,7 @@ class SafeAndDeclarationTaxDataCollectorWrapper {
   UserWrapper? userAddress;
   List<TaxStepsWrapper>? steps;
   List<String>? invoices;
-  List<String>? documentsPath;
+  List<DocumentsWrapper>? documentsPath;
   DateTime? createdAt;
   DateTime? approveAt;
   String? taxName;
@@ -48,11 +49,16 @@ class SafeAndDeclarationTaxDataCollectorWrapper {
     approveAt = json['approve_at']?.toDate();
     approvedBy = json['approved_by'];
     taxName = json['tax_name'];
+    userInfo = UserWrapper.fromJson(json['user_info']);
+    userAddress = UserWrapper.fromJson(json['user_address']);
     steps = List<TaxStepsWrapper>.from(
         json['steps'].map((x) => TaxStepsWrapper.fromJson(x)));
     status = json['status'];
     invoices = json['invoices'];
-    documentsPath = json['documents_path'];
+    documentsPath = json['documents_path'] != null
+        ? List<DocumentsWrapper>.from(
+            json['documents_path']?.map((x) => DocumentsWrapper.fromJson(x)))
+        : [];
     keyId = documentId;
   }
 
@@ -67,7 +73,7 @@ class SafeAndDeclarationTaxDataCollectorWrapper {
     _data['user_info'] = userInfo?.toJson();
     _data['terms_and_condition_checked'] = termsAndConditionChecked;
     _data['invoices'] = invoices;
-    _data['documents_path'] = documentsPath;
+    _data['documents_path'] = documentsPath?.map((e) => e.toJson()).toList();
     _data['created_at'] = DateTime.now();
     _data['approve_at'] = null;
     _data['tax_name'] = taxName;

@@ -23,7 +23,6 @@ import 'package:steuermachen/screens/auth/verify_account_screen.dart';
 import 'package:steuermachen/screens/file_tax/tax_file_year_screen.dart';
 import 'package:steuermachen/screens/get_started/get_started_screen.dart';
 import 'package:steuermachen/screens/how_it_works/how_it_works_screen.dart';
-import 'package:steuermachen/screens/legal_action/legal_action2_screen.dart';
 import 'package:steuermachen/screens/onboarding/onboarding_screen.dart';
 import 'package:steuermachen/screens/payment/billing/add_new_billing_address_screen.dart';
 import 'package:steuermachen/screens/payment/confirm_bill_screen.dart';
@@ -34,7 +33,7 @@ import 'package:steuermachen/screens/profile/complete_profile_screen.dart';
 import 'package:steuermachen/screens/profile/order_overview_screen.dart';
 import 'package:steuermachen/screens/profile/profile_%20menu_screen.dart';
 import 'package:steuermachen/screens/profile/profile_screen.dart';
-import 'package:steuermachen/screens/profile/what_in_works/what_in_work_steps_component.dart';
+import 'package:steuermachen/screens/profile/what_in_works/what_in_work_year_selection_screen.dart';
 import 'package:steuermachen/screens/splash_screen.dart';
 import 'package:steuermachen/screens/sustainability/sustainability_screen.dart';
 import 'package:steuermachen/screens/tax/current_year_tax/current_year_tax_screen.dart';
@@ -47,9 +46,6 @@ import 'package:steuermachen/screens/tax/quick_tax/quick_tax_screen.dart';
 import 'package:steuermachen/screens/tax/safe_tax/safe_tax_screen.dart';
 import 'package:steuermachen/screens/tax/select_safe_or_quick_tax_screen.dart';
 import 'package:steuermachen/screens/tax_tips/tax_tips_screen.dart';
-import 'package:steuermachen/wrappers/declaration_tax/declaration_tax_data_collector_wrapper.dart';
-
-import '../screens/profile/what_in_works/what_in_work_year_selection_screen.dart';
 
 onGenerateRoutes(RouteSettings settings) {
   switch (settings.name) {
@@ -213,10 +209,6 @@ onGenerateRoutes(RouteSettings settings) {
     //   return MaterialPageRoute(
     //     builder: (_) => const TaxTipsDetailScreen(),
     //   );
-    case RouteConstants.legalAction2Screen:
-      return MaterialPageRoute(
-        builder: (_) => const LegalAction2Screen(),
-      );
     // case RouteConstants.taxAdviceScreen:
     //   return MaterialPageRoute(
     //     builder: (_) => const TaxAdviceScreen(),

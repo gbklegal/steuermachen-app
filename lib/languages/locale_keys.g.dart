@@ -99,6 +99,7 @@ abstract class  LocaleKeys {
   static const camera = 'camera';
   static const gallery = 'gallery';
   static const form = 'form';
+  static const noDocuments = 'noDocuments';
   static const orUseOur = 'orUseOur';
   static const callUs = 'callUs';
   static const contactUs = 'contactUs';

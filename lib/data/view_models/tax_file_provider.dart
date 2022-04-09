@@ -40,11 +40,11 @@ class TaxFileProvider extends ChangeNotifier {
       User? user = FirebaseAuth.instance.currentUser;
       DocumentsViewModel documentsProvider =
           Provider.of<DocumentsViewModel>(context, listen: false);
-      CommonResponseWrapper _fileRes = await documentsProvider.uploadFiles();
-      if (!_fileRes.status!) {
-        return CommonResponseWrapper(
-            status: true, message: ErrorMessagesConstants.somethingWentWrong);
-      }
+      // CommonResponseWrapper _fileRes = await documentsProvider.uploadFiles();
+      // if (!_fileRes.status!) {
+      //   return CommonResponseWrapper(
+      //       status: true, message: ErrorMessagesConstants.somethingWentWrong);
+      // }
       await firestore
           .collection("forms_data")
           .doc("tax_file")

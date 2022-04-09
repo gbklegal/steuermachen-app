@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path/path.dart';
 import 'package:flutter/material.dart';
+import 'package:steuermachen/components/toast_component.dart';
 import 'package:steuermachen/constants/strings/error_messages_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/data/repositories/remote/documents_repository.dart';
@@ -23,45 +24,29 @@ class DocumentsViewModel extends ChangeNotifier {
   }
 
   List<String> _selectedFiles = [];
-  late String _signaturePath = "";
   setFilesForUpload(List<String> files) {
     _selectedFiles = files;
   }
 
-  setSignaturePath(String signature) {
-    _signaturePath = signature;
-  }
-
-  Future<CommonResponseWrapper> uploadFiles() async {
+  Future<CommonResponseWrapper> uploadFiles(String documentTitle,
+      SafeAndDeclarationTaxDataCollectorWrapper _selectedTax) async {
     try {
-      List<String> _url = [];
+      List<DocumentsWrapper> _url = [];
       if (_selectedFiles.isNotEmpty) {
         for (var i = 0; i < _selectedFiles.length; i++) {
           String url = await _uploadToFirebaseStorage(_selectedFiles[i]);
-          _url.add(url);
+          _url.add(DocumentsWrapper(documentTitle: documentTitle, url: url));
         }
       }
       User? user = FirebaseAuth.instance.currentUser;
       if (_url.isNotEmpty) {
-        await firestore
-            .collection("user_documents")
-            .doc("${user?.uid}")
-            .collection("path")
-            .add({"url": _url});
+        _selectedTax.documentsPath?.addAll(_url);
+        await serviceLocatorInstance<DocumentsRepository>()
+            .addUserTaxDocuments(_selectedTax);
       }
-
-      if (_signaturePath != "") {
-        String digiSignatureUrl =
-            await _uploadToFirebaseStorage(_signaturePath);
-        if (digiSignatureUrl.isNotEmpty) {
-          await firestore
-              .collection("legal_advice")
-              .doc("${user?.uid}")
-              .collection("path")
-              .add({"signature_path": digiSignatureUrl});
-        }
-      }
+      selectedTax = _selectedTax;
       _clearFields();
+      notifyListeners();
       return CommonResponseWrapper(status: true, message: "Documents uploaded");
     } catch (e) {
       return CommonResponseWrapper(
@@ -78,40 +63,17 @@ class DocumentsViewModel extends ChangeNotifier {
     return url;
   }
 
-  Future<List<DocumentsWrapper>> getDocuments() async {
-    User? user = FirebaseAuth.instance.currentUser;
-    QuerySnapshot data = await firestore
-        .collection("user_documents")
-        .doc(user!.uid)
-        .collection("path")
-        .get();
-    List<DocumentsWrapper> documents = [];
-    for (var ele in data.docs) {
-      Map<String, dynamic> mapDocsUrl = ele.data() as Map<String, dynamic>;
-      List<String> urls = [];
-      for (var item in mapDocsUrl["url"]) {
-        urls.add(item);
-      }
-      DocumentsWrapper x = DocumentsWrapper(
-          path: "user_documents/${user.uid}/path/${ele.id}",
-          key: ele.id,
-          url: urls);
-      documents.add(x);
-    }
-    notifyListeners();
-    return documents;
-  }
-
-  deleteDocuments(DocumentsWrapper _document, String url) async {
+  deleteDocuments(SafeAndDeclarationTaxDataCollectorWrapper _selectedTax,
+      String url) async {
     try {
-      _document.url.remove(url);
-      User? user = FirebaseAuth.instance.currentUser;
+      _selectedTax.documentsPath?.removeWhere((element) => element.url == url);
       await FirebaseStorage.instance.refFromURL(url).delete();
-      await firestore
-          .doc("user_documents/${user?.uid}/path/${_document.key}")
-          .set({"url": _document.url});
+      await serviceLocatorInstance<DocumentsRepository>()
+          .addUserTaxDocuments(_selectedTax);
+      selectedTax = _selectedTax;
+      notifyListeners();
     } catch (e) {
-      print(e);
+      ToastComponent.showToast(ErrorMessagesConstants.somethingWentWrong);
     }
   }
 
@@ -146,6 +108,5 @@ class DocumentsViewModel extends ChangeNotifier {
 
   _clearFields() {
     _selectedFiles = [];
-    _signaturePath = "";
   }
 }

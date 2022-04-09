@@ -6,9 +6,11 @@ import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/constants/theme/app_theme.dart';
+import 'package:steuermachen/data/repositories/remote/documents_repository.dart';
+import 'package:steuermachen/data/repositories/remote/safe_and_declaration_tax_repository.dart';
 import 'package:steuermachen/languages/codegen_loader.g.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
-import 'package:steuermachen/providers/initialize_provider.dart';
+import 'package:steuermachen/data/view_models/initialize_provider.dart';
 import 'package:steuermachen/routes/app_routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:steuermachen/screens/splash_screen.dart';
@@ -55,9 +57,8 @@ void setupDepedencies() {
   serviceLocatorInstance
       .registerSingleton<DioClientNetwork>(DioClientNetwork());
   serviceLocatorInstance.registerLazySingleton(() => DioApiServices());
-  // serviceLocatorInstance.registerSingleton<LocalRepository>(LocalRepository());
-  // serviceLocatorInstance.registerLazySingleton(() => AuthRepository());
-  // serviceLocatorInstance.registerLazySingleton(() => StudioRepository());
+  serviceLocatorInstance.registerLazySingleton(() => DocumentsRepository());
+  serviceLocatorInstance.registerLazySingleton(() => SafeAndDeclarationTaxRepository());
   // serviceLocatorInstance.registerLazySingleton(() => ProfileRepository());
   serviceLocatorInstance.registerLazySingleton(() => NavigationService());
   serviceLocatorInstance

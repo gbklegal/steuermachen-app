@@ -6,7 +6,7 @@ import 'package:steuermachen/components/empty_screen_loader_component.dart';
 import 'package:steuermachen/components/error_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
-import 'package:steuermachen/providers/tax/safe_tax/safe_tax_provider.dart';
+import 'package:steuermachen/data/view_models/tax/safe_tax/safe_tax_provider.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 import 'package:steuermachen/wrappers/safe_tax/safe_tax_wrapper.dart';
 import 'safe_tax_components/safe_tax_questions_component.dart';

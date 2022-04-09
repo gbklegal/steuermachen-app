@@ -5,14 +5,14 @@ import 'package:steuermachen/components/custom_icon_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
+import 'package:steuermachen/data/view_models/profile/profile_provider.dart';
+import 'package:steuermachen/data/view_models/tax_tips_provider.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
-import 'package:steuermachen/providers/language_provider.dart';
+import 'package:steuermachen/data/view_models/language_provider.dart';
 import 'package:steuermachen/screens/faq/faq_screen.dart';
 import 'package:steuermachen/screens/home/home_screen.dart';
 import 'package:steuermachen/screens/tax_tips/tax_tips_screen.dart';
 
-import '../../providers/profile/profile_provider.dart';
-import '../../providers/tax_tips_provider.dart';
 
 class BottomNavBarScreen extends StatefulWidget {
   const BottomNavBarScreen({Key? key}) : super(key: key);

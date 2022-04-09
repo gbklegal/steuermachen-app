@@ -5,7 +5,7 @@ import 'package:steuermachen/components/button_component.dart';
 import 'package:steuermachen/constants/app_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
-import 'package:steuermachen/providers/profile/profile_provider.dart';
+import 'package:steuermachen/data/view_models/profile/profile_provider.dart';
 
 class ConfirmBillingComponent extends StatelessWidget {
   const ConfirmBillingComponent({

@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "257707946117-4ti355ecqrvg2ac6jied9q23lsq635v4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "de.steuermachen.app",
+            "certificate_hash": "9fb83bc316d7be8d0c2282b029005a75188c620b"
+          }
+        },
+        {
           "client_id": "257707946117-spceqocm2p9uak0pput1v707va99t0n1.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

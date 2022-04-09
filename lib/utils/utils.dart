@@ -8,7 +8,7 @@ import 'package:steuermachen/components/dialogs/completed_dialog_component.dart'
 import 'package:steuermachen/components/popup_loader_component.dart';
 import 'package:steuermachen/components/toast_component.dart';
 import 'package:steuermachen/constants/strings/error_messages_constants.dart';
-import 'package:steuermachen/providers/profile/profile_provider.dart';
+import 'package:steuermachen/data/view_models/profile/profile_provider.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 import 'package:timeago/timeago.dart' as timeago;
 

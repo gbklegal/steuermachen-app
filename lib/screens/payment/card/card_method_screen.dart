@@ -8,11 +8,10 @@ import 'package:steuermachen/constants/app_constants.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
+import 'package:steuermachen/data/view_models/payment_gateway/payment_gateway_provider.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/services/networks/api_response_states.dart';
-import '../../../providers/payment_gateway/payment_gateway_provider.dart';
-import '../../../wrappers/payment_gateway/sumpup_access_token_wrapper.dart';
-import '../../../wrappers/payment_gateway/sumup_checkout_wrapper.dart';
+import 'package:steuermachen/wrappers/payment_gateway/sumpup_access_token_wrapper.dart';
 
 class CardPaymentMethodScreen extends StatelessWidget {
   const CardPaymentMethodScreen({Key? key}) : super(key: key);

@@ -6,7 +6,7 @@ import 'package:steuermachen/components/empty_screen_loader_component.dart';
 import 'package:steuermachen/components/error_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
-import 'package:steuermachen/providers/tax/declaration_tax/declaration_tax_provider.dart';
+import 'package:steuermachen/data/view_models/tax/declaration_tax/declaration_tax_view_model.dart';
 import 'package:steuermachen/screens/tax/declaration_tax/declaration_tax_components/declaration_question_view_component.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 import 'package:steuermachen/wrappers/declaration_tax/declaration_tax_view_wrapper.dart';
@@ -19,15 +19,16 @@ class DeclarationTaxScreen extends StatefulWidget {
 }
 
 class _DeclarationTaxScreenState extends State<DeclarationTaxScreen> {
-  late DeclarationTaxProvider provider;
+  late DeclarationTaxViewModel provider;
   CommonResponseWrapper? response;
   CommonResponseWrapper? checkSubmittedTaxYears;
   @override
   void initState() {
-    provider = Provider.of<DeclarationTaxProvider>(context, listen: false);
+    provider = Provider.of<DeclarationTaxViewModel>(context, listen: false);
     provider.checkTaxIsAlreadySubmit().then((va) {
       checkSubmittedTaxYears = va;
       _getDeclarationTaxViewData();
+      provider.sendMail();
     });
 
     super.initState();

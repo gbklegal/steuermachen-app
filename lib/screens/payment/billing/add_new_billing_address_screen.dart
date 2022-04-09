@@ -11,7 +11,7 @@ import 'package:steuermachen/constants/app_constants.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
-import 'package:steuermachen/providers/profile/profile_provider.dart';
+import 'package:steuermachen/data/view_models/profile/profile_provider.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 
 class AddNewBillingAddressScreen extends StatelessWidget {

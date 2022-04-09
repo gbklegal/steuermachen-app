@@ -9,8 +9,8 @@ import 'package:steuermachen/screens/calculator/calculator_screen.dart';
 import 'package:steuermachen/screens/contact_us/chat/chat_screen.dart';
 import 'package:steuermachen/screens/contact_us/contact_us_form_screen.dart';
 import 'package:steuermachen/screens/contact_us/contact_us_options_screen.dart';
+import 'package:steuermachen/screens/document/document_overview_details_screen.dart';
 import 'package:steuermachen/screens/document/document_overview_screen.dart';
-import 'package:steuermachen/screens/document/select_document_for_upload_screen.dart';
 import 'package:steuermachen/screens/document/uploaded_document_screen.dart';
 import 'package:steuermachen/screens/faq/faq_screen.dart';
 import 'package:steuermachen/screens/file_tax/file_tax_done_order_screen.dart';
@@ -83,11 +83,11 @@ onGenerateRoutes(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (_) => const VerifyAccountScreen(),
       );
-    case RouteConstants.selectDocumentForScreen:
+    case RouteConstants.documentOverviewScreen:
       if (settings.arguments != null) {
         Map obj = settings.arguments as Map;
         return MaterialPageRoute(
-          builder: (_) => SelectDocumentForScreen(
+          builder: (_) => DocumentOverviewScreen(
             showNextBtn: obj["showNextBtn"] ?? false,
             onNextBtnRoute: obj["nextRoute"] ?? "",
             uploadBtnNow: obj["uploadBtn"] ?? false,
@@ -96,11 +96,11 @@ onGenerateRoutes(RouteSettings settings) {
         );
       }
       return MaterialPageRoute(
-        builder: (_) => const SelectDocumentForScreen(),
-      );
-    case RouteConstants.documentOverviewScreen:
-      return MaterialPageRoute(
         builder: (_) => const DocumentOverviewScreen(),
+      );
+    case RouteConstants.documentOverviewDetailScreen:
+      return MaterialPageRoute(
+        builder: (_) => const DocumentOverviewDetailScreen(),
       );
     case RouteConstants.selectYearScreen:
       return MaterialPageRoute(

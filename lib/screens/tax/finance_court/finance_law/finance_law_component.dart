@@ -6,7 +6,7 @@ import 'package:steuermachen/components/textformfield_icon_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
-import 'package:steuermachen/providers/tax/finance_court/finance_court_provider.dart';
+import 'package:steuermachen/data/view_models/tax/finance_court/finance_court_provider.dart';
 import 'package:steuermachen/wrappers/finance/finance_law_view_wrapper.dart';
 
 class FinanceLawComponent extends StatelessWidget {

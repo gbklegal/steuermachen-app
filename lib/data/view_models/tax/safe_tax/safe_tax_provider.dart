@@ -5,16 +5,16 @@ import 'package:provider/provider.dart';
 import 'package:steuermachen/constants/strings/error_messages_constants.dart';
 import 'package:steuermachen/constants/strings/process_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
+import 'package:steuermachen/data/view_models/profile/profile_provider.dart';
+import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/main.dart';
-import 'package:steuermachen/providers/signature/signature_provider.dart';
+import 'package:steuermachen/data/view_models/signature/signature_provider.dart';
 import 'package:steuermachen/utils/utils.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
+import 'package:steuermachen/wrappers/declaration_tax/declaration_tax_data_collector_wrapper.dart';
 import 'package:steuermachen/wrappers/safe_tax/safe_tax_wrapper.dart';
 import 'package:steuermachen/wrappers/tax_steps_wrapper.dart';
 
-import '../../../languages/locale_keys.g.dart';
-import '../../../wrappers/declaration_tax/declaration_tax_data_collector_wrapper.dart';
-import '../../profile/profile_provider.dart';
 
 class SafeTaxProvider extends ChangeNotifier {
   final SafeAndDeclarationTaxDataCollectorWrapper?

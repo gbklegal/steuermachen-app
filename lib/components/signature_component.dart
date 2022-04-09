@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:signature/signature.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
-import 'package:steuermachen/providers/signature/signature_provider.dart';
+import 'package:steuermachen/data/view_models/signature/signature_provider.dart';
 
 class SignatureComponent extends StatefulWidget {
   const SignatureComponent({Key? key}) : super(key: key);

@@ -11,7 +11,7 @@ import 'package:steuermachen/components/toast_component.dart';
 import 'package:steuermachen/components/user_form_component.dart';
 import 'package:steuermachen/constants/strings/options_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
-import 'package:steuermachen/providers/tax/easy_tax/easy_tax_provider.dart';
+import 'package:steuermachen/data/view_models/tax/easy_tax/easy_tax_provider.dart';
 import 'package:steuermachen/screens/tax/easy_tax/easy_tax_component/initial_easy_tax_component.dart';
 import 'package:steuermachen/utils/utils.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -10,7 +12,7 @@ import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
-import 'package:steuermachen/providers/auth/auth_provider.dart';
+import 'package:steuermachen/data/view_models/auth/auth_provider.dart';
 import 'package:steuermachen/screens/auth/auth_components/button_auth_component.dart';
 import 'package:steuermachen/screens/auth/auth_components/choice_auth_component.dart';
 import 'package:steuermachen/components/imprint_privacy_condition_component.dart';
@@ -148,7 +150,8 @@ class _SignInScreenState extends State<SignInScreen> with InputValidationUtil {
 
   Widget _signInWithApple() {
     return Consumer<AuthProvider>(builder: (context, consumer, child) {
-      if (consumer.signInWithAppleIsAvailable) {
+      // if (consumer.signInWithAppleIsAvailable) {
+      if (Platform.isIOS) {
         return InkWell(
           onTap: _appleSignIn,
           child: SignInOptionsAuthComponent(

@@ -11,7 +11,7 @@ import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
-import 'package:steuermachen/providers/tax_file_provider.dart';
+import 'package:steuermachen/data/view_models/tax_file_provider.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 
 class FileTaxFinalSubmissionScreen extends StatefulWidget {

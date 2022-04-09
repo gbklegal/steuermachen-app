@@ -38,6 +38,7 @@ class StringConstants {
   static const String married = "Married";
   static const String divorced = "Divorced";
   static const String widowed = "Widowed";
+  static const String success = "Added successfully";
   // static const String step = "Step";
   // static const String areSingle = "Are you Single or Married?";
   // static const String selectYear = "Select year";

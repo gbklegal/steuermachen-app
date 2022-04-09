@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:steuermachen/providers/language_provider.dart';
+import 'package:steuermachen/data/view_models/language_provider.dart';
 
 class TextComponent extends StatelessWidget {
   const TextComponent(this.text,

@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -6,11 +7,12 @@ import 'package:steuermachen/constants/strings/error_messages_constants.dart';
 import 'package:steuermachen/constants/strings/http_constants.dart';
 import 'package:steuermachen/constants/strings/process_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
+import 'package:steuermachen/data/repositories/remote/safe_and_declaration_tax_repository.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/main.dart';
-import 'package:steuermachen/providers/profile/profile_provider.dart';
-import 'package:steuermachen/providers/signature/signature_provider.dart';
-import 'package:steuermachen/providers/tax_calculator_provider.dart';
+import 'package:steuermachen/data/view_models/profile/profile_provider.dart';
+import 'package:steuermachen/data/view_models/signature/signature_provider.dart';
+import 'package:steuermachen/data/view_models/tax_calculator_provider.dart';
 import 'package:steuermachen/services/networks/dio_api_services.dart';
 import 'package:steuermachen/services/networks/dio_client_network.dart';
 import 'package:steuermachen/utils/utils.dart';
@@ -19,7 +21,7 @@ import 'package:steuermachen/wrappers/declaration_tax/declaration_tax_data_colle
 import 'package:steuermachen/wrappers/declaration_tax/declaration_tax_view_wrapper.dart';
 import 'package:steuermachen/wrappers/tax_steps_wrapper.dart';
 
-class DeclarationTaxProvider extends ChangeNotifier {
+class DeclarationTaxViewModel extends ChangeNotifier {
   final SafeAndDeclarationTaxDataCollectorWrapper?
       _declarationTaxDataCollectorWrapper =
       SafeAndDeclarationTaxDataCollectorWrapper();
@@ -101,21 +103,24 @@ class DeclarationTaxProvider extends ChangeNotifier {
   }
 
   sendMail() async {
+    serviceLocatorInstance<DioClientNetwork>().dio.options.baseUrl =
+        HTTPConstants.baseUrl;
     serviceLocatorInstance<DioClientNetwork>()
             .dio
             .options
             .headers["Authorization"] =
         "Bearer " + HTTPConstants.defaultAccessToken;
-    serviceLocatorInstance<DioClientNetwork>().dio.options.baseUrl =
-        HTTPConstants.sumpBaseUrl;
     var response = await serviceLocatorInstance<DioApiServices>()
-        .postRequest(HTTPConstants.sumupCheckOuts, data: {
-      // 'checkout_reference': getCheckoutReference(10),
-      // 'amount': amount,
-      // 'currency': "EUR",
-      // "pay_to_email": "dialog@steuermachen.de",
-      // "description": "Sample one-time payment"
-    });
+        .postRequest(HTTPConstants.sendMail,
+            // options: Options(headers: {
+            //   "Authorization": "Bearer ${HTTPConstants.defaultAccessToken}"
+            // }),
+            data: {
+          "to": "osama.asif20@gmail.com",
+          "subject": "You tax has been submitted",
+          "message": "Test meesage"
+        });
+    print(response);
   }
 
   Future<void> _setData(BuildContext context) async {
@@ -137,12 +142,8 @@ class DeclarationTaxProvider extends ChangeNotifier {
 
   Future<CommonResponseWrapper?> checkTaxIsAlreadySubmit() async {
     try {
-      User? user = FirebaseAuth.instance.currentUser;
-      var res = await firestore
-          .collection("user_orders")
-          .doc("${user?.uid}")
-          .collection("safe_and_declaration_tax")
-          .get();
+      var res = await serviceLocatorInstance<SafeAndDeclarationTaxRepository>()
+          .fetchTaxFiledYears();
       if (res.docs.isNotEmpty) {
         return CommonResponseWrapper(
           status: true,

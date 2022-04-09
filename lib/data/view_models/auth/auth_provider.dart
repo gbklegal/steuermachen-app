@@ -43,6 +43,12 @@ class AuthProvider extends ChangeNotifier {
           AppleIDAuthorizationScopes.email,
           AppleIDAuthorizationScopes.fullName,
         ],
+        // webAuthenticationOptions: WebAuthenticationOptions(
+        //    clientId: 'de.steuermachen.app',
+
+        //   redirectUri: Uri.parse(
+        //       'https://steuermachen.de/'),
+        // ),
         nonce: nonce,
       );
       final oauthCredential = OAuthProvider("apple.com").credential(

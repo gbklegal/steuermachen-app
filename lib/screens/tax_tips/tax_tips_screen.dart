@@ -4,7 +4,7 @@ import 'package:steuermachen/components/app_bar/appbar_with_side_corner_circle_a
 import 'package:steuermachen/components/error_component.dart';
 import 'package:steuermachen/components/loading_component.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
-import 'package:steuermachen/providers/tax_tips_provider.dart';
+import 'package:steuermachen/data/view_models/tax_tips_provider.dart';
 import 'package:steuermachen/screens/tax_tips/tax_tips_detail_screen.dart';
 import 'package:steuermachen/screens/tax_tips/tax_tips_top_component.dart';
 import 'package:steuermachen/utils/utils.dart';

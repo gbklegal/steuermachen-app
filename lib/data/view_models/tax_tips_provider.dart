@@ -3,9 +3,8 @@ import 'package:steuermachen/constants/strings/http_constants.dart';
 import 'package:steuermachen/main.dart';
 import 'package:steuermachen/services/networks/api_response_states.dart';
 import 'package:steuermachen/services/networks/dio_api_services.dart';
+import 'package:steuermachen/services/networks/dio_client_network.dart';
 import 'package:steuermachen/wrappers/faq_wp_wrapper.dart';
-
-import '../services/networks/dio_client_network.dart';
 
 class TaxTipsProvider extends ChangeNotifier {
   ApiResponse _taxTips = ApiResponse.loading();

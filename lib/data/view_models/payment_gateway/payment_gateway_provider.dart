@@ -1,14 +1,14 @@
 import 'dart:math';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:steuermachen/constants/strings/http_constants.dart';
+import 'package:steuermachen/main.dart';
 import 'package:steuermachen/services/networks/api_response_states.dart';
+import 'package:steuermachen/services/networks/dio_api_services.dart';
+import 'package:steuermachen/services/networks/dio_client_network.dart';
+import 'package:steuermachen/wrappers/payment_gateway/sumpup_access_token_wrapper.dart';
 import 'package:steuermachen/wrappers/payment_gateway/sumup_checkout_wrapper.dart';
-import '../../constants/strings/http_constants.dart';
-import '../../main.dart';
-import '../../services/networks/dio_api_services.dart';
-import '../../services/networks/dio_client_network.dart';
-import '../../wrappers/payment_gateway/sumpup_access_token_wrapper.dart';
+
 
 class PaymentGateWayProvider extends ChangeNotifier {
   final String _clientSecret =

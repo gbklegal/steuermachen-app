@@ -15,8 +15,8 @@ import 'package:steuermachen/components/user_form_component.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/options_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
-import 'package:steuermachen/providers/signature/signature_provider.dart';
-import 'package:steuermachen/providers/tax/declaration_tax/declaration_tax_provider.dart';
+import 'package:steuermachen/data/view_models/signature/signature_provider.dart';
+import 'package:steuermachen/data/view_models/tax/declaration_tax/declaration_tax_view_model.dart';
 import 'package:steuermachen/screens/tax/declaration_tax/declaration_tax_components/declaration_tax_calculation_component.dart';
 import 'package:steuermachen/utils/utils.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
@@ -78,7 +78,7 @@ class _DeclarationQuestionsViewComponentState
               ),
               Expanded(
                 child: SingleChildScrollView(
-                  child: Consumer<DeclarationTaxProvider>(
+                  child: Consumer<DeclarationTaxViewModel>(
                       builder: (context, consumer, child) {
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 25),
@@ -179,7 +179,7 @@ class _DeclarationQuestionsViewComponentState
   }
 
   SelectionCardComponent _optionsWidget(
-      DeclarationTaxProvider consumer, int i, int x) {
+      DeclarationTaxViewModel consumer, int i, int x) {
     return SelectionCardComponent(
         title: widget.declarationTaxData[i].options[x],
         imagePath: widget.declarationTaxData[i].optionImgPath.isNotEmpty
@@ -203,7 +203,7 @@ class _DeclarationQuestionsViewComponentState
             _checkYearAlreadyExist(widget.declarationTaxData[i].options[x]));
   }
 
-  _submitData(DeclarationTaxProvider consumer) async {
+  _submitData(DeclarationTaxViewModel consumer) async {
     PopupLoader.showLoadingDialog(context);
     CommonResponseWrapper res =
         await consumer.submitDeclarationTaxData(context);

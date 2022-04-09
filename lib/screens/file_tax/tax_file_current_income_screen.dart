@@ -11,8 +11,8 @@ import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
-import 'package:steuermachen/providers/tax_calculator_provider.dart';
-import 'package:steuermachen/providers/tax_file_provider.dart';
+import 'package:steuermachen/data/view_models/tax_calculator_provider.dart';
+import 'package:steuermachen/data/view_models/tax_file_provider.dart';
 
 class TaxFileCurrentIncomeScreen extends StatefulWidget {
   const TaxFileCurrentIncomeScreen({Key? key}) : super(key: key);

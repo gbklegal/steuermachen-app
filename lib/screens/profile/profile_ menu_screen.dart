@@ -100,7 +100,7 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
                               RouteConstants.splashScreen, (val) => false);
                         }
                         if (profileMenuOptionsList[i].routeName ==
-                            RouteConstants.selectDocumentForScreen) {
+                            RouteConstants.documentOverviewScreen) {
                           Navigator.pushNamed(
                               context, profileMenuOptionsList[i].routeName,
                               arguments: {"uploadBtn": true});

@@ -6,10 +6,9 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:steuermachen/components/text_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
+import 'package:steuermachen/constants/strings/process_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
-
-import '../../../constants/strings/process_constants.dart';
-import '../../../wrappers/tax_steps_wrapper.dart';
+import 'package:steuermachen/wrappers/tax_steps_wrapper.dart';
 
 class WhatInWorkStepsComponent extends StatelessWidget {
   const WhatInWorkStepsComponent({Key? key, this.submittedTaxYears})
@@ -100,7 +99,8 @@ class WhatInWorkStepsComponent extends StatelessWidget {
                                             fontSize: 16),
                                       ),
                                     TextComponent(
-                                      taxSteps[i].updatedAt?.toString() ?? "----",
+                                      taxSteps[i].updatedAt?.toString() ??
+                                          "----",
                                       style:
                                           FontStyles.fontRegular(fontSize: 12),
                                     ),

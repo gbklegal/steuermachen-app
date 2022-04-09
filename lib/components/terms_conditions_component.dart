@@ -9,7 +9,7 @@ import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 
-import 'package:steuermachen/providers/terms_and_condition_provider.dart';
+import 'package:steuermachen/data/view_models/terms_and_condition_provider.dart';
 
 class TermsAndConditionComponent extends StatelessWidget {
   const TermsAndConditionComponent(

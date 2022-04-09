@@ -9,7 +9,7 @@ import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
-import 'package:steuermachen/providers/profile/profile_provider.dart';
+import 'package:steuermachen/data/view_models/profile/profile_provider.dart';
 import 'package:steuermachen/utils/string_utils.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -146,7 +146,7 @@ class _CollectReceipts extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, RouteConstants.selectDocumentForScreen,
+        Navigator.pushNamed(context, RouteConstants.documentOverviewScreen,
             arguments: {"uploadBtn": false});
       },
       child: Container(

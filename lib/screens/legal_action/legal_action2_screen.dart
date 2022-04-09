@@ -8,8 +8,8 @@ import 'package:steuermachen/components/popup_loader_component.dart';
 import 'package:steuermachen/components/signature_component.dart';
 import 'package:steuermachen/constants/app_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
-import 'package:steuermachen/providers/document/document_provider.dart';
-import 'package:steuermachen/providers/signature/signature_provider.dart';
+import 'package:steuermachen/data/view_models/document/document_view_model.dart';
+import 'package:steuermachen/data/view_models/signature/signature_provider.dart';
 
 class LegalAction2Screen extends StatefulWidget {
   const LegalAction2Screen({Key? key}) : super(key: key);
@@ -59,8 +59,8 @@ class _LegalAction2ScreenState extends State<LegalAction2Screen> {
                 Provider.of<SignatureProvider>(context, listen: false);
             var pngBytes = await signatureProvider.controller.toPngBytes();
             String sign = await signatureProvider.createTempPath(pngBytes!);
-            DocumentsProvider _provider =
-                Provider.of<DocumentsProvider>(context, listen: false);
+            DocumentsViewModel _provider =
+                Provider.of<DocumentsViewModel>(context, listen: false);
             _provider.setSignaturePath(sign);
             await _provider.uploadFiles();
             PopupLoader.hideLoadingDialog(context);

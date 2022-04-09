@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
-import 'package:steuermachen/providers/language_provider.dart';
+import 'package:steuermachen/data/view_models/language_provider.dart';
 
 class LanguageDropdownComponent extends StatefulWidget {
   const LanguageDropdownComponent({Key? key}) : super(key: key);

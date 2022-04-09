@@ -5,7 +5,7 @@ import 'package:steuermachen/constants/strings/error_messages_constants.dart';
 import 'package:steuermachen/constants/strings/process_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/main.dart';
-import 'package:steuermachen/providers/profile/profile_provider.dart';
+import 'package:steuermachen/data/view_models/profile/profile_provider.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 import 'package:steuermachen/wrappers/easy_tax/easy_tax_data_collector_wrapper.dart';
 import 'package:steuermachen/wrappers/easy_tax/easy_tax_wrapper.dart';

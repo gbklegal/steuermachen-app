@@ -3,7 +3,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
-import 'package:steuermachen/providers/auth/auth_provider.dart';
+import 'package:steuermachen/data/view_models/auth/auth_provider.dart';
 import 'package:steuermachen/components/logo_component.dart';
 
 class SplashScreen extends StatefulWidget {

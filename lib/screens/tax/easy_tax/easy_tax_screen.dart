@@ -6,7 +6,7 @@ import 'package:steuermachen/components/empty_screen_loader_component.dart';
 import 'package:steuermachen/components/error_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
-import 'package:steuermachen/providers/tax/easy_tax/easy_tax_provider.dart';
+import 'package:steuermachen/data/view_models/tax/easy_tax/easy_tax_provider.dart';
 import 'package:steuermachen/screens/tax/easy_tax/easy_tax_component/easy_tax_question_component.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 import 'package:steuermachen/wrappers/easy_tax/easy_tax_wrapper.dart';

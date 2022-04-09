@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:steuermachen/constants/strings/error_messages_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/main.dart';
-import 'package:steuermachen/providers/document/document_provider.dart';
+import 'package:steuermachen/data/view_models/document/document_view_model.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 
 class TaxFileProvider extends ChangeNotifier {
@@ -38,8 +38,8 @@ class TaxFileProvider extends ChangeNotifier {
       TaxFileDataCollector formData, BuildContext context) async {
     try {
       User? user = FirebaseAuth.instance.currentUser;
-      DocumentsProvider documentsProvider =
-          Provider.of<DocumentsProvider>(context, listen: false);
+      DocumentsViewModel documentsProvider =
+          Provider.of<DocumentsViewModel>(context, listen: false);
       CommonResponseWrapper _fileRes = await documentsProvider.uploadFiles();
       if (!_fileRes.status!) {
         return CommonResponseWrapper(

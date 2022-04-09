@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
+import 'package:steuermachen/components/collect_receipt_component.dart';
 import 'package:steuermachen/components/shadow_card_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
@@ -123,57 +124,13 @@ class HomeScreen extends StatelessWidget {
                         const SizedBox(
                           height: 40,
                         ),
-                        const _CollectReceipts()
+                        const CollectReceiptsComponent()
                       ],
                     ),
                   ),
                 ),
               ],
             ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _CollectReceipts extends StatelessWidget {
-  const _CollectReceipts({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        Navigator.pushNamed(context, RouteConstants.documentOverviewScreen,
-            arguments: {"uploadBtn": false});
-      },
-      child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: ColorConstants.primary, width: 1),
-          borderRadius: const BorderRadius.all(
-            Radius.circular(20.0),
-          ),
-        ),
-        child: ListTile(
-          leading: SvgPicture.asset(
-            AssetConstants.icReceipts,
-            height: 18,
-            color: ColorConstants.black,
-          ),
-          title: Padding(
-            padding: const EdgeInsets.only(bottom: 5),
-            child: Text(
-              LocaleKeys.collectReceipts.tr(),
-              textAlign: TextAlign.left,
-              style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                  fontWeight: FontWeight.w500, fontSize: 14, letterSpacing: -0.3),
-            ),
-          ),
-          trailing: SvgPicture.asset(
-            AssetConstants.icForward,
-            height: 12,
           ),
         ),
       ),

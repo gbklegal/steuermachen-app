@@ -13,6 +13,7 @@ import 'package:steuermachen/components/user_form_component.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/options_constants.dart';
 import 'package:steuermachen/data/view_models/signature/signature_provider.dart';
+import 'package:steuermachen/data/view_models/tax/declaration_tax/declaration_tax_view_model.dart';
 import 'package:steuermachen/data/view_models/tax/safe_tax/safe_tax_provider.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/utils/utils.dart';
@@ -174,6 +175,8 @@ class _SafeTaxQuestionsComponentState extends State<SafeTaxQuestionsComponent> {
   _submitData(SafeTaxProvider consumer) async {
     PopupLoader.showLoadingDialog(context);
     CommonResponseWrapper res = await consumer.submitSafeTaxData(context);
+    await Provider.of<DeclarationTaxViewModel>(context, listen: false)
+        .fetchTaxFiledYears();
     PopupLoader.hideLoadingDialog(context);
     if (res.status!) {
       Utils.completedDialog(context);

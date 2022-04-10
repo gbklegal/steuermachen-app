@@ -99,6 +99,10 @@ abstract class  LocaleKeys {
   static const camera = 'camera';
   static const gallery = 'gallery';
   static const form = 'form';
+  static const taxName = 'taxName';
+  static const status = 'status';
+  static const price = 'price';
+  static const taxReturn = 'taxReturn';
   static const noDocuments = 'noDocuments';
   static const orUseOur = 'orUseOur';
   static const callUs = 'callUs';

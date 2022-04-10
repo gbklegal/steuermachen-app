@@ -22,6 +22,7 @@ class SafeAndDeclarationTaxDataCollectorWrapper {
   String? taxYear;
   String? martialStatus;
   String? grossIncome;
+  String? taxPrice;
   bool? isPromoApplied;
   String? signaturePath;
   bool? termsAndConditionChecked;
@@ -49,6 +50,7 @@ class SafeAndDeclarationTaxDataCollectorWrapper {
     approveAt = json['approve_at']?.toDate();
     approvedBy = json['approved_by'];
     taxName = json['tax_name'];
+    taxPrice = json['tax_price'];
     userInfo = UserWrapper.fromJson(json['user_info']);
     userAddress = json['user_address'] != null
         ? UserWrapper.fromJson(json['user_address'])
@@ -75,6 +77,7 @@ class SafeAndDeclarationTaxDataCollectorWrapper {
     _data['user_info'] = userInfo?.toJson();
     _data['terms_and_condition_checked'] = termsAndConditionChecked;
     _data['invoices'] = invoices;
+    _data['tax_price'] = taxPrice;
     _data['documents_path'] = documentsPath?.map((e) => e.toJson()).toList();
     _data['created_at'] = DateTime.now();
     _data['approve_at'] = null;

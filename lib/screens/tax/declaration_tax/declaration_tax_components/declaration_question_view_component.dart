@@ -14,6 +14,7 @@ import 'package:steuermachen/components/toast_component.dart';
 import 'package:steuermachen/components/user_form_component.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/options_constants.dart';
+import 'package:steuermachen/data/view_models/tax_calculator_provider.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/data/view_models/signature/signature_provider.dart';
 import 'package:steuermachen/data/view_models/tax/declaration_tax/declaration_tax_view_model.dart';
@@ -101,19 +102,27 @@ class _DeclarationQuestionsViewComponentState
                             const SignatureComponent()
                           else if (widget.declarationTaxData[i].optionType ==
                               OptionConstants.paymentMethods)
-                            PaymentMethodsComponent(
-                              amount: "asdasd",
-                              decisionTap: () {
-                                Utils.animateToNextPage(pageController, i);
-                              },
-                            )
+                            Consumer<TaxCalculatorProvider>(
+                                builder: (context, taxCalConsumer, child) {
+                              return PaymentMethodsComponent(
+                                amount: "${taxCalConsumer.calculatedPrice},00",
+                                decisionTap: () {
+                                  consumer.setTaxPrice(
+                                      "${taxCalConsumer.calculatedPrice},00");
+                                  Utils.animateToNextPage(pageController, i);
+                                },
+                              );
+                            })
                           else if (widget.declarationTaxData[i].optionType ==
                               OptionConstants.confirmBilling)
-                            ConfirmBillingComponent(
-                              amount: "39.00",
-                              onTapOrder: () =>
-                                  Utils.animateToNextPage(pageController, i),
-                            )
+                            Consumer<TaxCalculatorProvider>(
+                                builder: (context, taxCalConsumer, child) {
+                              return ConfirmBillingComponent(
+                                amount: "${taxCalConsumer.calculatedPrice},00",
+                                onTapOrder: () =>
+                                    Utils.animateToNextPage(pageController, i),
+                              );
+                            })
                           else if (widget.declarationTaxData[i].optionType ==
                               OptionConstants.termsCondition)
                             TermsAndConditionComponent(
@@ -207,6 +216,7 @@ class _DeclarationQuestionsViewComponentState
     PopupLoader.showLoadingDialog(context);
     CommonResponseWrapper res =
         await consumer.submitDeclarationTaxData(context);
+    await consumer.fetchTaxFiledYears();
     PopupLoader.hideLoadingDialog(context);
     if (res.status!) {
       Utils.completedDialog(context);

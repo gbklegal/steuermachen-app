@@ -78,6 +78,9 @@ class DeclarationTaxViewModel extends ChangeNotifier {
   setIncome(String income) {
     _declarationTaxDataCollectorWrapper?.grossIncome = income;
   }
+  setTaxPrice(String taxPrice) {
+    _declarationTaxDataCollectorWrapper?.taxPrice = taxPrice;
+  }
 
   Future<CommonResponseWrapper> submitDeclarationTaxData(
       BuildContext context) async {

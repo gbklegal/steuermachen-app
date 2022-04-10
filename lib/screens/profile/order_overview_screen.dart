@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
@@ -137,10 +138,10 @@ class _OrderCards extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
             child: Column(
               children: [
-                _rowTitleAndText("Tax name", data.taxName!),
+                _rowTitleAndText(LocaleKeys.taxName.tr(), data.taxName ?? "--"),
+                _rowTitleAndText(LocaleKeys.price.tr(), data.taxPrice ?? "--"),
                 _rowTitleAndText(
-                    "Price", Utils.dateFormatter(data.createdAt.toString())),
-                _rowTitleAndText("Tax return ${data.taxYear}",
+                    "${LocaleKeys.taxReturn.tr()} ${data.taxYear ?? "--"}",
                     Utils.dateFormatter(data.createdAt.toString())),
                 const Divider(),
                 SizedBox(
@@ -148,7 +149,7 @@ class _OrderCards extends StatelessWidget {
                   child: Row(
                     children: [
                       TextComponent(
-                        "Status: ",
+                        "${LocaleKeys.status.tr()}: ",
                         style: FontStyles.fontMedium(
                             fontSize: 15, fontWeight: FontWeight.w600),
                       ),

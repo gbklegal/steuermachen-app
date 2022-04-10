@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
 import 'package:steuermachen/components/empty_screen_loader_component.dart';
 import 'package:steuermachen/components/error_component.dart';
+import 'package:steuermachen/components/no_order_component.dart';
 import 'package:steuermachen/components/tax_year_component.dart';
 import 'package:steuermachen/components/text_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
@@ -71,6 +72,9 @@ class _DocumentOverviewScreenState extends State<DocumentOverviewScreen> {
             },
           );
         } else {
+          if (consumer.taxFiledYears.data == null) {
+            return const NoOrderComponent();
+          }
           return _mainBody(consumer.taxFiledYears.data);
         }
       }),

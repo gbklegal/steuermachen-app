@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:steuermachen/components/collect_receipt_component.dart';
 import 'package:steuermachen/components/empty_screen_loader_component.dart';
 import 'package:steuermachen/components/error_component.dart';
+import 'package:steuermachen/components/no_order_component.dart';
 import 'package:steuermachen/components/tax_year_component.dart';
 import 'package:steuermachen/components/text_component.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
@@ -84,6 +85,9 @@ class _OrderOverviewScreenState extends State<OrderOverviewScreen> {
               },
             );
           } else {
+            if(consumer.taxFiledYears.data ==null){
+                return const NoOrderComponent();
+            }
             return _getMainBody(consumer.taxFiledYears.data);
           }
         }),

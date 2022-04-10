@@ -78,6 +78,7 @@ class DeclarationTaxViewModel extends ChangeNotifier {
   setIncome(String income) {
     _declarationTaxDataCollectorWrapper?.grossIncome = income;
   }
+
   setTaxPrice(String taxPrice) {
     _declarationTaxDataCollectorWrapper?.taxPrice = taxPrice;
   }
@@ -143,8 +144,7 @@ class DeclarationTaxViewModel extends ChangeNotifier {
       if (res.docs.isNotEmpty) {
         setTaxFiledYears = ApiResponse.completed(res.docs);
       } else {
-        setTaxFiledYears =
-            ApiResponse.error(ErrorMessagesConstants.noRecordFound);
+        setTaxFiledYears = ApiResponse.completed(null);
       }
     } catch (e) {
       setTaxFiledYears = ApiResponse.error(e.toString());

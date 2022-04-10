@@ -61,7 +61,7 @@ class AddNewBillingAddressScreen extends StatelessWidget {
                         await consumer.addUserAddresss();
                     PopupLoader.hideLoadingDialog(context);
                     if (res.status!) {
-                      Navigator.pop(context);
+                      Navigator.pop(context, true);
                     } else {
                       ToastComponent.showToast(res.message!, long: true);
                     }

@@ -14,16 +14,29 @@ import 'package:steuermachen/data/view_models/profile/profile_provider.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 import 'package:steuermachen/wrappers/user_wrapper.dart';
 
-class SelectBillingAddressScreen extends StatelessWidget {
+class SelectBillingAddressScreen extends StatefulWidget {
   const SelectBillingAddressScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    CommonResponseWrapper? response;
-    final ProfileProvider provider =
-        Provider.of<ProfileProvider>(context, listen: false);
+  State<SelectBillingAddressScreen> createState() =>
+      _SelectBillingAddressScreenState();
+}
+
+class _SelectBillingAddressScreenState
+    extends State<SelectBillingAddressScreen> {
+  CommonResponseWrapper? response;
+  late ProfileProvider provider;
+
+  @override
+  void initState() {
+    provider = Provider.of<ProfileProvider>(context, listen: false);
     WidgetsBinding.instance!.addPostFrameCallback(
         (_) => provider.getUserAddresses().then((value) => response = value));
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: const AppBarComponent(
         StringConstants.appName,
@@ -42,14 +55,28 @@ class SelectBillingAddressScreen extends StatelessWidget {
             return ErrorComponent(
               message: response!.message!,
               onTap: () async {
-                await provider
-                    .getUserAddresses()
-                    .then((value) => response = value);
+                await provider.getUserAddresses().then((value) {
+                  setState(() {
+                    response = value;
+                  });
+                });
               },
             );
           } else {
             if (response?.data == null) {
-              return const _AddNewAddress();
+              return _AddNewAddress(
+                onTap: () async {
+                  var res = await Navigator.pushNamed(
+                      context, RouteConstants.addNewBillingAddressScreen);
+                  if (res != null) {
+                    await provider.getUserAddresses().then((value) {
+                      setState(() {
+                        response = value;
+                      });
+                    });
+                  }
+                },
+              );
             } else {
               List<UserWrapper> addressess =
                   response!.data as List<UserWrapper>;
@@ -90,7 +117,19 @@ class SelectBillingAddressScreen extends StatelessWidget {
           const SizedBox(
             height: 15,
           ),
-          const _AddNewAddress(),
+          _AddNewAddress(
+            onTap: () async {
+              var res = await Navigator.pushNamed(
+                  context, RouteConstants.addNewBillingAddressScreen);
+              if (res != null) {
+                await provider.getUserAddresses().then((value) {
+                  setState(() {
+                    response = value;
+                  });
+                });
+              }
+            },
+          ),
           const SizedBox(
             height: 35,
           ),
@@ -171,13 +210,13 @@ class SelectBillingAddressScreen extends StatelessWidget {
 class _AddNewAddress extends StatelessWidget {
   const _AddNewAddress({
     Key? key,
+    this.onTap,
   }) : super(key: key);
-
+  final void Function()? onTap;
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.pushNamed(
-          context, RouteConstants.addNewBillingAddressScreen),
+      onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
           border: Border.all(width: 0.2, color: ColorConstants.black),

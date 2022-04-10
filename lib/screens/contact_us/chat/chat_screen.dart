@@ -1,8 +1,11 @@
 import 'dart:convert';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
+import 'package:steuermachen/components/app_bar/appbar_with_side_corner_circle_and_body.dart';
+import 'package:steuermachen/constants/colors/color_constants.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({Key? key}) : super(key: key);
@@ -27,127 +30,22 @@ class _ChatScreenState extends State<ChatScreen> {
     });
   }
 
-  void _handleAtachmentPressed() {
-    showModalBottomSheet<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return SafeArea(
-          child: SizedBox(
-            height: 144,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                    // _handleImageSelection();
-                  },
-                  child: const Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text('Photo'),
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                    // _handleFileSelection();
-                  },
-                  child: const Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text('File'),
-                  ),
-                ),
-                TextButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: const Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text('Cancel'),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
+  void _handleSendPressed(types.PartialText message) {
+    final textMessage = types.TextMessage(
+      author: _user,
+      createdAt: DateTime.now().millisecondsSinceEpoch,
+      id: randomString(),
+      text: message.text,
     );
+
+    _addMessage(textMessage);
   }
 
-  // void _handleFileSelection() async {
-  //   final result = await FilePicker.platform.pickFiles(
-  //     type: FileType.any,
-  //   );
-
-  //   if (result != null && result.files.single.path != null) {
-  //     final message = types.FileMessage(
-  //       author: _user,
-  //       createdAt: DateTime.now().millisecondsSinceEpoch,
-  //       id: const Uuid().v4(),
-  //       mimeType: lookupMimeType(result.files.single.path!),
-  //       name: result.files.single.name,
-  //       size: result.files.single.size,
-  //       uri: result.files.single.path!,
-  //     );
-
-  //     _addMessage(message);
-  //   }
-  // }
-
-  // void _handleImageSelection() async {
-  //   final result = await ImagePicker().pickImage(
-  //     imageQuality: 70,
-  //     maxWidth: 1440,
-  //     source: ImageSource.gallery,
-  //   );
-
-  //   if (result != null) {
-  //     final bytes = await result.readAsBytes();
-  //     final image = await decodeImageFromList(bytes);
-
-  //     final message = types.ImageMessage(
-  //       author: _user,
-  //       createdAt: DateTime.now().millisecondsSinceEpoch,
-  //       height: image.height.toDouble(),
-  //       id: const Uuid().v4(),
-  //       name: result.name,
-  //       size: bytes.length,
-  //       uri: result.path,
-  //       width: image.width.toDouble(),
-  //     );
-
-  //     _addMessage(message);
-  //   }
-  // }
-
-  // void _handleMessageTap(BuildContext context, types.Message message) async {
-  //   if (message is types.FileMessage) {
-  //     await OpenFile.open(message.uri);
-  //   }
-  // }
-
-  void _handlePreviewDataFetched(
-    types.TextMessage message,
-    types.PreviewData previewData,
-  ) {
-    final index = _messages.indexWhere((element) => element.id == message.id);
-    final updatedMessage = _messages[index].copyWith(previewData: previewData);
-
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
-      setState(() {
-        _messages[index] = updatedMessage;
-      });
-    });
+  String randomString() {
+    final random = Random.secure();
+    final values = List<int>.generate(16, (i) => random.nextInt(100));
+    return base64UrlEncode(values);
   }
-
-  // void _handleSendPressed(types.PartialText message) {
-  //   final textMessage = types.TextMessage(
-  //     author: _user,
-  //     createdAt: DateTime.now().millisecondsSinceEpoch,
-  //     id: const Uuid().v4(),
-  //     text: message.text,
-  //   );
-
-  //   _addMessage(textMessage);
-  // }
 
   void _loadMessages() async {
     final response = await rootBundle.loadString('assets/messages.json');
@@ -162,15 +60,20 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return AppBarWithSideCornerCircleAndRoundBody(
       body: SafeArea(
         bottom: false,
         child: Chat(
+          theme: DefaultChatTheme(
+            inputTextColor: ColorConstants.black,
+            inputTextStyle: const TextStyle(color: ColorConstants.black),
+            inputBackgroundColor: ColorConstants.mediumGrey.withOpacity(0.2),
+            inputBorderRadius: BorderRadius.circular(0),
+            primaryColor: ColorConstants.primary,
+            // inputContainerDecoration:
+          ),
           messages: _messages,
-          onAttachmentPressed: _handleAtachmentPressed,
-          onMessageTap: (context, me) => {},
-          onPreviewDataFetched: _handlePreviewDataFetched,
-          onSendPressed: (val) => {},
+          onSendPressed: _handleSendPressed,
           user: _user,
         ),
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 
 class ColorConstants {
   static const Color primary = Color(0xffFF6138);
@@ -19,6 +20,7 @@ class ColorConstants {
   static const Color blackSix = Color(0x0f000000);
   static const Color duckEggBlue = Color(0xfff1f6fc);
   static const Color blue = Color(0xff4975E9);
+
   static MaterialColor kPrimaryColor = const MaterialColor(
     0xffFF6138,
     <int, Color>{
@@ -34,4 +36,24 @@ class ColorConstants {
       900: primary,
     },
   );
+
+  static const userColors = [
+    Color(0xffff6767),
+    Color(0xff66e0da),
+    Color(0xfff5a2d9),
+    Color(0xfff0c722),
+    Color(0xff6a85e5),
+    Color(0xfffd9a6f),
+    Color(0xff92db6e),
+    Color(0xff73b8e5),
+    Color(0xfffd7590),
+    Color(0xffc78ae5),
+  ];
+  static Color getUserAvatarNameColor(types.User user) {
+    final index = user.id.hashCode % userColors.length;
+    return userColors[index];
+  }
+
+  static String getUserName(types.User user) =>
+      '${user.firstName ?? ''} ${user.lastName ?? ''}'.trim();
 }

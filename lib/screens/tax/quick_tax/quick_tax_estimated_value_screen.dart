@@ -19,6 +19,8 @@ class QuickTaxEstimatedValueScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isUserPresent = Provider.of<AuthProvider>(context, listen: false)
+        .checkUserInPreference();
     return Scaffold(
       appBar: const AppBarComponent(
         StringConstants.appName,
@@ -68,15 +70,23 @@ class QuickTaxEstimatedValueScreen extends StatelessWidget {
             const SizedBox(
               height: 40,
             ),
-            borderButton(context, RouteConstants.quickTaxScreen,
-                LocaleKeys.calculateTaxReturnCost),
+            borderButton(context, LocaleKeys.calculateTaxReturnCost, () {
+              Navigator.pop(context);
+              Navigator.pop(context);
+              Navigator.pushNamed(context, RouteConstants.quickTaxScreen);
+            }),
             const SizedBox(height: 20),
-            borderButton(context, RouteConstants.signupScreen,
-                LocaleKeys.startNowWithTheTaxReturn),
+            borderButton(context, LocaleKeys.startNowWithTheTaxReturn, () {
+              if (!isUserPresent) {
+                Navigator.pushNamed(context, RouteConstants.signupScreen);
+              } else {
+                Navigator.pushNamedAndRemoveUntil(
+                    context, RouteConstants.bottomNavBarScreen, (val) => false);
+              }
+            }),
             const SizedBox(height: 50),
             Visibility(
-              visible: !Provider.of<AuthProvider>(context, listen: false)
-                  .checkUserInPreference(),
+              visible: !isUserPresent,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -101,7 +111,7 @@ class QuickTaxEstimatedValueScreen extends StatelessWidget {
   }
 
   Container borderButton(
-      BuildContext context, String nextRoute, String btnText) {
+      BuildContext context, String btnText, void Function()? onPressed) {
     return Container(
       decoration: BoxDecoration(
         border: Border.all(color: ColorConstants.primary),
@@ -109,9 +119,8 @@ class QuickTaxEstimatedValueScreen extends StatelessWidget {
           Radius.circular(10.0),
         ),
       ),
-      child: _button(context, btnText, () {
-        Navigator.pushNamed(context, nextRoute);
-      }, backgroundColor: ColorConstants.white),
+      child: _button(context, btnText, onPressed,
+          backgroundColor: ColorConstants.white),
     );
   }
 

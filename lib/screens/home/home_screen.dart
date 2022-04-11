@@ -90,6 +90,7 @@ class HomeScreen extends StatelessWidget {
                 ),
                 Expanded(
                   child: SingleChildScrollView(
+                    clipBehavior: Clip.none,
                     child: Column(
                       children: [
                         for (var i = 0; i < content.length; i++)

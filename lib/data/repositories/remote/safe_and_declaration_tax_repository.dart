@@ -41,7 +41,7 @@ class SafeAndDeclarationTaxRepository {
   Future<dynamic> submitDeclarationTax(
       SafeAndDeclarationTaxDataCollectorWrapper
           _declarationTaxDataCollectorWrapper,
-      List<TaxStepsWrapper> taxSteps) async {
+      List<TaxStepsWrapper> taxSteps, String taxName) async {
     try {
       User? user = FirebaseAuth.instance.currentUser;
       await firestore
@@ -50,7 +50,7 @@ class SafeAndDeclarationTaxRepository {
           .collection("safe_and_declaration_tax")
           .add(
             _declarationTaxDataCollectorWrapper.toJson(
-                "declarationTax", taxSteps),
+                taxName, taxSteps),
           );
     } catch (e) {
       rethrow;

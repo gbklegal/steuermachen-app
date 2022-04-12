@@ -197,6 +197,7 @@ class _DeclarationQuestionsViewComponentState
         onTap: () {
           int year = DateTime.now().year;
           if (year.toString() == widget.declarationTaxData[i].options[x]) {
+             consumer.setTaxYear(widget.declarationTaxData[i].options[x]);
             Navigator.pushNamed(context, RouteConstants.currentYearTaxScreen);
           } else {
             if (i == 0) {

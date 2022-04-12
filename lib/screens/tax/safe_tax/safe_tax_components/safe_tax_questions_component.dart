@@ -159,6 +159,8 @@ class _SafeTaxQuestionsComponentState extends State<SafeTaxQuestionsComponent> {
         onTap: () {
           int year = DateTime.now().year;
           if (year.toString() == widget.safeTaxData[i].options[x]) {
+            Provider.of<DeclarationTaxViewModel>(context, listen: false)
+                .setTaxYear(year.toString());
             Navigator.pushNamed(context, RouteConstants.currentYearTaxScreen);
           } else {
             if (i == 0) {

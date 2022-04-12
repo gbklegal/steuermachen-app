@@ -1,12 +1,9 @@
-import 'package:dio/dio.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/constants/strings/error_messages_constants.dart';
 import 'package:steuermachen/constants/strings/http_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/data/repositories/remote/safe_and_declaration_tax_repository.dart';
-import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/main.dart';
 import 'package:steuermachen/data/view_models/profile/profile_provider.dart';
 import 'package:steuermachen/data/view_models/signature/signature_provider.dart';
@@ -83,12 +80,20 @@ class DeclarationTaxViewModel extends ChangeNotifier {
     _declarationTaxDataCollectorWrapper?.taxPrice = taxPrice;
   }
 
-  Future<CommonResponseWrapper> submitDeclarationTaxData(
-      BuildContext context) async {
-    await _setData(context);
+  Future<CommonResponseWrapper> submitDeclarationTaxData(BuildContext context,
+      {bool isCurrentYear = false, String? taxPrice}) async {
+    if (isCurrentYear) {
+      _setCurrentYearTax(context, taxPrice!);
+    } else {
+      await _setDataDeclarationTax(context);
+    }
     try {
       await serviceLocatorInstance<SafeAndDeclarationTaxRepository>()
-          .submitDeclarationTax(_declarationTaxDataCollectorWrapper!, taxSteps);
+          .submitDeclarationTax(
+        _declarationTaxDataCollectorWrapper!,
+        taxSteps,
+        isCurrentYear ? "currentYear" : "declarationTax",
+      );
       return CommonResponseWrapper(
           status: true, message: StringConstants.thankYouForOrder);
     } catch (e) {
@@ -118,7 +123,7 @@ class DeclarationTaxViewModel extends ChangeNotifier {
     print(response);
   }
 
-  Future<void> _setData(BuildContext context) async {
+  Future<void> _setDataDeclarationTax(BuildContext context) async {
     SignatureProvider _signature =
         Provider.of<SignatureProvider>(context, listen: false);
     ProfileProvider _user =
@@ -133,6 +138,16 @@ class DeclarationTaxViewModel extends ChangeNotifier {
     _declarationTaxDataCollectorWrapper?.userAddress = _user.getSelectedAddress;
     _declarationTaxDataCollectorWrapper?.termsAndConditionChecked = true;
     _declarationTaxDataCollectorWrapper?.grossIncome = _tax.selectedPrice;
+  }
+
+  Future<void> _setCurrentYearTax(BuildContext context, String taxPrice) async {
+    ProfileProvider _user =
+        Provider.of<ProfileProvider>(context, listen: false);
+    _declarationTaxDataCollectorWrapper?.userInfo =
+        _user.getUserFromControllers();
+    _declarationTaxDataCollectorWrapper?.userAddress = _user.getSelectedAddress;
+    _declarationTaxDataCollectorWrapper?.termsAndConditionChecked = true;
+    _declarationTaxDataCollectorWrapper?.grossIncome = taxPrice;
   }
 
   Future<void> fetchTaxFiledYears() async {

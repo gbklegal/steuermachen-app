@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:steuermachen/constants/strings/error_messages_constants.dart';
+import 'package:steuermachen/main.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 
 class AuthProvider extends ChangeNotifier {
@@ -198,6 +199,17 @@ class AuthProvider extends ChangeNotifier {
       return false;
     } else {
       return true;
+    }
+  }
+
+  deleteAccount() async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      await FirebaseAuth.instance.currentUser?.delete();
+      await firestore.collection("user_orders").doc("${user?.uid}").delete();
+      return true;
+    } catch (e) {
+      return false;
     }
   }
 

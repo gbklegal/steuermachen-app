@@ -217,5 +217,6 @@
     "creditCard": "Credit card",
     "bill": "bill",
     "choosePaymentMethod": "Choose pay method",
+    "deleteAccountMessage": "Warnung! Dies ist eine gefährliche Aktion, die alle Ihre Daten und Ihr Konto dauerhaft löscht.",
     "logout": "Ausloggen"
 }

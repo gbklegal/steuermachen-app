@@ -215,5 +215,6 @@
     "creditCard": "Credit card",
     "bill": "bill",
     "choosePaymentMethod": "Choose pay method",
+    "deleteAccountMessage": "Warning! this is a dangerous action and it will delete all your data and account permanently.",
     "logout": "Logout"
 }

@@ -219,6 +219,7 @@ abstract class  LocaleKeys {
   static const creditCard = 'creditCard';
   static const bill = 'bill';
   static const choosePaymentMethod = 'choosePaymentMethod';
+  static const deleteAccountMessage = 'deleteAccountMessage';
   static const logout = 'logout';
 
 }

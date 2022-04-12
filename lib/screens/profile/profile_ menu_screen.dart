@@ -1,15 +1,20 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 import 'package:steuermachen/components/app_bar/custom_appbar_component.dart';
 import 'package:steuermachen/components/button_component.dart';
 import 'package:steuermachen/components/imprint_privacy_condition_component.dart';
 import 'package:steuermachen/components/popup_loader_component.dart';
 import 'package:steuermachen/components/text_component.dart';
+import 'package:steuermachen/components/toast_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
+import 'package:steuermachen/constants/strings/error_messages_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
+import 'package:steuermachen/data/view_models/auth/auth_provider.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 
 class ProfileMenuScreen extends StatefulWidget {
@@ -144,9 +149,14 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    TextComponent(
-                      LocaleKeys.deletingAnAccount,
-                      style: FontStyles.fontMedium(fontSize: 15),
+                    InkWell(
+                      onTap: () {
+                        showAlertDialog(context);
+                      },
+                      child: TextComponent(
+                        LocaleKeys.deletingAnAccount,
+                        style: FontStyles.fontMedium(fontSize: 15),
+                      ),
                     ),
                     const ImprintPrivacyConditionsComponent(),
                   ],
@@ -159,6 +169,46 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  showAlertDialog(BuildContext context) {
+    Widget okButton = TextButton(
+      child: const Text("Ok"),
+      onPressed: () async {
+        AuthProvider _auth = Provider.of(context, listen: false);
+        PopupLoader.showLoadingDialog(context);
+        bool res = await _auth.deleteAccount();
+        PopupLoader.hideLoadingDialog(context);
+        Navigator.pop(context);
+        if (res) {
+          Navigator.pushNamedAndRemoveUntil(
+              context, RouteConstants.splashScreen, (val) => false);
+        } else {
+          ToastComponent.showToast(ErrorMessagesConstants.somethingWentWrong);
+        }
+      },
+    );
+    Widget cancelButton = TextButton(
+      child: Text(LocaleKeys.cancel.tr()),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+    AlertDialog alert = AlertDialog(
+      content: Text(LocaleKeys.deleteAccountMessage.tr()),
+      actions: [
+        cancelButton,
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 }

@@ -233,6 +233,7 @@ class CodegenLoader extends AssetLoader{
   "creditCard": "Credit card",
   "bill": "bill",
   "choosePaymentMethod": "Choose pay method",
+  "deleteAccountMessage": "Warnung! Dies ist eine gefährliche Aktion, die alle Ihre Daten und Ihr Konto dauerhaft löscht.",
   "logout": "Ausloggen"
 };
 static const Map<String,dynamic> en = {
@@ -452,6 +453,7 @@ static const Map<String,dynamic> en = {
   "creditCard": "Credit card",
   "bill": "bill",
   "choosePaymentMethod": "Choose pay method",
+  "deleteAccountMessage": "Warning! this is a dangerous action and it will delete all your data and account permanently.",
   "logout": "Logout"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"de": de, "en": en};

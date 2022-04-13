@@ -224,5 +224,6 @@
     "imprint": "Impressum",
     "privacyPolicy": "Datenschutz",
     "conditions": "AGB",
+    "taxYear": "Steuerjahr",
     "logout": "Ausloggen"
 }

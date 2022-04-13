@@ -240,6 +240,7 @@ class CodegenLoader extends AssetLoader{
   "imprint": "Impressum",
   "privacyPolicy": "Datenschutz",
   "conditions": "AGB",
+  "taxYear": "Steuerjahr",
   "logout": "Ausloggen"
 };
 static const Map<String,dynamic> en = {
@@ -466,6 +467,7 @@ static const Map<String,dynamic> en = {
   "imprint": "Imprint",
   "privacyPolicy": "Privacy Policy",
   "conditions": "Conditions",
+  "taxYear": "tax year",
   "logout": "Logout"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"de": de, "en": en};

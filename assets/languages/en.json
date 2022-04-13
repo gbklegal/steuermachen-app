@@ -222,5 +222,6 @@
     "imprint": "Imprint",
     "privacyPolicy": "Privacy Policy",
     "conditions": "Conditions",
+    "taxYear": "tax year",
     "logout": "Logout"
 }

@@ -1,9 +1,11 @@
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:steuermachen/components/text_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
+import 'package:steuermachen/languages/locale_keys.g.dart';
 
 class TaxYearComponent extends StatelessWidget {
   const TaxYearComponent({
@@ -30,7 +32,7 @@ class TaxYearComponent extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               TextComponent(
-                "tax year $year",
+                "${LocaleKeys.taxYear.tr()} $year",
                 style: FontStyles.fontMedium(fontSize: 16),
               ),
               SvgPicture.asset(

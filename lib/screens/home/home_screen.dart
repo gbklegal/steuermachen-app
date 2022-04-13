@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
 import 'package:steuermachen/components/collect_receipt_component.dart';
@@ -68,7 +67,7 @@ class HomeScreen extends StatelessWidget {
                 Consumer<ProfileProvider>(builder: (context, consumer, child) {
                   return Text(
                     LocaleKeys.hello.tr().onlyFirstInCaps +
-                        " ${consumer.userData?.firstName ?? ""}",
+                        " ${consumer.userData?.firstName?.toUpperCase() ?? ""}",
                     textAlign: TextAlign.left,
                     style: Theme.of(context)
                         .textTheme

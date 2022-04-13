@@ -21,7 +21,7 @@ class GetStartedScreen extends StatelessWidget {
             children: [
               const LogoComponent(),
               const SizedBox(height: 35),
-              Expanded(child: _topTitle(context)),
+              _topTitle(context),
               Image.asset(
                 AssetConstants.fileArtWork,
                 height: 280,

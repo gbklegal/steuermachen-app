@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
+import 'package:steuermachen/languages/locale_keys.g.dart';
 
 class BackResetForwardBtnComponent extends StatelessWidget {
   const BackResetForwardBtnComponent({
@@ -21,12 +23,14 @@ class BackResetForwardBtnComponent extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          _iconText(AssetConstants.icBackNav, "Back", onTapBack, context),
-          _iconText(AssetConstants.icReset, "Start new", onTapReset, context),
+          _iconText(AssetConstants.icBackNav, LocaleKeys.back.tr(), onTapBack,
+              context),
+          _iconText(AssetConstants.icReset, LocaleKeys.startNew.tr(),
+              onTapReset, context),
           Visibility(
             visible: showContinueBtn!,
-            child: _iconText(AssetConstants.icForwardNav, "Continue",
-                onTapContinue, context),
+            child: _iconText(AssetConstants.icForwardNav,
+                LocaleKeys.continueText.tr(), onTapContinue, context),
           ),
         ],
       ),

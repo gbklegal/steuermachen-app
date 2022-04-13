@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
+import 'package:steuermachen/components/button_component.dart';
 import 'package:steuermachen/components/text_component.dart';
 import 'package:steuermachen/components/textformfield_icon_component.dart';
 import 'package:steuermachen/components/user_form_component.dart';
@@ -149,6 +150,9 @@ class ChangePassword extends StatelessWidget with InputValidationUtil {
           validator: validatePassword,
         ),
         const SizedBox(height: 15),
+        ButtonComponent(
+          buttonText: LocaleKeys.changePassword.tr(),
+        )
       ],
     );
   }

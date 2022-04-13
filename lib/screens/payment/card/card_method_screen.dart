@@ -99,7 +99,7 @@ class CardPaymentMethodScreen extends StatelessWidget {
       bottomNavigationBar: Padding(
         padding: AppConstants.bottomBtnPadding,
         child: ButtonComponent(
-          buttonText: LocaleKeys.continueWord.tr(),
+          buttonText: LocaleKeys.continueText.tr(),
           onPressed: () async {
             ApiResponse accessTokenRes = await provider.fetchAccessToken();
             if (accessTokenRes.status == Status.error) {

@@ -179,8 +179,8 @@ class _SignupScreenState extends State<SignupScreen> with InputValidationUtil {
               decoration: InputDecoration(
                 label: Text(LocaleKeys.password.tr()),
                 prefixIcon: TextFormFieldIcons(
-                  assetName: AssetConstants.icEye,
-                  padding: 16,
+                  assetName: AssetConstants.icEyeClose,
+                  padding: 12,
                 ),
               ),
               obscureText: true,

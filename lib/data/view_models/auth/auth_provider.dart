@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:steuermachen/constants/strings/error_messages_constants.dart';
+import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/main.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 
@@ -199,6 +200,22 @@ class AuthProvider extends ChangeNotifier {
       return false;
     } else {
       return true;
+    }
+  }
+
+  Future<CommonResponseWrapper> changePassword(
+      String oldPassword, String newPassword) async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: user!.email!,
+        password: oldPassword,
+      );
+      await user.updatePassword(newPassword);
+      return CommonResponseWrapper(
+          status: true, message: LocaleKeys.passwordChangedSuccess);
+    } catch (e) {
+      return CommonResponseWrapper(status: false, message: e.toString());
     }
   }
 

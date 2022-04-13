@@ -29,9 +29,11 @@ class OrderOverviewScreen extends StatefulWidget {
 
 class _OrderOverviewScreenState extends State<OrderOverviewScreen> {
   late DeclarationTaxViewModel provider;
+  late DocumentsViewModel documentViewModel;
   @override
   void initState() {
     provider = Provider.of<DeclarationTaxViewModel>(context, listen: false);
+    documentViewModel = Provider.of<DocumentsViewModel>(context, listen: false);
     _fetchTaxFiledYears();
     super.initState();
   }
@@ -39,7 +41,10 @@ class _OrderOverviewScreenState extends State<OrderOverviewScreen> {
   void _fetchTaxFiledYears() {
     if (provider.taxFiledYears.status != Status.completed) {
       WidgetsBinding.instance!.addPostFrameCallback(
-        (_) => {provider.fetchTaxFiledYears()},
+        (_) => {
+          provider.fetchTaxFiledYears(),
+          documentViewModel.fetchDocumentOptionsData()
+        },
       );
     }
   }
@@ -85,8 +90,8 @@ class _OrderOverviewScreenState extends State<OrderOverviewScreen> {
               },
             );
           } else {
-            if(consumer.taxFiledYears.data ==null){
-                return const NoOrderComponent();
+            if (consumer.taxFiledYears.data == null) {
+              return const NoOrderComponent();
             }
             return _getMainBody(consumer.taxFiledYears.data);
           }

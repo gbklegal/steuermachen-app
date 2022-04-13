@@ -120,7 +120,7 @@ class _SignInScreenState extends State<SignInScreen> with InputValidationUtil {
                 const SizedBox(height: 20),
                 RichTextAuthComponent(
                   textSpan1: LocaleKeys.dontHaveAnAccount.tr(),
-                  textSpan2: LocaleKeys.signupNow.tr(),
+                  textSpan2: LocaleKeys.toRegister.tr(),
                   onTap: () {
                     Navigator.pushReplacementNamed(
                         context, RouteConstants.signupScreen);
@@ -206,12 +206,7 @@ class _SignInScreenState extends State<SignInScreen> with InputValidationUtil {
             controller: _passwordController,
             decoration: InputDecoration(
               label: Text(LocaleKeys.password.tr()),
-              contentPadding: const EdgeInsets.only(left: 0),
               prefixIcon: TextFormFieldIcons(
-                assetName: AssetConstants.icLock,
-                padding: 12,
-              ),
-              suffixIcon: TextFormFieldIcons(
                 assetName: AssetConstants.icEyeClose,
                 padding: 12,
               ),

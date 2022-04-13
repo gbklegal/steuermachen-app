@@ -37,6 +37,8 @@ abstract class  LocaleKeys {
   static const order = 'order';
   static const startWithPersonalInfo = 'startWithPersonalInfo';
   static const salutation = 'salutation';
+  static const startNew = 'startNew';
+  static const continueText = 'continueText';
   static const thankOrder = 'thankOrder';
   static const youReceiveEmail = 'youReceiveEmail';
   static const goHome = 'goHome';
@@ -220,6 +222,10 @@ abstract class  LocaleKeys {
   static const bill = 'bill';
   static const choosePaymentMethod = 'choosePaymentMethod';
   static const deleteAccountMessage = 'deleteAccountMessage';
+  static const passwordChangedSuccess = 'passwordChangedSuccess';
+  static const imprint = 'imprint';
+  static const privacyPolicy = 'privacyPolicy';
+  static const conditions = 'conditions';
   static const logout = 'logout';
 
 }

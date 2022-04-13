@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/components/button_component.dart';
@@ -8,7 +9,6 @@ import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
-
 import 'package:steuermachen/data/view_models/terms_and_condition_provider.dart';
 
 class TermsAndConditionComponent extends StatelessWidget {
@@ -110,7 +110,7 @@ class TermsAndConditionComponent extends StatelessWidget {
             child: Column(
               children: [
                 ButtonComponent(
-                    buttonText: "Order now",
+                    buttonText: LocaleKeys.orderNow.tr(),
                     onPressed: () {
                       if (consumer.validateChecks(showCommissioning)) {
                         onPressedOrderNow!(true);

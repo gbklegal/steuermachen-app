@@ -4,6 +4,7 @@ import 'package:steuermachen/constants/strings/error_messages_constants.dart';
 import 'package:steuermachen/constants/strings/http_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/data/repositories/remote/safe_and_declaration_tax_repository.dart';
+import 'package:steuermachen/data/view_models/payment_gateway/payment_gateway_provider.dart';
 import 'package:steuermachen/main.dart';
 import 'package:steuermachen/data/view_models/profile/profile_provider.dart';
 import 'package:steuermachen/data/view_models/signature/signature_provider.dart';
@@ -15,6 +16,7 @@ import 'package:steuermachen/utils/utils.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 import 'package:steuermachen/wrappers/declaration_tax/declaration_tax_data_collector_wrapper.dart';
 import 'package:steuermachen/wrappers/declaration_tax/declaration_tax_view_wrapper.dart';
+import 'package:steuermachen/wrappers/payment_gateway/sumup_checkout_wrapper.dart';
 import 'package:steuermachen/wrappers/tax_steps_wrapper.dart';
 
 class DeclarationTaxViewModel extends ChangeNotifier {
@@ -82,18 +84,38 @@ class DeclarationTaxViewModel extends ChangeNotifier {
 
   Future<CommonResponseWrapper> submitDeclarationTaxData(BuildContext context,
       {bool isCurrentYear = false, String? taxPrice}) async {
+    PaymentGateWayProvider _paymentProvider =
+        Provider.of<PaymentGateWayProvider>(context, listen: false);
     if (isCurrentYear) {
       _setCurrentYearTax(context, taxPrice!);
     } else {
       await _setDataDeclarationTax(context);
     }
     try {
-      await serviceLocatorInstance<SafeAndDeclarationTaxRepository>()
-          .submitDeclarationTax(
-        _declarationTaxDataCollectorWrapper!,
-        taxSteps,
-        isCurrentYear ? "currentYear" : "declarationTax",
-      );
+      Map<String, dynamic> data = {
+        ..._declarationTaxDataCollectorWrapper!
+            .toJson(isCurrentYear ? "currentYear" : "declarationTax", taxSteps),
+        "payment_type": "billing",
+        "payment_info": null,
+        "approved_by": null,
+      };
+      if (_paymentProvider.isCardPayment) {
+        ApiResponse apiResponse = await _paymentProvider.completeCheckout();
+        if (apiResponse.status == Status.completed) {
+          SumpupCheckoutWrapper checkoutWrapper = apiResponse.data;
+          data["payment_info"] = checkoutWrapper.toJson();
+          data["payment_type"] = "card";
+          await serviceLocatorInstance<SafeAndDeclarationTaxRepository>()
+              .submitDeclarationTax(data);
+          _paymentProvider.isCardPayment = false;
+        } else {
+          return CommonResponseWrapper(
+              status: false, message: apiResponse.message);
+        }
+      } else {
+        await serviceLocatorInstance<SafeAndDeclarationTaxRepository>()
+            .submitDeclarationTax(data);
+      }
       return CommonResponseWrapper(
           status: true, message: StringConstants.thankYouForOrder);
     } catch (e) {
@@ -130,6 +152,7 @@ class DeclarationTaxViewModel extends ChangeNotifier {
         Provider.of<ProfileProvider>(context, listen: false);
     TaxCalculatorProvider _tax =
         Provider.of<TaxCalculatorProvider>(context, listen: false);
+
     String signaturePath = await Utils.uploadToFirebaseStorage(
         await _signature.getSignaturePath());
     _declarationTaxDataCollectorWrapper?.signaturePath = signaturePath;

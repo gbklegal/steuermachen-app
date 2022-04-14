@@ -12,6 +12,7 @@ import 'package:steuermachen/wrappers/payment_gateway/user_card_wrapper.dart';
 
 class PaymentGateWayProvider extends ChangeNotifier {
   bool isCardPayment = false;
+  dynamic paymentAmount;
   late SumpupCheckoutWrapper? checkoutWrapper;
   UserCardWrapper userCardInfo = UserCardWrapper(card: UserCardInfo());
   final String _clientSecret =
@@ -45,8 +46,14 @@ class PaymentGateWayProvider extends ChangeNotifier {
     }
   }
 
-  Future<ApiResponse> createCheckout(String accessToken, int amount) async {
+  Future<ApiResponse> createCheckout(String accessToken, dynamic amount) async {
     try {
+      // if (amount is double) {
+        amount = double.parse(amount.toString());
+      // }
+      //  else {
+      //   amount = int.parse(amount.toString());
+      // }
       serviceLocatorInstance<DioClientNetwork>()
           .dio
           .options

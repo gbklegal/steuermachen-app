@@ -105,7 +105,8 @@ class _DeclarationQuestionsViewComponentState
                             Consumer<TaxCalculatorProvider>(
                                 builder: (context, taxCalConsumer, child) {
                               return PaymentMethodsComponent(
-                                amount: "${taxCalConsumer.calculatedPrice},00",
+                                amount:
+                                    taxCalConsumer.calculatedPrice.toString(),
                                 decisionTap: () {
                                   consumer.setTaxPrice(
                                       "${taxCalConsumer.calculatedPrice},00");
@@ -197,7 +198,7 @@ class _DeclarationQuestionsViewComponentState
         onTap: () {
           int year = DateTime.now().year;
           if (year.toString() == widget.declarationTaxData[i].options[x]) {
-             consumer.setTaxYear(widget.declarationTaxData[i].options[x]);
+            consumer.setTaxYear(widget.declarationTaxData[i].options[x]);
             Navigator.pushNamed(context, RouteConstants.currentYearTaxScreen);
           } else {
             if (i == 0) {

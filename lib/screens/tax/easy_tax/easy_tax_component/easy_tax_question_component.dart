@@ -93,8 +93,7 @@ class _EasyTaxQuestionsViewComponentState
                           else if (widget.easyTaxData[i].optionType ==
                               OptionConstants.paymentMethods)
                             PaymentMethodsComponent(
-                              amount:
-                                  "${widget.easyTaxData[0].content!.price.toString()} ${widget.easyTaxData[0].content!.currencySymbol}",
+                              amount: widget.easyTaxData[0].content!.price,
                               decisionTap: () {
                                 Utils.animateToNextPage(pageController, i);
                               },
@@ -149,8 +148,7 @@ class _EasyTaxQuestionsViewComponentState
 
   _submitData(EasyTaxProvider consumer) async {
     PopupLoader.showLoadingDialog(context);
-    CommonResponseWrapper res =
-        await consumer.submitEasyTaxData(context);
+    CommonResponseWrapper res = await consumer.submitEasyTaxData(context);
     PopupLoader.hideLoadingDialog(context);
     if (res.status!) {
       Utils.completedDialog(context);

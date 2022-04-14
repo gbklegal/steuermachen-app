@@ -218,8 +218,8 @@ class _CardPaymentMethodScreenState extends State<CardPaymentMethodScreen> {
     } else {
       SumpupAccessTokenWrapper accessTokenWrapper =
           accessTokenRes.data as SumpupAccessTokenWrapper;
-      ApiResponse createCheckoutRes =
-          await provider.createCheckout(accessTokenWrapper.accessToken, 10);
+      ApiResponse createCheckoutRes = await provider.createCheckout(
+          accessTokenWrapper.accessToken, provider.paymentAmount);
       if (createCheckoutRes.status == Status.error) {
         ToastComponent.showToast(createCheckoutRes.message!);
         return false;

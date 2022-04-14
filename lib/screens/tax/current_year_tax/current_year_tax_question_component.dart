@@ -44,7 +44,7 @@ class _CurrentYearTaxViewState extends State<CurrentYearTaxViewComponent> {
       children: [
         _initialView(context),
         PaymentMethodsComponent(
-          amount: "${widget.currentYearTaxData.price}0 euros",
+          amount: widget.currentYearTaxData.price.toString(),
           decisionTap: () {
             Utils.animateToNextPage(pageController, pageIndex);
           },

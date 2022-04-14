@@ -1,9 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:steuermachen/components/shadow_card_component.dart';
 import 'package:steuermachen/components/text_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
+import 'package:steuermachen/data/view_models/payment_gateway/payment_gateway_provider.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 
 class PaymentMethodsComponent extends StatelessWidget {
@@ -28,6 +30,9 @@ class PaymentMethodsComponent extends StatelessWidget {
           padding: const EdgeInsets.all(2.0),
           child: InkWell(
             onTap: () async {
+              var paymentProvider =
+                  Provider.of<PaymentGateWayProvider>(context, listen: false);
+              paymentProvider.paymentAmount = amount;
               var paymentStatus = await Navigator.pushNamed(
                   context, RouteConstants.cardPaymentMethodScreen);
               if (paymentStatus != null) {
@@ -80,7 +85,7 @@ class PaymentMethodsComponent extends StatelessWidget {
                   .copyWith(fontSize: 16, fontWeight: FontWeight.w600),
             ),
             TextComponent(
-              amount,
+              amount+" euros",
               style: Theme.of(context)
                   .textTheme
                   .bodyText1!

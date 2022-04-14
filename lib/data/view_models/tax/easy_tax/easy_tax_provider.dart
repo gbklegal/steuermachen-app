@@ -4,11 +4,14 @@ import 'package:provider/provider.dart';
 import 'package:steuermachen/constants/strings/error_messages_constants.dart';
 import 'package:steuermachen/constants/strings/process_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
+import 'package:steuermachen/data/view_models/payment_gateway/payment_gateway_provider.dart';
 import 'package:steuermachen/main.dart';
 import 'package:steuermachen/data/view_models/profile/profile_provider.dart';
+import 'package:steuermachen/services/networks/api_response_states.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 import 'package:steuermachen/wrappers/easy_tax/easy_tax_data_collector_wrapper.dart';
 import 'package:steuermachen/wrappers/easy_tax/easy_tax_wrapper.dart';
+import 'package:steuermachen/wrappers/payment_gateway/sumup_checkout_wrapper.dart';
 
 class EasyTaxProvider extends ChangeNotifier {
   final EasyTaxDataCollectorWrapper? _easyTaxDataCollectorWrapper =
@@ -68,25 +71,47 @@ class EasyTaxProvider extends ChangeNotifier {
     }
   }
 
-  Future<CommonResponseWrapper> submitDeclarationTaxData(
-      BuildContext context) async {
+  Future<CommonResponseWrapper> submitEasyTaxData(BuildContext context) async {
     ProfileProvider _user =
         Provider.of<ProfileProvider>(context, listen: false);
+    PaymentGateWayProvider _paymentProvider =
+        Provider.of<PaymentGateWayProvider>(context, listen: false);
     _easyTaxDataCollectorWrapper?.userInfo = _user.getUserFromControllers();
     _easyTaxDataCollectorWrapper?.userAddress = _user.getSelectedAddress;
     _easyTaxDataCollectorWrapper?.termsAndConditionChecked = true;
     try {
       User? user = FirebaseAuth.instance.currentUser;
-      await firestore
-          .collection("user_orders")
-          .doc("${user?.uid}")
-          .collection("easy_tax")
-          .add({
+      Map<String, dynamic> data = {
         ..._easyTaxDataCollectorWrapper!.toJson(),
         "created_at": DateTime.now(),
         "status": ProcessConstants.pending,
+        "payment_type": "billing",
+        "payment_info": null,
         "approved_by": null,
-      });
+      };
+      if (_paymentProvider.isCardPayment) {
+        ApiResponse apiResponse = await _paymentProvider.completeCheckout();
+        if (apiResponse.status == Status.completed) {
+          SumpupCheckoutWrapper checkoutWrapper = apiResponse.data;
+          data["payment_info"] = checkoutWrapper.toJson();
+          data["payment_type"] = "card";
+          await firestore
+              .collection("user_orders")
+              .doc("${user?.uid}")
+              .collection("easy_tax")
+              .add(data);
+          _paymentProvider.isCardPayment = false;
+        } else {
+          return CommonResponseWrapper(
+              status: false, message: apiResponse.message);
+        }
+      } else {
+        await firestore
+            .collection("user_orders")
+            .doc("${user?.uid}")
+            .collection("easy_tax")
+            .add(data);
+      }
       return CommonResponseWrapper(
           status: true, message: StringConstants.thankYouForOrder);
     } catch (e) {

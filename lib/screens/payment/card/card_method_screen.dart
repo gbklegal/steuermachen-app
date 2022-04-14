@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
 import 'package:steuermachen/components/button_component.dart';
+import 'package:steuermachen/components/popup_loader_component.dart';
 import 'package:steuermachen/components/toast_component.dart';
 import 'package:steuermachen/constants/app_constants.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
@@ -15,6 +16,7 @@ import 'package:steuermachen/services/networks/api_response_states.dart';
 import 'package:steuermachen/utils/card_validation/card_input_formatters.dart';
 import 'package:steuermachen/utils/card_validation/card_validation_utils.dart';
 import 'package:steuermachen/utils/input_validation_util.dart';
+import 'package:steuermachen/utils/utils.dart';
 import 'package:steuermachen/wrappers/payment_gateway/sumpup_access_token_wrapper.dart';
 
 class CardPaymentMethodScreen extends StatefulWidget {
@@ -29,7 +31,8 @@ class _CardPaymentMethodScreenState extends State<CardPaymentMethodScreen> {
   late PaymentGateWayProvider provider;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController numberController = TextEditingController();
+  final TextEditingController numberController =
+      TextEditingController(text: "5060 6666 6666 6666 666");
   final paymentCard = PaymentCard();
   var _autoValidateMode = AutovalidateMode.disabled;
 
@@ -74,99 +77,109 @@ class _CardPaymentMethodScreenState extends State<CardPaymentMethodScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.only(left: 16, right: 16, top: 25),
-        child: Form(
-          key: _formKey,
-          autovalidateMode: _autoValidateMode,
-          child: Column(
-            children: [
-              Image.asset(AssetConstants.paymentMethods),
-              sizedBoxH12,
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: LocaleKeys.nameOnTheCard.tr() + "*",
-                  hintStyle: fontStyle,
-                ),
-                onSaved: (val) => provider.userCardInfo.card?.name = val,
-                validator: InputValidationUtil().validateName,
-              ),
-              sizedBoxH12,
-              TextFormField(
-                controller: numberController,
-                keyboardType: TextInputType.number,
-                inputFormatters: [
-                  FilteringTextInputFormatter.digitsOnly,
-                  LengthLimitingTextInputFormatter(19),
-                  CardNumberInputFormatter()
-                ],
-                decoration: InputDecoration(
-                    labelText: LocaleKeys.cardNumber.tr() + "*",
+        child: InkWell(
+          focusColor: Colors.transparent,
+          highlightColor: Colors.transparent,
+          splashColor: Colors.transparent,
+          splashFactory: NoSplash.splashFactory,
+          onTap: () {
+            Utils.hideKeyboard(context);
+          },
+          child: Form(
+            key: _formKey,
+            autovalidateMode: _autoValidateMode,
+            child: Column(
+              children: [
+                Image.asset(AssetConstants.paymentMethods),
+                sizedBoxH12,
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: LocaleKeys.nameOnTheCard.tr() + "*",
                     hintStyle: fontStyle,
-                    suffixIcon: CardUtils.getCardIcon(paymentCard.type)),
-                onSaved: (val) {
-                  if (val != null) {
-                    provider.userCardInfo.card?.number =
-                        CardUtils.getCleanedNumber(val);
-                  }
-                },
-                validator: CardUtils.validateCardNum,
-              ),
-              sizedBoxH12,
-              Row(
-                children: [
-                  Flexible(
-                    child: TextFormField(
-                      inputFormatters: [
-                        FilteringTextInputFormatter.digitsOnly,
-                        LengthLimitingTextInputFormatter(4),
-                        CardMonthInputFormatter()
-                      ],
-                      decoration: InputDecoration(
-                        labelText: LocaleKeys.expiryDate.tr() + " ('MM/YY') *",
-                        hintStyle: fontStyle,
+                  ),
+                  onSaved: (val) => provider.userCardInfo.card?.name = val,
+                  validator: InputValidationUtil().validateName,
+                ),
+                sizedBoxH12,
+                TextFormField(
+                  controller: numberController,
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                    LengthLimitingTextInputFormatter(19),
+                    CardNumberInputFormatter()
+                  ],
+                  decoration: InputDecoration(
+                      labelText: LocaleKeys.cardNumber.tr() + "*",
+                      hintStyle: fontStyle,
+                      suffixIcon: CardUtils.getCardIcon(paymentCard.type)),
+                  onSaved: (val) {
+                    if (val != null) {
+                      provider.userCardInfo.card?.number =
+                          CardUtils.getCleanedNumber(val);
+                    }
+                  },
+                  validator: CardUtils.validateCardNum,
+                ),
+                sizedBoxH12,
+                Row(
+                  children: [
+                    Flexible(
+                      child: TextFormField(
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                          LengthLimitingTextInputFormatter(4),
+                          CardMonthInputFormatter()
+                        ],
+                        decoration: InputDecoration(
+                          labelText:
+                              LocaleKeys.expiryDate.tr() + " ('MM/YY') *",
+                          hintStyle: fontStyle,
+                        ),
+                        validator: CardUtils.validateDate,
+                        keyboardType: TextInputType.number,
+                        onSaved: (val) {
+                          if (val != null) {
+                            List<int> expiryDate = CardUtils.getExpiryDate(val);
+                            provider.userCardInfo.card?.expiryMonth =
+                                expiryDate[0].toString();
+                            provider.userCardInfo.card?.expiryYear =
+                                expiryDate[1].toString();
+                          }
+                        },
                       ),
-                      validator: CardUtils.validateDate,
-                      keyboardType: TextInputType.number,
-                      onSaved: (val) {
-                        if (val != null) {
-                          List<int> expiryDate = CardUtils.getExpiryDate(val);
-                          provider.userCardInfo.card?.expiryMonth =
-                              expiryDate[0].toString();
-                          provider.userCardInfo.card?.expiryYear =
-                              expiryDate[1].toString();
-                        }
-                      },
                     ),
-                  ),
-                  const SizedBox(
-                    width: 50,
-                  ),
-                  Flexible(
-                    child: TextFormField(
-                      inputFormatters: [
-                        FilteringTextInputFormatter.digitsOnly,
-                        LengthLimitingTextInputFormatter(4),
-                      ],
-                      decoration: InputDecoration(
-                        labelText: LocaleKeys.cv.tr() + "*",
-                        hintStyle: fontStyle,
-                        suffixIcon: Padding(
-                          padding: const EdgeInsets.only(top: 15, bottom: 15),
-                          child: Image.asset(
-                            AssetConstants.icCv,
-                            height: 15,
+                    const SizedBox(
+                      width: 50,
+                    ),
+                    Flexible(
+                      child: TextFormField(
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                          LengthLimitingTextInputFormatter(4),
+                        ],
+                        decoration: InputDecoration(
+                          labelText: LocaleKeys.cv.tr() + "*",
+                          hintStyle: fontStyle,
+                          suffixIcon: Padding(
+                            padding: const EdgeInsets.only(top: 15, bottom: 15),
+                            child: Image.asset(
+                              AssetConstants.icCv,
+                              height: 15,
+                            ),
                           ),
                         ),
+                        validator: CardUtils.validateCVV,
+                        keyboardType: TextInputType.number,
+                        onSaved: (val) {
+                          provider.userCardInfo.card?.cvv = val;
+                        },
                       ),
-                      validator: CardUtils.validateCVV,
-                      keyboardType: TextInputType.number,
-                      onSaved: (val) {
-                        provider.userCardInfo.card?.cvv = val;
-                      },
                     ),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -183,25 +196,37 @@ class _CardPaymentMethodScreenState extends State<CardPaymentMethodScreen> {
               });
             } else {
               form.save();
-              // await _tokenAndCheckOutRequest();
+              PopupLoader.showLoadingDialog(context);
+              if (await _tokenAndCheckOutRequest()) {
+                PopupLoader.hideLoadingDialog(context);
+                Navigator.pop(context, true);
+              } else {
+                PopupLoader.hideLoadingDialog(context);
+              }
             }
-            // Navigator.pushNamed(context, RouteConstants.confirmBillingScreen);
           },
         ),
       ),
     );
   }
 
-  Future<void> _tokenAndCheckOutRequest() async {
+  Future<bool> _tokenAndCheckOutRequest() async {
     ApiResponse accessTokenRes = await provider.fetchAccessToken();
     if (accessTokenRes.status == Status.error) {
       ToastComponent.showToast(accessTokenRes.message!);
+      return false;
     } else {
       SumpupAccessTokenWrapper accessTokenWrapper =
           accessTokenRes.data as SumpupAccessTokenWrapper;
       ApiResponse createCheckoutRes =
           await provider.createCheckout(accessTokenWrapper.accessToken, 10);
-      print(createCheckoutRes);
+      if (createCheckoutRes.status == Status.error) {
+        ToastComponent.showToast(createCheckoutRes.message!);
+        return false;
+      } else {
+        provider.isCardPayment = true;
+        return true;
+      }
     }
   }
 }

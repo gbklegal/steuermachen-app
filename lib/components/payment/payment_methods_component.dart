@@ -7,7 +7,8 @@ import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 
 class PaymentMethodsComponent extends StatelessWidget {
-  const PaymentMethodsComponent({Key? key, required this.decisionTap, required this.amount})
+  const PaymentMethodsComponent(
+      {Key? key, required this.decisionTap, required this.amount})
       : super(key: key);
   final void Function() decisionTap;
   final String amount;
@@ -26,8 +27,17 @@ class PaymentMethodsComponent extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(2.0),
           child: InkWell(
-            onTap: () => Navigator.pushNamed(
-                context, RouteConstants.cardPaymentMethodScreen),
+            onTap: () async {
+              var paymentStatus = await Navigator.pushNamed(
+                  context, RouteConstants.cardPaymentMethodScreen);
+              if (paymentStatus != null) {
+                var billingStatus = await Navigator.pushNamed(
+                    context, RouteConstants.selectBillingAddressScreen);
+                if (billingStatus != null) {
+                  decisionTap();
+                }
+              }
+            },
             child: ShadowCardComponent(
               height: 60,
               fontSize: 17,

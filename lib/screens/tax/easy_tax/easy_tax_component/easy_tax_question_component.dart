@@ -150,7 +150,7 @@ class _EasyTaxQuestionsViewComponentState
   _submitData(EasyTaxProvider consumer) async {
     PopupLoader.showLoadingDialog(context);
     CommonResponseWrapper res =
-        await consumer.submitDeclarationTaxData(context);
+        await consumer.submitEasyTaxData(context);
     PopupLoader.hideLoadingDialog(context);
     if (res.status!) {
       Utils.completedDialog(context);

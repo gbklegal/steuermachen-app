@@ -43,12 +43,11 @@ class Utils {
 
   static void hideKeyboard(context) {
     FocusScopeNode currentFocus = FocusScope.of(context);
-
     if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
       FocusManager.instance.primaryFocus!.unfocus();
-      currentFocus.dispose();
     }
   }
+
 
   static completedDialog(BuildContext context,
       {bool? backButton = false, String? title, text}) {

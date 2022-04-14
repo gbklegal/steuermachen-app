@@ -11,6 +11,7 @@ import 'package:steuermachen/wrappers/payment_gateway/sumup_checkout_wrapper.dar
 import 'package:steuermachen/wrappers/payment_gateway/user_card_wrapper.dart';
 
 class PaymentGateWayProvider extends ChangeNotifier {
+  bool isCardPayment = false;
   late SumpupCheckoutWrapper? checkoutWrapper;
   UserCardWrapper userCardInfo = UserCardWrapper(card: UserCardInfo());
   final String _clientSecret =
@@ -60,6 +61,21 @@ class PaymentGateWayProvider extends ChangeNotifier {
         "pay_to_email": "dialog@steuermachen.de",
         "description": "Sample one-time payment"
       });
+      checkoutWrapper = SumpupCheckoutWrapper.fromJson(response);
+      return ApiResponse.completed(checkoutWrapper);
+    } catch (e) {
+      return ApiResponse.error(e.toString());
+    }
+  }
+
+  Future<ApiResponse> completeCheckout() async {
+    try {
+      serviceLocatorInstance<DioClientNetwork>().dio.options.baseUrl =
+          HTTPConstants.sumpBaseUrl;
+      userCardInfo.paymentType = "card";
+      var response = await serviceLocatorInstance<DioApiServices>().postRequest(
+          HTTPConstants.sumupCheckOuts + "/${checkoutWrapper?.id}",
+          data: userCardInfo.toJson());
       checkoutWrapper = SumpupCheckoutWrapper.fromJson(response);
       return ApiResponse.completed(checkoutWrapper);
     } catch (e) {

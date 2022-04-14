@@ -13,7 +13,7 @@ class SumpupCheckoutWrapper {
     required this.transactions,
   });
   late final String checkoutReference;
-  late final int amount;
+  late final dynamic amount;
   late final String currency;
   late final String payToEmail;
   late final String description;

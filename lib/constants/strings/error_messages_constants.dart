@@ -24,6 +24,7 @@ class ErrorMessagesConstants {
   static const String noRecordFound = 'Opps no record found..!!';
   static const String somethingWentWrong = 'Something went wrong.';
   static const String invalidForm = 'Invalid form.';
+  static const String invalidNumber = 'Number is invalid';
   static const String fieldRequired = 'Field is Required';
   static const String errEmpty = "Field is empty";
   static const String errMinLength = "Minimum Length will be";

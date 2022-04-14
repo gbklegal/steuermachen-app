@@ -30,7 +30,7 @@ class EasyTaxInitialViewData {
   });
   late final String pageTitle;
   late final String title;
-  late final double price;
+  late final String price;
   late final String currencySymbol;
   late final String subtitle;
   late final String buttonText;
@@ -39,7 +39,7 @@ class EasyTaxInitialViewData {
   EasyTaxInitialViewData.fromJson(Map<String, dynamic> json) {
     pageTitle = json['page_title'];
     title = json['title'];
-    price = json['price'];
+    price = json['price'].toString();
     currencySymbol = json['currency_symbol'];
     subtitle = json['subtitle'];
     buttonText = json['buttonText'];

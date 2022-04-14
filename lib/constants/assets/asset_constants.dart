@@ -63,6 +63,16 @@ class AssetConstants {
   static String icTaxTips = "assets/icons/more/faxtips-icon.png";
   static String icFaq = "assets/icons/more/faq-icon.png";
 
+  //More
+  static String calender = "assets/icons/card/calender.png";
+  static String visa = "assets/icons/card/visa.png";
+  static String jcb = "assets/icons/card/jcb.png";
+  static String verve = "assets/icons/card/verve.png";
+  static String discover = "assets/icons/card/discover.png";
+  static String americanExpress = "assets/icons/card/american_express.png";
+  static String dinnersClub = "assets/icons/card/dinners_club.png";
+  static String mastercard = "assets/icons/card/mastercard.png";
+
   //Process
   static String icBroken = "assets/icons/process/broken.png";
   static String icStickman = "assets/icons/process/stickman.png";

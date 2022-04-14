@@ -55,21 +55,25 @@ class _EasyTaxScreenState extends State<EasyTaxScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.only(left: 16, right: 16, top: 25),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (provider.getBusyStateEasyTax || response == null)
-              const EmptyScreenLoaderComponent()
-            else if (!response!.status!)
-              ErrorComponent(
-                  message: response!.message!,
-                  onTap: () async {
-                    var res = await provider.getEasyTaxViewData();
-                    response = res;
-                  })
-            else
-              _getMainBody(),
-          ],
+        child: Consumer<EasyTaxProvider>(
+          builder: (context, consumer, child) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                if (consumer.getBusyStateEasyTax || response == null)
+                  const EmptyScreenLoaderComponent()
+                else if (!response!.status!)
+                  ErrorComponent(
+                      message: response!.message!,
+                      onTap: () async {
+                        var res = await consumer.getEasyTaxViewData();
+                        response = res;
+                      })
+                else
+                  _getMainBody(),
+              ],
+            );
+          }
         ),
       ),
     );

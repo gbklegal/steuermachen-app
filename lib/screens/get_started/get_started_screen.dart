@@ -22,16 +22,23 @@ class GetStartedScreen extends StatelessWidget {
               const LogoComponent(),
               const SizedBox(height: 35),
               _topTitle(context),
+              const SizedBox(
+                height: 50,
+              ),
               Image.asset(
                 AssetConstants.fileArtWork,
-                height: 280,
+                height: 157,
+                width: 357,
+              ),
+              const SizedBox(
+                height: 50,
               ),
               borderButton(context, RouteConstants.quickTaxScreen,
                   LocaleKeys.tryForFree),
-              const SizedBox(height: 20),
+              const SizedBox(height: 14),
               borderButton(context, RouteConstants.signupScreen,
                   LocaleKeys.startYourTaxReturn),
-              const SizedBox(height: 22),
+              const SizedBox(height: 24),
               _button(context, LocaleKeys.alreadyHaveAnAccount, () {
                 Navigator.pushNamed(context, RouteConstants.signInScreen);
               }),
@@ -64,10 +71,11 @@ class GetStartedScreen extends StatelessWidget {
     return TextComponent(
       LocaleKeys.getStartedText_1,
       textAlign: TextAlign.start,
-      style: Theme.of(context)
-          .textTheme
-          .headline5!
-          .copyWith(fontWeight: FontWeight.w700, letterSpacing: 3),
+      style: FontStyles.fontMedium(
+          fontWeight: FontWeight.w700,
+          letterSpacing: 1.8,
+          fontSize: 32,
+          lineSpacing: 1.1),
     );
   }
 
@@ -80,6 +88,7 @@ class GetStartedScreen extends StatelessWidget {
       buttonText: btnText,
       textStyle: FontStyles.fontMedium(
           fontSize: 15,
+          lineSpacing: 1.1,
           color: backgroundColor == null
               ? ColorConstants.white
               : ColorConstants.black),

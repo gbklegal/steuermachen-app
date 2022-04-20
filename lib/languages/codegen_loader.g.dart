@@ -16,7 +16,7 @@ class CodegenLoader extends AssetLoader{
 
   static const Map<String,dynamic> de = {
   "appName": "steuermachen",
-  "onboardingTitle": "Willkommen bei steuermachen!\nHole jetzt deine Steuererstattung zurück",
+  "onboardingTitle": "Willkommen bei steuermachen!\nHole jetzt deine Steuererstattung\nzurück",
   "onboardingOne": "1047 Euro durchschnittliche Steuererstattung für\nSteuerzahler",
   "onboardingTwo": "100 % Zeit und Nerven gespart",
   "onboardingThree": "Verliere kein Geld aufgrund \nfehlerhafter Steuerbescheide ",
@@ -245,7 +245,7 @@ class CodegenLoader extends AssetLoader{
 };
 static const Map<String,dynamic> en = {
   "appName": "make tax",
-  "onboardingTitle": "Welcome to tax making!\nGet your tax refund back nowe",
+  "onboardingTitle": "Welcome to tax making!\nGet your tax refund back now",
   "onboardingOne": "1047 euros average tax refund for taxpayers",
   "onboardingTwo": "100% time and nerves saved",
   "onboardingThree": "Don't lose money due to incorrect tax assessments",

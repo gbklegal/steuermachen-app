@@ -30,6 +30,7 @@ class FontStyles {
           color: color,
           fontWeight: bold ? FontWeight.bold : fontWeight,
           fontStyle: FontStyle.normal,
+          letterSpacing: letterSpacing,
           height: lineSpacing, //line height 200% of actual height
           decoration:
               underLine ? TextDecoration.underline : TextDecoration.none);

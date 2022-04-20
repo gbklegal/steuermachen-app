@@ -63,7 +63,7 @@ class AuthProvider extends ChangeNotifier {
           status: true, message: "Signin successfully");
     } catch (e) {
       return CommonResponseWrapper(
-          status: false, message: ErrorMessagesConstants.somethingWentWrong);
+          status: false, message: e.toString());
     }
   }
 

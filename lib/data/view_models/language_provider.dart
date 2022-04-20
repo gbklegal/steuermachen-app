@@ -3,6 +3,14 @@ import 'package:flutter/cupertino.dart';
 
 class LanguageProvider extends ChangeNotifier {
   String value = 'EN';
+  String currentValue(BuildContext context) {
+    if (context.locale == const Locale('en')) {
+      value = "EN";
+    } else {
+      value = "DE";
+    }
+    return value;
+  }
 
   changeLanguage(String newValue, BuildContext context) {
     value = newValue;

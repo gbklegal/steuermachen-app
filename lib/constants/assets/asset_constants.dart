@@ -47,6 +47,7 @@ class AssetConstants {
   static String icChat = "assets/icons/chat-icon.svg";
   static String icLock = "assets/icons/lock-icon.svg";
   static String icEyeClose = "assets/icons/eye-close-icon.svg";
+  static String icEyeOpen = "assets/icons/eye-icon.svg";
   static String icCamera = "assets/icons/camera-icon.svg";
   static String icActiveCheck = "assets/icons/active-check-icon.svg";
   static String icInActiveCheck = "assets/icons/inactive-check-icon.svg";

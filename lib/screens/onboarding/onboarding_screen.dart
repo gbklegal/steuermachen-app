@@ -52,7 +52,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               children: [
                 Padding(
                   padding:
-                      const EdgeInsets.only(left: 18, right: 18, bottom: 50),
+                      const EdgeInsets.only(left: 18, right: 18, bottom: 60),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     // ignore: prefer_const_literals_to_create_immutables
@@ -98,7 +98,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 30, top: 80),
+                  padding: const EdgeInsets.only(bottom: 20, top: 60),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -138,20 +138,20 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 color: ColorConstants.black,
                 fontWeight: FontWeight.bold,
                 fontStyle: FontStyle.normal,
-                letterSpacing: 1,
                 fontSize: 20),
           ),
-          Flexible(
-            child: Image.asset(assetName, height: 196, width: 196),
-          ),
-          TextComponent(
-            title,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-                color: ColorConstants.black,
-                fontWeight: FontWeight.bold,
-                fontStyle: FontStyle.normal,
-                fontSize: 24),
+          Image.asset(assetName, height: 152, width: 152),
+          SizedBox(
+            height: 100,
+            child: TextComponent(
+              title,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                  color: ColorConstants.black,
+                  fontWeight: FontWeight.bold,
+                  fontStyle: FontStyle.normal,
+                  fontSize: 20),
+            ),
           ),
         ],
       ),

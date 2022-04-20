@@ -45,7 +45,7 @@ void main() async {
         Locale('de'),
       ],
       path: 'assets/languages',
-      fallbackLocale: const Locale('en'),
+      fallbackLocale: const Locale('de'),
       assetLoader: const CodegenLoader(),
       child: const MyApp(),
     ),

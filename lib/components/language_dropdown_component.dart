@@ -18,7 +18,7 @@ class _LanguageDropdownComponentState extends State<LanguageDropdownComponent> {
   Widget build(BuildContext context) {
     return Consumer<LanguageProvider>(builder: (context, consumer, child) {
       return DropdownButton<String>(
-        value: consumer.value,
+        value: consumer.currentValue(context),
         icon: SvgPicture.asset(
           AssetConstants.icDown,
           height: 8,

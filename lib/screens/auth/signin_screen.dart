@@ -34,6 +34,7 @@ class _SignInScreenState extends State<SignInScreen> with InputValidationUtil {
   final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<FormState> _signupFormKey = GlobalKey<FormState>();
   late AuthProvider authProvider;
+  bool showPassword = false;
   @override
   void initState() {
     authProvider = Provider.of<AuthProvider>(context, listen: false);
@@ -206,12 +207,21 @@ class _SignInScreenState extends State<SignInScreen> with InputValidationUtil {
             controller: _passwordController,
             decoration: InputDecoration(
               label: Text(LocaleKeys.password.tr()),
-              prefixIcon: TextFormFieldIcons(
-                assetName: AssetConstants.icEyeClose,
-                padding: 12,
+              prefixIcon: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    showPassword = !showPassword;
+                  });
+                },
+                child: TextFormFieldIcons(
+                  assetName: showPassword
+                      ? AssetConstants.icEyeClose
+                      : AssetConstants.icEyeOpen,
+                  padding: 12,
+                ),
               ),
             ),
-            obscureText: true,
+            obscureText: showPassword,
             validator: validateFieldEmpty,
           ),
         ],

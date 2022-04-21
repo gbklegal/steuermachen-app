@@ -62,12 +62,12 @@ class AppBarComponent extends StatelessWidget with PreferredSizeWidget {
             leading: Visibility(
               visible: showBackButton!,
               child: InkWell(
-                onTap: () {
-                  /*  overrideBackPressed == null
+                onTap: overrideBackPressed ?? () {
+                        /*  overrideBackPressed == null
                                 ? Get.back()
                                 : overrideBackPressed!(); */
-                  Navigator.pop(context);
-                },
+                        Navigator.pop(context);
+                      },
                 child: Row(
                   children: [
                     const Padding(

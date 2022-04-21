@@ -174,7 +174,7 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
 
   showAlertDialog(BuildContext context) {
     Widget okButton = TextButton(
-      child: const Text("Ok"),
+      child:  Text(LocaleKeys.deleteAcc.tr()),
       onPressed: () async {
         AuthProvider _auth = Provider.of(context, listen: false);
         PopupLoader.showLoadingDialog(context);
@@ -190,7 +190,7 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
       },
     );
     Widget cancelButton = TextButton(
-      child: Text(LocaleKeys.cancel.tr()),
+      child: Text(LocaleKeys.abort.tr()),
       onPressed: () {
         Navigator.pop(context);
       },

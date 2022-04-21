@@ -146,7 +146,11 @@ class _OrderCards extends StatelessWidget {
             child: Column(
               children: [
                 _rowTitleAndText(LocaleKeys.product.tr(), data.taxName ?? "--"),
-                _rowTitleAndText(LocaleKeys.price.tr(), data.taxPrice ?? "--"),
+                _rowTitleAndText(
+                    LocaleKeys.price.tr(),
+                    data.taxPrice != null
+                        ? data.taxPrice! + " Euro (inkl. MwSt.)"
+                        : "--"),
                 _rowTitleAndText(
                     "${LocaleKeys.orderDate.tr()} ${data.taxYear ?? "--"}",
                     Utils.dateFormatter(data.createdAt.toString())),

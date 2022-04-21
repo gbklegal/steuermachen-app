@@ -1,84 +1,134 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:steuermachen/components/app_bar/appbar_with_side_corner_circle_and_body.dart';
+import 'package:steuermachen/components/loading_component.dart';
 import 'package:steuermachen/constants/app_constants.dart';
+import 'package:steuermachen/constants/assets/asset_constants.dart';
+import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
-import 'package:steuermachen/screens/tax_tips/tax_tips_top_component.dart';
 import 'package:steuermachen/wrappers/faq_wp_wrapper.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
-class TaxTipsDetailScreen extends StatelessWidget {
+class TaxTipsDetailScreen extends StatefulWidget {
   const TaxTipsDetailScreen({Key? key, required this.taxTipsContent})
       : super(key: key);
   final TaxTipsWrapper taxTipsContent;
+
+  @override
+  State<TaxTipsDetailScreen> createState() => _TaxTipsDetailScreenState();
+}
+
+class _TaxTipsDetailScreenState extends State<TaxTipsDetailScreen> {
+  final Completer<WebViewController> _controller =
+      Completer<WebViewController>();
+  WebViewController? _webViewController;
+  int _stackToView = 1;
+  void _handleLoad(String value) {
+    setState(() {
+      _stackToView = 0;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    log(taxTipsContent.content!.rendered.toString());
+    // log(widget.taxTipsContent.content!.rendered.toString());
     return Scaffold(
       body: AppBarWithSideCornerCircleAndRoundBody(
+        overrideBackPressed: () async {
+          if (await _webViewController!.canGoBack()) {
+            _webViewController?.goBack();
+          } else {
+            Navigator.pop(context);
+          }
+        },
         body: SizedBox(
           height: MediaQuery.of(context).size.height,
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(
-                  height: 21,
-                ),
-                TaxTipTopComponent(
-                  title: taxTipsContent.title!.rendered,
-                  subtitle:
-                      taxTipsContent.embedded!.wpFeaturedmedia![0].altText,
-                  publishedDate: taxTipsContent
-                      .embedded!.wpFeaturedmedia![0].date
-                      .toString(),
-                  articleBy: taxTipsContent.embedded!.author![0].name,
-                  image: taxTipsContent.embedded!.wpFeaturedmedia![0].sourceUrl,
-                  readTime: "",
-                ),
-                Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 20),
-                    child: Html(
-                      data: taxTipsContent.content!.rendered.toString(),
-                      // onMathError: (String parsedTex, String error,
-                      //     String errorWithType) {
-                      //   //your logic here. A Widget must be returned from this function:
-                      //   return Text(error);
-                      //   //you can also try and fix the parsing yourself:
-                      //   // return Math.tex(correctedParsedTex);
-                      // },
-                    )
-
-                    // Text(
-                    //   taxTipsContent.content!.rendered.toString(),
-                    //   style: Theme.of(context).textTheme.bodyText2,
-                    // ),
-                    ),
-              ],
-            ),
-          ),
+          child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 0),
+              child: IndexedStack(
+                index: _stackToView,
+                children: [
+                  WebView(
+                    initialUrl: widget.taxTipsContent.link,
+                    javascriptMode: JavascriptMode.unrestricted,
+                    onWebViewCreated: (WebViewController webViewController) {
+                      _controller.complete(webViewController);
+                      _webViewController = webViewController;
+                    },
+                    onProgress: (progress) {
+                      if (progress > 30) {
+                        //remove the element with class name
+                        _controller.future.then((webviewController) => webviewController
+                            .runJavascript("javascript:(function() { " +
+                                "var head = document.getElementsByTagName('header')[0];" +
+                                "head.parentNode.removeChild(head);" +
+                                "var headSection = document.getElementById('header-section');" +
+                                "headSection.parentNode.removeChild(headSection);" +
+                                "var footer = document.getElementsByTagName('footer')[0];" +
+                                "footer.parentNode.removeChild(footer);" +
+                                "var comments = document.getElementsByClassName('comment-respond')[0];" +
+                                "comments.parentNode.removeChild(comments);" +
+                                "var search = document.getElementById('search-2');" +
+                                "search.parentNode.removeChild(search);" +
+                                "var a=document.getElementsByTagName('a');" +
+                                "a.href='http://www.stackoverflow.com';" +
+                                "document.getElementsByTagName('body').style.marginTop='-40px'"
+                                    "})()")
+                            .then((value) => debugPrint('Page finished running Javascript'))
+                            .catchError((onError) => debugPrint('$onError')));
+                      }
+                    },
+                    onPageFinished: _handleLoad,
+                  ),
+                  const LoadingComponent(),
+                ],
+              )),
         ),
       ),
       bottomNavigationBar: Padding(
         padding: AppConstants.bottomBtnPadding,
-        child: ElevatedButton(
-          style: ElevatedButtonTheme.of(context).style?.copyWith(
-                minimumSize: MaterialStateProperty.all(
-                  Size(MediaQuery.of(context).size.width, 56),
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(right: 15),
+              child: FloatingActionButton(
+                onPressed: () async {
+                  if (await _webViewController!.canGoBack()) {
+                    _webViewController?.goBack();
+                  }
+                },
+                child: SvgPicture.asset(
+                  AssetConstants.icBackNav,
+                  color: ColorConstants.white,
+                  height: 15,
                 ),
               ),
-          onPressed: () {
-            Navigator.pushNamedAndRemoveUntil(
-                context, RouteConstants.bottomNavBarScreen, (val) => false);
-          },
-          child: Text(
-            LocaleKeys.applyNow.tr(),
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-          ),
+            ),
+            Flexible(
+              child: ElevatedButton(
+                style: ElevatedButtonTheme.of(context).style?.copyWith(
+                      minimumSize: MaterialStateProperty.all(
+                        Size(MediaQuery.of(context).size.width, 56),
+                      ),
+                    ),
+                onPressed: () {
+                  Navigator.pushNamedAndRemoveUntil(context,
+                      RouteConstants.bottomNavBarScreen, (val) => false);
+                },
+                child: Text(
+                  LocaleKeys.orderNow.tr(),
+                  style: const TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.w500),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

@@ -98,7 +98,7 @@ class _CurrentYearTaxViewState extends State<CurrentYearTaxViewComponent> {
                 ),
               ),
               Text(
-                widget.currentYearTaxData.price.toString() + "0",
+                widget.currentYearTaxData.price.toString() + "0 Euro",
                 style: Theme.of(context).textTheme.bodyText1!.copyWith(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,

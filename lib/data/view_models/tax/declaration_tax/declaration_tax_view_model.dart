@@ -153,7 +153,6 @@ class DeclarationTaxViewModel extends ChangeNotifier {
         Provider.of<ProfileProvider>(context, listen: false);
     TaxCalculatorProvider _tax =
         Provider.of<TaxCalculatorProvider>(context, listen: false);
-
     String signaturePath = await Utils.uploadToFirebaseStorage(
         await _signature.getSignaturePath());
     _declarationTaxDataCollectorWrapper?.signaturePath = signaturePath;
@@ -174,10 +173,12 @@ class DeclarationTaxViewModel extends ChangeNotifier {
     _declarationTaxDataCollectorWrapper?.grossIncome = taxPrice;
   }
 
-  Future<void> fetchTaxFiledYears() async {
+  Future<void> fetchTaxFiledYears({bool isNotifify = true}) async {
     try {
       setTaxFiledYears = ApiResponse.loading();
-      notifyListeners();
+      if (isNotifify) {
+        notifyListeners();
+      }
       var res = await serviceLocatorInstance<SafeAndDeclarationTaxRepository>()
           .fetchTaxFiledYears();
       if (res.docs.isNotEmpty) {
@@ -188,6 +189,8 @@ class DeclarationTaxViewModel extends ChangeNotifier {
     } catch (e) {
       setTaxFiledYears = ApiResponse.error(e.toString());
     }
-    notifyListeners();
+    if (isNotifify) {
+      notifyListeners();
+    }
   }
 }

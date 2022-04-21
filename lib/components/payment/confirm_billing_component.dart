@@ -64,7 +64,7 @@ class ConfirmBillingComponent extends StatelessWidget {
                 height: 5,
               ),
               Text(
-                "${provider.getSelectedAddress?.houseNumber} ${provider.getSelectedAddress?.street}, ${provider.getSelectedAddress?.location}, \n${provider.getSelectedAddress?.land}\n+${provider.getSelectedAddress?.phone}",
+                "${provider.getSelectedAddress?.street} ${provider.getSelectedAddress?.houseNumber}, ${provider.getSelectedAddress?.location}, \n${provider.getSelectedAddress?.land}\n+${provider.getSelectedAddress?.phone}",
                 textAlign: TextAlign.left,
                 style: Theme.of(context).textTheme.bodyText1!.copyWith(
                     fontSize: 13, fontWeight: FontWeight.w500, height: 1.5),

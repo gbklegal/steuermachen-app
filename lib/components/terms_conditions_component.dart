@@ -20,6 +20,11 @@ class TermsAndConditionComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TermsAndConditionProvider provider =
+        Provider.of<TermsAndConditionProvider>(context, listen: false);
+    for (var e in provider.termsAndConditionChecks) {
+      e.isSelected = false;
+    }
     return Consumer<TermsAndConditionProvider>(
         builder: (context, consumer, child) {
       return Column(
@@ -68,36 +73,49 @@ class TermsAndConditionComponent extends StatelessWidget {
                 height: 10,
               ),
               for (var i = 0; i < consumer.termsAndConditionChecks.length; i++)
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _checkBox(
-                        context,
-                        consumer.termsAndConditionChecks[i].title,
-                        consumer.termsAndConditionChecks[i].isSelected,
-                        (va) =>
-                            consumer.changeTermsAndConditionCheckedState(i)),
-                    Visibility(
-                      visible: i == 0,
-                      child: Transform.translate(
-                        offset: const Offset(0, -15),
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 60),
-                          child: TextComponent(
-                            LocaleKeys.termsAndConditionCheckNonDisclosure,
-                            style: FontStyles.fontMedium(
-                                fontSize: 15, color: ColorConstants.primary),
+                Transform.translate(
+                  offset: const Offset(-14, 0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Transform.translate(
+                        offset: Offset(
+                            0,
+                            consumer.termsAndConditionChecks.length - 1 == i
+                                ? -10
+                                : 0),
+                        child: _checkBox(
+                            context,
+                            consumer.termsAndConditionChecks[i].title,
+                            consumer.termsAndConditionChecks[i].isSelected,
+                            (va) => consumer
+                                .changeTermsAndConditionCheckedState(i)),
+                      ),
+                      Visibility(
+                        visible: i == 0,
+                        child: Transform.translate(
+                          offset: const Offset(-6, -22),
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 60),
+                            child: TextComponent(
+                              LocaleKeys.termsAndConditionCheckNonDisclosure,
+                              style: FontStyles.fontMedium(
+                                  fontSize: 15, color: ColorConstants.primary),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Image.asset(
-                  AssetConstants.trustShops,
-                  height: 50,
+              Transform.translate(
+                offset: const Offset(-10, 0),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Image.asset(
+                    AssetConstants.trustShops,
+                    height: 50,
+                  ),
                 ),
               ),
             ],
@@ -111,6 +129,7 @@ class TermsAndConditionComponent extends StatelessWidget {
               children: [
                 ButtonComponent(
                     buttonText: LocaleKeys.orderNow.tr(),
+                    color: ColorConstants.toxicGreen,
                     onPressed: () {
                       if (consumer.validateChecks(showCommissioning)) {
                         onPressedOrderNow!(true);
@@ -138,11 +157,14 @@ class TermsAndConditionComponent extends StatelessWidget {
           width: 2,
         ),
         Flexible(
-          child: Padding(
-            padding: const EdgeInsets.only(top: 12),
-            child: TextComponent(checkBoxTitle,
-                style: FontStyles.fontMedium(
-                    fontSize: 16, letterSpacing: -0.3, lineSpacing: 1.1)),
+          child: Transform.translate(
+            offset: const Offset(-5, 0),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 12),
+              child: TextComponent(checkBoxTitle,
+                  style: FontStyles.fontMedium(
+                      fontSize: 16, letterSpacing: -0.3, lineSpacing: 1.1)),
+            ),
           ),
         ),
       ],

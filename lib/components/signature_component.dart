@@ -18,6 +18,7 @@ class _SignatureComponentState extends State<SignatureComponent> {
   @override
   void initState() {
     signatureProvider = Provider.of<SignatureProvider>(context, listen: false);
+    signatureProvider.clearSignature();
     super.initState();
   }
 

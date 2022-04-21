@@ -104,6 +104,8 @@ abstract class  LocaleKeys {
   static const taxName = 'taxName';
   static const status = 'status';
   static const price = 'price';
+  static const product = 'product';
+  static const orderDate = 'orderDate';
   static const taxReturn = 'taxReturn';
   static const noDocuments = 'noDocuments';
   static const orUseOur = 'orUseOur';

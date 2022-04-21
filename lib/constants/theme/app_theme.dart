@@ -7,11 +7,20 @@ ThemeData appTheme() {
     primarySwatch: ColorConstants.kPrimaryColor,
     scaffoldBackgroundColor: ColorConstants.body,
     textTheme: _textTheme(),
+    checkboxTheme: _checkBoxTheme,
     elevatedButtonTheme: _elevatedBtnTheme(),
     inputDecorationTheme: _inputDecorationTheme(),
   );
 }
-
+final _checkBoxTheme = CheckboxThemeData(
+  side: MaterialStateBorderSide.resolveWith(
+      (_) =>  const BorderSide(width: 0.5, color: ColorConstants.black)),
+  fillColor: MaterialStateProperty.all(ColorConstants.primary),
+  checkColor: MaterialStateProperty.all(Colors.white),
+  shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(4),
+  ),
+);
 InputDecorationTheme _inputDecorationTheme() {
   underlineInputBorder({Color? color = ColorConstants.veryLightPurple}) =>
       UnderlineInputBorder(

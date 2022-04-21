@@ -145,10 +145,10 @@ class _OrderCards extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
             child: Column(
               children: [
-                _rowTitleAndText(LocaleKeys.taxName.tr(), data.taxName ?? "--"),
+                _rowTitleAndText(LocaleKeys.product.tr(), data.taxName ?? "--"),
                 _rowTitleAndText(LocaleKeys.price.tr(), data.taxPrice ?? "--"),
                 _rowTitleAndText(
-                    "${LocaleKeys.taxReturn.tr()} ${data.taxYear ?? "--"}",
+                    "${LocaleKeys.orderDate.tr()} ${data.taxYear ?? "--"}",
                     Utils.dateFormatter(data.createdAt.toString())),
                 const Divider(),
                 SizedBox(

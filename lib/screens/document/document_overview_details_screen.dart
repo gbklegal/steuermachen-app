@@ -73,9 +73,9 @@ class _DocumentOverviewDetailScreenState
           ),
           TextComponent(
             LocaleKeys.documentOverviewForTaxYear.tr() +
-                "${documentViewModel.selectedTax.taxYear}",
+                " ${documentViewModel.selectedTax.taxYear}",
             style: FontStyles.fontMedium(
-                fontSize: 16, fontWeight: FontWeight.w600, letterSpacing: 3),
+                fontSize: 16, fontWeight: FontWeight.w600, letterSpacing: 0.9),
           ),
           const SizedBox(
             height: 20,

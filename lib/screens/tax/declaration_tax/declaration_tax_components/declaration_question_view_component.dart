@@ -218,10 +218,10 @@ class _DeclarationQuestionsViewComponentState
     PopupLoader.showLoadingDialog(context);
     CommonResponseWrapper res =
         await consumer.submitDeclarationTaxData(context);
-    await consumer.fetchTaxFiledYears();
     PopupLoader.hideLoadingDialog(context);
     if (res.status!) {
       Utils.completedDialog(context);
+      consumer.fetchTaxFiledYears(isNotifify: false);
     } else {
       ToastComponent.showToast(res.message!);
     }

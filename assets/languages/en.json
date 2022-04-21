@@ -103,6 +103,8 @@
     "taxName": "Tax name",
     "status": "Status",
     "price": "Price",
+    "product": "Product",
+    "orderDate": "Order date",
     "taxReturn": "Tax return",
     "noDocuments": "No documents attached",
     "orUseOur": "Or use our",

@@ -39,7 +39,7 @@ class SafeTaxProvider extends ChangeNotifier {
     } catch (e) {
       setBusyStateSafeTax = false;
       return CommonResponseWrapper(
-          status: false, message: ErrorMessagesConstants.somethingWentWrong);
+          status: false, message: LocaleKeys.somethingWentWrong.tr());
     }
   }
 
@@ -52,7 +52,7 @@ class SafeTaxProvider extends ChangeNotifier {
           status: true, message: "safe tax view data added successfully");
     } catch (e) {
       return CommonResponseWrapper(
-          status: true, message: ErrorMessagesConstants.somethingWentWrong);
+          status: true, message: LocaleKeys.somethingWentWrong.tr());
     }
   }
 
@@ -86,7 +86,7 @@ class SafeTaxProvider extends ChangeNotifier {
           status: true, message: StringConstants.thankYouForOrder);
     } catch (e) {
       return CommonResponseWrapper(
-          status: false, message: ErrorMessagesConstants.somethingWentWrong);
+          status: false, message: LocaleKeys.somethingWentWrong.tr());
     }
   }
 

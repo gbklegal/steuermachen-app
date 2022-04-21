@@ -101,14 +101,14 @@ class AuthProvider extends ChangeNotifier {
         }
       } catch (e) {
         return CommonResponseWrapper(
-            status: true, message: ErrorMessagesConstants.somethingWentWrong);
+            status: true, message: LocaleKeys.somethingWentWrong);
       }
     }
     if (googleSignInAccount == null) {
       return CommonResponseWrapper(status: false, message: "");
     } else {
       return CommonResponseWrapper(
-          status: false, message: ErrorMessagesConstants.somethingWentWrong);
+          status: false, message: LocaleKeys.somethingWentWrong);
     }
   }
 
@@ -121,18 +121,18 @@ class AuthProvider extends ChangeNotifier {
       return CommonResponseWrapper(
           status: true,
           message:
-              "Account registered successfully\nCheck your mail for the verification link");
+              LocaleKeys.accRegisteredSuccess);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         return CommonResponseWrapper(
-            status: false, message: 'The password provided is too weak.');
+            status: false, message: LocaleKeys.weakPwd);
       } else if (e.code == 'email-already-in-use') {
         return CommonResponseWrapper(
             status: false,
-            message: 'The account already exists for that email.');
+            message: LocaleKeys.accAlreadyExists);
       }
       return CommonResponseWrapper(
-          status: false, message: ErrorMessagesConstants.somethingWentWrong);
+          status: false, message: LocaleKeys.somethingWentWrong);
     } catch (e) {
       return CommonResponseWrapper(status: false, message: e.toString());
     }
@@ -146,21 +146,19 @@ class AuthProvider extends ChangeNotifier {
       if (!_user.user!.emailVerified) {
         await sendVerificationEmail();
         return CommonResponseWrapper(
-            status: false, message: 'Please verify your email');
+            status: false, message: LocaleKeys.verifyEmail);
       }
       return CommonResponseWrapper(status: true, message: 'Sigin successfully');
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        print('No user found for that email.');
         return CommonResponseWrapper(
-            status: false, message: 'No user found for that email.');
+            status: false, message: LocaleKeys.noUserFound);
       } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
         return CommonResponseWrapper(
-            status: false, message: 'Wrong password provided for that user.');
+            status: false, message: LocaleKeys.wrongPwd);
       }
       return CommonResponseWrapper(
-          status: false, message: ErrorMessagesConstants.somethingWentWrong);
+          status: false, message: LocaleKeys.somethingWentWrong);
     }
   }
 
@@ -169,10 +167,10 @@ class AuthProvider extends ChangeNotifier {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
       return CommonResponseWrapper(
           status: true,
-          message: 'Check your email for the reset password link');
+          message: LocaleKeys.checkEmailForPwdResetLink);
     } on FirebaseAuthException catch (e) {
       return CommonResponseWrapper(
-          status: false, message: ErrorMessagesConstants.somethingWentWrong);
+          status: false, message: LocaleKeys.somethingWentWrong);
     }
   }
 

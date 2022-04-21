@@ -1,10 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:steuermachen/constants/strings/error_messages_constants.dart';
 import 'package:steuermachen/constants/strings/http_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/data/repositories/remote/safe_and_declaration_tax_repository.dart';
 import 'package:steuermachen/data/view_models/payment_gateway/payment_gateway_provider.dart';
+import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/main.dart';
 import 'package:steuermachen/data/view_models/profile/profile_provider.dart';
 import 'package:steuermachen/data/view_models/signature/signature_provider.dart';
@@ -62,7 +63,7 @@ class DeclarationTaxViewModel extends ChangeNotifier {
           status: true, message: StringConstants.success);
     } catch (e) {
       return CommonResponseWrapper(
-          status: true, message: ErrorMessagesConstants.somethingWentWrong);
+          status: true, message: LocaleKeys.somethingWentWrong.tr());
     }
   }
 
@@ -120,7 +121,7 @@ class DeclarationTaxViewModel extends ChangeNotifier {
           status: true, message: StringConstants.thankYouForOrder);
     } catch (e) {
       return CommonResponseWrapper(
-          status: false, message: ErrorMessagesConstants.somethingWentWrong);
+          status: false, message: LocaleKeys.somethingWentWrong.tr());
     }
   }
 

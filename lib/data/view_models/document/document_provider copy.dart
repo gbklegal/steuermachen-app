@@ -61,7 +61,7 @@
 //       return CommonResponseWrapper(status: true, message: "Documents uploaded");
 //     } catch (e) {
 //       return CommonResponseWrapper(
-//           status: true, message: ErrorMessagesConstants.somethingWentWrong);
+//           status: true, message: LocaleKeys.somethingWentWrong.tr());
 //     }
 //   }
 
@@ -123,7 +123,7 @@
 //     } catch (e) {
 //       setBusyStateDocument = false;
 //       return CommonResponseWrapper(
-//           status: false, message: ErrorMessagesConstants.somethingWentWrong);
+//           status: false, message: LocaleKeys.somethingWentWrong.tr());
 //     }
 //   }
 
@@ -137,7 +137,7 @@
 //           message: "addDocumentOptionsData view data added successfully");
 //     } catch (e) {
 //       return CommonResponseWrapper(
-//           status: true, message: ErrorMessagesConstants.somethingWentWrong);
+//           status: true, message: LocaleKeys.somethingWentWrong.tr());
 //     }
 //   }
 

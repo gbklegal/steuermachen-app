@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path/path.dart';
@@ -8,6 +9,7 @@ import 'package:steuermachen/components/toast_component.dart';
 import 'package:steuermachen/constants/strings/error_messages_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/data/repositories/remote/documents_repository.dart';
+import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/main.dart';
 import 'package:steuermachen/services/networks/api_response_states.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
@@ -50,7 +52,7 @@ class DocumentsViewModel extends ChangeNotifier {
       return CommonResponseWrapper(status: true, message: "Documents uploaded");
     } catch (e) {
       return CommonResponseWrapper(
-          status: true, message: ErrorMessagesConstants.somethingWentWrong);
+          status: true, message: LocaleKeys.somethingWentWrong.tr());
     }
   }
 
@@ -73,7 +75,7 @@ class DocumentsViewModel extends ChangeNotifier {
       selectedTax = _selectedTax;
       notifyListeners();
     } catch (e) {
-      ToastComponent.showToast(ErrorMessagesConstants.somethingWentWrong);
+      ToastComponent.showToast(LocaleKeys.somethingWentWrong.tr());
     }
   }
 
@@ -85,7 +87,7 @@ class DocumentsViewModel extends ChangeNotifier {
           status: true, message: StringConstants.success);
     } catch (e) {
       return CommonResponseWrapper(
-          status: true, message: ErrorMessagesConstants.somethingWentWrong);
+          status: true, message: LocaleKeys.somethingWentWrong.tr());
     }
   }
 

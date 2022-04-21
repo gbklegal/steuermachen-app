@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:steuermachen/constants/strings/error_messages_constants.dart';
+import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/main.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 import 'package:steuermachen/wrappers/user_wrapper.dart';
@@ -32,7 +33,7 @@ class ProfileProvider extends ChangeNotifier {
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController emailController =
       TextEditingController(text: FirebaseAuth.instance.currentUser!.email);
-  final TextEditingController countryController = TextEditingController();
+  final TextEditingController countryController = TextEditingController(text: "Germany (DE)");
   final GlobalKey<FormState> userFormKey = GlobalKey<FormState>();
 
   setGender(String value) {
@@ -90,7 +91,7 @@ class ProfileProvider extends ChangeNotifier {
           status: true, message: "Profile updated successfully");
     } catch (e) {
       return CommonResponseWrapper(
-          status: false, message: ErrorMessagesConstants.somethingWentWrong);
+          status: false, message: LocaleKeys.somethingWentWrong.tr());
     }
   }
 
@@ -121,7 +122,7 @@ class ProfileProvider extends ChangeNotifier {
       } catch (e) {
         setBusyStateProfile = false;
         return CommonResponseWrapper(
-            status: false, message: ErrorMessagesConstants.somethingWentWrong);
+            status: false, message: LocaleKeys.somethingWentWrong.tr());
       }
     }
     return null;
@@ -165,7 +166,7 @@ class ProfileProvider extends ChangeNotifier {
           status: true, message: "Profile updated successfully");
     } catch (e) {
       return CommonResponseWrapper(
-          status: false, message: ErrorMessagesConstants.somethingWentWrong);
+          status: false, message: LocaleKeys.somethingWentWrong.tr());
     }
   }
 
@@ -197,7 +198,7 @@ class ProfileProvider extends ChangeNotifier {
     } catch (e) {
       setBusyStateProfile = false;
       return CommonResponseWrapper(
-          status: false, message: ErrorMessagesConstants.somethingWentWrong);
+          status: false, message: LocaleKeys.somethingWentWrong.tr());
     }
   }
 }

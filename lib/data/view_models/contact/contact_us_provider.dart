@@ -1,6 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:steuermachen/constants/strings/error_messages_constants.dart';
+import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/main.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 
@@ -18,7 +19,7 @@ class ContactUsProvider extends ChangeNotifier {
           status: true, message: "Form submitted successfully");
     } catch (e) {
       return CommonResponseWrapper(
-          status: true, message: ErrorMessagesConstants.somethingWentWrong);
+          status: true, message: LocaleKeys.somethingWentWrong.tr());
     }
   }
 }

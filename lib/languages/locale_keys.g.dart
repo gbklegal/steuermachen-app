@@ -143,6 +143,13 @@ abstract class  LocaleKeys {
   static const clear = 'clear';
   static const pay = 'pay';
   static const signUp = 'signUp';
+  static const accRegisteredSuccess = 'accRegisteredSuccess';
+  static const weakPwd = 'weakPwd';
+  static const accAlreadyExists = 'accAlreadyExists';
+  static const verifyEmail = 'verifyEmail';
+  static const noUserFound = 'noUserFound';
+  static const wrongPwd = 'wrongPwd';
+  static const checkEmailForPwdResetLink = 'checkEmailForPwdResetLink';
   static const forgotPassword = 'forgotPassword';
   static const calculateYourPrice = 'calculateYourPrice';
   static const tryForFree = 'tryForFree';
@@ -155,6 +162,13 @@ abstract class  LocaleKeys {
   static const hello = 'hello';
   static const login = 'login';
   static const toRegister = 'toRegister';
+  static const conditionCheck = 'conditionCheck';
+  static const conditionCheck1 = 'conditionCheck1';
+  static const conditionCheck2 = 'conditionCheck2';
+  static const conditionCheck3 = 'conditionCheck3';
+  static const conditionCheck4 = 'conditionCheck4';
+  static const selectCheckAbove = 'selectCheckAbove';
+  static const somethingWentWrong = 'somethingWentWrong';
   static const alreadyRegistered = 'alreadyRegistered';
   static const signupWith = 'signupWith';
   static const emailUs = 'emailUs';

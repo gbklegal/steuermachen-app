@@ -185,7 +185,7 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
           Navigator.pushNamedAndRemoveUntil(
               context, RouteConstants.splashScreen, (val) => false);
         } else {
-          ToastComponent.showToast(ErrorMessagesConstants.somethingWentWrong);
+          ToastComponent.showToast(LocaleKeys.somethingWentWrong.tr());
         }
       },
     );

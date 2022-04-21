@@ -73,7 +73,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen>
             PopupLoader.showLoadingDialog(context);
             CommonResponseWrapper res =
                 await authProvider.forgotPassword(_emailController.text);
-            ToastComponent.showToast(res.message!, long: true);
+            ToastComponent.showToast(res.message!.tr(), long: true);
 
             PopupLoader.hideLoadingDialog(context);
             // if (res.status!) {

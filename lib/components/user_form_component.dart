@@ -59,7 +59,7 @@ class _UserFormComponentState extends State<UserFormComponent>
           return const LoadingComponent();
         } else if (!consumer.getBusyStateProfile && consumer.userData == null) {
           return ErrorComponent(
-            message: ErrorMessagesConstants.somethingWentWrong,
+            message: LocaleKeys.somethingWentWrong.tr(),
             onTap: () async {
               await _profileProvider.getUserProfile();
             },

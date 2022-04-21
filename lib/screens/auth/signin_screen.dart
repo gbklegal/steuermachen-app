@@ -46,7 +46,7 @@ class _SignInScreenState extends State<SignInScreen> with InputValidationUtil {
   _googleSignIn() async {
     PopupLoader.showLoadingDialog(context);
     CommonResponseWrapper res = await authProvider.signInWithGoogle();
-    ToastComponent.showToast(res.message!, long: true);
+    ToastComponent.showToast(res.message!.tr(), long: true);
     PopupLoader.hideLoadingDialog(context);
     if (res.status!) {
       if (authProvider.isFirstTimeLoggedIn) {
@@ -62,7 +62,7 @@ class _SignInScreenState extends State<SignInScreen> with InputValidationUtil {
   _appleSignIn() async {
     PopupLoader.showLoadingDialog(context);
     CommonResponseWrapper res = await authProvider.signInWithApple();
-    ToastComponent.showToast(res.message!, long: true);
+    ToastComponent.showToast(res.message!.tr(), long: true);
 
     PopupLoader.hideLoadingDialog(context);
     if (res.status!) {
@@ -81,7 +81,7 @@ class _SignInScreenState extends State<SignInScreen> with InputValidationUtil {
       PopupLoader.showLoadingDialog(context);
       CommonResponseWrapper res = await authProvider.signInWithEmailAndPassword(
           _emailController.text, _passwordController.text);
-      ToastComponent.showToast(res.message!, long: true);
+      ToastComponent.showToast(res.message!.tr(), long: true);
 
       PopupLoader.hideLoadingDialog(context);
       if (res.status!) {

@@ -2,9 +2,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:steuermachen/constants/strings/error_messages_constants.dart';
 import 'package:steuermachen/constants/strings/process_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
+import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/main.dart';
 import 'package:steuermachen/data/view_models/signature/signature_provider.dart';
 import 'package:steuermachen/data/view_models/terms_and_condition_provider.dart';
@@ -44,7 +44,7 @@ class FinanceCourtProvider extends ChangeNotifier {
     } catch (e) {
       setBusyStateFinanceCourt = false;
       return CommonResponseWrapper(
-          status: false, message: ErrorMessagesConstants.somethingWentWrong);
+          status: false, message: LocaleKeys.somethingWentWrong.tr());
     }
   }
 
@@ -62,7 +62,7 @@ class FinanceCourtProvider extends ChangeNotifier {
     } catch (e) {
       setBusyStateFinanceLaw = false;
       return CommonResponseWrapper(
-          status: false, message: ErrorMessagesConstants.somethingWentWrong);
+          status: false, message: LocaleKeys.somethingWentWrong.tr());
     }
   }
 
@@ -75,7 +75,7 @@ class FinanceCourtProvider extends ChangeNotifier {
           status: true, message: "easy tax view data added successfully");
     } catch (e) {
       return CommonResponseWrapper(
-          status: true, message: ErrorMessagesConstants.somethingWentWrong);
+          status: true, message: LocaleKeys.somethingWentWrong.tr());
     }
   }
 
@@ -91,7 +91,7 @@ class FinanceCourtProvider extends ChangeNotifier {
           status: true, message: "easy tax view data added successfully");
     } catch (e) {
       return CommonResponseWrapper(
-          status: true, message: ErrorMessagesConstants.somethingWentWrong);
+          status: true, message: LocaleKeys.somethingWentWrong.tr());
     }
   }
 
@@ -129,10 +129,10 @@ class FinanceCourtProvider extends ChangeNotifier {
         "approved_by": null,
       });
       return CommonResponseWrapper(
-          status: true, message: StringConstants.thankYouForOrder);
+          status: true, message: LocaleKeys.thankYouForOrder.tr());
     } catch (e) {
       return CommonResponseWrapper(
-          status: false, message: ErrorMessagesConstants.somethingWentWrong);
+          status: false, message: LocaleKeys.somethingWentWrong.tr());
     }
   }
 }

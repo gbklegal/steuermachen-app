@@ -86,7 +86,7 @@ class _CurrentYearTaxViewState extends State<CurrentYearTaxViewComponent> {
           color: ColorConstants.black.withOpacity(0.49),
           padding: const EdgeInsets.all(15),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween, 
             children: [
               Flexible(
                 child: Text(

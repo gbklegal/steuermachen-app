@@ -16,26 +16,36 @@ class FaqScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppBarWithSideCornerCircleAndRoundBody(
       showBackButton: false,
-      body: SingleChildScrollView(
-          child: SizedBox(
-        height: MediaQuery.of(context).size.height,
-        child: FutureBuilder<DocumentSnapshot>(
-            future: firestore.collection("faq").doc("content").get(),
-            builder: (context, AsyncSnapshot snapshot) {
-              if (snapshot.hasData) {
-                Map<String, dynamic> x =
-                    snapshot.data.data() as Map<String, dynamic>;
-                FAQContentWrapper res = FAQContentWrapper.fromJson(x);
-                return _FAQListTile(
-                  faqContentWrapper: res,
-                );
-              } else if (snapshot.hasError) {
-                return const SimpleErrorTextComponent();
-              } else {
-                return const LoadingComponent();
-              }
-            }),
-      )),
+      body: InkWell(
+        onTap: () async {
+          // for (var e in faqJson) {
+          //   await firestore.collection("faq_content").add(e);
+          // }
+        },
+        child: SingleChildScrollView(
+            child: FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                future: firestore.collection("faq_content").get(),
+                builder: (context, AsyncSnapshot snapshot) {
+                  if (snapshot.hasData) {
+                    List<Map<String, dynamic>> x = [];
+                    for (var item in snapshot.data.docs) {
+                      x.add(item.data() as Map<String, dynamic>);
+                    }
+                    List<FAQContentWrapper> faqContent = [];
+                    for (var element in x) {
+                      FAQContentWrapper res = FAQContentWrapper.fromJson(element);
+                      faqContent.add(res);
+                    }
+                    return _FAQListTile(
+                      faqContentWrapper: faqContent,
+                    );
+                  } else if (snapshot.hasError) {
+                    return const SimpleErrorTextComponent();
+                  } else {
+                    return const LoadingComponent();
+                  }
+                })),
+      ),
     );
   }
 }
@@ -43,13 +53,13 @@ class FaqScreen extends StatelessWidget {
 class _FAQListTile extends StatefulWidget {
   const _FAQListTile({Key? key, required this.faqContentWrapper})
       : super(key: key);
-  final FAQContentWrapper faqContentWrapper;
+  final List<FAQContentWrapper> faqContentWrapper;
   @override
   __FAQListTileState createState() => __FAQListTileState();
 }
 
 class __FAQListTileState extends State<_FAQListTile> {
-  late FAQContentWrapper _wrapper;
+  late List<FAQContentWrapper> _wrapper;
 
   @override
   void initState() {
@@ -77,54 +87,50 @@ class __FAQListTileState extends State<_FAQListTile> {
                 Theme.of(context).textTheme.headline6!.copyWith(fontSize: 22),
           ),
         ),
-        if (context.locale == const Locale('en'))
-          for (var i = 0; i < _wrapper.en!.length; i++)
+        for (var i = 0; i < _wrapper.length; i++)
+          if (context.locale == const Locale('du'))
             InkWell(
-                onTap: () {
-                  setState(() {
-                    if (_wrapper.en![i].isActive!) {
-                      _wrapper.en![i].isActive = false;
-                    } else {
-                      _wrapper.en![i].isActive = true;
-                    }
-                  });
-                },
-                child: questionListTile(_wrapper.en![i], divider))
-        else
-          for (var i = 0; i < _wrapper.du!.length; i++)
+              onTap: () {
+                setState(() {
+                  if (_wrapper[i].du!.isActive!) {
+                    _wrapper[i].du!.isActive = false;
+                  } else {
+                    _wrapper[i].du!.isActive = true;
+                  }
+                });
+              },
+              child: questionListTile(_wrapper[i].du!, divider),
+            )
+          else
             InkWell(
-                onTap: () {
-                  setState(() {
-                    if (_wrapper.du![i].isActive!) {
-                      _wrapper.du![i].isActive = false;
-                    } else {
-                      _wrapper.du![i].isActive = true;
-                    }
-                  });
-                },
-                child: questionListTile(_wrapper.du![i], divider))
+              onTap: () {
+                setState(() {
+                  if (_wrapper[i].en!.isActive!) {
+                    _wrapper[i].en!.isActive = false;
+                  } else {
+                    _wrapper[i].en!.isActive = true;
+                  }
+                });
+              },
+              child: questionListTile(_wrapper[i].en!, divider),
+            )
       ],
     );
   }
 
-  Container questionListTile(FAQContent faq, Padding divider) {
-    return Container(
-      color: faq.isActive!
-          ? ColorConstants.formFieldBackground
-          : ColorConstants.white,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _FAQQuestion(
-            faq: faq,
-          ),
-          divider,
-          _FAQAnswer(
-            faq: faq,
-          ),
-        ],
-      ),
+  Column questionListTile(FAQContent faq, Padding divider) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _FAQQuestion(
+          faq: faq,
+        ),
+        divider,
+        _FAQAnswer(
+          faq: faq,
+        ),
+      ],
     );
   }
 }
@@ -145,7 +151,7 @@ class _FAQQuestion extends StatelessWidget {
         style: Theme.of(context)
             .textTheme
             .bodyText2!
-            .copyWith(fontSize: 16, color: ColorConstants.green),
+            .copyWith(fontSize: 16, color: ColorConstants.plantGreen),
       ),
       trailing: const Icon(
         Icons.keyboard_arrow_down_outlined,
@@ -167,35 +173,33 @@ class _FAQAnswer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Visibility(
       visible: faq.isActive!,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 18),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              faq.title!,
-              style: FontStyles.fontMedium(
-                  fontSize: 17, fontWeight: FontWeight.w700),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 15),
-              child: Text(
-                faq.answer!,
-                style: FontStyles.fontMedium(
-                    fontSize: 17, fontWeight: FontWeight.w500),
+      child: Container(
+         color: ColorConstants.toxicGreen.withOpacity(0.18),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 18),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 15),
+                child: Text(
+                  faq.answer!,
+                  style: FontStyles.fontMedium(
+                      fontSize: 13, fontWeight: FontWeight.w500),
+                ),
               ),
-            ),
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(vertical: 10),
-            //   child: Text(
-            //     "Read more",
-            //     style: FontStyles.fontMedium(
-            //         fontSize: 15,
-            //         fontWeight: FontWeight.bold,
-            //         color: ColorConstants.primary),
-            //   ),
-            // ),
-          ],
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(vertical: 10),
+              //   child: Text(
+              //     "Read more",
+              //     style: FontStyles.fontMedium(
+              //         fontSize: 15,
+              //         fontWeight: FontWeight.bold,
+              //         color: ColorConstants.primary),
+              //   ),
+              // ),
+            ],
+          ),
         ),
       ),
     );

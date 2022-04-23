@@ -6,8 +6,8 @@ class FAQContentWrapper {
     this.en,
   });
 
-  List<FAQContent>? du;
-  List<FAQContent>? en;
+  FAQContent? du;
+  FAQContent? en;
 
   factory FAQContentWrapper.fromRawJson(String str) =>
       FAQContentWrapper.fromJson(json.decode(str));
@@ -16,29 +16,20 @@ class FAQContentWrapper {
 
   factory FAQContentWrapper.fromJson(Map<String, dynamic> json) =>
       FAQContentWrapper(
-        du: json["du"] == null
-            ? null
-            : List<FAQContent>.from(
-                json["du"].map((x) => FAQContent.fromJson(x))),
-        en: json["en"] == null
-            ? null
-            : List<FAQContent>.from(
-                json["en"].map((x) => FAQContent.fromJson(x))),
+        du: FAQContent.fromJson(json["du"]),
+        en: FAQContent.fromJson(json["en"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "du":
-            du == null ? null : List<dynamic>.from(du!.map((x) => x.toJson())),
-        "en":
-            en == null ? null : List<dynamic>.from(en!.map((x) => x.toJson())),
+        "du": du,
+        "en": en,
       };
 }
 
 class FAQContent {
-  FAQContent({this.question, this.title, this.answer, this.isActive});
+  FAQContent({this.question, this.answer, this.isActive});
 
   String? question;
-  String? title;
   String? answer;
   bool? isActive;
   factory FAQContent.fromRawJson(String str) =>
@@ -48,14 +39,12 @@ class FAQContent {
 
   factory FAQContent.fromJson(Map<String, dynamic> json) => FAQContent(
         question: json["question"],
-        title: json["title"],
         answer: json["answer"],
         isActive: false,
       );
 
   Map<String, dynamic> toJson() => {
         "question": question,
-        "title": title,
         "answer": answer,
       };
 }

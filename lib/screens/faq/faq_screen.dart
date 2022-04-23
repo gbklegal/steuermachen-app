@@ -88,20 +88,7 @@ class __FAQListTileState extends State<_FAQListTile> {
           ),
         ),
         for (var i = 0; i < _wrapper.length; i++)
-          if (context.locale == const Locale('du'))
-            InkWell(
-              onTap: () {
-                setState(() {
-                  if (_wrapper[i].du!.isActive!) {
-                    _wrapper[i].du!.isActive = false;
-                  } else {
-                    _wrapper[i].du!.isActive = true;
-                  }
-                });
-              },
-              child: questionListTile(_wrapper[i].du!, divider),
-            )
-          else
+          if (context.locale == const Locale('en'))
             InkWell(
               onTap: () {
                 setState(() {
@@ -113,6 +100,19 @@ class __FAQListTileState extends State<_FAQListTile> {
                 });
               },
               child: questionListTile(_wrapper[i].en!, divider),
+            )
+          else
+            InkWell(
+              onTap: () {
+                setState(() {
+                  if (_wrapper[i].du!.isActive!) {
+                    _wrapper[i].du!.isActive = false;
+                  } else {
+                    _wrapper[i].du!.isActive = true;
+                  }
+                });
+              },
+              child: questionListTile(_wrapper[i].du!, divider),
             )
       ],
     );

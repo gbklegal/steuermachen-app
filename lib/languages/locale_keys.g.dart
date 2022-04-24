@@ -244,6 +244,7 @@ abstract class  LocaleKeys {
   static const imprint = 'imprint';
   static const privacyPolicy = 'privacyPolicy';
   static const conditions = 'conditions';
+  static const estimatedReimbursement = 'estimatedReimbursement';
   static const taxYear = 'taxYear';
   static const logout = 'logout';
 

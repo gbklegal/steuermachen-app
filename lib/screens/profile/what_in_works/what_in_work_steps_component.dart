@@ -7,6 +7,7 @@ import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/strings/process_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
+import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/wrappers/declaration_tax/declaration_tax_data_collector_wrapper.dart';
 import 'package:steuermachen/wrappers/tax_steps_wrapper.dart';
 
@@ -41,7 +42,7 @@ class WhatInWorkStepsComponent extends StatelessWidget {
                   ),
                   padding: const EdgeInsets.all(12),
                   child: TextComponent(
-                    "Estimated reimbursement :   -----",
+                    "${LocaleKeys.estimatedReimbursement.tr()} :   -----",
                     style: FontStyles.fontMedium(fontSize: 16),
                   ),
                 ),

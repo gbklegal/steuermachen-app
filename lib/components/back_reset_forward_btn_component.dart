@@ -37,9 +37,9 @@ class BackResetForwardBtnComponent extends StatelessWidget {
     );
   }
 
-  InkWell _iconText(String iconName, String btnName, void Function()? onTap,
+  GestureDetector _iconText(String iconName, String btnName, void Function()? onTap,
       BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: onTap,
       child: Column(
         children: [

@@ -113,6 +113,7 @@ class _DocumentOverviewScreenState extends State<DocumentOverviewScreen> {
                 child: ListView.builder(
                   itemCount: data.length,
                   itemBuilder: (context, index) {
+                    data.sort(((a, b) => a.taxYear!.compareTo(b.taxYear!)));
                     return TaxYearComponent(
                       year: data[index].taxYear!,
                       onTap: () {

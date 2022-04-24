@@ -229,6 +229,10 @@ class _QuestionsViewState extends State<_QuestionsView> {
                         onTapBack: () {
                           Utils.animateToPreviousPage(pageController, i);
                         },
+                        onTapReset: () => Utils.animateToPreviousPage(
+                            pageController,
+                            widget.financeCourtViewData.length -
+                                widget.financeCourtViewData.length),
                         onTapContinue: () => _onTapContinue(i),
                       ),
                     )
@@ -269,8 +273,8 @@ class _QuestionsViewState extends State<_QuestionsView> {
       _data = provider.financeLawWrapper.du;
     }
     var foundChecked =
-        _data.options.firstWhereOrNull((e) => e.isSelect == false);
-    if (foundChecked == null) {
+        _data.options.firstWhereOrNull((e) => e.isSelect == true);
+    if (foundChecked != null) {
       Utils.animateToNextPage(pageController, i);
     } else {
       ToastComponent.showToast(

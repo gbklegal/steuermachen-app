@@ -111,7 +111,11 @@ class _OrderOverviewScreenState extends State<OrderOverviewScreen> {
       child: ListView.builder(
         itemCount: data.length,
         itemBuilder: (context, index) {
-          return _OrderCards(data: data[index]);
+          if (data[index].taxYear != DateTime.now().year.toString()) {
+            return _OrderCards(data: data[index]);
+          } else {
+            return const SizedBox();
+          }
         },
       ),
     );

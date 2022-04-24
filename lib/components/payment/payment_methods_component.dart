@@ -7,6 +7,7 @@ import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/data/view_models/payment_gateway/payment_gateway_provider.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
+import 'package:steuermachen/utils/utils.dart';
 
 class PaymentMethodsComponent extends StatelessWidget {
   const PaymentMethodsComponent(
@@ -85,7 +86,7 @@ class PaymentMethodsComponent extends StatelessWidget {
                   .copyWith(fontSize: 16, fontWeight: FontWeight.w600),
             ),
             TextComponent(
-              amount+" euros",
+              Utils.currencyFormatter.format(double.parse(amount)),
               style: Theme.of(context)
                   .textTheme
                   .bodyText1!

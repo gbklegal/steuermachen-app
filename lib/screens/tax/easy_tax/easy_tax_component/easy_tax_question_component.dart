@@ -126,6 +126,9 @@ class _EasyTaxQuestionsViewComponentState
                     onTapBack: () {
                       Utils.animateToPreviousPage(pageController, i);
                     },
+                    onTapReset: () => Utils.animateToPreviousPage(
+                        pageController,
+                        widget.easyTaxData.length - widget.easyTaxData.length),
                     onTapContinue: () => _onTapContinue(i),
                   ),
                 )

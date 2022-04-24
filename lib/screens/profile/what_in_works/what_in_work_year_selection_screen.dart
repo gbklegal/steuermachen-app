@@ -106,20 +106,25 @@ class _WhatInWorkYearSelectionScreenState
         child: ListView.builder(
           itemCount: data.length,
           itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: TaxYearComponent(
-                year: data[index].taxYear!,
-                onTap: () {
-                  Utils.customDialog(
-                    context,
-                    WhatInWorkStepsComponent(
-                      submittedTaxYears: data[index],
-                    ),
-                  );
-                },
-              ),
-            );
+            data.sort(((a, b) => a.taxYear!.compareTo(b.taxYear!)));
+            if (data[index].taxYear != DateTime.now().year.toString()) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: TaxYearComponent(
+                  year: data[index].taxYear!,
+                  onTap: () {
+                    Utils.customDialog(
+                      context,
+                      WhatInWorkStepsComponent(
+                        submittedTaxYears: data[index],
+                      ),
+                    );
+                  },
+                ),
+              );
+            } else {
+              return const SizedBox();
+            }
           },
         ),
       ),

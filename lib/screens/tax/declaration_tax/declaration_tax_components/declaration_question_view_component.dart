@@ -155,6 +155,10 @@ class _DeclarationQuestionsViewComponentState
         onTapBack: () {
           Utils.animateToPreviousPage(pageController, i);
         },
+        onTapReset: () => Utils.animateToPreviousPage(
+            pageController,
+            widget.declarationTaxData.length -
+                widget.declarationTaxData.length),
         onTapContinue: () async {
           if (widget.declarationTaxData[i].optionType ==
               OptionConstants.userForm) {

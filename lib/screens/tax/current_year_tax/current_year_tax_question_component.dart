@@ -50,7 +50,7 @@ class _CurrentYearTaxViewState extends State<CurrentYearTaxViewComponent> {
           },
         ),
         ConfirmBillingComponent(
-          amount: "${widget.currentYearTaxData.price}0 euros",
+          amount: "${widget.currentYearTaxData.price}0 euro",
           onTapOrder: () => Utils.animateToNextPage(pageController, pageIndex),
         ),
         Consumer<DeclarationTaxViewModel>(builder: (context, consumer, child) {

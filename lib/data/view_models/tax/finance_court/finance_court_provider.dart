@@ -96,6 +96,10 @@ class FinanceCourtProvider extends ChangeNotifier {
   }
 
   changeSubjectLawCheckBoxState(FinanceViewData _data, int index) {
+    for (var i = 0; i < financeLawWrapper.du.options.length; i++) {
+      financeLawWrapper.du.options[i].isSelect = false;
+      financeLawWrapper.en.options[i].isSelect = false;
+    }
     _data.options[index].isSelect = !_data.options[index].isSelect;
     financeLawWrapper.en = _data;
     financeLawWrapper.du = _data;

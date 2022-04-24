@@ -127,6 +127,8 @@ class _SafeTaxQuestionsComponentState extends State<SafeTaxQuestionsComponent> {
         onTapBack: () {
           Utils.animateToPreviousPage(pageController, i);
         },
+        onTapReset: () => Utils.animateToPreviousPage(pageController,
+            widget.safeTaxData.length - widget.safeTaxData.length),
         onTapContinue: () async {
           if (widget.safeTaxData[i].optionType == OptionConstants.userForm) {
             bool status = await Utils.submitProfile(context);

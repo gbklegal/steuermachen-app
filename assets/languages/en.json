@@ -240,6 +240,7 @@
     "imprint": "Imprint",
     "privacyPolicy": "Privacy Policy",
     "conditions": "Conditions",
+    "estimatedReimbursement": "Estimated reimbursement",
     "taxYear": "tax year",
     "logout": "Logout"
 }

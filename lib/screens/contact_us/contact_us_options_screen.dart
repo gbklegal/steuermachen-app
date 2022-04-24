@@ -90,7 +90,7 @@ class _ContactUsOptionScreenState extends State<ContactUsOptionScreen> {
             Navigator.pushNamed(context, RouteConstants.contactUsFormScreen);
           },
           child: _contactOptions(
-              context, AssetConstants.icChat, LocaleKeys.useOurContactForm),
+              context, AssetConstants.icPersons, LocaleKeys.useOurContactForm,),
         ),
       ],
     );
@@ -118,7 +118,7 @@ class _ContactUsOptionScreenState extends State<ContactUsOptionScreen> {
           const SizedBox(
             height: 10,
           ),
-          SvgPicture.asset(assetName),
+          SvgPicture.asset(assetName, color: ColorConstants.black,),
           const SizedBox(
             height: 5,
           ),

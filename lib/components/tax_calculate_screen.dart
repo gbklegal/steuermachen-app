@@ -87,7 +87,7 @@ class TaxCalculatorComponent extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 3, left: 5),
                     child: Text(
-                      "Euros",
+                      "Euro",
                       style: Theme.of(context)
                           .textTheme
                           .bodyText1!

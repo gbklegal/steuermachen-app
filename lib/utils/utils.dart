@@ -13,6 +13,7 @@ import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class Utils {
+  static final currencyFormatter = NumberFormat.simpleCurrency(locale: 'de');
   static String getTimeAgo(DateTime dateTime) {
     var differenceDateTime = DateTime.now().difference(dateTime);
     final subtractedDateTime = DateTime.now()
@@ -47,7 +48,6 @@ class Utils {
       FocusManager.instance.primaryFocus!.unfocus();
     }
   }
-
 
   static completedDialog(BuildContext context,
       {bool? backButton = false, String? title, text}) {

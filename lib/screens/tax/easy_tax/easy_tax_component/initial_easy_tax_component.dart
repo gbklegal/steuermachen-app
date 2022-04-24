@@ -4,6 +4,7 @@ import 'package:steuermachen/components/button_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
+import 'package:steuermachen/utils/utils.dart';
 import 'package:steuermachen/wrappers/easy_tax/easy_tax_initial_view_wrapper.dart';
 
 class InitialEasyTaxComponent extends StatelessWidget {
@@ -25,7 +26,7 @@ class InitialEasyTaxComponent extends StatelessWidget {
               .copyWith(fontSize: 16, fontWeight: FontWeight.w600),
         ),
         const SizedBox(height: 15),
-        _adviceCard(context, data.title, data.subtitle, "${data.price.toString()} ${data.currencySymbol}"),
+        _adviceCard(context, data.title, data.subtitle, data.price),
         const SizedBox(height: 25),
         for (var i = 0; i < data.advicePoints.length; i++)
           _advicePoints(context, data.advicePoints[i]),
@@ -107,7 +108,7 @@ class InitialEasyTaxComponent extends StatelessWidget {
                 //   ),
                 // ),
                 Text(
-                  price,
+                 Utils.currencyFormatter.format(double.parse(price)), 
                   style: Theme.of(context).textTheme.bodyText1!.copyWith(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,

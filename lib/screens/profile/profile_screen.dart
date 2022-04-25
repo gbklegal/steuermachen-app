@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
@@ -12,7 +13,6 @@ import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:steuermachen/data/view_models/auth/auth_provider.dart';
-import 'package:steuermachen/data/view_models/profile/profile_provider.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/utils/input_validation_util.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
@@ -31,8 +31,12 @@ class _ProfileScreenState extends State<ProfileScreen>
   late TextEditingController currentPassword;
   late TextEditingController newPassword;
   late TextEditingController confirmPassword;
+  late AuthProvider authProvider;
+  bool isShowChangePasswordWidget = false;
   @override
   void initState() {
+    authProvider = Provider.of<AuthProvider>(context, listen: false);
+    changePasswordWidgetVisibility();
     currentPassword = TextEditingController();
     newPassword = TextEditingController();
     confirmPassword = TextEditingController();
@@ -46,6 +50,16 @@ class _ProfileScreenState extends State<ProfileScreen>
     newPassword.dispose();
     confirmPassword.dispose();
     super.deactivate();
+  }
+
+  changePasswordWidgetVisibility() {
+    List<UserInfo>? providers = authProvider.checkProviders();
+    for (var item in providers!) {
+      if (item.providerId == "password") {
+        isShowChangePasswordWidget = true;
+        break;
+      }
+    }
   }
 
   @override
@@ -79,12 +93,9 @@ class _ProfileScreenState extends State<ProfileScreen>
                   LocaleKeys.personalData,
                 ),
               ),
-              Visibility(
-                visible: true,
-                child: Tab(
-                  child: TextComponent(
-                    LocaleKeys.changePassword,
-                  ),
+              Tab(
+                child: TextComponent(
+                  LocaleKeys.changePassword,
                 ),
               ),
             ],
@@ -93,18 +104,20 @@ class _ProfileScreenState extends State<ProfileScreen>
         body: TabBarView(
           children: [
             _userForm(),
-            Visibility(
-              visible: true,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-                child: ChangePassword(
-                  currentPassword: currentPassword,
-                  newPassword: newPassword,
-                  confirmPassword: confirmPassword,
-                  changePasswordForm: changePasswordForm,
-                ),
-              ),
-            ),
+            isShowChangePasswordWidget
+                ? Padding(
+                    padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                    child: ChangePassword(
+                      currentPassword: currentPassword,
+                      newPassword: newPassword,
+                      confirmPassword: confirmPassword,
+                      changePasswordForm: changePasswordForm,
+                    ),
+                  )
+                : Center(
+                    child: TextComponent(
+                        LocaleKeys.changePasswordNotAvailableMessage.tr()),
+                  ),
           ],
         ),
       ),
@@ -235,7 +248,7 @@ class _ChangePasswordState extends State<ChangePassword>
             validator: (val) => InputValidationUtil()
                 .validatePassAndConfirmPass(widget.newPassword.text, val),
           ),
-          const SizedBox(height: 15),
+          const SizedBox(height: 30),
           ButtonComponent(
             onPressed: () => _changePassword(context),
             buttonText: LocaleKeys.changePassword.tr(),

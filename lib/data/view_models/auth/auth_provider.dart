@@ -62,8 +62,7 @@ class AuthProvider extends ChangeNotifier {
       return CommonResponseWrapper(
           status: true, message: "Signin successfully");
     } catch (e) {
-      return CommonResponseWrapper(
-          status: false, message: e.toString());
+      return CommonResponseWrapper(status: false, message: e.toString());
     }
   }
 
@@ -119,17 +118,14 @@ class AuthProvider extends ChangeNotifier {
           .createUserWithEmailAndPassword(email: email, password: password);
       await sendVerificationEmail();
       return CommonResponseWrapper(
-          status: true,
-          message:
-              LocaleKeys.accRegisteredSuccess);
+          status: true, message: LocaleKeys.accRegisteredSuccess);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         return CommonResponseWrapper(
             status: false, message: LocaleKeys.weakPwd);
       } else if (e.code == 'email-already-in-use') {
         return CommonResponseWrapper(
-            status: false,
-            message: LocaleKeys.accAlreadyExists);
+            status: false, message: LocaleKeys.accAlreadyExists);
       }
       return CommonResponseWrapper(
           status: false, message: LocaleKeys.somethingWentWrong);
@@ -166,8 +162,7 @@ class AuthProvider extends ChangeNotifier {
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
       return CommonResponseWrapper(
-          status: true,
-          message: LocaleKeys.checkEmailForPwdResetLink);
+          status: true, message: LocaleKeys.checkEmailForPwdResetLink);
     } on FirebaseAuthException catch (e) {
       return CommonResponseWrapper(
           status: false, message: LocaleKeys.somethingWentWrong);
@@ -188,6 +183,11 @@ class AuthProvider extends ChangeNotifier {
     } else {
       isFirstTimeLoggedIn = true;
     }
+  }
+
+  List<UserInfo>? checkProviders()  {
+    List<UserInfo> userInfo = FirebaseAuth.instance.currentUser!.providerData;
+    return userInfo;
   }
 
   bool checkUserInPreference() {

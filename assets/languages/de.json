@@ -243,6 +243,7 @@
     "privacyPolicy": "Datenschutz",
     "conditions": "AGB",
     "estimatedReimbursement": "voraussichtliche Erstattung",
+    "changePasswordNotAvailableMessage": "Diese Funktion ist nicht über Social Login verfügbar.",
     "taxYear": "Steuerjahr",
     "logout": "Ausloggen"
 }

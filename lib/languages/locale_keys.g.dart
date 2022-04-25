@@ -245,6 +245,7 @@ abstract class  LocaleKeys {
   static const privacyPolicy = 'privacyPolicy';
   static const conditions = 'conditions';
   static const estimatedReimbursement = 'estimatedReimbursement';
+  static const changePasswordNotAvailableMessage = 'changePasswordNotAvailableMessage';
   static const taxYear = 'taxYear';
   static const logout = 'logout';
 

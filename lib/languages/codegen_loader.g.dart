@@ -259,6 +259,7 @@ class CodegenLoader extends AssetLoader{
   "privacyPolicy": "Datenschutz",
   "conditions": "AGB",
   "estimatedReimbursement": "voraussichtliche Erstattung",
+  "changePasswordNotAvailableMessage": "Diese Funktion ist nicht über Social Login verfügbar.",
   "taxYear": "Steuerjahr",
   "logout": "Ausloggen"
 };
@@ -505,6 +506,7 @@ static const Map<String,dynamic> en = {
   "privacyPolicy": "Privacy Policy",
   "conditions": "Conditions",
   "estimatedReimbursement": "Estimated reimbursement",
+  "changePasswordNotAvailableMessage": "This feature is not available through social login.",
   "taxYear": "tax year",
   "logout": "Logout"
 };

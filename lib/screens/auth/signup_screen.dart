@@ -34,7 +34,7 @@ class _SignupScreenState extends State<SignupScreen> with InputValidationUtil {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<FormState> _signupFormKey = GlobalKey<FormState>();
-  bool showPassword = false;
+  bool showPassword = true;
   bool isConditionChecked = false;
   @override
   void initState() {
@@ -60,8 +60,10 @@ class _SignupScreenState extends State<SignupScreen> with InputValidationUtil {
               _emailController.text, _passwordController.text);
       ToastComponent.showToast(res.message!.tr(), long: true);
       PopupLoader.hideLoadingDialog(context);
-      Navigator.pushNamedAndRemoveUntil(
-          context, RouteConstants.completeProfileScreen, (val) => false);
+      if (res.status!) {
+        Navigator.pushNamedAndRemoveUntil(
+            context, RouteConstants.completeProfileScreen, (val) => false);
+      }
     }
   }
 

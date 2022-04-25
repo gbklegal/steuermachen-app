@@ -34,7 +34,7 @@ class _SignInScreenState extends State<SignInScreen> with InputValidationUtil {
   final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<FormState> _signupFormKey = GlobalKey<FormState>();
   late AuthProvider authProvider;
-  bool showPassword = false;
+  bool showPassword = true;
   @override
   void initState() {
     authProvider = Provider.of<AuthProvider>(context, listen: false);

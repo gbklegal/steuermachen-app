@@ -95,13 +95,13 @@ class AuthProvider extends ChangeNotifier {
             status: true, message: "Signin successfully");
       } on FirebaseAuthException catch (e) {
         if (e.code == 'account-exists-with-different-credential') {
-          return CommonResponseWrapper(status: true, message: e.code);
+          return CommonResponseWrapper(status: false, message: e.code);
         } else if (e.code == 'invalid-credential') {
-          return CommonResponseWrapper(status: true, message: e.code);
+          return CommonResponseWrapper(status: false, message: e.code);
         }
       } catch (e) {
         return CommonResponseWrapper(
-            status: true, message: LocaleKeys.somethingWentWrong);
+            status: false, message: LocaleKeys.somethingWentWrong);
       }
     }
     if (googleSignInAccount == null) {

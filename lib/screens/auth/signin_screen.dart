@@ -63,7 +63,6 @@ class _SignInScreenState extends State<SignInScreen> with InputValidationUtil {
     PopupLoader.showLoadingDialog(context);
     CommonResponseWrapper res = await authProvider.signInWithApple();
     ToastComponent.showToast(res.message!.tr(), long: true);
-
     PopupLoader.hideLoadingDialog(context);
     if (res.status!) {
       if (authProvider.isFirstTimeLoggedIn) {

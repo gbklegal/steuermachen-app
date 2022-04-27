@@ -1,4 +1,3 @@
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -27,6 +26,7 @@ class CollectReceiptsComponent extends StatelessWidget {
           ),
         ),
         child: ListTile(
+          horizontalTitleGap: 0,
           leading: SvgPicture.asset(
             AssetConstants.icReceipts,
             height: 18,
@@ -34,11 +34,16 @@ class CollectReceiptsComponent extends StatelessWidget {
           ),
           title: Padding(
             padding: const EdgeInsets.only(bottom: 5),
-            child: Text(
-              LocaleKeys.collectReceipts.tr(),
-              textAlign: TextAlign.left,
-              style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                  fontWeight: FontWeight.w500, fontSize: 14, letterSpacing: -0.3),
+            child: Transform.translate(
+              offset: const Offset(-11, 0),
+              child: Text(
+                LocaleKeys.collectReceipts.tr(),
+                textAlign: TextAlign.left,
+                style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14,
+                    letterSpacing: -0.3),
+              ),
             ),
           ),
           trailing: SvgPicture.asset(

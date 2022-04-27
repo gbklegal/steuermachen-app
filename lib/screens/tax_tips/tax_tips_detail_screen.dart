@@ -37,13 +37,13 @@ class _TaxTipsDetailScreenState extends State<TaxTipsDetailScreen> {
     // log(widget.taxTipsContent.content!.rendered.toString());
     return Scaffold(
       body: AppBarWithSideCornerCircleAndRoundBody(
-        overrideBackPressed: () async {
-          if (await _webViewController!.canGoBack()) {
-            _webViewController?.goBack();
-          } else {
-            Navigator.pop(context);
-          }
-        },
+        // overrideBackPressed: () async {
+        //   if (await _webViewController!.canGoBack()) {
+        //     _webViewController?.goBack();
+        //   } else {
+        //     Navigator.pop(context);
+        //   }
+        // },
         body: SizedBox(
           height: MediaQuery.of(context).size.height,
           child: Padding(

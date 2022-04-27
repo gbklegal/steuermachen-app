@@ -1,7 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:steuermachen/components/html_view_component.dart';
 import 'package:steuermachen/components/text_component.dart';
-import 'package:steuermachen/components/web_view_component.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 
@@ -10,11 +11,12 @@ class ImprintPrivacyConditionsComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     final List<_DataMode> data = [
-      _DataMode(LocaleKeys.imprint.tr(), "https://steuermachen.de/impressum/"),
+      _DataMode(LocaleKeys.imprint.tr(), "assets/html/AGB.html"),
       _DataMode(LocaleKeys.privacyPolicy.tr(),
-          "https://steuermachen.de/datenschutz/"),
-      _DataMode(LocaleKeys.conditions.tr(), "https://steuermachen.de/agb/"),
+          "assets/html/Datenschutz.html"),
+      _DataMode(LocaleKeys.conditions.tr(), "assets/html/Impressum.html"),
     ];
     text(val) => TextComponent(
           val,
@@ -29,11 +31,12 @@ class ImprintPrivacyConditionsComponent extends StatelessWidget {
           children: [
             for (var item in data)
               InkWell(
-                onTap: () {
+                onTap: () async{
+                   final response = await rootBundle.loadString(item.path);
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => WebViewComponent(url: item.url),
+                      builder: (context) => LocalHtmlWebViewComponent(html: response),
                     ),
                   );
                 },
@@ -48,7 +51,7 @@ class ImprintPrivacyConditionsComponent extends StatelessWidget {
 }
 
 class _DataMode {
-  final String name, url;
+  final String name, path;
 
-  _DataMode(this.name, this.url);
+  _DataMode(this.name, this.path);
 }

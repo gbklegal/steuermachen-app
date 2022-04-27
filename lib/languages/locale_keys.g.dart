@@ -172,6 +172,8 @@ abstract class  LocaleKeys {
   static const selectCheckAbove = 'selectCheckAbove';
   static const somethingWentWrong = 'somethingWentWrong';
   static const alreadyRegistered = 'alreadyRegistered';
+  static const already = 'already';
+  static const registered = 'registered';
   static const signupWith = 'signupWith';
   static const emailUs = 'emailUs';
   static const password = 'password';
@@ -179,6 +181,7 @@ abstract class  LocaleKeys {
   static const currentPassword = 'currentPassword';
   static const newPassword = 'newPassword';
   static const confirmNewPassword = 'confirmNewPassword';
+  static const confirmPassword = 'confirmPassword';
   static const signinWith = 'signinWith';
   static const dontHaveAnAccount = 'dontHaveAnAccount';
   static const signupNow = 'signupNow';
@@ -215,6 +218,7 @@ abstract class  LocaleKeys {
   static const deletingAnAccount = 'deletingAnAccount';
   static const emailToUs = 'emailToUs';
   static const chatWithExpert = 'chatWithExpert';
+  static const noMessagesText = 'noMessagesText';
   static const useOurContactForm = 'useOurContactForm';
   static const youHaveNoOrderSomething = 'youHaveNoOrderSomething';
   static const pleaseSelect = 'pleaseSelect';
@@ -240,6 +244,7 @@ abstract class  LocaleKeys {
   static const deleteAccountMessage = 'deleteAccountMessage';
   static const abort = 'abort';
   static const deleteAcc = 'deleteAcc';
+  static const deleteAccReloginWarning = 'deleteAccReloginWarning';
   static const passwordChangedSuccess = 'passwordChangedSuccess';
   static const imprint = 'imprint';
   static const privacyPolicy = 'privacyPolicy';

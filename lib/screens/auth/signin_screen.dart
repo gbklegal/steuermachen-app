@@ -85,8 +85,13 @@ class _SignInScreenState extends State<SignInScreen> with InputValidationUtil {
 
       PopupLoader.hideLoadingDialog(context);
       if (res.status!) {
-        Navigator.pushNamedAndRemoveUntil(
-            context, RouteConstants.bottomNavBarScreen, (val) => false);
+        if (authProvider.isFirstTimeLoggedIn) {
+          Navigator.pushNamedAndRemoveUntil(
+              context, RouteConstants.completeProfileScreen, (val) => false);
+        } else {
+          Navigator.pushNamedAndRemoveUntil(
+              context, RouteConstants.bottomNavBarScreen, (val) => false);
+        }
       }
     }
   }

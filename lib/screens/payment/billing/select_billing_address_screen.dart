@@ -64,18 +64,21 @@ class _SelectBillingAddressScreenState
             );
           } else {
             if (response?.data == null) {
-              return _AddNewAddress(
-                onTap: () async {
-                  var res = await Navigator.pushNamed(
-                      context, RouteConstants.addNewBillingAddressScreen);
-                  if (res != null) {
-                    await provider.getUserAddresses().then((value) {
-                      setState(() {
-                        response = value;
+              return Padding(
+                padding: const EdgeInsets.only(top: 15),
+                child: _AddNewAddress(
+                  onTap: () async {
+                    var res = await Navigator.pushNamed(
+                        context, RouteConstants.addNewBillingAddressScreen);
+                    if (res != null) {
+                      await provider.getUserAddresses().then((value) {
+                        setState(() {
+                          response = value;
+                        });
                       });
-                    });
-                  }
-                },
+                    }
+                  },
+                ),
               );
             } else {
               List<UserWrapper> addressess =

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 import 'package:path/path.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -28,6 +29,17 @@ class Utils {
   static String dateFormatter(String dateTime) {
     var formattedDate = DateFormat.yMMMd().format(DateTime.parse(dateTime));
     return formattedDate;
+  }
+
+  static String generateRandomString(int length) {
+    final _random = Random();
+    const _availableChars =
+        'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+    final randomString = List.generate(length,
+            (index) => _availableChars[_random.nextInt(_availableChars.length)])
+        .join();
+
+    return randomString;
   }
 
   static void animateToPreviousPage(PageController pageController, int i) {

@@ -21,7 +21,9 @@ class GetStartedScreen extends StatelessWidget {
             children: [
               const LogoComponent(),
               const SizedBox(height: 35),
-              _topTitle(context),
+              Transform.translate(
+                offset: const Offset(-23, 0),
+                child: _topTitle(context)),
               const SizedBox(
                 height: 50,
               ),
@@ -73,7 +75,7 @@ class GetStartedScreen extends StatelessWidget {
       textAlign: TextAlign.start,
       style: FontStyles.fontMedium(
           fontWeight: FontWeight.w700,
-          letterSpacing: 1.8,
+          letterSpacing: 2.3,
           fontSize: 32,
           lineSpacing: 1.1),
     );

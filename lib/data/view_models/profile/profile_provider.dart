@@ -33,7 +33,8 @@ class ProfileProvider extends ChangeNotifier {
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController emailController =
       TextEditingController(text: FirebaseAuth.instance.currentUser!.email);
-  final TextEditingController countryController = TextEditingController(text: "Germany (DE)");
+  final TextEditingController countryController =
+      TextEditingController(text: "Germany (DE)");
   final GlobalKey<FormState> userFormKey = GlobalKey<FormState>();
 
   setGender(String value) {
@@ -67,6 +68,19 @@ class ProfileProvider extends ChangeNotifier {
     countryController.dispose();
   }
 
+  clearControllers() {
+    genderController.text = "";
+    firstNameController.text = "";
+    lastNameController.text = "";
+    streetController.text = "";
+    houseNumberController.text = "";
+    postCodeController.text = "";
+    locationController.text = "";
+    phoneController.text = "";
+    emailController.text = "";
+    countryController.text = "Germany (DE)";
+  }
+
   Future<CommonResponseWrapper> submitUserProfile() async {
     var userWrapper = UserWrapper(
       gender: genderController.text,
@@ -96,7 +110,7 @@ class ProfileProvider extends ChangeNotifier {
   }
 
   Future<CommonResponseWrapper?> getUserProfile() async {
-    if (userData == null) {
+    if (userData == null || userData?.email ==null) {
       try {
         setBusyStateProfile = true;
         User? user = FirebaseAuth.instance.currentUser;
@@ -104,6 +118,7 @@ class ProfileProvider extends ChangeNotifier {
             .collection("user_profile")
             .doc("${user?.uid}")
             .get();
+         emailController.text = user!.email!;   
         if (snapshot.data() != null) {
           Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
           userData = UserWrapper.fromJson(data);

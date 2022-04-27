@@ -62,7 +62,7 @@ class _SignupScreenState extends State<SignupScreen> with InputValidationUtil {
       PopupLoader.hideLoadingDialog(context);
       if (res.status!) {
         Navigator.pushNamedAndRemoveUntil(
-            context, RouteConstants.completeProfileScreen, (val) => false);
+            context, RouteConstants.signInScreen, (val) => false);
       }
     }
   }
@@ -165,14 +165,16 @@ class _SignupScreenState extends State<SignupScreen> with InputValidationUtil {
                     onPressed: _signupWithEmailAndPass),
                 const SizedBox(height: 22),
                 RichTextAuthComponent(
-                  textSpan1: LocaleKeys.alreadyRegistered.tr() + " ",
-                  textSpan2: LocaleKeys.signIn.tr(),
+                  textSpan1: LocaleKeys.already.tr() + " ",
+                  textSpan2: LocaleKeys.registered.tr(),
+                  textSpan2Color: const Color(0xffFF0000),
                   onTap: () {
                     Navigator.pushReplacementNamed(
                         context, RouteConstants.signInScreen);
                   },
                 ),
-                const ChoiceTextAuthComponent(text: LocaleKeys.signinWith),
+                const SizedBox(height: 8,),
+                const ChoiceTextAuthComponent(text: LocaleKeys.signinWith, isOrText: false,),
                 _signInWithApple(),
                 const SizedBox(height: 22),
                 InkWell(

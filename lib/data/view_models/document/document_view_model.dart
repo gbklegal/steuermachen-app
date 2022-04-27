@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -12,6 +13,7 @@ import 'package:steuermachen/data/repositories/remote/documents_repository.dart'
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/main.dart';
 import 'package:steuermachen/services/networks/api_response_states.dart';
+import 'package:steuermachen/utils/utils.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 import 'package:steuermachen/wrappers/declaration_tax/declaration_tax_data_collector_wrapper.dart';
 import 'package:steuermachen/wrappers/document/document_option_wrapper.dart';
@@ -60,10 +62,12 @@ class DocumentsViewModel extends ChangeNotifier {
     File file = File(_file);
     String fileName = basename(file.path);
     var snapshot = FirebaseStorage.instance.ref().child("files/");
-    var uploadedFile = await snapshot.child(fileName).putFile(file);
+    var uploadedFile = await snapshot.child(Utils.generateRandomString(10)).putFile(file);
     String url = await uploadedFile.ref.getDownloadURL();
     return url;
   }
+
+
 
   deleteDocuments(SafeAndDeclarationTaxDataCollectorWrapper _selectedTax,
       String url) async {

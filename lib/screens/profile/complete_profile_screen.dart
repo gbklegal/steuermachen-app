@@ -1,4 +1,3 @@
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -28,13 +27,12 @@ class CompleteProfileScreen extends StatefulWidget {
 class _CompleteProfileScreenState extends State<CompleteProfileScreen>
     with InputValidationUtil {
   late ProfileProvider _profileProvider;
-  CommonResponseWrapper? response;
   @override
   void initState() {
     super.initState();
     _profileProvider = Provider.of<ProfileProvider>(context, listen: false);
-    WidgetsBinding.instance!.addPostFrameCallback((_) =>
-        _profileProvider.getUserProfile().then((value) => response = value));
+    WidgetsBinding.instance!
+        .addPostFrameCallback((_) => _profileProvider.getUserProfile());
   }
 
   @override
@@ -100,7 +98,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen>
       padding: AppConstants.bottomBtnPadding,
       child: ButtonComponent(
         btnHeight: 56,
-        buttonText: LocaleKeys.continueWord.tr(),
+        buttonText: LocaleKeys.continueText.tr(),
         onPressed: () async {
           if (consumer.genderController.text == "") {
             ToastComponent.showToast(ErrorMessagesConstants.selectGender,
@@ -111,6 +109,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen>
             CommonResponseWrapper res = await consumer.submitUserProfile();
             PopupLoader.hideLoadingDialog(context);
             if (res.status!) {
+              _profileProvider.getUserProfile();
               Navigator.pushNamedAndRemoveUntil(
                   context, RouteConstants.bottomNavBarScreen, (val) => false);
             } else {

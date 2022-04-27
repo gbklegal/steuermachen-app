@@ -8,6 +8,7 @@ import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:steuermachen/constants/strings/error_messages_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/main.dart';
+import 'package:steuermachen/services/networks/api_response_states.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 
 class AuthProvider extends ChangeNotifier {
@@ -144,6 +145,7 @@ class AuthProvider extends ChangeNotifier {
         return CommonResponseWrapper(
             status: false, message: LocaleKeys.verifyEmail);
       }
+      await checkUserFirstTimeLoggedIn(email);
       return CommonResponseWrapper(status: true, message: 'Sigin successfully');
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
@@ -185,7 +187,7 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  List<UserInfo>? checkProviders()  {
+  List<UserInfo>? checkProviders() {
     List<UserInfo> userInfo = FirebaseAuth.instance.currentUser!.providerData;
     return userInfo;
   }
@@ -217,14 +219,34 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  deleteAccount() async {
+  Future<ApiResponse> deleteAccount() async {
     try {
       User? user = FirebaseAuth.instance.currentUser;
       await FirebaseAuth.instance.currentUser?.delete();
       await firestore.collection("user_orders").doc("${user?.uid}").delete();
-      return true;
-    } catch (e) {
-      return false;
+      await firestore.collection("user_profile").doc("${user?.uid}").delete();
+      await firestore.collection("user_address").doc("${user?.uid}").delete();
+      return ApiResponse.completed("");
+    } on FirebaseException catch (e) {
+      return ApiResponse.error(e.code.toString());
+    }
+  }
+
+  Future<ApiResponse> reLogin(String password) async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: user!.email!,
+        password: password,
+      );
+      return ApiResponse.completed("");
+    } on FirebaseException catch (e) {
+      if (e.code == 'user-not-found') {
+        return ApiResponse.error(LocaleKeys.noUserFound);
+      } else if (e.code == 'wrong-password') {
+        return ApiResponse.error(LocaleKeys.wrongPwd);
+      }
+      return ApiResponse.error(LocaleKeys.somethingWentWrong);
     }
   }
 

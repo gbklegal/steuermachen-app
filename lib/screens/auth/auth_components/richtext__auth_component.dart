@@ -4,10 +4,15 @@ import 'package:steuermachen/constants/colors/color_constants.dart';
 
 class RichTextAuthComponent extends StatelessWidget {
   const RichTextAuthComponent(
-      {Key? key, required this.textSpan1, required this.textSpan2, this.onTap})
+      {Key? key,
+      required this.textSpan1,
+      required this.textSpan2,
+      this.onTap,
+      this.textSpan2Color})
       : super(key: key);
   final String textSpan1, textSpan2;
   final void Function()? onTap;
+  final Color? textSpan2Color;
   @override
   Widget build(BuildContext context) {
     return RichText(
@@ -23,8 +28,9 @@ class RichTextAuthComponent extends StatelessWidget {
               text: textSpan2,
               style: Theme.of(context).textTheme.bodyText1?.copyWith(
                   fontSize: 14,
-                  color: ColorConstants.black,
-                  fontWeight: FontWeight.w700),
+                  color: textSpan2Color ?? ColorConstants.black,
+                  letterSpacing: 0.3,
+                  fontWeight: FontWeight.w600),
               recognizer: TapGestureRecognizer()..onTap = onTap)
         ],
       ),

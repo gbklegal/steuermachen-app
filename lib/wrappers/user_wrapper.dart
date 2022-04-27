@@ -1,5 +1,5 @@
 class UserWrapper {
-  final String? firstName,
+  String? firstName,
       lastName,
       street,
       houseNumber,

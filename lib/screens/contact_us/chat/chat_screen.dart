@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'dart:math';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:steuermachen/components/app_bar/appbar_with_side_corner_circle_and_body.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
+import 'package:steuermachen/languages/locale_keys.g.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({Key? key}) : super(key: key);
@@ -64,13 +66,21 @@ class _ChatScreenState extends State<ChatScreen> {
       body: SafeArea(
         bottom: false,
         child: Chat(
+          emptyState: const SizedBox(),
+          l10n: ChatL10nEn(
+            inputPlaceholder: LocaleKeys.message.tr(),
+          ),
           theme: DefaultChatTheme(
             inputTextColor: ColorConstants.black,
             inputTextStyle: const TextStyle(color: ColorConstants.black),
             inputBackgroundColor: ColorConstants.mediumGrey.withOpacity(0.2),
             inputBorderRadius: BorderRadius.circular(0),
+            inputTextDecoration: const InputDecoration(
+                filled: false,
+                contentPadding: EdgeInsets.zero,
+                focusedBorder: InputBorder.none,
+                enabledBorder: InputBorder.none),
             primaryColor: ColorConstants.primary,
-            // inputContainerDecoration:
           ),
           messages: _messages,
           onSendPressed: _handleSendPressed,

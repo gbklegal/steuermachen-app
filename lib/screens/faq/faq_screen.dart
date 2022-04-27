@@ -6,6 +6,7 @@ import 'package:steuermachen/components/loading_component.dart';
 import 'package:steuermachen/components/simple_error_text_component.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
+// import 'package:steuermachen/json/faq_json.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/main.dart';
 import 'package:steuermachen/wrappers/faq_wrapper.dart';
@@ -19,7 +20,7 @@ class FaqScreen extends StatelessWidget {
       body: InkWell(
         onTap: () async {
           // for (var e in faqJson) {
-          //   await firestore.collection("faq_content").add(e);
+          //   // await firestore.collection("faq_content").add(e);
           // }
         },
         child: SingleChildScrollView(

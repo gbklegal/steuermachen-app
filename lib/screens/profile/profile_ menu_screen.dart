@@ -15,7 +15,10 @@ import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/error_messages_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:steuermachen/data/view_models/auth/auth_provider.dart';
+import 'package:steuermachen/data/view_models/profile/profile_provider.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
+import 'package:steuermachen/services/networks/api_response_states.dart';
+import 'package:steuermachen/wrappers/user_wrapper.dart';
 
 class ProfileMenuScreen extends StatefulWidget {
   const ProfileMenuScreen({Key? key}) : super(key: key);
@@ -174,18 +177,26 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
 
   showAlertDialog(BuildContext context) {
     Widget okButton = TextButton(
-      child:  Text(LocaleKeys.deleteAcc.tr()),
+      child: Text(LocaleKeys.deleteAcc.tr()),
       onPressed: () async {
-        AuthProvider _auth = Provider.of(context, listen: false);
+        AuthProvider _auth = Provider.of<AuthProvider>(context, listen: false);
         PopupLoader.showLoadingDialog(context);
-        bool res = await _auth.deleteAccount();
+        ApiResponse res = await _auth.deleteAccount();
         PopupLoader.hideLoadingDialog(context);
         Navigator.pop(context);
-        if (res) {
+        if (res.status == Status.completed) {
+          ProfileProvider profileProvider =
+              Provider.of<ProfileProvider>(context, listen: false);
+          profileProvider.clearControllers();
+          profileProvider.userData = UserWrapper();
           Navigator.pushNamedAndRemoveUntil(
               context, RouteConstants.splashScreen, (val) => false);
         } else {
-          ToastComponent.showToast(LocaleKeys.somethingWentWrong.tr());
+          if (res.message == "requires-recent-login") {
+            ToastComponent.showToast(LocaleKeys.deleteAccReloginWarning.tr());
+          } else {
+            ToastComponent.showToast(LocaleKeys.somethingWentWrong.tr());
+          }
         }
       },
     );

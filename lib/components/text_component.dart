@@ -17,7 +17,9 @@ class TextComponent extends StatelessWidget {
       this.maxLines,
       this.semanticsLabel,
       this.textWidthBasis,
-      this.textHeightBehavior})
+      this.textHeightBehavior,
+      this.leadingText,
+      this.trailingText})
       : super(key: key);
   final String text;
   final TextStyle? style;
@@ -32,11 +34,12 @@ class TextComponent extends StatelessWidget {
   final String? semanticsLabel;
   final TextWidthBasis? textWidthBasis;
   final TextHeightBehavior? textHeightBehavior;
+  final String? leadingText, trailingText;
   @override
   Widget build(BuildContext context) {
     return Consumer<LanguageProvider>(builder: (context, consumer, child) {
       return Text(
-        text.tr(),
+        leadingText ?? "" + text.tr() + (trailingText ?? ""),
         style: style,
         strutStyle: strutStyle,
         textAlign: textAlign,

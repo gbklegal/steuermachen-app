@@ -80,7 +80,8 @@ class _EasyTaxQuestionsViewComponentState
                               OptionConstants.initialScreen)
                             InitialEasyTaxComponent(
                               data: widget.easyTaxData[i].content!,
-                              onPressed: () {
+                              onPressed: (val) {
+                                consumer.setSubscriptionPrice(val);
                                 Utils.animateToNextPage(pageController, i);
                               },
                             )

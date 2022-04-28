@@ -48,6 +48,7 @@ class _DocumentOverviewDetailScreenState
         showBackButton: true,
         showPersonIcon: false,
         showBottomLine: true,
+        isLanguageDropdown: false,
       ),
       body: _mainBody(context),
     );

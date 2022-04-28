@@ -1,9 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:steuermachen/constants/strings/process_constants.dart';
 import 'package:steuermachen/json/declaration_tax_view.dart';
 import 'package:steuermachen/main.dart';
-import 'package:steuermachen/wrappers/declaration_tax/declaration_tax_data_collector_wrapper.dart';
-import 'package:steuermachen/wrappers/tax_steps_wrapper.dart';
 
 class SafeAndDeclarationTaxRepository {
   Future<dynamic> addDeclarationTaxViewData() async {

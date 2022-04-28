@@ -5,19 +5,21 @@ import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 
 class AppBarWithSideCornerCircleAndRoundBody extends StatelessWidget {
-  const AppBarWithSideCornerCircleAndRoundBody({
-    Key? key,
-    required this.body,
-    this.showNotificationIcon = false,
-    this.showCircle = false,
-    this.showBackButton = true,
-    this.overrideBackPressed,
-  }) : super(key: key);
+  const AppBarWithSideCornerCircleAndRoundBody(
+      {Key? key,
+      required this.body,
+      this.showNotificationIcon = false,
+      this.showCircle = false,
+      this.showBackButton = true,
+      this.overrideBackPressed,
+      this.isLanguageDropdown = true})
+      : super(key: key);
   final Widget body;
   final bool? showNotificationIcon;
   final bool showCircle;
   final bool? showBackButton;
   final dynamic Function()? overrideBackPressed;
+  final bool? isLanguageDropdown;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,6 +31,7 @@ class AppBarWithSideCornerCircleAndRoundBody extends StatelessWidget {
         showPersonIcon: showNotificationIcon,
         showBackButton: showBackButton,
         overrideBackPressed: overrideBackPressed,
+        isLanguageDropdown: isLanguageDropdown,
       ),
       body: Container(
         width: MediaQuery.of(context).size.width,

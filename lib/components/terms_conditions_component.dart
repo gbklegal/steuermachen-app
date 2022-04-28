@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/components/button_component.dart';
@@ -11,6 +12,7 @@ import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/data/view_models/terms_and_condition_provider.dart';
+import 'package:steuermachen/screens/auth/auth_components/richtext__auth_component.dart';
 
 class TermsAndConditionComponent extends StatelessWidget {
   const TermsAndConditionComponent(
@@ -79,48 +81,45 @@ class TermsAndConditionComponent extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Transform.translate(
-                        offset: Offset(
-                            0,
-                            consumer.termsAndConditionChecks.length - 1 == i
-                                ? -10
-                                : 0),
-                        child: _checkBox(
-                            context,
-                            consumer.termsAndConditionChecks[i].title,
-                            consumer.termsAndConditionChecks[i].isSelected,
-                            (va) => consumer
-                                .changeTermsAndConditionCheckedState(i)),
-                      ),
-                      Visibility(
-                        visible: i == 0,
-                        child: Transform.translate(
-                          offset: const Offset(-6, -5),
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 60, bottom: 10, top: 5),
-                            child: InkWell(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        const WebViewComponent(
-                                      url:
-                                          "https://steuermachen.de/schweigepflichtsentbindung/?frame_mode=remove-links",
-                                    ),
-                                  ),
-                                );
-                              },
-                              child: TextComponent(
-                                LocaleKeys.termsAndConditionCheckNonDisclosure,
-                                style: FontStyles.fontMedium(
-                                    fontSize: 15,
-                                    color: ColorConstants.primary),
-                              ),
+                      _checkBox(
+                          context,
+                          consumer.termsAndConditionChecks[i].title,
+                          i == 0
+                              ? LocaleKeys.termsAndConditionCheckNonDisclosure
+                              : null,
+                          consumer.termsAndConditionChecks[i].isSelected,
+                          (va) =>
+                              consumer.changeTermsAndConditionCheckedState(i),
+                          () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const WebViewComponent(
+                              url:
+                                  "https://steuermachen.de/schweigepflichtsentbindung/?frame_mode=remove-links",
                             ),
                           ),
-                        ),
-                      ),
+                        );
+                      }),
+                      // Visibility(
+                      //   visible: i == 0,
+                      //   child: Transform.translate(
+                      //     offset: const Offset(-6, -5),
+                      //     child: Padding(
+                      //       padding: const EdgeInsets.only(
+                      //           left: 60, bottom: 10, top: 5),
+                      //       child: InkWell(
+                      //         ,
+                      //         child: TextComponent(
+                      //           ,
+                      //           style: FontStyles.fontMedium(
+                      //               fontSize: 15,
+                      //               color: ColorConstants.primary),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),
@@ -160,8 +159,13 @@ class TermsAndConditionComponent extends StatelessWidget {
     });
   }
 
-  Row _checkBox(BuildContext context, String checkBoxTitle, bool isSelected,
-      void Function(bool?)? onChanged) {
+  Row _checkBox(
+      BuildContext context,
+      String checkBoxTitle,
+      String? linkText,
+      bool isSelected,
+      void Function(bool?)? onChanged,
+      void Function()? onTap) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -186,12 +190,56 @@ class TermsAndConditionComponent extends StatelessWidget {
                         fontSize: 16, letterSpacing: -0.3, lineSpacing: 1.1),
                   ),
                   Flexible(
-                    child: TextComponent(
-                      checkBoxTitle,
-                      style: FontStyles.fontMedium(
-                          fontSize: 16, letterSpacing: -0.3, lineSpacing: 1.1),
+                    child: RichText(
+                      textAlign: TextAlign.left,
+                      text: TextSpan(
+                        text: checkBoxTitle.tr()+" ",
+                        style: FontStyles.fontMedium(
+                            fontSize: 16,
+                            letterSpacing: -0.3,
+                            lineSpacing: 1.1),
+                        children: <TextSpan>[
+                          TextSpan(
+                              text: linkText?.tr() ?? "",
+                              style: FontStyles.fontMedium(
+                                  fontSize: 16,
+                                  color: ColorConstants.primary,
+                                  letterSpacing: -0.3,
+                                  lineSpacing: 1.1),
+                              recognizer: TapGestureRecognizer()..onTap = onTap)
+                        ],
+                      ),
                     ),
-                  ),
+                  )
+                  // Flexible(
+                  //   child: Row(
+                  //     children: [
+                  //       Flexible(
+                  //         child: TextComponent(
+                  //           checkBoxTitle,
+                  //           style: FontStyles.fontMedium(
+                  //               fontSize: 16,
+                  //               letterSpacing: -0.3,
+                  //               lineSpacing: 1.1),
+                  //         ),
+                  //       ),
+                  //       Visibility(
+                  //         visible: linkText != null,
+                  //         child: InkWell(
+                  //           onTap: onTap,
+                  //           child: TextComponent(
+                  //             linkText ?? "",
+                  //             style: FontStyles.fontMedium(
+                  //                 fontSize: 16,
+                  //                 color: ColorConstants.primary,
+                  //                 letterSpacing: -0.3,
+                  //                 lineSpacing: 1.1),
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                 ],
               ),
             ),

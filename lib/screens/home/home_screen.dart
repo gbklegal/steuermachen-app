@@ -45,6 +45,7 @@ class HomeScreen extends StatelessWidget {
         showBackButton: false,
         showPersonIcon: false,
         showBottomLine: false,
+        
       ),
       body: SafeArea(
         child: SizedBox(

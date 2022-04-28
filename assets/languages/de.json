@@ -102,7 +102,7 @@
     "taxName": "Steuername",
     "status": "Status",
     "price": "Preis",
-    "product": "Produk",
+    "product": "Produkt",
     "orderDate": "Bestelldatum",
     "taxReturn": "Steuererklärung",
     "noDocuments": "Keine Dokumente beigefügt",

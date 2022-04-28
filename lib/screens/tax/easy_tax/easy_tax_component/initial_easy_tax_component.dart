@@ -10,7 +10,7 @@ import 'package:steuermachen/wrappers/easy_tax/easy_tax_initial_view_wrapper.dar
 class InitialEasyTaxComponent extends StatelessWidget {
   const InitialEasyTaxComponent({Key? key, this.onPressed, required this.data})
       : super(key: key);
-  final void Function()? onPressed;
+  final void Function(double val)? onPressed;
   final EasyTaxInitialViewData data;
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class InitialEasyTaxComponent extends StatelessWidget {
         const SizedBox(height: 45),
         ButtonComponent(
           buttonText: LocaleKeys.applyNowForAfee.tr(),
-          onPressed: onPressed,
+          onPressed: ()=> onPressed!(double.parse( data.price)),
         ),
         const SizedBox(height: 25),
       ],

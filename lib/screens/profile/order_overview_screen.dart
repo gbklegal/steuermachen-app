@@ -149,14 +149,14 @@ class _OrderCards extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
             child: Column(
               children: [
-                _rowTitleAndText(LocaleKeys.product.tr(), data.taxName ?? "--"),
+                _rowTitleAndText(
+                    LocaleKeys.product.tr(), getTaxName(data.taxName!) +" "+ data.taxYear!),
                 _rowTitleAndText(
                     LocaleKeys.price.tr(),
                     data.taxPrice != null
                         ? data.taxPrice! + " Euro (inkl. MwSt.)"
                         : "--"),
-                _rowTitleAndText(
-                    "${LocaleKeys.orderDate.tr()} ${data.taxYear ?? "--"}",
+                _rowTitleAndText(LocaleKeys.orderDate.tr(),
                     Utils.dateFormatter(data.createdAt.toString())),
                 const Divider(),
                 SizedBox(
@@ -195,6 +195,15 @@ class _OrderCards extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String getTaxName(String taxName) {
+    if (taxName == "declarationTax") {
+      return "Steuererklärung";
+    } else if (taxName == "safeTax") {
+      return "safeTAX";
+    }
+    return "";
   }
 
   Row _rowTitleAndText(String title, String text) {

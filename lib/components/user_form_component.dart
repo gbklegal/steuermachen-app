@@ -46,11 +46,7 @@ class _UserFormComponentState extends State<UserFormComponent>
   final sizedBox6 = const SizedBox(
     height: 6,
   );
-  final List<String> gender = [
-    LocaleKeys.mister.tr(),
-    LocaleKeys.mrs.tr(),
-    LocaleKeys.others.tr(),
-  ];
+
   @override
   Widget build(BuildContext context) {
     return Consumer<ProfileProvider>(
@@ -72,6 +68,11 @@ class _UserFormComponentState extends State<UserFormComponent>
   }
 
   Column _mainBody(ProfileProvider consumer, BuildContext context) {
+    final List<String> gender = [
+      LocaleKeys.mister.tr(),
+      LocaleKeys.mrs.tr(),
+      LocaleKeys.others.tr(),
+    ];
     return Column(
       children: [
         Visibility(
@@ -207,10 +208,9 @@ class _UserFormComponentState extends State<UserFormComponent>
               TextFormField(
                 controller: consumer.phoneController,
                 decoration: InputDecoration(
-                  labelText: LocaleKeys.phone.tr() + "*",
-                  hintStyle: fontStyle,
-                  hintText: "+4912341234567"
-                ),
+                    labelText: LocaleKeys.phone.tr() + "*",
+                    hintStyle: fontStyle,
+                    hintText: "+4912341234567"),
                 validator: validatePhone,
               ),
               sizedBox4,

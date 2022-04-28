@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:steuermachen/components/language_dropdown_component.dart';
 import 'package:steuermachen/components/text_component.dart';
 import 'package:steuermachen/constants/app_constants.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
@@ -19,6 +20,7 @@ class AppBarComponent extends StatelessWidget with PreferredSizeWidget {
   final Color backgroundColor;
   final bool? showBackButton;
   final bool? showPersonIcon;
+  final bool? isLanguageDropdown;
   final bool? showBottomLine;
   final bool? centerTitle;
   final PreferredSizeWidget? bottom;
@@ -36,6 +38,7 @@ class AppBarComponent extends StatelessWidget with PreferredSizeWidget {
     this.bottom,
     this.appBarHeight = AppConstants.toolbarSize,
     this.centerTitle = true,
+    this.isLanguageDropdown = true,
   }) : super(key: key);
 
   @override
@@ -62,12 +65,13 @@ class AppBarComponent extends StatelessWidget with PreferredSizeWidget {
             leading: Visibility(
               visible: showBackButton!,
               child: InkWell(
-                onTap: overrideBackPressed ?? () {
-                        /*  overrideBackPressed == null
+                onTap: overrideBackPressed ??
+                    () {
+                      /*  overrideBackPressed == null
                                 ? Get.back()
                                 : overrideBackPressed!(); */
-                        Navigator.pop(context);
-                      },
+                      Navigator.pop(context);
+                    },
                 child: Row(
                   children: [
                     const Padding(
@@ -100,6 +104,12 @@ class AppBarComponent extends StatelessWidget with PreferredSizeWidget {
                   child: SvgPicture.asset(AssetConstants.icPerson),
                 ),
               ),
+              Visibility(
+                  visible: isLanguageDropdown!,
+                  child: const Padding(
+                    padding: EdgeInsets.only(right: 15, top: 5),
+                    child: LanguageDropdownComponent(),
+                  ))
             ],
             bottom: bottom,
           );

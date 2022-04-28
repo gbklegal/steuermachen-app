@@ -5,6 +5,7 @@ import 'package:steuermachen/components/text_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
+import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/data/view_models/language_provider.dart';
 import 'package:provider/provider.dart';
@@ -52,7 +53,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               children: [
                 Padding(
                   padding:
-                      const EdgeInsets.only(left: 18, right: 18, bottom: 60),
+                      const EdgeInsets.only(left: 18, right: 18, bottom: 39),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     // ignore: prefer_const_literals_to_create_immutables
@@ -98,7 +99,9 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 20, top: 60),
+                  padding: const EdgeInsets.only(
+                    bottom: 20,
+                  ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -129,28 +132,36 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          TextComponent(
-            text,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-                color: ColorConstants.black,
-                fontWeight: FontWeight.bold,
-                fontStyle: FontStyle.normal,
-                fontSize: 20),
+          Image.asset(assetName, height: 264, width: 264),
+          const SizedBox(
+            height: 20,
           ),
-          Image.asset(assetName, height: 152, width: 152),
-          SizedBox(
-            height: 100,
-            child: TextComponent(
-              title,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                  color: ColorConstants.black,
-                  fontWeight: FontWeight.bold,
-                  fontStyle: FontStyle.normal,
-                  fontSize: 20),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextComponent(
+                  text,
+                  // textAlign: TextAlign.center,
+                  style: FontStyles.fontBold(
+                      color: ColorConstants.black,
+                      letterSpacing: 0.2,
+                      fontSize: 36),
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                TextComponent(
+                  title,
+                  // textAlign: TextAlign.center,
+                  style: FontStyles.fontBold(
+                      color: ColorConstants.black,
+                      letterSpacing: 0.2,
+                      fontSize: 24),
+                ),
+              ],
             ),
           ),
         ],

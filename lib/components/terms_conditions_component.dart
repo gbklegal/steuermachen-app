@@ -5,6 +5,7 @@ import 'package:steuermachen/components/button_component.dart';
 import 'package:steuermachen/components/imprint_privacy_condition_component.dart';
 import 'package:steuermachen/components/radio_component.dart';
 import 'package:steuermachen/components/text_component.dart';
+import 'package:steuermachen/components/web_view_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
@@ -94,13 +95,28 @@ class TermsAndConditionComponent extends StatelessWidget {
                       Visibility(
                         visible: i == 0,
                         child: Transform.translate(
-                          offset: const Offset(-6, -22),
+                          offset: const Offset(-6, -5),
                           child: Padding(
-                            padding: const EdgeInsets.only(left: 60),
-                            child: TextComponent(
-                              LocaleKeys.termsAndConditionCheckNonDisclosure,
-                              style: FontStyles.fontMedium(
-                                  fontSize: 15, color: ColorConstants.primary),
+                            padding: const EdgeInsets.only(left: 60, bottom: 10, top: 5),
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const WebViewComponent(
+                                      url:
+                                          "https://steuermachen.de/schweigepflichtsentbindung/?frame_mode=remove-links",
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: TextComponent(
+                                LocaleKeys.termsAndConditionCheckNonDisclosure,
+                                style: FontStyles.fontMedium(
+                                    fontSize: 15,
+                                    color: ColorConstants.primary),
+                              ),
                             ),
                           ),
                         ),
@@ -161,9 +177,23 @@ class TermsAndConditionComponent extends StatelessWidget {
             offset: const Offset(-5, 0),
             child: Padding(
               padding: const EdgeInsets.only(top: 12),
-              child: TextComponent(checkBoxTitle,
-                  style: FontStyles.fontMedium(
-                      fontSize: 16, letterSpacing: -0.3, lineSpacing: 1.1)),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TextComponent(
+                    "* ",
+                    style: FontStyles.fontMedium(
+                        fontSize: 16, letterSpacing: -0.3, lineSpacing: 1.1),
+                  ),
+                  Flexible(
+                    child: TextComponent(
+                      checkBoxTitle,
+                      style: FontStyles.fontMedium(
+                          fontSize: 16, letterSpacing: -0.3, lineSpacing: 1.1),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

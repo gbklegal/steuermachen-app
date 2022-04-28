@@ -52,7 +52,8 @@ class _TaxTipsDetailScreenState extends State<TaxTipsDetailScreen> {
                 index: _stackToView,
                 children: [
                   WebView(
-                    initialUrl: widget.taxTipsContent.link,
+                    initialUrl: widget.taxTipsContent.link! +
+                        "?frame_mode=remove-links",
                     javascriptMode: JavascriptMode.unrestricted,
                     onWebViewCreated: (WebViewController webViewController) {
                       _controller.complete(webViewController);

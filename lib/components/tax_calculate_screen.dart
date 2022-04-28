@@ -5,9 +5,11 @@ import 'package:provider/provider.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
+import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/data/view_models/tax_calculator_provider.dart';
 import 'package:steuermachen/data/view_models/tax_file_provider.dart';
+import 'package:steuermachen/utils/utils.dart';
 
 class TaxCalculatorComponent extends StatelessWidget {
   const TaxCalculatorComponent({
@@ -21,6 +23,7 @@ class TaxCalculatorComponent extends StatelessWidget {
       return Column(
         children: [
           DropdownButtonFormField<String>(
+            isExpanded: true,
             decoration: const InputDecoration(
               border: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.white),
@@ -33,8 +36,17 @@ class TaxCalculatorComponent extends StatelessWidget {
             value: consumer.selectedPrice,
             items: consumer.taxPrices
                 .map((e) => DropdownMenuItem<String>(
+                      alignment: AlignmentDirectional.center,
                       value: e,
-                      child: Text(e),
+                      child: Text(
+                        e,
+                        textAlign: TextAlign.center,
+                        style: FontStyles.fontMedium(
+                            fontSize: 15,
+                            color: e == consumer.selectedPrice
+                                ? ColorConstants.toxicGreen
+                                : ColorConstants.black),
+                      ),
                     ))
                 .toList(),
             onChanged: (val) {
@@ -78,7 +90,9 @@ class TaxCalculatorComponent extends StatelessWidget {
                   Text(
                     consumer.calculatedPrice == 0
                         ? 'x'
-                        : consumer.calculatedPrice.toString() + ',00',
+                        : Utils.currencyFormatter
+                            .format(consumer.calculatedPrice)
+                            .replaceAll("€", ""),
                     style: Theme.of(context)
                         .textTheme
                         .headline6!

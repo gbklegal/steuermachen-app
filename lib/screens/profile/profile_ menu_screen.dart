@@ -139,8 +139,12 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
                   buttonText: LocaleKeys.logout,
                   color: ColorConstants.primary,
                   onPressed: () async {
+                    ProfileProvider profileProvider =
+                        Provider.of<ProfileProvider>(context, listen: false);
                     PopupLoader.showLoadingDialog(context);
                     await FirebaseAuth.instance.signOut();
+                    profileProvider.clearControllers();
+                    profileProvider.userData = UserWrapper();
                     PopupLoader.hideLoadingDialog(context);
                     Navigator.pushNamedAndRemoveUntil(
                         context, RouteConstants.splashScreen, (val) => false);

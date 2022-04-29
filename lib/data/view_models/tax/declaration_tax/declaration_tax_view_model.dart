@@ -1,8 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:steuermachen/constants/strings/email_constants.dart';
 import 'package:steuermachen/constants/strings/http_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
+import 'package:steuermachen/data/repositories/remote/email_repository.dart';
 import 'package:steuermachen/data/repositories/remote/safe_and_declaration_tax_repository.dart';
 import 'package:steuermachen/data/view_models/payment_gateway/payment_gateway_provider.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
@@ -11,8 +13,6 @@ import 'package:steuermachen/data/view_models/profile/profile_provider.dart';
 import 'package:steuermachen/data/view_models/signature/signature_provider.dart';
 import 'package:steuermachen/data/view_models/tax_calculator_provider.dart';
 import 'package:steuermachen/services/networks/api_response_states.dart';
-import 'package:steuermachen/services/networks/dio_api_services.dart';
-import 'package:steuermachen/services/networks/dio_client_network.dart';
 import 'package:steuermachen/utils/utils.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 import 'package:steuermachen/wrappers/declaration_tax/declaration_tax_data_collector_wrapper.dart';
@@ -106,6 +106,9 @@ class DeclarationTaxViewModel extends ChangeNotifier {
           SumpupCheckoutWrapper checkoutWrapper = apiResponse.data;
           data["payment_info"] = checkoutWrapper.toJson();
           data["payment_type"] = "card";
+          data['checkout_reference'] = checkoutWrapper.checkoutReference;
+          _declarationTaxDataCollectorWrapper?.checkOutReference =
+              checkoutWrapper.checkoutReference;
           await serviceLocatorInstance<SafeAndDeclarationTaxRepository>()
               .submitDeclarationTax(data);
           _paymentProvider.isCardPayment = false;
@@ -114,8 +117,33 @@ class DeclarationTaxViewModel extends ChangeNotifier {
               status: false, message: apiResponse.message);
         }
       } else {
+        data['checkout_reference'] = _paymentProvider.getCheckoutReference(10);
+        _declarationTaxDataCollectorWrapper?.checkOutReference =
+            _paymentProvider.getCheckoutReference(10);
         await serviceLocatorInstance<SafeAndDeclarationTaxRepository>()
             .submitDeclarationTax(data);
+      }
+      if (!isCurrentYear) {
+        await EmailRepository().sendMail(
+            _declarationTaxDataCollectorWrapper!.userInfo!.email!,
+            EmailInvoiceConstants.orderSubject,
+            EmailInvoiceConstants.declarationTax,
+            salutation: _declarationTaxDataCollectorWrapper!.userInfo!.gender,
+            lastName: _declarationTaxDataCollectorWrapper!.userInfo!.lastName,
+            orderNumber: _declarationTaxDataCollectorWrapper?.checkOutReference,
+            orderDate:
+                _declarationTaxDataCollectorWrapper!.createdAt.toString(),
+            firstName: _declarationTaxDataCollectorWrapper!.userInfo!.firstName,
+            street: _declarationTaxDataCollectorWrapper!.userInfo!.street,
+            houseNumber:
+                _declarationTaxDataCollectorWrapper!.userInfo!.houseNumber,
+            postcode: _declarationTaxDataCollectorWrapper!.userInfo!.plz,
+            city: _declarationTaxDataCollectorWrapper!.userInfo!.location,
+            email: _declarationTaxDataCollectorWrapper!.userInfo!.email!,
+            phone: _declarationTaxDataCollectorWrapper!.userInfo!.phone!,
+            maritalStatus: _declarationTaxDataCollectorWrapper!.martialStatus,
+            taxYear: _declarationTaxDataCollectorWrapper!.taxYear,
+            invoiceTemplate: EmailInvoiceConstants.declarationTaxInvoice);
       }
       return CommonResponseWrapper(
           status: true, message: StringConstants.thankYouForOrder);
@@ -123,27 +151,6 @@ class DeclarationTaxViewModel extends ChangeNotifier {
       return CommonResponseWrapper(
           status: false, message: LocaleKeys.somethingWentWrong.tr());
     }
-  }
-
-  sendMail() async {
-    serviceLocatorInstance<DioClientNetwork>().dio.options.baseUrl =
-        HTTPConstants.baseUrl;
-    serviceLocatorInstance<DioClientNetwork>()
-            .dio
-            .options
-            .headers["Authorization"] =
-        "Bearer " + HTTPConstants.defaultAccessToken;
-    var response = await serviceLocatorInstance<DioApiServices>()
-        .postRequest(HTTPConstants.sendMail,
-            // options: Options(headers: {
-            //   "Authorization": "Bearer ${HTTPConstants.defaultAccessToken}"
-            // }),
-            data: {
-          "to": "osama.asif20@gmail.com",
-          "subject": "You tax has been submitted",
-          "message": "Test meesage"
-        });
-    print(response);
   }
 
   Future<void> _setDataDeclarationTax(BuildContext context) async {

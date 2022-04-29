@@ -37,6 +37,7 @@ class SafeAndDeclarationTaxDataCollectorWrapper {
   String? status;
   String? approvedBy;
   String? keyId;
+  String? checkOutReference;
 
   SafeAndDeclarationTaxDataCollectorWrapper.fromJson(
       Map<String, dynamic> json, String documentId) {
@@ -64,6 +65,7 @@ class SafeAndDeclarationTaxDataCollectorWrapper {
             json['documents_path']?.map((x) => DocumentsWrapper.fromJson(x)))
         : [];
     keyId = documentId;
+    checkOutReference = json["checkout_reference"];
   }
 
   Map<String, dynamic> toJson(String taxName, List<TaxStepsWrapper> _steps) {
@@ -85,6 +87,7 @@ class SafeAndDeclarationTaxDataCollectorWrapper {
     _data['steps'] = _steps.map((e) => e.toJson()).toList();
     _data['status'] = ProcessConstants.pending;
     _data['approved_by'] = null;
+    _data['checkout_reference'] = checkOutReference;
 
     return _data;
   }

@@ -5,7 +5,9 @@ import 'package:steuermachen/components/app_bar/appbar_component.dart';
 import 'package:steuermachen/components/empty_screen_loader_component.dart';
 import 'package:steuermachen/components/error_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
+import 'package:steuermachen/constants/strings/email_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
+import 'package:steuermachen/data/repositories/remote/email_repository.dart';
 import 'package:steuermachen/data/view_models/tax/declaration_tax/declaration_tax_view_model.dart';
 import 'package:steuermachen/screens/tax/declaration_tax/declaration_tax_components/declaration_question_view_component.dart';
 import 'package:steuermachen/services/networks/api_response_states.dart';
@@ -24,7 +26,6 @@ class _DeclarationTaxScreenState extends State<DeclarationTaxScreen> {
   void initState() {
     provider = Provider.of<DeclarationTaxViewModel>(context, listen: false);
     _getDeclarationTaxViewData();
-    
     super.initState();
   }
 

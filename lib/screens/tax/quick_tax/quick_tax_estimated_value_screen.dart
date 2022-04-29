@@ -73,7 +73,7 @@ class QuickTaxEstimatedValueScreen extends StatelessWidget {
             borderButton(context, LocaleKeys.calculateTaxReturnCost, () {
               Navigator.pop(context);
               Navigator.pop(context);
-              Navigator.pushNamed(context, RouteConstants.quickTaxScreen);
+              Navigator.pushNamed(context, RouteConstants.calculatorScreen);
             }),
             const SizedBox(height: 20),
             borderButton(context, LocaleKeys.startNowWithTheTaxReturn, () {

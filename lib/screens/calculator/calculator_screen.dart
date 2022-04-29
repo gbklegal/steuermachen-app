@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
 import 'package:steuermachen/components/tax_calculate_screen.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
+import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
@@ -43,7 +44,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
         children: [
           Align(
             alignment: Alignment.topRight,
-            child: SvgPicture.asset(AssetConstants.topRightRoundCircle),
+            child: SvgPicture.asset(AssetConstants.topRightRoundCircle, color: ColorConstants.white,),
           ),
           Expanded(
             child: GestureDetector(
@@ -60,20 +61,22 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                 child: Column(
                   children: [
                     Image.asset(AssetConstants.tax),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          left: 15, top: 35, right: 15, bottom: 20),
-                      child: Text(
-                        LocaleKeys.whatIsYourAnnualIncomeGoal.tr(),
-                        textAlign: TextAlign.left,
-                        style: Theme.of(context).textTheme.headline5!.copyWith(
-                            fontWeight: FontWeight.w700, fontSize: 28),
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.only(
+                    //       left: 15, top: 35, right: 15, bottom: 20),
+                    //   child: Text(
+                    //     LocaleKeys.whatIsYourAnnualIncomeGoal.tr(),
+                    //     textAlign: TextAlign.left,
+                    //     style: Theme.of(context).textTheme.headline5!.copyWith(
+                    //         fontWeight: FontWeight.w700, fontSize: 28),
+                    //   ),
+                    // ),
+                    const SizedBox(height: 50,),
                     const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 15),
                       child: TaxCalculatorComponent(),
                     ),
+                    const SizedBox(height: 50,),
                     Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 15, vertical: 25),

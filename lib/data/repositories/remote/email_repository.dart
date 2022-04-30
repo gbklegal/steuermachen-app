@@ -21,6 +21,7 @@ class EmailRepository {
       String? phone,
       String? maritalStatus,
       String? taxYear,
+      dynamic totalPrice,
       String? invoiceTemplate,
       bool sendInvoice = true}) async {
     serviceLocatorInstance<DioClientNetwork>().dio.options.baseUrl =
@@ -90,6 +91,7 @@ class EmailRepository {
     String? email,
     String? phone,
     String? maritalStatus,
+    dynamic totalPrice,
     String? taxYear,
   }) async {
     serviceLocatorInstance<DioClientNetwork>().dio.options.baseUrl =
@@ -104,6 +106,7 @@ class EmailRepository {
       "to": to,
       "subject": "$subject $orderNumber",
       "message": message,
+      "api_key": EmailInvoiceConstants.apiKey,
       "template": template,
       "salutation": salutation,
       "last_name": lastName,

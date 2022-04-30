@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:steuermachen/components/order_completed_screen_component.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/screens/auth/forgot_password_screen.dart';
 import 'package:steuermachen/screens/auth/signin_screen.dart';
@@ -204,6 +205,10 @@ onGenerateRoutes(RouteSettings settings) {
     case RouteConstants.paymentTermsConditionScreen:
       return MaterialPageRoute(
         builder: (_) => const PaymentTermsConditionScreen(),
+      );
+    case RouteConstants.orderCompletedScreenComponent:
+      return MaterialPageRoute(
+        builder: (_) => const OrderCompletedScreenComponent(),
       );
     // case RouteConstants.taxTipsDetailScreen:
     //   return MaterialPageRoute(

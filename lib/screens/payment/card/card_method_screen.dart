@@ -32,7 +32,8 @@ class _CardPaymentMethodScreenState extends State<CardPaymentMethodScreen> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final _formKey = GlobalKey<FormState>();
   final TextEditingController numberController =
-      TextEditingController(text: "5060 6666 6666 6666 666");
+      TextEditingController();
+      // text: "5060 6666 6666 6666 666"
   final paymentCard = PaymentCard();
   var _autoValidateMode = AutovalidateMode.disabled;
 

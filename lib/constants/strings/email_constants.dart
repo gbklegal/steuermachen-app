@@ -10,4 +10,5 @@ class EmailInvoiceConstants {
   static String objectionInvoice = "steuererklaerung-anfechtung-rechnung";
   static String declarationTax = "steuererklaerung";
   static String declarationTaxInvoice = "steuererklaerung-rechnung";
+  static String apiKey = "9e150ff3-f02b-4cd1-8ea9-4b39929919c9";
 }

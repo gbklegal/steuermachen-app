@@ -143,6 +143,7 @@ class DeclarationTaxViewModel extends ChangeNotifier {
             phone: _declarationTaxDataCollectorWrapper!.userInfo!.phone!,
             maritalStatus: _declarationTaxDataCollectorWrapper!.martialStatus,
             taxYear: _declarationTaxDataCollectorWrapper!.taxYear,
+            
             invoiceTemplate: EmailInvoiceConstants.declarationTaxInvoice);
       }
       return CommonResponseWrapper(

@@ -28,6 +28,7 @@ abstract class  LocaleKeys {
   static const uplaodYourDocuments = 'uplaodYourDocuments';
   static const upload = 'upload';
   static const uploadDocuments = 'uploadDocuments';
+  static const uploadReceipts = 'uploadReceipts';
   static const annualSlip = 'annualSlip';
   static const initAdvice = 'initAdvice';
   static const ifNeedInit = 'ifNeedInit';
@@ -67,6 +68,7 @@ abstract class  LocaleKeys {
   static const verifyYourAccount = 'verifyYourAccount';
   static const next = 'next';
   static const goToHome = 'goToHome';
+  static const goToProfile = 'goToProfile';
   static const selectDocument = 'selectDocument';
   static const documentOverview = 'documentOverview';
   static const useCamera = 'useCamera';

@@ -62,13 +62,14 @@ class Utils {
   }
 
   static completedDialog(BuildContext context,
-      {bool? backButton = false, String? title, text}) {
+      {bool? backButton = false, String? title, text, bool isChatBtn = false}) {
     showDialog(
       barrierDismissible: false,
       context: context,
       builder: (BuildContext context) {
         return CompletedDialogComponent(
           showBackBtn: backButton,
+          showChatBtn: isChatBtn,
           title: title,
           text: text,
         );

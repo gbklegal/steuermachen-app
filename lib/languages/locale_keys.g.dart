@@ -216,6 +216,7 @@ abstract class  LocaleKeys {
   static const orderOverview = 'orderOverview';
   static const checkWhatInWorks = 'checkWhatInWorks';
   static const chatContact = 'chatContact';
+  static const chat = 'chat';
   static const quickCheckForYourRefund = 'quickCheckForYourRefund';
   static const deletingAnAccount = 'deletingAnAccount';
   static const emailToUs = 'emailToUs';

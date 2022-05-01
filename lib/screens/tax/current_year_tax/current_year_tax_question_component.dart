@@ -157,7 +157,7 @@ class _CurrentYearTaxViewState extends State<CurrentYearTaxViewComponent> {
     await consumer.fetchTaxFiledYears();
     PopupLoader.hideLoadingDialog(context);
     if (res.status!) {
-      Utils.completedDialog(context);
+      Utils.completedDialog(context, isChatBtn: false);
     } else {
       ToastComponent.showToast(res.message!);
     }

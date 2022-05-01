@@ -155,7 +155,7 @@ class _EasyTaxQuestionsViewComponentState
     CommonResponseWrapper res = await consumer.submitEasyTaxData(context);
     PopupLoader.hideLoadingDialog(context);
     if (res.status!) {
-      Utils.completedDialog(context);
+      Utils.completedDialog(context, isChatBtn: true);
     } else {
       ToastComponent.showToast(res.message!);
     }

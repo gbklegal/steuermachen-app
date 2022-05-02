@@ -6,7 +6,8 @@ import 'package:steuermachen/services/networks/dio_client_network.dart';
 
 class EmailRepository {
   Future<dynamic> sendMail(String to, String subject, String template,
-      {String? message,
+      {String? templatePdf,
+      String? message,
       String? salutation,
       String? lastName,
       String? orderNumber,
@@ -37,6 +38,7 @@ class EmailRepository {
       "subject": subject,
       "message": message,
       "template": template,
+      "template_pdf": templatePdf,
       "salutation": salutation,
       "last_name": lastName,
       "order_number": orderNumber,
@@ -50,7 +52,7 @@ class EmailRepository {
       "email": email,
       "phone": phone,
       "marital_status": maritalStatus,
-      "tax_year": taxYear,
+      "tax_year": taxYear
     });
     if (sendInvoice) {
       await invoicesMail(
@@ -68,6 +70,8 @@ class EmailRepository {
           email: email,
           phone: phone,
           maritalStatus: maritalStatus,
+          templatePdf: templatePdf,
+          totalPrice: totalPrice,
           taxYear: taxYear);
     }
     print(response);
@@ -93,6 +97,7 @@ class EmailRepository {
     String? maritalStatus,
     dynamic totalPrice,
     String? taxYear,
+    String? templatePdf,
   }) async {
     serviceLocatorInstance<DioClientNetwork>().dio.options.baseUrl =
         HTTPConstants.baseUrl;
@@ -106,8 +111,9 @@ class EmailRepository {
       "to": to,
       "subject": "$subject $orderNumber",
       "message": message,
-      "api_key": EmailInvoiceConstants.apiKey,
+      "api_key": "CXvJAWY32cZ001FiqjkMYHEtIsBSLiKgv8YFwzFyhCAYVjqaggNyMLIUQMP1YMeb",
       "template": template,
+      "template_pdf": templatePdf,
       "salutation": salutation,
       "last_name": lastName,
       "invoice_number": orderNumber,
@@ -122,6 +128,8 @@ class EmailRepository {
       "phone": phone,
       "marital_status": maritalStatus,
       "tax_year": taxYear,
+      "price_total": totalPrice,
+      "pdf": ""
     });
     print(response);
   }

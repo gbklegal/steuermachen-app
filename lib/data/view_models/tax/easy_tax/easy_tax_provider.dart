@@ -2,7 +2,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:steuermachen/constants/strings/email_constants.dart';
 import 'package:steuermachen/constants/strings/process_constants.dart';
+import 'package:steuermachen/data/repositories/remote/email_repository.dart';
 import 'package:steuermachen/data/view_models/payment_gateway/payment_gateway_provider.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/main.dart';
@@ -83,6 +85,7 @@ class EasyTaxProvider extends ChangeNotifier {
     _easyTaxDataCollectorWrapper?.userInfo = _user.getUserFromControllers();
     _easyTaxDataCollectorWrapper?.userAddress = _user.getSelectedAddress;
     _easyTaxDataCollectorWrapper?.termsAndConditionChecked = true;
+    _easyTaxDataCollectorWrapper?.taxYear = DateTime.now().year.toString();
     try {
       User? user = FirebaseAuth.instance.currentUser;
       Map<String, dynamic> data = {
@@ -99,6 +102,9 @@ class EasyTaxProvider extends ChangeNotifier {
           SumpupCheckoutWrapper checkoutWrapper = apiResponse.data;
           data["payment_info"] = checkoutWrapper.toJson();
           data["payment_type"] = "card";
+          data['checkout_reference'] = checkoutWrapper.checkoutReference;
+          _easyTaxDataCollectorWrapper?.checkOutReference =
+              checkoutWrapper.checkoutReference;
           await firestore
               .collection("user_orders")
               .doc("${user?.uid}")
@@ -110,12 +116,26 @@ class EasyTaxProvider extends ChangeNotifier {
               status: false, message: apiResponse.message);
         }
       } else {
+        data['checkout_reference'] = _paymentProvider.getCheckoutReference(10);
+        _easyTaxDataCollectorWrapper?.checkOutReference =
+            _paymentProvider.getCheckoutReference(10);
         await firestore
             .collection("user_orders")
             .doc("${user?.uid}")
             .collection("easy_tax")
             .add(data);
       }
+      
+      await EmailRepository().sendMail(
+          _easyTaxDataCollectorWrapper!.userInfo!.email!,
+          EmailInvoiceConstants.orderSubject,
+          EmailInvoiceConstants.steuerEASY,
+          salutation: _easyTaxDataCollectorWrapper!.userInfo!.gender,
+          lastName: _easyTaxDataCollectorWrapper!.userInfo!.lastName,
+          orderNumber: _easyTaxDataCollectorWrapper!.checkOutReference,
+          taxYear: _easyTaxDataCollectorWrapper!.taxYear,
+          sendInvoice: true,
+          invoiceTemplate: EmailInvoiceConstants.steuerEASY);
       return CommonResponseWrapper(
           status: true, message: LocaleKeys.thankYouForOrder.tr());
     } catch (e) {

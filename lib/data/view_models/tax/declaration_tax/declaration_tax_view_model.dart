@@ -128,6 +128,7 @@ class DeclarationTaxViewModel extends ChangeNotifier {
             _declarationTaxDataCollectorWrapper!.userInfo!.email!,
             EmailInvoiceConstants.orderSubject,
             EmailInvoiceConstants.declarationTax,
+            templatePdf: EmailInvoiceConstants.declarationPdf,
             salutation: _declarationTaxDataCollectorWrapper!.userInfo!.gender,
             lastName: _declarationTaxDataCollectorWrapper!.userInfo!.lastName,
             orderNumber: _declarationTaxDataCollectorWrapper?.checkOutReference,
@@ -142,8 +143,8 @@ class DeclarationTaxViewModel extends ChangeNotifier {
             email: _declarationTaxDataCollectorWrapper!.userInfo!.email!,
             phone: _declarationTaxDataCollectorWrapper!.userInfo!.phone!,
             maritalStatus: _declarationTaxDataCollectorWrapper!.martialStatus,
-            taxYear: _declarationTaxDataCollectorWrapper!.taxYear,
-            
+            taxYear: _declarationTaxDataCollectorWrapper!.taxYear,      
+            totalPrice: _declarationTaxDataCollectorWrapper!.taxPrice,
             invoiceTemplate: EmailInvoiceConstants.declarationTaxInvoice);
       }
       return CommonResponseWrapper(

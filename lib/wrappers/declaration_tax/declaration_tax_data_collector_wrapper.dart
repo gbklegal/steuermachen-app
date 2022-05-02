@@ -18,7 +18,9 @@ class SafeAndDeclarationTaxDataCollectorWrapper {
       this.approvedBy,
       this.createdAt,
       this.status,
-      this.taxName});
+      this.taxName,
+      this.checkOutReference
+      });
   String? taxYear;
   String? martialStatus;
   String? grossIncome;

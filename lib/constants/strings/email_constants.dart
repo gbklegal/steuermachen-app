@@ -4,11 +4,18 @@ class EmailInvoiceConstants {
   static String invoiceSubject =
       "Ihre steuermachen - Rechnung für die Rechnungsnummer";
   static String currentYearTax = "beratung-flat";
+
   static String safeTax = "safeTax";
+  static String safetaxPdf = "safetax";
+
   static String steuerEASY = "steuereasy";
+  static String steuerEasyPdf = "erstberatung";
+  static String steuerEasyMonthlyPdf = "erstberatung-flat";
+
   static String objection = "steuererklaerung-anfechtung";
   static String objectionInvoice = "steuererklaerung-anfechtung-rechnung";
   static String declarationTax = "steuererklaerung";
+  static String declarationPdf = "steuererklaerung";
   static String declarationTaxInvoice = "steuererklaerung-rechnung";
-  static String apiKey = "9e150ff3-f02b-4cd1-8ea9-4b39929919c9";
+  static String apiKey = "CXvJAWY32cZ001FiqjkMYHEtIsBSLiKgv8YFwzFyhCAYVjqaggNyMLIUQMP1YMeb";
 }

@@ -134,8 +134,11 @@ class EasyTaxProvider extends ChangeNotifier {
           lastName: _easyTaxDataCollectorWrapper!.userInfo!.lastName,
           orderNumber: _easyTaxDataCollectorWrapper!.checkOutReference,
           taxYear: _easyTaxDataCollectorWrapper!.taxYear,
+          totalPrice: _easyTaxDataCollectorWrapper!.subscriptionPrice,
           sendInvoice: true,
-          invoiceTemplate: EmailInvoiceConstants.steuerEASY);
+          invoiceTemplate: EmailInvoiceConstants.steuerEASY,
+          templatePdf: EmailInvoiceConstants.steuerEasyPdf
+          );
       return CommonResponseWrapper(
           status: true, message: LocaleKeys.thankYouForOrder.tr());
     } catch (e) {

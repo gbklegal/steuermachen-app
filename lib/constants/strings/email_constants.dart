@@ -5,7 +5,7 @@ class EmailInvoiceConstants {
       "Ihre steuermachen - Rechnung für die Rechnungsnummer";
   static String currentYearTax = "beratung-flat";
 
-  static String safeTax = "safeTax";
+  static String safeTax = "safetax";
   static String safetaxPdf = "safetax";
 
   static String steuerEASY = "steuereasy";

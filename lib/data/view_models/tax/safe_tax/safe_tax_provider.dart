@@ -2,7 +2,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:steuermachen/constants/strings/email_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
+import 'package:steuermachen/data/repositories/remote/email_repository.dart';
+import 'package:steuermachen/data/view_models/payment_gateway/payment_gateway_provider.dart';
 import 'package:steuermachen/data/view_models/profile/profile_provider.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/main.dart';
@@ -67,12 +70,16 @@ class SafeTaxProvider extends ChangeNotifier {
         Provider.of<SignatureProvider>(context, listen: false);
     ProfileProvider _user =
         Provider.of<ProfileProvider>(context, listen: false);
+    PaymentGateWayProvider _paymentProvider =
+        Provider.of<PaymentGateWayProvider>(context, listen: false);
     String signaturePath = await Utils.uploadToFirebaseStorage(
         await _signature.getSignaturePath());
     _safeTaxDataCollectorWrapper?.signaturePath = signaturePath;
     _safeTaxDataCollectorWrapper?.userInfo = _user.getUserFromControllers();
     _safeTaxDataCollectorWrapper?.userAddress = _user.getSelectedAddress;
     _safeTaxDataCollectorWrapper?.termsAndConditionChecked = true;
+    _safeTaxDataCollectorWrapper?.checkOutReference =
+        _paymentProvider.getCheckoutReference(10);
     try {
       User? user = FirebaseAuth.instance.currentUser;
       await firestore
@@ -80,6 +87,28 @@ class SafeTaxProvider extends ChangeNotifier {
           .doc("${user?.uid}")
           .collection("safe_and_declaration_tax")
           .add(_safeTaxDataCollectorWrapper!.toJson("safeTax", taxSteps));
+
+      await EmailRepository().sendMail(
+          _safeTaxDataCollectorWrapper!.userInfo!.email!,
+          EmailInvoiceConstants.orderSubject,
+          EmailInvoiceConstants.safeTax,
+          templatePdf: EmailInvoiceConstants.safeTax,
+          salutation: _safeTaxDataCollectorWrapper!.userInfo!.gender,
+          lastName: _safeTaxDataCollectorWrapper!.userInfo!.lastName,
+          orderNumber: _safeTaxDataCollectorWrapper?.checkOutReference,
+          orderDate: _safeTaxDataCollectorWrapper!.createdAt.toString(),
+          firstName: _safeTaxDataCollectorWrapper!.userInfo!.firstName,
+          street: _safeTaxDataCollectorWrapper!.userInfo!.street,
+          houseNumber: _safeTaxDataCollectorWrapper!.userInfo!.houseNumber,
+          postcode: _safeTaxDataCollectorWrapper!.userInfo!.plz,
+          city: _safeTaxDataCollectorWrapper!.userInfo!.location,
+          email: _safeTaxDataCollectorWrapper!.userInfo!.email!,
+          phone: _safeTaxDataCollectorWrapper!.userInfo!.phone!,
+          maritalStatus: _safeTaxDataCollectorWrapper!.martialStatus,
+          taxYear: _safeTaxDataCollectorWrapper!.taxYear,
+          totalPrice: _safeTaxDataCollectorWrapper!.taxPrice,
+          invoiceTemplate: EmailInvoiceConstants.safeTax);
+
       return CommonResponseWrapper(
           status: true, message: StringConstants.thankYouForOrder);
     } catch (e) {

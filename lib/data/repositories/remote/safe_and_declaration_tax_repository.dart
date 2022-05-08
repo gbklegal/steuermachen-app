@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:steuermachen/json/declaration_tax_view.dart';
 import 'package:steuermachen/main.dart';
@@ -35,10 +36,11 @@ class SafeAndDeclarationTaxRepository {
     }
   }
 
-  Future<dynamic> submitDeclarationTax(Map<String, dynamic> data) async {
+  Future<DocumentReference<Map<String, dynamic>>> submitDeclarationTax(
+      Map<String, dynamic> data) async {
     try {
       User? user = FirebaseAuth.instance.currentUser;
-      await firestore
+      return await firestore
           .collection("user_orders")
           .doc("${user?.uid}")
           .collection("safe_and_declaration_tax")

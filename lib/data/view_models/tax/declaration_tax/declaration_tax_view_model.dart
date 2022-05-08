@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -18,6 +19,7 @@ import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 import 'package:steuermachen/wrappers/declaration_tax/declaration_tax_data_collector_wrapper.dart';
 import 'package:steuermachen/wrappers/declaration_tax/declaration_tax_view_wrapper.dart';
 import 'package:steuermachen/wrappers/payment_gateway/sumup_checkout_wrapper.dart';
+import 'package:steuermachen/wrappers/send_mail_model.dart';
 import 'package:steuermachen/wrappers/tax_steps_wrapper.dart';
 
 class DeclarationTaxViewModel extends ChangeNotifier {
@@ -100,6 +102,7 @@ class DeclarationTaxViewModel extends ChangeNotifier {
         "payment_info": null,
         "approved_by": null,
       };
+      DocumentReference<Map<String, dynamic>> firestoreResponse;
       if (_paymentProvider.isCardPayment) {
         ApiResponse apiResponse = await _paymentProvider.completeCheckout();
         if (apiResponse.status == Status.completed) {
@@ -109,8 +112,9 @@ class DeclarationTaxViewModel extends ChangeNotifier {
           data['checkout_reference'] = checkoutWrapper.checkoutReference;
           _declarationTaxDataCollectorWrapper?.checkOutReference =
               checkoutWrapper.checkoutReference;
-          await serviceLocatorInstance<SafeAndDeclarationTaxRepository>()
-              .submitDeclarationTax(data);
+          firestoreResponse =
+              await serviceLocatorInstance<SafeAndDeclarationTaxRepository>()
+                  .submitDeclarationTax(data);
           _paymentProvider.isCardPayment = false;
         } else {
           return CommonResponseWrapper(
@@ -120,11 +124,12 @@ class DeclarationTaxViewModel extends ChangeNotifier {
         data['checkout_reference'] = _paymentProvider.getCheckoutReference(10);
         _declarationTaxDataCollectorWrapper?.checkOutReference =
             _paymentProvider.getCheckoutReference(10);
-        await serviceLocatorInstance<SafeAndDeclarationTaxRepository>()
-            .submitDeclarationTax(data);
+        firestoreResponse =
+            await serviceLocatorInstance<SafeAndDeclarationTaxRepository>()
+                .submitDeclarationTax(data);
       }
       if (!isCurrentYear) {
-        await EmailRepository().sendMail(
+        SendMailModel? sendMailResponse = await EmailRepository().sendMail(
             _declarationTaxDataCollectorWrapper!.userInfo!.email!,
             EmailInvoiceConstants.orderSubject,
             EmailInvoiceConstants.declarationTax,
@@ -143,9 +148,14 @@ class DeclarationTaxViewModel extends ChangeNotifier {
             email: _declarationTaxDataCollectorWrapper!.userInfo!.email!,
             phone: _declarationTaxDataCollectorWrapper!.userInfo!.phone!,
             maritalStatus: _declarationTaxDataCollectorWrapper!.martialStatus,
-            taxYear: _declarationTaxDataCollectorWrapper!.taxYear,      
+            taxYear: _declarationTaxDataCollectorWrapper!.taxYear,
             totalPrice: _declarationTaxDataCollectorWrapper!.taxPrice,
             invoiceTemplate: EmailInvoiceConstants.declarationTaxInvoice);
+        if (sendMailResponse != null) {
+          firestoreResponse.update({
+            "invoices_path": [sendMailResponse.pdf.url]
+          });
+        }
       }
       return CommonResponseWrapper(
           status: true, message: StringConstants.thankYouForOrder);

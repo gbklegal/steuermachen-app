@@ -3,9 +3,10 @@ import 'package:steuermachen/constants/strings/http_constants.dart';
 import 'package:steuermachen/main.dart';
 import 'package:steuermachen/services/networks/dio_api_services.dart';
 import 'package:steuermachen/services/networks/dio_client_network.dart';
+import 'package:steuermachen/wrappers/send_mail_model.dart';
 
 class EmailRepository {
-  Future<dynamic> sendMail(String to, String subject, String template,
+  Future<SendMailModel?> sendMail(String to, String subject, String template,
       {String? templatePdf,
       String? message,
       String? salutation,
@@ -32,7 +33,7 @@ class EmailRepository {
             .options
             .headers["Authorization"] =
         "Bearer " + HTTPConstants.defaultAccessToken;
-    var response = await serviceLocatorInstance<DioApiServices>()
+    await serviceLocatorInstance<DioApiServices>()
         .getRequest(HTTPConstants.sendMail, queryParameters: {
       "to": to,
       "subject": subject,
@@ -55,7 +56,7 @@ class EmailRepository {
       "tax_year": taxYear
     });
     if (sendInvoice) {
-      await invoicesMail(
+      SendMailModel? res = await invoicesMail(
           to, EmailInvoiceConstants.invoiceSubject, invoiceTemplate!,
           salutation: salutation,
           lastName: lastName,
@@ -73,11 +74,14 @@ class EmailRepository {
           templatePdf: templatePdf,
           totalPrice: totalPrice,
           taxYear: taxYear);
+      if (res != null) {
+        return res;
+      }
     }
-    print(response);
+    return null;
   }
 
-  Future<dynamic> invoicesMail(
+  Future<SendMailModel?> invoicesMail(
     String to,
     String subject,
     String template, {
@@ -132,6 +136,10 @@ class EmailRepository {
       "price_total": totalPrice,
       "pdf": ""
     });
+    if (response["sendmail"]) {
+      return SendMailModel.fromJson(response);
+    }
+    return null;
     print(response);
   }
 }

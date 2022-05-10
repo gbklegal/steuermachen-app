@@ -6,6 +6,8 @@ import 'package:steuermachen/components/empty_screen_loader_component.dart';
 import 'package:steuermachen/components/error_component.dart';
 import 'package:steuermachen/components/no_order_component.dart';
 import 'package:steuermachen/components/text_component.dart';
+import 'package:steuermachen/components/web_view_component.dart';
+import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/process_constants.dart';
@@ -149,8 +151,8 @@ class _OrderCards extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
             child: Column(
               children: [
-                _rowTitleAndText(
-                    LocaleKeys.product.tr(), getTaxName(data.taxName!) +" "+ data.taxYear!),
+                _rowTitleAndText(LocaleKeys.product.tr(),
+                    getTaxName(data.taxName!) + " " + data.taxYear!),
                 _rowTitleAndText(
                     LocaleKeys.price.tr(),
                     data.taxPrice != null
@@ -188,7 +190,54 @@ class _OrderCards extends StatelessWidget {
                       )
                     ],
                   ),
-                )
+                ),
+                data.invoices != null
+                    ? ListTile(
+                        contentPadding: EdgeInsets.zero,
+                        leading: Image.asset(
+                          AssetConstants.icPdf,
+                          height: 18,
+                        ),
+                        horizontalTitleGap: 0,
+                        title: Padding(
+                          padding: const EdgeInsets.only(bottom: 10),
+                          child: TextComponent(
+                            "${LocaleKeys.invoice} #${data.checkOutReference!}",
+                            style: FontStyles.fontMedium(
+                                fontSize: 15, fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => WebViewComponent(
+                                      url: data.invoices![0],
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: const Icon(
+                                Icons.visibility_sharp,
+                                color: ColorConstants.black,
+                              ),
+                            ),
+                            const SizedBox(width: 5),
+                            InkWell(
+                              onTap: () {},
+                              child: const Icon(
+                                Icons.download,
+                                color: ColorConstants.black,
+                              ),
+                            )
+                          ],
+                        ),
+                      )
+                    : const SizedBox()
               ],
             ),
           ),

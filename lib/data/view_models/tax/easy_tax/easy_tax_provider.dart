@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,7 @@ import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 import 'package:steuermachen/wrappers/easy_tax/easy_tax_data_collector_wrapper.dart';
 import 'package:steuermachen/wrappers/easy_tax/easy_tax_wrapper.dart';
 import 'package:steuermachen/wrappers/payment_gateway/sumup_checkout_wrapper.dart';
+import 'package:steuermachen/wrappers/send_mail_model.dart';
 
 class EasyTaxProvider extends ChangeNotifier {
   final EasyTaxDataCollectorWrapper? _easyTaxDataCollectorWrapper =
@@ -96,6 +98,7 @@ class EasyTaxProvider extends ChangeNotifier {
         "payment_info": null,
         "approved_by": null,
       };
+      DocumentReference<Map<String, dynamic>> firestoreResponse;
       if (_paymentProvider.isCardPayment) {
         ApiResponse apiResponse = await _paymentProvider.completeCheckout();
         if (apiResponse.status == Status.completed) {
@@ -105,7 +108,7 @@ class EasyTaxProvider extends ChangeNotifier {
           data['checkout_reference'] = checkoutWrapper.checkoutReference;
           _easyTaxDataCollectorWrapper?.checkOutReference =
               checkoutWrapper.checkoutReference;
-          await firestore
+          firestoreResponse = await firestore
               .collection("user_orders")
               .doc("${user?.uid}")
               .collection("easy_tax")
@@ -119,14 +122,14 @@ class EasyTaxProvider extends ChangeNotifier {
         data['checkout_reference'] = _paymentProvider.getCheckoutReference(10);
         _easyTaxDataCollectorWrapper?.checkOutReference =
             _paymentProvider.getCheckoutReference(10);
-        await firestore
+        firestoreResponse = await firestore
             .collection("user_orders")
             .doc("${user?.uid}")
             .collection("easy_tax")
             .add(data);
       }
-      
-      await EmailRepository().sendMail(
+
+      SendMailModel? sendMailResponse = await EmailRepository().sendMail(
           _easyTaxDataCollectorWrapper!.userInfo!.email!,
           EmailInvoiceConstants.orderSubject,
           EmailInvoiceConstants.steuerEASY,
@@ -137,8 +140,12 @@ class EasyTaxProvider extends ChangeNotifier {
           totalPrice: _easyTaxDataCollectorWrapper!.subscriptionPrice,
           sendInvoice: true,
           invoiceTemplate: EmailInvoiceConstants.steuerEASY,
-          templatePdf: EmailInvoiceConstants.steuerEasyPdf
-          );
+          templatePdf: EmailInvoiceConstants.steuerEasyPdf);
+      if (sendMailResponse != null) {
+        firestoreResponse.update({
+          "invoices_path": [sendMailResponse.pdf.url]
+        });
+      }
       return CommonResponseWrapper(
           status: true, message: LocaleKeys.thankYouForOrder.tr());
     } catch (e) {

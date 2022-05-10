@@ -19,8 +19,7 @@ class SafeAndDeclarationTaxDataCollectorWrapper {
       this.createdAt,
       this.status,
       this.taxName,
-      this.checkOutReference
-      });
+      this.checkOutReference});
   String? taxYear;
   String? martialStatus;
   String? grossIncome;
@@ -61,7 +60,9 @@ class SafeAndDeclarationTaxDataCollectorWrapper {
     steps = List<TaxStepsWrapper>.from(
         json['steps'].map((x) => TaxStepsWrapper.fromJson(x)));
     status = json['status'];
-    invoices = json['invoices'];
+    invoices = json['invoices_path'] != null
+        ? List<String>.from(json['invoices_path'])
+        : null;
     documentsPath = json['documents_path'] != null
         ? List<DocumentsWrapper>.from(
             json['documents_path']?.map((x) => DocumentsWrapper.fromJson(x)))
@@ -80,7 +81,7 @@ class SafeAndDeclarationTaxDataCollectorWrapper {
     _data['user_address'] = userAddress?.toJson();
     _data['user_info'] = userInfo?.toJson();
     _data['terms_and_condition_checked'] = termsAndConditionChecked;
-    _data['invoices'] = invoices;
+    _data['invoices_path'] = invoices;
     _data['tax_price'] = taxPrice;
     _data['documents_path'] = documentsPath?.map((e) => e.toJson()).toList();
     _data['created_at'] = DateTime.now();

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,7 @@ import 'package:steuermachen/utils/utils.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 import 'package:steuermachen/wrappers/declaration_tax/declaration_tax_data_collector_wrapper.dart';
 import 'package:steuermachen/wrappers/safe_tax/safe_tax_wrapper.dart';
+import 'package:steuermachen/wrappers/send_mail_model.dart';
 import 'package:steuermachen/wrappers/tax_steps_wrapper.dart';
 
 class SafeTaxProvider extends ChangeNotifier {
@@ -82,13 +84,14 @@ class SafeTaxProvider extends ChangeNotifier {
         _paymentProvider.getCheckoutReference(10);
     try {
       User? user = FirebaseAuth.instance.currentUser;
-      await firestore
-          .collection("user_orders")
-          .doc("${user?.uid}")
-          .collection("safe_and_declaration_tax")
-          .add(_safeTaxDataCollectorWrapper!.toJson("safeTax", taxSteps));
+      DocumentReference<Map<String, dynamic>> firestoreResponse =
+          await firestore
+              .collection("user_orders")
+              .doc("${user?.uid}")
+              .collection("safe_and_declaration_tax")
+              .add(_safeTaxDataCollectorWrapper!.toJson("safeTax", taxSteps));
 
-      await EmailRepository().sendMail(
+      SendMailModel? sendMailResponse = await EmailRepository().sendMail(
           _safeTaxDataCollectorWrapper!.userInfo!.email!,
           EmailInvoiceConstants.orderSubject,
           EmailInvoiceConstants.safeTax,
@@ -108,7 +111,11 @@ class SafeTaxProvider extends ChangeNotifier {
           taxYear: _safeTaxDataCollectorWrapper!.taxYear,
           totalPrice: _safeTaxDataCollectorWrapper!.taxPrice,
           invoiceTemplate: EmailInvoiceConstants.safeTax);
-
+      if (sendMailResponse != null) {
+        firestoreResponse.update({
+          "invoices_path": [sendMailResponse.pdf.url]
+        });
+      }
       return CommonResponseWrapper(
           status: true, message: StringConstants.thankYouForOrder);
     } catch (e) {

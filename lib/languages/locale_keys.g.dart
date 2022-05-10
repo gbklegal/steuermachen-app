@@ -217,6 +217,7 @@ abstract class  LocaleKeys {
   static const checkWhatInWorks = 'checkWhatInWorks';
   static const chatContact = 'chatContact';
   static const chat = 'chat';
+  static const invoice = 'invoice';
   static const quickCheckForYourRefund = 'quickCheckForYourRefund';
   static const deletingAnAccount = 'deletingAnAccount';
   static const emailToUs = 'emailToUs';

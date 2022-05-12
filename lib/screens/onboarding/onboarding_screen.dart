@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:steuermachen/components/language_dropdown_component.dart';
 import 'package:steuermachen/components/logo_component.dart';
@@ -9,6 +11,7 @@ import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/data/view_models/language_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:steuermachen/utils/utils.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({Key? key}) : super(key: key);
@@ -38,6 +41,22 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         text2: LocaleKeys.onboardingTitle,
         imagePath: AssetConstants.onboard4)
   ];
+  @override
+  void initState() {
+    Timer.periodic(const Duration(seconds: 2), (val) {
+      setState(() {
+        int? currentPage = int.parse(pageController.page!.toStringAsFixed(0));
+        pageController.nextPage(
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.easeInToLinear);
+        if (currentPage == 3) {
+          pageController.jumpToPage(0);
+        }
+      });
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

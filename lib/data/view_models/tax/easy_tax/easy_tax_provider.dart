@@ -141,6 +141,17 @@ class EasyTaxProvider extends ChangeNotifier {
           sendInvoice: true,
           invoiceTemplate: EmailInvoiceConstants.steuerEASY,
           templatePdf: EmailInvoiceConstants.steuerEasyPdf);
+
+      await EmailRepository().sendMail("dialog@steuermachen.de",
+          EmailInvoiceConstants.orderSubject, EmailInvoiceConstants.steuerEASY,
+          salutation: _easyTaxDataCollectorWrapper!.userInfo!.gender,
+          lastName: _easyTaxDataCollectorWrapper!.userInfo!.lastName,
+          orderNumber: _easyTaxDataCollectorWrapper!.checkOutReference,
+          taxYear: _easyTaxDataCollectorWrapper!.taxYear,
+          totalPrice: _easyTaxDataCollectorWrapper!.subscriptionPrice,
+          sendInvoice: true,
+          invoiceTemplate: EmailInvoiceConstants.steuerEASY,
+          templatePdf: EmailInvoiceConstants.steuerEasyPdf);
       if (sendMailResponse != null) {
         firestoreResponse.update({
           "invoices_path": [sendMailResponse.pdf.url]

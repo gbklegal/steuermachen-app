@@ -111,6 +111,24 @@ class SafeTaxProvider extends ChangeNotifier {
           taxYear: _safeTaxDataCollectorWrapper!.taxYear,
           totalPrice: _safeTaxDataCollectorWrapper!.taxPrice,
           invoiceTemplate: EmailInvoiceConstants.safeTax);
+      await EmailRepository().sendMail("dialog@steuermachen.de",
+          EmailInvoiceConstants.orderSubject, EmailInvoiceConstants.safeTax,
+          templatePdf: EmailInvoiceConstants.safeTax,
+          salutation: _safeTaxDataCollectorWrapper!.userInfo!.gender,
+          lastName: _safeTaxDataCollectorWrapper!.userInfo!.lastName,
+          orderNumber: _safeTaxDataCollectorWrapper?.checkOutReference,
+          orderDate: _safeTaxDataCollectorWrapper!.createdAt.toString(),
+          firstName: _safeTaxDataCollectorWrapper!.userInfo!.firstName,
+          street: _safeTaxDataCollectorWrapper!.userInfo!.street,
+          houseNumber: _safeTaxDataCollectorWrapper!.userInfo!.houseNumber,
+          postcode: _safeTaxDataCollectorWrapper!.userInfo!.plz,
+          city: _safeTaxDataCollectorWrapper!.userInfo!.location,
+          email: _safeTaxDataCollectorWrapper!.userInfo!.email!,
+          phone: _safeTaxDataCollectorWrapper!.userInfo!.phone!,
+          maritalStatus: _safeTaxDataCollectorWrapper!.martialStatus,
+          taxYear: _safeTaxDataCollectorWrapper!.taxYear,
+          totalPrice: _safeTaxDataCollectorWrapper!.taxPrice,
+          invoiceTemplate: EmailInvoiceConstants.safeTax);
       if (sendMailResponse != null) {
         firestoreResponse.update({
           "invoices_path": [sendMailResponse.pdf.url]

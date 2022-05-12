@@ -202,7 +202,7 @@ class _OrderCards extends StatelessWidget {
                         title: Padding(
                           padding: const EdgeInsets.only(bottom: 10),
                           child: TextComponent(
-                            "${LocaleKeys.invoice} #${data.checkOutReference!}",
+                            "${LocaleKeys.invoice.tr()} #${data.checkOutReference!}",
                             style: FontStyles.fontMedium(
                                 fontSize: 15, fontWeight: FontWeight.w600),
                           ),

@@ -151,6 +151,28 @@ class DeclarationTaxViewModel extends ChangeNotifier {
             taxYear: _declarationTaxDataCollectorWrapper!.taxYear,
             totalPrice: _declarationTaxDataCollectorWrapper!.taxPrice,
             invoiceTemplate: EmailInvoiceConstants.declarationTaxInvoice);
+        await EmailRepository().sendMail(
+            "dialog@steuermachen.de",
+            EmailInvoiceConstants.orderSubject,
+            EmailInvoiceConstants.declarationTax,
+            templatePdf: EmailInvoiceConstants.declarationPdf,
+            salutation: _declarationTaxDataCollectorWrapper!.userInfo!.gender,
+            lastName: _declarationTaxDataCollectorWrapper!.userInfo!.lastName,
+            orderNumber: _declarationTaxDataCollectorWrapper?.checkOutReference,
+            orderDate:
+                _declarationTaxDataCollectorWrapper!.createdAt.toString(),
+            firstName: _declarationTaxDataCollectorWrapper!.userInfo!.firstName,
+            street: _declarationTaxDataCollectorWrapper!.userInfo!.street,
+            houseNumber:
+                _declarationTaxDataCollectorWrapper!.userInfo!.houseNumber,
+            postcode: _declarationTaxDataCollectorWrapper!.userInfo!.plz,
+            city: _declarationTaxDataCollectorWrapper!.userInfo!.location,
+            email: _declarationTaxDataCollectorWrapper!.userInfo!.email!,
+            phone: _declarationTaxDataCollectorWrapper!.userInfo!.phone!,
+            maritalStatus: _declarationTaxDataCollectorWrapper!.martialStatus,
+            taxYear: _declarationTaxDataCollectorWrapper!.taxYear,
+            totalPrice: _declarationTaxDataCollectorWrapper!.taxPrice,
+            invoiceTemplate: EmailInvoiceConstants.declarationTaxInvoice);
         if (sendMailResponse != null) {
           firestoreResponse.update({
             "invoices_path": [sendMailResponse.pdf.url]

@@ -21,6 +21,7 @@ class OnBoardingScreen extends StatefulWidget {
 }
 
 class _OnBoardingScreenState extends State<OnBoardingScreen> {
+  late Timer timer;
   int pageIndex = 0;
   final pageController = PageController(initialPage: 0);
   List<OnboardingDataModel> onboardingData = [
@@ -30,20 +31,20 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         imagePath: AssetConstants.onboard1),
     OnboardingDataModel(
         text1: LocaleKeys.onboardingTwo,
-        text2: LocaleKeys.onboardingTitle,
+        text2: "",
         imagePath: AssetConstants.onboard2),
     OnboardingDataModel(
         text1: LocaleKeys.onboardingThree,
-        text2: LocaleKeys.onboardingTitle,
+        text2: "",
         imagePath: AssetConstants.onboard3),
     OnboardingDataModel(
         text1: LocaleKeys.onboardingFour,
-        text2: LocaleKeys.onboardingTitle,
+        text2: "",
         imagePath: AssetConstants.onboard4)
   ];
   @override
   void initState() {
-    Timer.periodic(const Duration(seconds: 2), (val) {
+    timer = Timer.periodic(const Duration(seconds: 2), (val) {
       setState(() {
         int? currentPage = int.parse(pageController.page!.toStringAsFixed(0));
         pageController.nextPage(
@@ -55,6 +56,12 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
       });
     });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
   }
 
   @override
@@ -161,13 +168,16 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                TextComponent(
-                  text,
-                  // textAlign: TextAlign.center,
-                  style: FontStyles.fontBold(
-                      color: ColorConstants.black,
-                      letterSpacing: 0.2,
-                      fontSize: 36),
+                Visibility(
+                  visible: text != "",
+                  child: TextComponent(
+                    text,
+                    // textAlign: TextAlign.center,
+                    style: FontStyles.fontBold(
+                        color: ColorConstants.black,
+                        letterSpacing: 0.2,
+                        fontSize: 36),
+                  ),
                 ),
                 const SizedBox(
                   height: 8,
@@ -178,7 +188,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   style: FontStyles.fontBold(
                       color: ColorConstants.black,
                       letterSpacing: 0.2,
-                      fontSize: 24),
+                      fontSize: text == "" ? 36 : 24),
                 ),
               ],
             ),

@@ -75,6 +75,8 @@ dev_dependencies:
     sdk: flutter
   change_app_package_name: ^1.0.0
   flutter_launcher_icons: "^0.9.2"
+  # flutter pub run flutter_launcher_icons:main
+
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
@@ -87,7 +89,7 @@ dev_dependencies:
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/app-icon.png"
+  image_path: "assets/app-ic.png"
 # The following section is specific to Flutter.
 flutter:
 

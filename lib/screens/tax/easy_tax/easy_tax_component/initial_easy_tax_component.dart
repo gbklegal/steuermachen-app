@@ -32,7 +32,7 @@ class InitialEasyTaxComponent extends StatelessWidget {
           _advicePoints(context, data.advicePoints[i]),
         const SizedBox(height: 45),
         ButtonComponent(
-          buttonText: LocaleKeys.applyNowForAfee.tr(),
+          buttonText: data.buttonText,
           onPressed: ()=> onPressed!(double.parse( data.price)),
         ),
         const SizedBox(height: 25),
@@ -93,7 +93,7 @@ class InitialEasyTaxComponent extends StatelessWidget {
             ),
           ),
           Container(
-            color: ColorConstants.black.withOpacity(0.49),
+            color: ColorConstants.toxicGreen,
             padding: const EdgeInsets.all(15),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,

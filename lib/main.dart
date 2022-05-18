@@ -17,7 +17,6 @@ import 'package:steuermachen/screens/splash_screen.dart';
 import 'package:steuermachen/services/navigation_services.dart';
 import 'package:steuermachen/services/networks/dio_client_network.dart';
 import 'package:steuermachen/services/shared_preferences_service.dart';
-
 import 'services/networks/dio_api_services.dart';
 
 // flutter pub run easy_localization:generate -S "assets/languages" -O "lib/languages"
@@ -58,7 +57,8 @@ void setupDepedencies() {
       .registerSingleton<DioClientNetwork>(DioClientNetwork());
   serviceLocatorInstance.registerLazySingleton(() => DioApiServices());
   serviceLocatorInstance.registerLazySingleton(() => DocumentsRepository());
-  serviceLocatorInstance.registerLazySingleton(() => SafeAndDeclarationTaxRepository());
+  serviceLocatorInstance
+      .registerLazySingleton(() => SafeAndDeclarationTaxRepository());
   // serviceLocatorInstance.registerLazySingleton(() => ProfileRepository());
   serviceLocatorInstance.registerLazySingleton(() => NavigationService());
   serviceLocatorInstance

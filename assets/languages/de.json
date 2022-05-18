@@ -254,5 +254,7 @@
     "estimatedReimbursement": "voraussichtliche Erstattung",
     "changePasswordNotAvailableMessage": "Diese Funktion ist nicht über Social Login verfügbar.",
     "taxYear": "Steuerjahr",
+    "viewFile": "Datei ansehen",
+    "downloadCompleted": "Download abgeschlossen",
     "logout": "Ausloggen"
 }

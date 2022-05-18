@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -207,7 +209,8 @@ class _SignupScreenState extends State<SignupScreen> with InputValidationUtil {
 
   Widget _signInWithApple() {
     return Consumer<AuthProvider>(builder: (context, consumer, child) {
-      if (consumer.signInWithAppleIsAvailable) {
+      // if (consumer.signInWithAppleIsAvailable) {
+      if (Platform.isIOS) {
         return InkWell(
           onTap: _appleSignIn,
           child: SignInOptionsAuthComponent(

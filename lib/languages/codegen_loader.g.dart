@@ -270,6 +270,8 @@ class CodegenLoader extends AssetLoader{
   "estimatedReimbursement": "voraussichtliche Erstattung",
   "changePasswordNotAvailableMessage": "Diese Funktion ist nicht über Social Login verfügbar.",
   "taxYear": "Steuerjahr",
+  "viewFile": "Datei ansehen",
+  "downloadCompleted": "Download abgeschlossen",
   "logout": "Ausloggen"
 };
 static const Map<String,dynamic> en = {
@@ -526,6 +528,8 @@ static const Map<String,dynamic> en = {
   "estimatedReimbursement": "Estimated reimbursement",
   "changePasswordNotAvailableMessage": "This feature is not available through social login.",
   "taxYear": "tax year",
+  "viewFile": "view file",
+  "downloadCompleted": "view file",
   "logout": "Logout"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"de": de, "en": en};

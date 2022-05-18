@@ -1,5 +1,9 @@
+import 'dart:io';
+import 'dart:math';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/components/empty_screen_loader_component.dart';
@@ -15,7 +19,9 @@ import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:steuermachen/data/view_models/document/document_view_model.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/data/view_models/tax/declaration_tax/declaration_tax_view_model.dart';
+import 'package:steuermachen/main.dart';
 import 'package:steuermachen/services/networks/api_response_states.dart';
+import 'package:steuermachen/services/networks/dio_client_network.dart';
 import 'package:steuermachen/utils/utils.dart';
 import 'package:steuermachen/wrappers/declaration_tax/declaration_tax_data_collector_wrapper.dart';
 import 'package:steuermachen/wrappers/tax_steps_wrapper.dart';
@@ -227,13 +233,25 @@ class _OrderCards extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(width: 5),
-                            InkWell(
-                              onTap: () {},
-                              child: const Icon(
-                                Icons.download,
-                                color: ColorConstants.black,
-                              ),
-                            )
+                            // InkWell(
+                            //   onTap: () async {
+                            //     String savePath = await getFilePath(Random(10).nextInt(20));
+                            //     serviceLocatorInstance<DioClientNetwork>()
+                            //         .dio
+                            //         .download(data.invoices![0], savePath,
+                            //             onReceiveProgress: (received, total) {
+                            //       if (total != -1) {
+                            //         print((received / total * 100)
+                            //                 .toStringAsFixed(0) +
+                            //             "%");
+                            //       }
+                            //     });
+                            //   },
+                            //   child: const Icon(
+                            //     Icons.download,
+                            //     color: ColorConstants.black,
+                            //   ),
+                            // )
                           ],
                         ),
                       )
@@ -244,6 +262,19 @@ class _OrderCards extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  final snackBar = const SnackBar(
+    content: TextComponent(LocaleKeys.downloadCompleted),
+  );
+  Future<String> getFilePath(uniqueFileName) async {
+    String path = '';
+
+    Directory dir = await getApplicationDocumentsDirectory();
+
+    path = '${dir.path}/$uniqueFileName';
+
+    return path;
   }
 
   String getTaxName(String taxName) {

@@ -30,7 +30,7 @@ class _SelectBillingAddressScreenState
   @override
   void initState() {
     provider = Provider.of<ProfileProvider>(context, listen: false);
-    WidgetsBinding.instance!.addPostFrameCallback(
+    WidgetsBinding.instance.addPostFrameCallback(
         (_) => provider.getUserAddresses().then((value) => response = value));
     super.initState();
   }

@@ -32,7 +32,7 @@ class _DeclarationTaxScreenState extends State<DeclarationTaxScreen> {
   void _getDeclarationTaxViewData() {
     if (provider.taxFiledYears.status != Status.completed ||
         provider.viewData.status != Status.completed) {
-      WidgetsBinding.instance!.addPostFrameCallback(
+      WidgetsBinding.instance.addPostFrameCallback(
         (_) => {
           provider
               .fetchTaxFiledYears()

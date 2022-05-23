@@ -40,7 +40,7 @@ class _DocumentOverviewScreenState extends State<DocumentOverviewScreen> {
   void _fetchTaxFiledYears() {
     if (declarationTaxViewModel.taxFiledYears.status != Status.completed ||
         documentViewModel.documentOptions.status != Status.completed) {
-      WidgetsBinding.instance!.addPostFrameCallback(
+      WidgetsBinding.instance.addPostFrameCallback(
         (_) => {
           documentViewModel.fetchDocumentOptionsData(),
           declarationTaxViewModel.fetchTaxFiledYears(),

@@ -145,7 +145,7 @@ class _FDottedLineState extends State<FDottedLine> {
   }
 
   void tryToGetChildSize() {
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       try {
         RenderBox box =
             childKey.currentContext!.findRenderObject() as RenderBox;
@@ -158,7 +158,7 @@ class _FDottedLineState extends State<FDottedLine> {
             childHeight = tempHeight;
           });
         }
-      // ignore: empty_catches
+        // ignore: empty_catches
       } catch (e, _) {}
     });
   }

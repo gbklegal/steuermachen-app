@@ -224,8 +224,8 @@ class _DeclarationQuestionsViewComponentState
         await consumer.submitDeclarationTaxData(context);
     PopupLoader.hideLoadingDialog(context);
     if (res.status!) {
-      // Navigator.pushNamed(
-      //     context, RouteConstants.orderCompletedScreenComponent);
+      Navigator.pushNamed(
+          context, RouteConstants.orderCompletedScreenComponent);
       consumer.fetchTaxFiledYears(isNotifify: false);
     } else {
       ToastComponent.showToast(res.message!);

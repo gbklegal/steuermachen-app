@@ -38,7 +38,7 @@ class _FinanceCourtScreenState extends State<FinanceCourtScreen> {
   @override
   void initState() {
     provider = Provider.of<FinanceCourtProvider>(context, listen: false);
-    WidgetsBinding.instance!.addPostFrameCallback(
+    WidgetsBinding.instance.addPostFrameCallback(
       (_) => provider.getFinanceCourtViewData().then(
         (value) {
           setState(
@@ -124,7 +124,7 @@ class _QuestionsViewState extends State<_QuestionsView> {
   @override
   void initState() {
     provider = Provider.of<FinanceCourtProvider>(context, listen: false);
-    WidgetsBinding.instance!.addPostFrameCallback((_) =>
+    WidgetsBinding.instance.addPostFrameCallback((_) =>
         provider.getFinanceLawViewData().then((value) => response = value));
     super.initState();
   }

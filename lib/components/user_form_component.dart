@@ -35,7 +35,7 @@ class _UserFormComponentState extends State<UserFormComponent>
   void initState() {
     super.initState();
     _profileProvider = Provider.of<ProfileProvider>(context, listen: false);
-    WidgetsBinding.instance!
+    WidgetsBinding.instance
         .addPostFrameCallback((_) => _profileProvider.getUserProfile());
   }
 

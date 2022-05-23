@@ -24,7 +24,7 @@ class _CurrentYearTaxScreenState extends State<CurrentYearTaxScreen> {
   @override
   void initState() {
     provider = Provider.of<CurrentYearTaxProvider>(context, listen: false);
-    WidgetsBinding.instance!.addPostFrameCallback((_) =>
+    WidgetsBinding.instance.addPostFrameCallback((_) =>
         provider.getCurrentYearTaxViewData().then((value) => response = value));
     super.initState();
   }

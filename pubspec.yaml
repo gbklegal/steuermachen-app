@@ -105,6 +105,7 @@ flutter:
     - assets/html/AGB.html
     - assets/html/Impressum.html
     - assets/html/Datenschutz.html
+    - assets/html/Schweigepflichtsentbindung.html
     - assets/languages/
     - assets/logo.png
     - assets/icons/onboarding/

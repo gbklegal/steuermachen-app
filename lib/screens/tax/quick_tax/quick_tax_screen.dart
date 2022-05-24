@@ -39,7 +39,7 @@ class _QuickTaxScreenState extends State<QuickTaxScreen> {
   }
 
   _getData() {
-    WidgetsBinding.instance.addPostFrameCallback(
+    WidgetsBinding.instance?.addPostFrameCallback(
       (_) => provider.getQuickTaxViewData().then(
         (value) {
           setState(() {

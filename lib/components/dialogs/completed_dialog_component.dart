@@ -39,7 +39,10 @@ class CompletedDialogComponent extends StatelessWidget {
             ),
             const SizedBox(height: 15),
             TextComponent(
-              text ?? LocaleKeys.emailReceive,
+              text ??
+                  (showChatBtn
+                      ? LocaleKeys.emailReceiveChat
+                      : LocaleKeys.emailReceive),
               textAlign: TextAlign.center,
               style: FontStyles.fontRegular(fontSize: 14),
             ),

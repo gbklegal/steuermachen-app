@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:steuermachen/components/text_component.dart';
+import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/utils/utils.dart';
 
@@ -55,17 +56,18 @@ class TaxTipTopComponent extends StatelessWidget {
             ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(top: 10, left: 15),
-          child: Text(
-            subtitle!,
-            textAlign: TextAlign.left,
-            style: Theme.of(context).textTheme.headline5!.copyWith(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 18,
-                ),
-          ),
-        ),
+        // Padding(
+        //   padding: const EdgeInsets.only(top: 10, left: 15),
+        //   child: Text(
+        //     subtitle!,
+        //     textAlign: TextAlign.left,
+        //     style: FontStyles.fontMedium(
+        //           fontWeight: FontWeight.w400,
+        //           fontSize: 15,
+        //           lineSpacing: 1.1
+        //         ),
+        //   ),
+        // ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,

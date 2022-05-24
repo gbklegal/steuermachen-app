@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/components/button_component.dart';
+import 'package:steuermachen/components/html_view_component.dart';
 import 'package:steuermachen/components/imprint_privacy_condition_component.dart';
 import 'package:steuermachen/components/radio_component.dart';
 import 'package:steuermachen/components/text_component.dart';
@@ -12,7 +13,7 @@ import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/data/view_models/terms_and_condition_provider.dart';
-import 'package:steuermachen/screens/auth/auth_components/richtext__auth_component.dart';
+import 'package:flutter/services.dart';
 
 class TermsAndConditionComponent extends StatelessWidget {
   const TermsAndConditionComponent(
@@ -90,36 +91,21 @@ class TermsAndConditionComponent extends StatelessWidget {
                           consumer.termsAndConditionChecks[i].isSelected,
                           (va) =>
                               consumer.changeTermsAndConditionCheckedState(i),
-                          () {
+                          () async {
+                        final response = await rootBundle.loadString(
+                            "assets/html/Schweigepflichtsentbindung.html");
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const WebViewComponent(
-                              url:
-                                  "https://steuermachen.de/schweigepflichtsentbindung/?frame_mode=remove-links",
-                            ),
+                            builder: (context) =>
+                                LocalHtmlWebViewComponent(html: response),
                           ),
                         );
-                      }),
-                      // Visibility(
-                      //   visible: i == 0,
-                      //   child: Transform.translate(
-                      //     offset: const Offset(-6, -5),
-                      //     child: Padding(
-                      //       padding: const EdgeInsets.only(
-                      //           left: 60, bottom: 10, top: 5),
-                      //       child: InkWell(
-                      //         ,
-                      //         child: TextComponent(
-                      //           ,
-                      //           style: FontStyles.fontMedium(
-                      //               fontSize: 15,
-                      //               color: ColorConstants.primary),
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
+                      },
+                          text3:
+                              (i == 0 && context.locale != const Locale('en'))
+                                  ? "zu"
+                                  : ""),
                     ],
                   ),
                 ),
@@ -160,12 +146,14 @@ class TermsAndConditionComponent extends StatelessWidget {
   }
 
   Row _checkBox(
-      BuildContext context,
-      String checkBoxTitle,
-      String? linkText,
-      bool isSelected,
-      void Function(bool?)? onChanged,
-      void Function()? onTap) {
+    BuildContext context,
+    String checkBoxTitle,
+    String? linkText,
+    bool isSelected,
+    void Function(bool?)? onChanged,
+    void Function()? onTap, {
+    String? text3,
+  }) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -193,7 +181,7 @@ class TermsAndConditionComponent extends StatelessWidget {
                     child: RichText(
                       textAlign: TextAlign.left,
                       text: TextSpan(
-                        text: checkBoxTitle.tr()+" ",
+                        text: checkBoxTitle.tr() + " ",
                         style: FontStyles.fontMedium(
                             fontSize: 16,
                             letterSpacing: -0.3,
@@ -206,7 +194,16 @@ class TermsAndConditionComponent extends StatelessWidget {
                                   color: ColorConstants.primary,
                                   letterSpacing: -0.3,
                                   lineSpacing: 1.1),
-                              recognizer: TapGestureRecognizer()..onTap = onTap)
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = onTap),
+                          TextSpan(
+                            text: text3 != null ? " " + text3 : "",
+                            style: FontStyles.fontMedium(
+                                fontSize: 16,
+                                color: ColorConstants.black,
+                                letterSpacing: -0.3,
+                                lineSpacing: 1.1),
+                          )
                         ],
                       ),
                     ),

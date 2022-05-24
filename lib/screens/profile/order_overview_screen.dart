@@ -46,7 +46,7 @@ class _OrderOverviewScreenState extends State<OrderOverviewScreen> {
 
   void _fetchTaxFiledYears() {
     if (provider.taxFiledYears.status != Status.completed) {
-      WidgetsBinding.instance.addPostFrameCallback(
+      WidgetsBinding.instance?.addPostFrameCallback(
         (_) => {
           provider.fetchTaxFiledYears(),
           documentViewModel.fetchDocumentOptionsData()

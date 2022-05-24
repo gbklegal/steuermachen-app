@@ -33,7 +33,7 @@ class _SafeTaxScreenState extends State<SafeTaxScreen> {
   }
 
   void _getSafeTaxViewData() {
-    WidgetsBinding.instance.addPostFrameCallback(
+    WidgetsBinding.instance?.addPostFrameCallback(
       (_) => provider.getSafeTaxViewData().then(
         (value) {
           setState(() {

@@ -32,7 +32,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen>
     super.initState();
     _profileProvider = Provider.of<ProfileProvider>(context, listen: false);
     WidgetsBinding.instance
-        .addPostFrameCallback((_) => _profileProvider.getUserProfile());
+        ?.addPostFrameCallback((_) => _profileProvider.getUserProfile());
   }
 
   @override

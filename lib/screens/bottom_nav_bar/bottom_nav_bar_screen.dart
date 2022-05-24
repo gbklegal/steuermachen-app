@@ -32,7 +32,7 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
     provider = Provider.of<TaxTipsProvider>(context, listen: false);
     declarationTaxViewModel =
         Provider.of<DeclarationTaxViewModel>(context, listen: false);
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
       provider.fetchTaxTips();
       profileProvider.getUserProfile();
       declarationTaxViewModel.fetchTaxFiledYears();

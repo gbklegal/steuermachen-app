@@ -93,21 +93,21 @@ class _TaxTipsDetailScreenState extends State<TaxTipsDetailScreen> {
         padding: AppConstants.bottomBtnPadding,
         child: Row(
           children: [
-            Padding(
-              padding: const EdgeInsets.only(right: 15),
-              child: FloatingActionButton(
-                onPressed: () async {
-                  if (await _webViewController!.canGoBack()) {
-                    _webViewController?.goBack();
-                  }
-                },
-                child: SvgPicture.asset(
-                  AssetConstants.icBackNav,
-                  color: ColorConstants.white,
-                  height: 15,
-                ),
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.only(right: 15),
+            //   child: FloatingActionButton(
+            //     onPressed: () async {
+            //       if (await _webViewController!.canGoBack()) {
+            //         _webViewController?.goBack();
+            //       }
+            //     },
+            //     child: SvgPicture.asset(
+            //       AssetConstants.icBackNav,
+            //       color: ColorConstants.white,
+            //       height: 15,
+            //     ),
+            //   ),
+            // ),
             Flexible(
               child: ElevatedButton(
                 style: ElevatedButtonTheme.of(context).style?.copyWith(

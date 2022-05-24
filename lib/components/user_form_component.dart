@@ -36,7 +36,7 @@ class _UserFormComponentState extends State<UserFormComponent>
     super.initState();
     _profileProvider = Provider.of<ProfileProvider>(context, listen: false);
     WidgetsBinding.instance
-        .addPostFrameCallback((_) => _profileProvider.getUserProfile());
+        ?.addPostFrameCallback((_) => _profileProvider.getUserProfile());
   }
 
   final sizedBox4 = const SizedBox(

@@ -29,7 +29,7 @@ class _EasyTaxScreenState extends State<EasyTaxScreen> {
   }
 
   void _getEasyTaxViewData() {
-    WidgetsBinding.instance.addPostFrameCallback(
+    WidgetsBinding.instance?.addPostFrameCallback(
       (_) => provider.getEasyTaxViewData().then(
         (value) {
           setState(

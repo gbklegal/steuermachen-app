@@ -34,7 +34,7 @@ class _WhatInWorkYearSelectionScreenState
 
   void _fetchTaxFiledYears() {
     if (provider.taxFiledYears.status != Status.completed) {
-      WidgetsBinding.instance.addPostFrameCallback(
+      WidgetsBinding.instance?.addPostFrameCallback(
         (_) => {provider.fetchTaxFiledYears()},
       );
     }

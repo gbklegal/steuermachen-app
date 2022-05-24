@@ -3,7 +3,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/constants/strings/email_constants.dart';
-import 'package:steuermachen/constants/strings/http_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/data/repositories/remote/email_repository.dart';
 import 'package:steuermachen/data/repositories/remote/safe_and_declaration_tax_repository.dart';

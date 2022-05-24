@@ -180,7 +180,7 @@ class AuthProvider extends ChangeNotifier {
 
   checkUserFirstTimeLoggedIn(String email) async {
     var methods = await FirebaseAuth.instance.fetchSignInMethodsForEmail(email);
-    if (methods.contains('google.com') || methods.contains('apple.com')) {
+    if (methods.contains('google.com') || methods.contains('apple.com') || methods.contains('password')) {
       isFirstTimeLoggedIn = false;
     } else {
       isFirstTimeLoggedIn = true;

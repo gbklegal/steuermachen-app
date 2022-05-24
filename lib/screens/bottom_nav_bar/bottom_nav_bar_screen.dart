@@ -6,6 +6,7 @@ import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:steuermachen/data/view_models/profile/profile_provider.dart';
+import 'package:steuermachen/data/view_models/tax/declaration_tax/declaration_tax_view_model.dart';
 import 'package:steuermachen/data/view_models/tax_tips_provider.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/data/view_models/language_provider.dart';
@@ -24,13 +25,17 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
   int _currentIndex = 0;
   late TaxTipsProvider provider;
   late ProfileProvider profileProvider;
+  late DeclarationTaxViewModel declarationTaxViewModel;
   @override
   void initState() {
     profileProvider = Provider.of<ProfileProvider>(context, listen: false);
     provider = Provider.of<TaxTipsProvider>(context, listen: false);
+    declarationTaxViewModel =
+        Provider.of<DeclarationTaxViewModel>(context, listen: false);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       provider.fetchTaxTips();
       profileProvider.getUserProfile();
+      declarationTaxViewModel.fetchTaxFiledYears();
     });
 
     super.initState();

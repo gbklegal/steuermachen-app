@@ -212,6 +212,10 @@ class _QuestionsViewState extends State<_QuestionsView> {
                           Utils.hideKeyboard(context);
                           Utils.animateToPreviousPage(pageController, i);
                         },
+                        onTapReset: () => Utils.animateToPreviousPage(
+                            pageController,
+                            widget.quickTaxData.length -
+                                widget.quickTaxData.length),
                         onTapContinue: () {
                           if (widget.quickTaxData[i].optionType ==
                               OptionConstants.input) {

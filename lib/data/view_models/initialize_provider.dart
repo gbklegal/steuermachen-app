@@ -1,6 +1,7 @@
 import 'package:provider/provider.dart';
 import 'package:steuermachen/data/view_models/auth/auth_provider.dart';
 import 'package:steuermachen/data/view_models/contact/contact_us_provider.dart';
+import 'package:steuermachen/data/view_models/faq_provider.dart';
 import 'package:steuermachen/data/view_models/forms_provider.dart';
 import 'package:steuermachen/data/view_models/language_provider.dart';
 import 'package:steuermachen/data/view_models/document/document_view_model.dart';
@@ -17,7 +18,6 @@ import 'package:steuermachen/data/view_models/tax_calculator_provider.dart';
 import 'package:steuermachen/data/view_models/tax_file_provider.dart';
 import 'package:steuermachen/data/view_models/tax_tips_provider.dart';
 import 'package:steuermachen/data/view_models/terms_and_condition_provider.dart';
-
 import 'payment_gateway/payment_gateway_provider.dart';
 
 providerList(context) {
@@ -75,6 +75,9 @@ providerList(context) {
     ),
     ChangeNotifierProvider(
       create: (context) => TaxTipsProvider(),
+    ),
+    ChangeNotifierProvider(
+      create: (context) => FaqProvider(),
     ),
     ChangeNotifierProvider(
       create: (context) => PaymentGateWayProvider(),

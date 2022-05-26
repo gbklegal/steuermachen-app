@@ -82,6 +82,8 @@ class SafeTaxProvider extends ChangeNotifier {
     _safeTaxDataCollectorWrapper?.termsAndConditionChecked = true;
     _safeTaxDataCollectorWrapper?.checkOutReference =
         _paymentProvider.getCheckoutReference(10);
+    _safeTaxDataCollectorWrapper?.orderNumber =
+        await _paymentProvider.generateOrderNumber();
     try {
       User? user = FirebaseAuth.instance.currentUser;
       DocumentReference<Map<String, dynamic>> firestoreResponse =
@@ -98,7 +100,7 @@ class SafeTaxProvider extends ChangeNotifier {
           templatePdf: EmailInvoiceConstants.safeTax,
           salutation: _safeTaxDataCollectorWrapper!.userInfo!.gender,
           lastName: _safeTaxDataCollectorWrapper!.userInfo!.lastName,
-          orderNumber: _safeTaxDataCollectorWrapper?.checkOutReference,
+          orderNumber: _safeTaxDataCollectorWrapper?.orderNumber,
           orderDate: _safeTaxDataCollectorWrapper!.createdAt.toString(),
           firstName: _safeTaxDataCollectorWrapper!.userInfo!.firstName,
           street: _safeTaxDataCollectorWrapper!.userInfo!.street,
@@ -116,7 +118,7 @@ class SafeTaxProvider extends ChangeNotifier {
           templatePdf: EmailInvoiceConstants.safeTax,
           salutation: _safeTaxDataCollectorWrapper!.userInfo!.gender,
           lastName: _safeTaxDataCollectorWrapper!.userInfo!.lastName,
-          orderNumber: _safeTaxDataCollectorWrapper?.checkOutReference,
+          orderNumber: _safeTaxDataCollectorWrapper?.orderNumber,
           orderDate: _safeTaxDataCollectorWrapper!.createdAt.toString(),
           firstName: _safeTaxDataCollectorWrapper!.userInfo!.firstName,
           street: _safeTaxDataCollectorWrapper!.userInfo!.street,

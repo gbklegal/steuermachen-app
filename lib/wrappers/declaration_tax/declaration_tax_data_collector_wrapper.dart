@@ -19,7 +19,9 @@ class SafeAndDeclarationTaxDataCollectorWrapper {
       this.createdAt,
       this.status,
       this.taxName,
-      this.checkOutReference});
+      this.checkOutReference,
+      this.orderNumber
+      });
   String? taxYear;
   String? martialStatus;
   String? grossIncome;
@@ -39,6 +41,7 @@ class SafeAndDeclarationTaxDataCollectorWrapper {
   String? approvedBy;
   String? keyId;
   String? checkOutReference;
+  String? orderNumber;
 
   SafeAndDeclarationTaxDataCollectorWrapper.fromJson(
       Map<String, dynamic> json, String documentId) {
@@ -69,6 +72,7 @@ class SafeAndDeclarationTaxDataCollectorWrapper {
         : [];
     keyId = documentId;
     checkOutReference = json["checkout_reference"];
+    orderNumber = json["order_number"];
   }
 
   Map<String, dynamic> toJson(String taxName, List<TaxStepsWrapper> _steps) {
@@ -91,6 +95,7 @@ class SafeAndDeclarationTaxDataCollectorWrapper {
     _data['status'] = ProcessConstants.pending;
     _data['approved_by'] = null;
     _data['checkout_reference'] = checkOutReference;
+    _data['order_number'] = orderNumber;
 
     return _data;
   }

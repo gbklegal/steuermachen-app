@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:steuermachen/constants/strings/http_constants.dart';
@@ -49,7 +50,7 @@ class PaymentGateWayProvider extends ChangeNotifier {
   Future<ApiResponse> createCheckout(String accessToken, dynamic amount) async {
     try {
       // if (amount is double) {
-        amount = double.parse(amount.toString());
+      amount = double.parse(amount.toString());
       // }
       //  else {
       //   amount = int.parse(amount.toString());
@@ -87,6 +88,28 @@ class PaymentGateWayProvider extends ChangeNotifier {
       return ApiResponse.completed(checkoutWrapper);
     } catch (e) {
       return ApiResponse.error(e.toString());
+    }
+  }
+
+  Future<String> generateOrderNumber() async {
+    try {
+      String orderNumber = "0";
+      DocumentSnapshot event =
+          await firestore.collection("user_orders").doc("order_number").get();
+      Map<String, dynamic>? data = event.data() as Map<String, dynamic>;
+      orderNumber = data["number"];
+      while (orderNumber.length < 4) {
+        orderNumber = "0" + orderNumber;
+      }
+      String currentYear = DateTime.now().year.toString();
+      int incrementOrderNumber = int.parse(data["number"]);
+      await firestore
+          .collection("user_orders")
+          .doc("order_number")
+          .update({"number": (incrementOrderNumber+1).toString()});
+      return "AS" + currentYear + orderNumber;
+    } catch (e) {
+      rethrow;
     }
   }
 

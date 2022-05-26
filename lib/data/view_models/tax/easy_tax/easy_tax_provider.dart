@@ -88,6 +88,8 @@ class EasyTaxProvider extends ChangeNotifier {
     _easyTaxDataCollectorWrapper?.userAddress = _user.getSelectedAddress;
     _easyTaxDataCollectorWrapper?.termsAndConditionChecked = true;
     _easyTaxDataCollectorWrapper?.taxYear = DateTime.now().year.toString();
+    _easyTaxDataCollectorWrapper?.orderNumber =
+        await _paymentProvider.generateOrderNumber();
     try {
       User? user = FirebaseAuth.instance.currentUser;
       Map<String, dynamic> data = {
@@ -135,7 +137,7 @@ class EasyTaxProvider extends ChangeNotifier {
           EmailInvoiceConstants.steuerEASY,
           salutation: _easyTaxDataCollectorWrapper!.userInfo!.gender,
           lastName: _easyTaxDataCollectorWrapper!.userInfo!.lastName,
-          orderNumber: _easyTaxDataCollectorWrapper!.checkOutReference,
+          orderNumber: _easyTaxDataCollectorWrapper!.orderNumber,
           taxYear: _easyTaxDataCollectorWrapper!.taxYear,
           totalPrice: _easyTaxDataCollectorWrapper!.subscriptionPrice,
           sendInvoice: true,
@@ -146,7 +148,7 @@ class EasyTaxProvider extends ChangeNotifier {
           EmailInvoiceConstants.orderSubject, EmailInvoiceConstants.steuerEASY,
           salutation: _easyTaxDataCollectorWrapper!.userInfo!.gender,
           lastName: _easyTaxDataCollectorWrapper!.userInfo!.lastName,
-          orderNumber: _easyTaxDataCollectorWrapper!.checkOutReference,
+          orderNumber: _easyTaxDataCollectorWrapper!.orderNumber,
           taxYear: _easyTaxDataCollectorWrapper!.taxYear,
           totalPrice: _easyTaxDataCollectorWrapper!.subscriptionPrice,
           sendInvoice: true,

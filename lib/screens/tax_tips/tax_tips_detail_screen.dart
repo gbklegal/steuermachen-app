@@ -1,12 +1,9 @@
 import 'dart:async';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:steuermachen/components/app_bar/appbar_with_side_corner_circle_and_body.dart';
 import 'package:steuermachen/components/loading_component.dart';
 import 'package:steuermachen/constants/app_constants.dart';
-import 'package:steuermachen/constants/assets/asset_constants.dart';
-import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/wrappers/faq_wp_wrapper.dart';
@@ -53,7 +50,7 @@ class _TaxTipsDetailScreenState extends State<TaxTipsDetailScreen> {
                 children: [
                   WebView(
                     initialUrl: widget.taxTipsContent.link! +
-                        "?frame_mode=remove-links",
+                        "?frame_mode=app",
                     javascriptMode: JavascriptMode.unrestricted,
                     onWebViewCreated: (WebViewController webViewController) {
                       _controller.complete(webViewController);

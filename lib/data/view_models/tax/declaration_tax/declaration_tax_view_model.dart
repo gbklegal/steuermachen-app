@@ -94,6 +94,7 @@ class DeclarationTaxViewModel extends ChangeNotifier {
       await _setDataDeclarationTax(context);
     }
     try {
+      _declarationTaxDataCollectorWrapper?.orderNumber = await _paymentProvider.generateOrderNumber();
       Map<String, dynamic> data = {
         ..._declarationTaxDataCollectorWrapper!
             .toJson(isCurrentYear ? "currentYear" : "declarationTax", taxSteps),
@@ -135,7 +136,7 @@ class DeclarationTaxViewModel extends ChangeNotifier {
             templatePdf: EmailInvoiceConstants.declarationPdf,
             salutation: _declarationTaxDataCollectorWrapper!.userInfo!.gender,
             lastName: _declarationTaxDataCollectorWrapper!.userInfo!.lastName,
-            orderNumber: _declarationTaxDataCollectorWrapper?.checkOutReference,
+            orderNumber: _declarationTaxDataCollectorWrapper?.orderNumber,
             orderDate:
                 _declarationTaxDataCollectorWrapper!.createdAt.toString(),
             firstName: _declarationTaxDataCollectorWrapper!.userInfo!.firstName,
@@ -157,7 +158,7 @@ class DeclarationTaxViewModel extends ChangeNotifier {
             templatePdf: EmailInvoiceConstants.declarationPdf,
             salutation: _declarationTaxDataCollectorWrapper!.userInfo!.gender,
             lastName: _declarationTaxDataCollectorWrapper!.userInfo!.lastName,
-            orderNumber: _declarationTaxDataCollectorWrapper?.checkOutReference,
+            orderNumber: _declarationTaxDataCollectorWrapper?.orderNumber,
             orderDate:
                 _declarationTaxDataCollectorWrapper!.createdAt.toString(),
             firstName: _declarationTaxDataCollectorWrapper!.userInfo!.firstName,

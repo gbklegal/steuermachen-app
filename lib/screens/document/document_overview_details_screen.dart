@@ -6,6 +6,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/components/app_bar/appbar_component.dart';
+import 'package:steuermachen/components/empty_screen_loader_component.dart';
+import 'package:steuermachen/components/error_component.dart';
 import 'package:steuermachen/components/popup_loader_component.dart';
 import 'package:steuermachen/components/text_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
@@ -13,8 +15,10 @@ import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:path/path.dart' as path;
+import 'package:steuermachen/data/view_models/tax/declaration_tax/declaration_tax_view_model.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/data/view_models/document/document_view_model.dart';
+import 'package:steuermachen/services/networks/api_response_states.dart';
 import 'package:steuermachen/wrappers/document/document_option_wrapper.dart';
 import 'documents_components/document_upload_component.dart';
 
@@ -31,11 +35,27 @@ class _DocumentOverviewDetailScreenState
     extends State<DocumentOverviewDetailScreen> {
   User? user = FirebaseAuth.instance.currentUser;
   late DocumentsViewModel documentViewModel;
+  late DeclarationTaxViewModel declarationTaxViewModel;
 
   @override
   void initState() {
     super.initState();
     documentViewModel = Provider.of<DocumentsViewModel>(context, listen: false);
+    declarationTaxViewModel =
+        Provider.of<DeclarationTaxViewModel>(context, listen: false);
+    _fetchTaxFiledYears();
+  }
+
+  void _fetchTaxFiledYears() {
+    if (declarationTaxViewModel.taxFiledYears.status != Status.completed ||
+        documentViewModel.documentOptions.status != Status.completed) {
+      WidgetsBinding.instance?.addPostFrameCallback(
+        (_) => {
+          documentViewModel.fetchDocumentOptionsData(),
+          declarationTaxViewModel.fetchTaxFiledYears(),
+        },
+      );
+    }
   }
 
   @override
@@ -50,7 +70,21 @@ class _DocumentOverviewDetailScreenState
         showBottomLine: true,
         isLanguageDropdown: false,
       ),
-      body: _mainBody(context),
+      body: Consumer<DeclarationTaxViewModel>(
+          builder: (context, consumer, child) {
+        if (consumer.taxFiledYears.status == Status.loading) {
+          return const EmptyScreenLoaderComponent();
+        } else if (consumer.taxFiledYears.status == Status.error) {
+          return ErrorComponent(
+            message: consumer.taxFiledYears.message!,
+            onTap: () async {
+              await consumer.fetchTaxFiledYears();
+            },
+          );
+        } else {
+          return _mainBody(context);
+        }
+      }),
     );
   }
 

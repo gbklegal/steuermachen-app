@@ -7,13 +7,16 @@ class EasyTaxDataCollectorWrapper {
       this.termsAndConditionChecked,
       this.checkOutReference,
       this.subscriptionPrice,
-      this.taxYear});
+      this.taxYear,
+      this.orderNumber
+      });
   String? taxYear;
   bool? termsAndConditionChecked;
   double? subscriptionPrice;
   UserWrapper? userInfo;
   UserWrapper? userAddress;
   String? checkOutReference;
+  String? orderNumber;
 
   EasyTaxDataCollectorWrapper.fromJson(Map<String, dynamic> json) {
     termsAndConditionChecked = json['terms_and_condition_checked'];
@@ -29,6 +32,7 @@ class EasyTaxDataCollectorWrapper {
     _data['terms_and_condition_checked'] = termsAndConditionChecked;
     _data['subscription_price'] = subscriptionPrice;
     _data['checkout_reference'] = checkOutReference;
+    _data['order_number'] = orderNumber;
     return _data;
   }
 }

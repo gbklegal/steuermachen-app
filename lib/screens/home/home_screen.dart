@@ -8,6 +8,7 @@ import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
+import 'package:steuermachen/data/view_models/payment_gateway/payment_gateway_provider.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/data/view_models/profile/profile_provider.dart';
 import 'package:steuermachen/utils/string_utils.dart';
@@ -45,7 +46,6 @@ class HomeScreen extends StatelessWidget {
         showBackButton: false,
         showPersonIcon: false,
         showBottomLine: false,
-        
       ),
       body: SafeArea(
         child: SizedBox(
@@ -59,9 +59,14 @@ class HomeScreen extends StatelessWidget {
                   alignment: Alignment.center,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 25),
-                    child: Image.asset(
-                      AssetConstants.tax,
-                      height: 120,
+                    child: InkWell(
+                      onTap: () async{
+                        print(await PaymentGateWayProvider().generateOrderNumber());
+                      },
+                      child: Image.asset(
+                        AssetConstants.tax,
+                        height: 120,
+                      ),
                     ),
                   ),
                 ),

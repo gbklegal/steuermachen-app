@@ -140,6 +140,5 @@ class EmailRepository {
       return SendMailModel.fromJson(response);
     }
     return null;
-    print(response);
   }
 }

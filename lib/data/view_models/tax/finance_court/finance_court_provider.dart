@@ -3,7 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/constants/strings/process_constants.dart';
-import 'package:steuermachen/constants/strings/string_constants.dart';
+import 'package:steuermachen/data/view_models/payment_gateway/payment_gateway_provider.dart';
+import 'package:steuermachen/data/view_models/payment_method_provider.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/main.dart';
 import 'package:steuermachen/data/view_models/signature/signature_provider.dart';
@@ -112,9 +113,12 @@ class FinanceCourtProvider extends ChangeNotifier {
         Provider.of<SignatureProvider>(context, listen: false);
     TermsAndConditionProvider _termsAndContition =
         Provider.of<TermsAndConditionProvider>(context, listen: false);
+    PaymentGateWayProvider _paymentProvider =
+        Provider.of<PaymentGateWayProvider>(context, listen: false);
     var checkedValue = _termsAndContition.getCommissionCheckedValue();
     String signaturePath = await Utils.uploadToFirebaseStorage(
         await _signature.getSignaturePath());
+    String orderNumber = await _paymentProvider.generateOrderNumber();
     try {
       User? user = FirebaseAuth.instance.currentUser;
       await firestore
@@ -127,6 +131,7 @@ class FinanceCourtProvider extends ChangeNotifier {
         "selected_appeal_date": selectedDate,
         "signature_path": signaturePath,
         "checked_commission": checkedValue!.title.tr(),
+        "order_number": orderNumber,
         "terms_and_condition_accepted": true,
         "created_at": DateTime.now(),
         "status": ProcessConstants.pending,

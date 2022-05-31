@@ -1,5 +1,7 @@
 class HTTPConstants {
+  static const String baseUrlApi = "https://steuermachen-backend.herokuapp.com/";
   static const String baseUrl = "https://steuermachen.de/";
+  static const String verifyEmail = "users/verifyEmail";
   static const String sendMail = "sendmail-api";
   static const String taxTips = "/wp-json/wp/v2/posts";
   static const String faq = "/wp-json/stm-faq/v1/faqs";

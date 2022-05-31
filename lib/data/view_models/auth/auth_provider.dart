@@ -191,6 +191,17 @@ class AuthProvider extends ChangeNotifier {
       await user.sendEmailVerification();
     }
   }
+  //   sendVerificationEmail() async {
+  //   User? user = FirebaseAuth.instance.currentUser;
+  //   if (user != null && !user.emailVerified) {
+  //     serviceLocatorInstance<DioClientNetwork>().dio.options.baseUrl =
+  //         HTTPConstants.baseUrlApi;
+  //     var response = await serviceLocatorInstance<DioApiServices>().postRequest(
+  //         HTTPConstants.verifyEmail,
+  //         data: {"email": user.email});
+  //     print(response);
+  //   }
+  // }
 
   checkUserFirstTimeLoggedIn(String email, bool isNewUser) async {
     // var methods = await FirebaseAuth.instance.fetchSignInMethodsForEmail(email);

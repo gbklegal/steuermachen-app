@@ -1,10 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:steuermachen/constants/strings/email_constants.dart';
 import 'package:steuermachen/constants/strings/process_constants.dart';
+import 'package:steuermachen/data/repositories/remote/email_repository.dart';
 import 'package:steuermachen/data/view_models/payment_gateway/payment_gateway_provider.dart';
 import 'package:steuermachen/data/view_models/payment_method_provider.dart';
+import 'package:steuermachen/data/view_models/profile/profile_provider.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/main.dart';
 import 'package:steuermachen/data/view_models/signature/signature_provider.dart';
@@ -13,6 +17,7 @@ import 'package:steuermachen/utils/utils.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 import 'package:steuermachen/wrappers/finance/finance_court_view_wrapper.dart';
 import 'package:steuermachen/wrappers/finance/finance_law_view_wrapper.dart';
+import 'package:steuermachen/wrappers/send_mail_model.dart';
 
 class FinanceCourtProvider extends ChangeNotifier {
   DateTime selectedDate = DateTime.now();
@@ -115,17 +120,20 @@ class FinanceCourtProvider extends ChangeNotifier {
         Provider.of<TermsAndConditionProvider>(context, listen: false);
     PaymentGateWayProvider _paymentProvider =
         Provider.of<PaymentGateWayProvider>(context, listen: false);
+    ProfileProvider _profile =
+        Provider.of<ProfileProvider>(context, listen: false);
     var checkedValue = _termsAndContition.getCommissionCheckedValue();
     String signaturePath = await Utils.uploadToFirebaseStorage(
         await _signature.getSignaturePath());
     String orderNumber = await _paymentProvider.generateOrderNumber();
     try {
       User? user = FirebaseAuth.instance.currentUser;
-      await firestore
-          .collection("user_orders")
-          .doc("${user?.uid}")
-          .collection("finance_court")
-          .add({
+      DocumentReference<Map<String, dynamic>> firestoreResponse =
+          await firestore
+              .collection("user_orders")
+              .doc("${user?.uid}")
+              .collection("finance_court")
+              .add({
         "subject_law_checks":
             financeLawWrapper.en.options.map((e) => e.toJson()).toList(),
         "selected_appeal_date": selectedDate,
@@ -137,6 +145,30 @@ class FinanceCourtProvider extends ChangeNotifier {
         "status": ProcessConstants.pending,
         "approved_by": null,
       });
+      SendMailModel? sendMailResponse = await EmailRepository().sendMail(
+         _profile.userData!.email!,
+          EmailInvoiceConstants.orderSubject,
+          EmailInvoiceConstants.declarationTax,
+          templatePdf: EmailInvoiceConstants.declarationPdf,
+          salutation:_profile.userData?.gender,
+          lastName:_profile.userData?.lastName,
+          orderNumber: orderNumber,
+          orderDate: DateTime.now().toString(),
+          firstName: _profile.userData?.firstName,
+          street:_profile.userData?.street,
+          houseNumber:
+             _profile.userData?.houseNumber,
+          postcode:_profile.userData?.plz,
+          city:_profile.userData?.location,
+          email:_profile.userData?.email!,
+          phone:_profile.userData?.phone!,
+          taxYear: DateTime.now().year.toString(),
+          invoiceTemplate: EmailInvoiceConstants.objectionInvoice);
+      if (sendMailResponse != null) {
+        firestoreResponse.update({
+          "invoices_path": [sendMailResponse.pdf.url]
+        });
+      }
       return CommonResponseWrapper(
           status: true, message: LocaleKeys.thankYouForOrder.tr());
     } catch (e) {

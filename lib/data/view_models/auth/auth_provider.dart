@@ -58,8 +58,10 @@ class AuthProvider extends ChangeNotifier {
         idToken: appleCredential.identityToken,
         rawNonce: rawNonce,
       );
-      await checkUserFirstTimeLoggedIn(appleCredential.email!);
-      await FirebaseAuth.instance.signInWithCredential(oauthCredential);
+      UserCredential user =
+          await FirebaseAuth.instance.signInWithCredential(oauthCredential);
+      await checkUserFirstTimeLoggedIn(
+          appleCredential.email!, user.additionalUserInfo!.isNewUser);
       return CommonResponseWrapper(
           status: true, message: "Signin successfully");
     } catch (e) {
@@ -77,7 +79,7 @@ class AuthProvider extends ChangeNotifier {
     final GoogleSignInAccount? googleSignInAccount =
         await googleSignIn.signIn();
     if (googleSignInAccount != null) {
-      await checkUserFirstTimeLoggedIn(googleSignInAccount.email);
+      // await checkUserFirstTimeLoggedIn(googleSignInAccount.email);
       final GoogleSignInAuthentication googleSignInAuthentication =
           await googleSignInAccount.authentication;
 
@@ -89,7 +91,13 @@ class AuthProvider extends ChangeNotifier {
       try {
         final UserCredential userCredential =
             await auth.signInWithCredential(credential);
-
+        if (!userCredential.user!.emailVerified) {
+          await sendVerificationEmail();
+          return CommonResponseWrapper(
+              status: false, message: LocaleKeys.verifyEmail);
+        }
+        await checkUserFirstTimeLoggedIn(googleSignInAccount.email,
+            userCredential.additionalUserInfo!.isNewUser);
         user = userCredential.user;
         return CommonResponseWrapper(
             status: true, message: "Signin successfully");
@@ -115,7 +123,7 @@ class AuthProvider extends ChangeNotifier {
   Future<CommonResponseWrapper> registerWithEmailAndPassword(
       String email, String password) async {
     try {
-      await FirebaseAuth.instance
+      UserCredential user = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
       await sendVerificationEmail();
       return CommonResponseWrapper(
@@ -140,12 +148,18 @@ class AuthProvider extends ChangeNotifier {
     try {
       UserCredential _user = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
+      if (_user.user!.metadata.creationTime ==
+          _user.user!.metadata.lastSignInTime) {
+        await checkUserFirstTimeLoggedIn(email, true);
+      } else {
+        await checkUserFirstTimeLoggedIn(email, false);
+      }
+
       if (!_user.user!.emailVerified) {
         await sendVerificationEmail();
         return CommonResponseWrapper(
             status: false, message: LocaleKeys.verifyEmail);
       }
-      await checkUserFirstTimeLoggedIn(email);
       return CommonResponseWrapper(status: true, message: 'Sigin successfully');
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
@@ -178,9 +192,12 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  checkUserFirstTimeLoggedIn(String email) async {
-    var methods = await FirebaseAuth.instance.fetchSignInMethodsForEmail(email);
-    if (methods.contains('google.com') || methods.contains('apple.com') || methods.contains('password')) {
+  checkUserFirstTimeLoggedIn(String email, bool isNewUser) async {
+    // var methods = await FirebaseAuth.instance.fetchSignInMethodsForEmail(email);
+    // if (methods.contains('google.com') ||
+    //     methods.contains('apple.com') ||
+    //     methods.contains('password')) {
+    if (!isNewUser) {
       isFirstTimeLoggedIn = false;
     } else {
       isFirstTimeLoggedIn = true;

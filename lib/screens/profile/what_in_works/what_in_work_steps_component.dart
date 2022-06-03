@@ -8,13 +8,13 @@ import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/strings/process_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
-import 'package:steuermachen/wrappers/declaration_tax/declaration_tax_data_collector_wrapper.dart';
+import 'package:steuermachen/wrappers/declaration_tax/user_orders_data_model.dart';
 import 'package:steuermachen/wrappers/tax_steps_wrapper.dart';
 
 class WhatInWorkStepsComponent extends StatelessWidget {
   const WhatInWorkStepsComponent({Key? key, required this.submittedTaxYears})
       : super(key: key);
-  final SafeAndDeclarationTaxDataCollectorWrapper submittedTaxYears;
+  final UserOrdersDataModel submittedTaxYears;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;

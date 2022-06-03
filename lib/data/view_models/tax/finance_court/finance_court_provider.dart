@@ -7,7 +7,6 @@ import 'package:steuermachen/constants/strings/email_constants.dart';
 import 'package:steuermachen/constants/strings/process_constants.dart';
 import 'package:steuermachen/data/repositories/remote/email_repository.dart';
 import 'package:steuermachen/data/view_models/payment_gateway/payment_gateway_provider.dart';
-import 'package:steuermachen/data/view_models/payment_method_provider.dart';
 import 'package:steuermachen/data/view_models/profile/profile_provider.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/main.dart';
@@ -125,7 +124,7 @@ class FinanceCourtProvider extends ChangeNotifier {
     var checkedValue = _termsAndContition.getCommissionCheckedValue();
     String signaturePath = await Utils.uploadToFirebaseStorage(
         await _signature.getSignaturePath());
-    String orderNumber = await _paymentProvider.generateOrderNumber();
+    List<String> orderAndInvoiceNumber = await _paymentProvider.generateOrderNumber();
     try {
       User? user = FirebaseAuth.instance.currentUser;
       DocumentReference<Map<String, dynamic>> firestoreResponse =
@@ -139,20 +138,16 @@ class FinanceCourtProvider extends ChangeNotifier {
         "selected_appeal_date": selectedDate,
         "signature_path": signaturePath,
         "checked_commission": checkedValue!.title.tr(),
-        "order_number": orderNumber,
-        "terms_and_condition_accepted": true,
-        "created_at": DateTime.now(),
-        "status": ProcessConstants.pending,
-        "approved_by": null,
       });
       SendMailModel? sendMailResponse = await EmailRepository().sendMail(
          _profile.userData!.email!,
           EmailInvoiceConstants.orderSubject,
-          EmailInvoiceConstants.declarationTax,
-          templatePdf: EmailInvoiceConstants.declarationPdf,
+          EmailInvoiceConstants.objection,
+          templatePdf: EmailInvoiceConstants.objection,
           salutation:_profile.userData?.gender,
           lastName:_profile.userData?.lastName,
-          orderNumber: orderNumber,
+          orderNumber: orderAndInvoiceNumber[0],
+          invoiceNumber: orderAndInvoiceNumber[1],
           orderDate: DateTime.now().toString(),
           firstName: _profile.userData?.firstName,
           street:_profile.userData?.street,

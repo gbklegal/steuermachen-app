@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/constants/strings/email_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
+import 'package:steuermachen/constants/strings/tax_name_constants.dart';
 import 'package:steuermachen/data/repositories/remote/email_repository.dart';
+import 'package:steuermachen/data/repositories/remote/user_order_repository.dart';
 import 'package:steuermachen/data/view_models/payment_gateway/payment_gateway_provider.dart';
 import 'package:steuermachen/data/view_models/profile/profile_provider.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
@@ -13,17 +15,14 @@ import 'package:steuermachen/main.dart';
 import 'package:steuermachen/data/view_models/signature/signature_provider.dart';
 import 'package:steuermachen/utils/utils.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
-import 'package:steuermachen/wrappers/declaration_tax/declaration_tax_data_collector_wrapper.dart';
+import 'package:steuermachen/wrappers/declaration_tax/user_orders_data_model.dart';
 import 'package:steuermachen/wrappers/safe_tax/safe_tax_wrapper.dart';
 import 'package:steuermachen/wrappers/send_mail_model.dart';
 import 'package:steuermachen/wrappers/tax_steps_wrapper.dart';
 
 class SafeTaxProvider extends ChangeNotifier {
-  final SafeAndDeclarationTaxDataCollectorWrapper?
-      _safeTaxDataCollectorWrapper =
-      SafeAndDeclarationTaxDataCollectorWrapper();
-  SafeAndDeclarationTaxDataCollectorWrapper? get dataCollectorWrapper =>
-      _safeTaxDataCollectorWrapper;
+  final UserOrdersDataModel? _userOrder = UserOrdersDataModel();
+  UserOrdersDataModel? get dataCollectorWrapper => _userOrder;
   bool _busyStateSafeTax = true;
   bool get getBusyStateSafeTax => _busyStateSafeTax;
   set setBusyStateSafeTax(bool _isBusy) {
@@ -60,11 +59,11 @@ class SafeTaxProvider extends ChangeNotifier {
   }
 
   setTaxYear(String year) {
-    _safeTaxDataCollectorWrapper?.taxYear = year;
+    _userOrder?.taxYear = year;
   }
 
   setMartialStatus(String status) {
-    _safeTaxDataCollectorWrapper?.martialStatus = status;
+    _userOrder?.martialStatus = status;
   }
 
   Future<CommonResponseWrapper> submitSafeTaxData(BuildContext context) async {
@@ -76,60 +75,56 @@ class SafeTaxProvider extends ChangeNotifier {
         Provider.of<PaymentGateWayProvider>(context, listen: false);
     String signaturePath = await Utils.uploadToFirebaseStorage(
         await _signature.getSignaturePath());
-    _safeTaxDataCollectorWrapper?.signaturePath = signaturePath;
-    _safeTaxDataCollectorWrapper?.userInfo = _user.getUserFromControllers();
-    _safeTaxDataCollectorWrapper?.userAddress = _user.getSelectedAddress;
-    _safeTaxDataCollectorWrapper?.termsAndConditionChecked = true;
-    _safeTaxDataCollectorWrapper?.checkOutReference =
-        _paymentProvider.getCheckoutReference(10);
-    _safeTaxDataCollectorWrapper?.orderNumber =
+    List<String> orderAndInvoiceNumber =
         await _paymentProvider.generateOrderNumber();
+    _userOrder?.signaturePath = signaturePath;
+    _userOrder?.userInfo = _user.getUserFromControllers();
+    _userOrder?.userAddress = _user.getSelectedAddress;
+    _userOrder?.termsAndConditionChecked = true;
+    _userOrder?.invoiceNumber = orderAndInvoiceNumber[1];
+    _userOrder?.orderNumber = orderAndInvoiceNumber[0];
     try {
-      User? user = FirebaseAuth.instance.currentUser;
       DocumentReference<Map<String, dynamic>> firestoreResponse =
-          await firestore
-              .collection("user_orders")
-              .doc("${user?.uid}")
-              .collection("safe_and_declaration_tax")
-              .add(_safeTaxDataCollectorWrapper!.toJson("safeTax", taxSteps));
+          await serviceLocatorInstance<UserOrderRepository>().submitUserOrder(
+              _userOrder!.toJson(TaxNameConstants.safeTax, steps: taxSteps));
 
       SendMailModel? sendMailResponse = await EmailRepository().sendMail(
-          _safeTaxDataCollectorWrapper!.userInfo!.email!,
+          _userOrder!.userInfo!.email!,
           EmailInvoiceConstants.orderSubject,
           EmailInvoiceConstants.safeTax,
           templatePdf: EmailInvoiceConstants.safeTax,
-          salutation: _safeTaxDataCollectorWrapper!.userInfo!.gender,
-          lastName: _safeTaxDataCollectorWrapper!.userInfo!.lastName,
-          orderNumber: _safeTaxDataCollectorWrapper?.orderNumber,
-          orderDate: _safeTaxDataCollectorWrapper!.createdAt.toString(),
-          firstName: _safeTaxDataCollectorWrapper!.userInfo!.firstName,
-          street: _safeTaxDataCollectorWrapper!.userInfo!.street,
-          houseNumber: _safeTaxDataCollectorWrapper!.userInfo!.houseNumber,
-          postcode: _safeTaxDataCollectorWrapper!.userInfo!.plz,
-          city: _safeTaxDataCollectorWrapper!.userInfo!.location,
-          email: _safeTaxDataCollectorWrapper!.userInfo!.email!,
-          phone: _safeTaxDataCollectorWrapper!.userInfo!.phone!,
-          maritalStatus: _safeTaxDataCollectorWrapper!.martialStatus,
-          taxYear: _safeTaxDataCollectorWrapper!.taxYear,
-          totalPrice: _safeTaxDataCollectorWrapper!.taxPrice,
+          salutation: _userOrder!.userInfo!.gender,
+          lastName: _userOrder!.userInfo!.lastName,
+          orderNumber: _userOrder?.orderNumber,
+          orderDate: _userOrder!.createdAt.toString(),
+          firstName: _userOrder!.userInfo!.firstName,
+          street: _userOrder!.userInfo!.street,
+          houseNumber: _userOrder!.userInfo!.houseNumber,
+          postcode: _userOrder!.userInfo!.plz,
+          city: _userOrder!.userInfo!.location,
+          email: _userOrder!.userInfo!.email!,
+          phone: _userOrder!.userInfo!.phone!,
+          maritalStatus: _userOrder!.martialStatus,
+          taxYear: _userOrder!.taxYear,
+          totalPrice: _userOrder!.taxPrice,
           invoiceTemplate: EmailInvoiceConstants.safeTax);
       await EmailRepository().sendMail("dialog@steuermachen.de",
           EmailInvoiceConstants.orderSubject, EmailInvoiceConstants.safeTax,
           templatePdf: EmailInvoiceConstants.safeTax,
-          salutation: _safeTaxDataCollectorWrapper!.userInfo!.gender,
-          lastName: _safeTaxDataCollectorWrapper!.userInfo!.lastName,
-          orderNumber: _safeTaxDataCollectorWrapper?.orderNumber,
-          orderDate: _safeTaxDataCollectorWrapper!.createdAt.toString(),
-          firstName: _safeTaxDataCollectorWrapper!.userInfo!.firstName,
-          street: _safeTaxDataCollectorWrapper!.userInfo!.street,
-          houseNumber: _safeTaxDataCollectorWrapper!.userInfo!.houseNumber,
-          postcode: _safeTaxDataCollectorWrapper!.userInfo!.plz,
-          city: _safeTaxDataCollectorWrapper!.userInfo!.location,
-          email: _safeTaxDataCollectorWrapper!.userInfo!.email!,
-          phone: _safeTaxDataCollectorWrapper!.userInfo!.phone!,
-          maritalStatus: _safeTaxDataCollectorWrapper!.martialStatus,
-          taxYear: _safeTaxDataCollectorWrapper!.taxYear,
-          totalPrice: _safeTaxDataCollectorWrapper!.taxPrice,
+          salutation: _userOrder!.userInfo!.gender,
+          lastName: _userOrder!.userInfo!.lastName,
+          orderNumber: _userOrder?.orderNumber,
+          orderDate: _userOrder!.createdAt.toString(),
+          firstName: _userOrder!.userInfo!.firstName,
+          street: _userOrder!.userInfo!.street,
+          houseNumber: _userOrder!.userInfo!.houseNumber,
+          postcode: _userOrder!.userInfo!.plz,
+          city: _userOrder!.userInfo!.location,
+          email: _userOrder!.userInfo!.email!,
+          phone: _userOrder!.userInfo!.phone!,
+          maritalStatus: _userOrder!.martialStatus,
+          taxYear: _userOrder!.taxYear,
+          totalPrice: _userOrder!.taxPrice,
           invoiceTemplate: EmailInvoiceConstants.safeTax);
       if (sendMailResponse != null) {
         firestoreResponse.update({

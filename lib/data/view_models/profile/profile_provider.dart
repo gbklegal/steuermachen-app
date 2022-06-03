@@ -110,7 +110,7 @@ class ProfileProvider extends ChangeNotifier {
   }
 
   Future<CommonResponseWrapper?> getUserProfile() async {
-    if (userData == null || userData?.email ==null) {
+    // if (userData == null || userData?.email ==null) {
       try {
         setBusyStateProfile = true;
         User? user = FirebaseAuth.instance.currentUser;
@@ -139,8 +139,8 @@ class ProfileProvider extends ChangeNotifier {
         return CommonResponseWrapper(
             status: false, message: LocaleKeys.somethingWentWrong.tr());
       }
-    }
-    return null;
+    // }
+    // return null;
   }
 
   UserWrapper getUserFromControllers() {

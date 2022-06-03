@@ -1,6 +1,7 @@
 class SumpupCheckoutWrapper {
   SumpupCheckoutWrapper({
-    required this.checkoutReference,
+    required this.invoiceNumber,
+    this.orderNumber,
     required this.amount,
     required this.currency,
     required this.payToEmail,
@@ -12,7 +13,8 @@ class SumpupCheckoutWrapper {
     required this.transactionId,
     required this.transactions,
   });
-  late final String checkoutReference;
+  late final String invoiceNumber;
+  String? orderNumber;
   late final dynamic amount;
   late final String currency;
   late final String payToEmail;
@@ -25,7 +27,7 @@ class SumpupCheckoutWrapper {
   late final List<Transactions>? transactions;
 
   SumpupCheckoutWrapper.fromJson(Map<String, dynamic> json) {
-    checkoutReference = json['checkout_reference'];
+    invoiceNumber = json['checkout_reference'];
     amount = json['amount'];
     currency = json['currency'];
     payToEmail = json['pay_to_email'];
@@ -42,7 +44,7 @@ class SumpupCheckoutWrapper {
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
-    _data['checkout_reference'] = checkoutReference;
+    _data['checkout_reference'] = invoiceNumber;
     _data['amount'] = amount;
     _data['currency'] = currency;
     _data['pay_to_email'] = payToEmail;

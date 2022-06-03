@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+
 class UserWrapper {
   String? firstName,
       lastName,
@@ -8,7 +10,8 @@ class UserWrapper {
       phone,
       email,
       gender,
-      land;
+      land,
+      userId;
 
   UserWrapper(
       {this.firstName,
@@ -20,7 +23,8 @@ class UserWrapper {
       this.houseNumber,
       this.plz,
       this.location,
-      this.gender});
+      this.gender,
+      this.userId});
   factory UserWrapper.fromJson(Map<String, dynamic> json) => UserWrapper(
         firstName: json["firstName"],
         lastName: json["lastName"],
@@ -32,6 +36,7 @@ class UserWrapper {
         email: json["email"],
         land: json["country"],
         gender: json["gender"],
+        userId: json["user_id"],
       );
   Map<String, dynamic> toJson() => {
         "firstName": firstName,
@@ -44,6 +49,7 @@ class UserWrapper {
         "email": email,
         "country": land,
         "gender": gender,
+        "user_id": FirebaseAuth.instance.currentUser?.uid,
         "createdAt": DateTime.now(),
       };
 }

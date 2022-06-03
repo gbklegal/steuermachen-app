@@ -61,14 +61,16 @@ class PaymentGateWayProvider extends ChangeNotifier {
           .headers["Authorization"] = "Bearer " + accessToken;
       serviceLocatorInstance<DioClientNetwork>().dio.options.baseUrl =
           HTTPConstants.sumpBaseUrl;
+      List<String> checkOutReferenceNo = await generateOrderNumber();
       var response = await serviceLocatorInstance<DioApiServices>()
           .postRequest(HTTPConstants.sumupCheckOuts, data: {
-        'checkout_reference': getCheckoutReference(10),
+        'checkout_reference': checkOutReferenceNo[1],
         'amount': amount,
         'currency': "EUR",
         "pay_to_email": "dialog@steuermachen.de",
         "description": "Sample one-time payment"
       });
+      checkoutWrapper?.orderNumber = checkOutReferenceNo[0];
       checkoutWrapper = SumpupCheckoutWrapper.fromJson(response);
       return ApiResponse.completed(checkoutWrapper);
     } catch (e) {
@@ -91,11 +93,11 @@ class PaymentGateWayProvider extends ChangeNotifier {
     }
   }
 
-  Future<String> generateOrderNumber() async {
+  Future<List<String>> generateOrderNumber() async {
     try {
       String orderNumber = "0";
       DocumentSnapshot event =
-          await firestore.collection("user_orders").doc("order_number").get();
+          await firestore.collection("order_number").doc("order_number").get();
       Map<String, dynamic>? data = event.data() as Map<String, dynamic>;
       orderNumber = data["number"];
       while (orderNumber.length < 4) {
@@ -104,10 +106,13 @@ class PaymentGateWayProvider extends ChangeNotifier {
       String currentYear = DateTime.now().year.toString();
       int incrementOrderNumber = int.parse(data["number"]);
       await firestore
-          .collection("user_orders")
+          .collection("order_number")
           .doc("order_number")
-          .update({"number": (incrementOrderNumber+1).toString()});
-      return "AS" + currentYear + orderNumber;
+          .update({"number": (incrementOrderNumber + 1).toString()});
+      String formattedOrderNumber = currentYear + orderNumber;
+      String formattedInvoiceNumber =
+          "AS" + currentYear.replaceAll("20", "-") + "-" + orderNumber;
+      return [formattedOrderNumber, formattedInvoiceNumber];
     } catch (e) {
       rethrow;
     }

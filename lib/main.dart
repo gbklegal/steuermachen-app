@@ -7,7 +7,7 @@ import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/constants/theme/app_theme.dart';
 import 'package:steuermachen/data/repositories/remote/documents_repository.dart';
-import 'package:steuermachen/data/repositories/remote/safe_and_declaration_tax_repository.dart';
+import 'package:steuermachen/data/repositories/remote/user_order_repository.dart';
 import 'package:steuermachen/languages/codegen_loader.g.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/data/view_models/initialize_provider.dart';
@@ -58,7 +58,7 @@ void setupDepedencies() {
   serviceLocatorInstance.registerLazySingleton(() => DioApiServices());
   serviceLocatorInstance.registerLazySingleton(() => DocumentsRepository());
   serviceLocatorInstance
-      .registerLazySingleton(() => SafeAndDeclarationTaxRepository());
+      .registerLazySingleton(() => UserOrderRepository());
   // serviceLocatorInstance.registerLazySingleton(() => ProfileRepository());
   serviceLocatorInstance.registerLazySingleton(() => NavigationService());
   serviceLocatorInstance

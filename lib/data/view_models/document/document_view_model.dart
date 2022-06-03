@@ -15,12 +15,12 @@ import 'package:steuermachen/main.dart';
 import 'package:steuermachen/services/networks/api_response_states.dart';
 import 'package:steuermachen/utils/utils.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
-import 'package:steuermachen/wrappers/declaration_tax/declaration_tax_data_collector_wrapper.dart';
+import 'package:steuermachen/wrappers/declaration_tax/user_orders_data_model.dart';
 import 'package:steuermachen/wrappers/document/document_option_wrapper.dart';
 import 'package:steuermachen/wrappers/document/documents_wrapper.dart';
 
 class DocumentsViewModel extends ChangeNotifier {
-  late SafeAndDeclarationTaxDataCollectorWrapper selectedTax;
+  late UserOrdersDataModel selectedTax;
   late ApiResponse _documentOptions = ApiResponse.loading();
   ApiResponse get documentOptions => _documentOptions;
   set setDocumentOptions(ApiResponse documentsOptions) {
@@ -33,7 +33,7 @@ class DocumentsViewModel extends ChangeNotifier {
   }
 
   Future<CommonResponseWrapper> uploadFiles(String documentTitle,
-      SafeAndDeclarationTaxDataCollectorWrapper _selectedTax) async {
+      UserOrdersDataModel _selectedTax) async {
     try {
       List<DocumentsWrapper> _url = [];
       if (_selectedFiles.isNotEmpty) {
@@ -69,7 +69,7 @@ class DocumentsViewModel extends ChangeNotifier {
 
 
 
-  deleteDocuments(SafeAndDeclarationTaxDataCollectorWrapper _selectedTax,
+  deleteDocuments(UserOrdersDataModel _selectedTax,
       String url) async {
     try {
       _selectedTax.documentsPath?.removeWhere((element) => element.url == url);

@@ -13,4 +13,6 @@ class OptionConstants {
   static const String optionsList = "option_list";
   static const String next = "next";
   static const String complete = "complete";
+  static const String card = "card";
+  static const String billing = "billing";
 }

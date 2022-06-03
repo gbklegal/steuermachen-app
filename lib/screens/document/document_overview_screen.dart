@@ -14,7 +14,7 @@ import 'package:steuermachen/data/view_models/tax/declaration_tax/declaration_ta
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/data/view_models/document/document_view_model.dart';
 import 'package:steuermachen/services/networks/api_response_states.dart';
-import 'package:steuermachen/wrappers/declaration_tax/declaration_tax_data_collector_wrapper.dart';
+import 'package:steuermachen/wrappers/declaration_tax/user_orders_data_model.dart';
 
 class DocumentOverviewScreen extends StatefulWidget {
   const DocumentOverviewScreen({
@@ -82,11 +82,11 @@ class _DocumentOverviewScreenState extends State<DocumentOverviewScreen> {
   }
 
   SizedBox _mainBody(var submittedTaxYears) {
-    List<SafeAndDeclarationTaxDataCollectorWrapper> data =
-        List<SafeAndDeclarationTaxDataCollectorWrapper>.from(
+    List<UserOrdersDataModel> data =
+        List<UserOrdersDataModel>.from(
       submittedTaxYears.map(
         (e) =>
-            SafeAndDeclarationTaxDataCollectorWrapper.fromJson(e.data(), e.id),
+            UserOrdersDataModel.fromJson(e.data(), e.id),
       ),
     );
     return SizedBox(

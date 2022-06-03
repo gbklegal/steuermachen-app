@@ -12,7 +12,7 @@ import 'package:steuermachen/data/view_models/tax/declaration_tax/declaration_ta
 import 'package:steuermachen/screens/profile/what_in_works/what_in_work_steps_component.dart';
 import 'package:steuermachen/services/networks/api_response_states.dart';
 import 'package:steuermachen/utils/utils.dart';
-import 'package:steuermachen/wrappers/declaration_tax/declaration_tax_data_collector_wrapper.dart';
+import 'package:steuermachen/wrappers/declaration_tax/user_orders_data_model.dart';
 
 class WhatInWorkYearSelectionScreen extends StatefulWidget {
   const WhatInWorkYearSelectionScreen({Key? key}) : super(key: key);
@@ -92,11 +92,11 @@ class _WhatInWorkYearSelectionScreenState
   }
 
   _getMainBody(var submittedTaxYears) {
-    List<SafeAndDeclarationTaxDataCollectorWrapper> data =
-        List<SafeAndDeclarationTaxDataCollectorWrapper>.from(
+    List<UserOrdersDataModel> data =
+        List<UserOrdersDataModel>.from(
       submittedTaxYears.map(
         (e) =>
-            SafeAndDeclarationTaxDataCollectorWrapper.fromJson(e.data(), e.id),
+            UserOrdersDataModel.fromJson(e.data(), e.id),
       ),
     );
     return Padding(

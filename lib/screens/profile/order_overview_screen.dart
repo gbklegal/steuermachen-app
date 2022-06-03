@@ -23,7 +23,7 @@ import 'package:steuermachen/main.dart';
 import 'package:steuermachen/services/networks/api_response_states.dart';
 import 'package:steuermachen/services/networks/dio_client_network.dart';
 import 'package:steuermachen/utils/utils.dart';
-import 'package:steuermachen/wrappers/declaration_tax/declaration_tax_data_collector_wrapper.dart';
+import 'package:steuermachen/wrappers/declaration_tax/user_orders_data_model.dart';
 import 'package:steuermachen/wrappers/tax_steps_wrapper.dart';
 
 class OrderOverviewScreen extends StatefulWidget {
@@ -107,11 +107,11 @@ class _OrderOverviewScreenState extends State<OrderOverviewScreen> {
   }
 
   _getMainBody(var submittedTaxYears) {
-    List<SafeAndDeclarationTaxDataCollectorWrapper> data =
-        List<SafeAndDeclarationTaxDataCollectorWrapper>.from(
+    List<UserOrdersDataModel> data =
+        List<UserOrdersDataModel>.from(
       submittedTaxYears.map(
         (e) =>
-            SafeAndDeclarationTaxDataCollectorWrapper.fromJson(e.data(), e.id),
+            UserOrdersDataModel.fromJson(e.data(), e.id),
       ),
     );
     return RefreshIndicator(
@@ -132,7 +132,7 @@ class _OrderOverviewScreenState extends State<OrderOverviewScreen> {
 
 class _OrderCards extends StatelessWidget {
   const _OrderCards({Key? key, required this.data}) : super(key: key);
-  final SafeAndDeclarationTaxDataCollectorWrapper data;
+  final UserOrdersDataModel data;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -208,7 +208,7 @@ class _OrderCards extends StatelessWidget {
                         title: Padding(
                           padding: const EdgeInsets.only(bottom: 10),
                           child: TextComponent(
-                            "${LocaleKeys.invoice.tr()} #${data.checkOutReference!}",
+                            "${LocaleKeys.invoice.tr()} #${data.invoiceNumber!}",
                             style: FontStyles.fontMedium(
                                 fontSize: 15, fontWeight: FontWeight.w600),
                           ),

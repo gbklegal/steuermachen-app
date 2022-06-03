@@ -1,27 +1,32 @@
 import 'package:steuermachen/constants/strings/process_constants.dart';
 import 'package:steuermachen/wrappers/document/documents_wrapper.dart';
+import 'package:steuermachen/wrappers/finance/finance_law_view_wrapper.dart';
+import 'package:steuermachen/wrappers/payment_gateway/sumup_checkout_wrapper.dart';
 import 'package:steuermachen/wrappers/tax_steps_wrapper.dart';
 import 'package:steuermachen/wrappers/user_wrapper.dart';
 
-class SafeAndDeclarationTaxDataCollectorWrapper {
-  SafeAndDeclarationTaxDataCollectorWrapper(
-      {this.taxYear,
-      this.martialStatus,
-      this.grossIncome,
-      this.isPromoApplied = false,
-      this.userInfo,
-      this.userAddress,
-      this.signaturePath,
-      this.termsAndConditionChecked,
-      this.steps,
-      this.approveAt,
-      this.approvedBy,
-      this.createdAt,
-      this.status,
-      this.taxName,
-      this.checkOutReference,
-      this.orderNumber
-      });
+class UserOrdersDataModel {
+  UserOrdersDataModel({
+    this.taxYear,
+    this.martialStatus,
+    this.grossIncome,
+    this.isPromoApplied = false,
+    this.userInfo,
+    this.userAddress,
+    this.signaturePath,
+    this.termsAndConditionChecked,
+    this.steps,
+    this.approveAt,
+    this.approvedBy,
+    this.createdAt,
+    this.status,
+    this.taxName,
+    this.invoiceNumber,
+    this.orderNumber,
+    this.paymentType,
+    this.paymentInfo,
+    this.subscriptionPrice,
+  });
   String? taxYear;
   String? martialStatus;
   String? grossIncome;
@@ -40,17 +45,23 @@ class SafeAndDeclarationTaxDataCollectorWrapper {
   String? status;
   String? approvedBy;
   String? keyId;
-  String? checkOutReference;
+  String? invoiceNumber;
   String? orderNumber;
+  String? paymentType;
+  SumpupCheckoutWrapper? paymentInfo;
+  double? subscriptionPrice;
+  FinanceLawViewWrapper? subjectLawChecks;
+  String? checkedCommission;
+  DateTime? selectedAppealDate;
 
-  SafeAndDeclarationTaxDataCollectorWrapper.fromJson(
-      Map<String, dynamic> json, String documentId) {
+  UserOrdersDataModel.fromJson(Map<String, dynamic> json, String documentId) {
     taxYear = json['tax_year'];
     martialStatus = json['martial_status'];
     grossIncome = json['grossIncome'];
     isPromoApplied = json['is_promo_applied'];
     signaturePath = json['signature_path'];
     termsAndConditionChecked = json['terms_and_condition_checked'];
+
     createdAt = json['created_at'].toDate();
     approveAt = json['approve_at']?.toDate();
     approvedBy = json['approved_by'];
@@ -60,8 +71,10 @@ class SafeAndDeclarationTaxDataCollectorWrapper {
     userAddress = json['user_address'] != null
         ? UserWrapper.fromJson(json['user_address'])
         : null;
-    steps = List<TaxStepsWrapper>.from(
-        json['steps'].map((x) => TaxStepsWrapper.fromJson(x)));
+    steps = json['steps'] != null
+        ? List<TaxStepsWrapper>.from(
+            json['steps'].map((x) => TaxStepsWrapper.fromJson(x)))
+        : null;
     status = json['status'];
     invoices = json['invoices_path'] != null
         ? List<String>.from(json['invoices_path'])
@@ -71,11 +84,17 @@ class SafeAndDeclarationTaxDataCollectorWrapper {
             json['documents_path']?.map((x) => DocumentsWrapper.fromJson(x)))
         : [];
     keyId = documentId;
-    checkOutReference = json["checkout_reference"];
+    invoiceNumber = json["invoice_number"];
     orderNumber = json["order_number"];
+    paymentType = json["payment_type"];
+    paymentInfo = json["payment_info"];
+    subscriptionPrice = json["subscription_price"];
+    subjectLawChecks = json["subject_law_checks"];
+    selectedAppealDate = json["selected_appeal_date"];
+    checkedCommission = json['checked_commission'];
   }
 
-  Map<String, dynamic> toJson(String taxName, List<TaxStepsWrapper> _steps) {
+  Map<String, dynamic> toJson(String taxName, {List<TaxStepsWrapper>? steps}) {
     final _data = <String, dynamic>{};
     _data['tax_year'] = taxYear;
     _data['martial_status'] = martialStatus;
@@ -91,11 +110,17 @@ class SafeAndDeclarationTaxDataCollectorWrapper {
     _data['created_at'] = DateTime.now();
     _data['approve_at'] = null;
     _data['tax_name'] = taxName;
-    _data['steps'] = _steps.map((e) => e.toJson()).toList();
-    _data['status'] = ProcessConstants.pending;
+    _data['steps'] = steps?.map((e) => e.toJson()).toList();
+    _data['status'] = status ?? ProcessConstants.pending;
     _data['approved_by'] = null;
-    _data['checkout_reference'] = checkOutReference;
+    _data['invoice_number'] = invoiceNumber;
     _data['order_number'] = orderNumber;
+    _data['payment_type'] = paymentType;
+    _data['payment_info'] = paymentInfo?.toJson();
+    _data['subscription_price'] = subscriptionPrice;
+    _data['subject_law_checks'] = subjectLawChecks?.toJson();
+    _data['selected_appeal_date'] = selectedAppealDate;
+    _data['checked_commission'] = checkedCommission;
 
     return _data;
   }

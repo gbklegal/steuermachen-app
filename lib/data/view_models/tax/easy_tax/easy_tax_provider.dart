@@ -4,25 +4,26 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/constants/strings/email_constants.dart';
+import 'package:steuermachen/constants/strings/options_constants.dart';
 import 'package:steuermachen/constants/strings/process_constants.dart';
+import 'package:steuermachen/constants/strings/tax_name_constants.dart';
 import 'package:steuermachen/data/repositories/remote/email_repository.dart';
+import 'package:steuermachen/data/repositories/remote/user_order_repository.dart';
 import 'package:steuermachen/data/view_models/payment_gateway/payment_gateway_provider.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/main.dart';
 import 'package:steuermachen/data/view_models/profile/profile_provider.dart';
 import 'package:steuermachen/services/networks/api_response_states.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
-import 'package:steuermachen/wrappers/easy_tax/easy_tax_data_collector_wrapper.dart';
+import 'package:steuermachen/wrappers/declaration_tax/user_orders_data_model.dart';
 import 'package:steuermachen/wrappers/easy_tax/easy_tax_wrapper.dart';
 import 'package:steuermachen/wrappers/payment_gateway/sumup_checkout_wrapper.dart';
 import 'package:steuermachen/wrappers/send_mail_model.dart';
 
 class EasyTaxProvider extends ChangeNotifier {
-  final EasyTaxDataCollectorWrapper? _easyTaxDataCollectorWrapper =
-      EasyTaxDataCollectorWrapper();
+  final UserOrdersDataModel? _userOrder = UserOrdersDataModel();
 
-  EasyTaxDataCollectorWrapper? get easyTaxDataCollectorWrapper =>
-      _easyTaxDataCollectorWrapper;
+  UserOrdersDataModel? get easyTaxDataCollectorWrapper => _userOrder;
 
   bool _busyStateEasyTax = true;
   bool get getBusyStateEasyTax => _busyStateEasyTax;
@@ -32,7 +33,7 @@ class EasyTaxProvider extends ChangeNotifier {
   }
 
   setSubscriptionPrice(double amount) {
-    _easyTaxDataCollectorWrapper?.subscriptionPrice = amount;
+    _userOrder?.subscriptionPrice = amount;
   }
 
   Future<CommonResponseWrapper> getEasyTaxViewData() async {
@@ -84,73 +85,61 @@ class EasyTaxProvider extends ChangeNotifier {
         Provider.of<ProfileProvider>(context, listen: false);
     PaymentGateWayProvider _paymentProvider =
         Provider.of<PaymentGateWayProvider>(context, listen: false);
-    _easyTaxDataCollectorWrapper?.userInfo = _user.getUserFromControllers();
-    _easyTaxDataCollectorWrapper?.userAddress = _user.getSelectedAddress;
-    _easyTaxDataCollectorWrapper?.termsAndConditionChecked = true;
-    _easyTaxDataCollectorWrapper?.taxYear = DateTime.now().year.toString();
-    _easyTaxDataCollectorWrapper?.orderNumber =
-        await _paymentProvider.generateOrderNumber();
+    _userOrder?.userInfo = _user.getUserFromControllers();
+    _userOrder?.userAddress = _user.getSelectedAddress;
+    _userOrder?.termsAndConditionChecked = true;
+    _userOrder?.taxYear = DateTime.now().year.toString();
     try {
       User? user = FirebaseAuth.instance.currentUser;
-      Map<String, dynamic> data = {
-        ..._easyTaxDataCollectorWrapper!.toJson(),
-        "created_at": DateTime.now(),
-        "status": ProcessConstants.pending,
-        "payment_type": "billing",
-        "payment_info": null,
-        "approved_by": null,
-      };
+
       DocumentReference<Map<String, dynamic>> firestoreResponse;
       if (_paymentProvider.isCardPayment) {
         ApiResponse apiResponse = await _paymentProvider.completeCheckout();
         if (apiResponse.status == Status.completed) {
           SumpupCheckoutWrapper checkoutWrapper = apiResponse.data;
-          data["payment_info"] = checkoutWrapper.toJson();
-          data["payment_type"] = "card";
-          data['checkout_reference'] = checkoutWrapper.checkoutReference;
-          _easyTaxDataCollectorWrapper?.checkOutReference =
-              checkoutWrapper.checkoutReference;
-          firestoreResponse = await firestore
-              .collection("user_orders")
-              .doc("${user?.uid}")
-              .collection("easy_tax")
-              .add(data);
+          _userOrder?.paymentInfo = checkoutWrapper;
+          _userOrder?.paymentType = OptionConstants.card;
+          _userOrder?.invoiceNumber = checkoutWrapper.invoiceNumber;
+          _userOrder?.orderNumber = checkoutWrapper.orderNumber;
+          firestoreResponse =
+              await serviceLocatorInstance<UserOrderRepository>()
+                  .submitUserOrder(
+                      _userOrder!.toJson(TaxNameConstants.easyTax));
           _paymentProvider.isCardPayment = false;
         } else {
           return CommonResponseWrapper(
               status: false, message: apiResponse.message);
         }
       } else {
-        data['checkout_reference'] = _paymentProvider.getCheckoutReference(10);
-        _easyTaxDataCollectorWrapper?.checkOutReference =
-            _paymentProvider.getCheckoutReference(10);
-        firestoreResponse = await firestore
-            .collection("user_orders")
-            .doc("${user?.uid}")
-            .collection("easy_tax")
-            .add(data);
+        List<String> orderAndInvoiceNo =
+            await _paymentProvider.generateOrderNumber();
+        _userOrder?.invoiceNumber = orderAndInvoiceNo[1];
+        _userOrder?.orderNumber = orderAndInvoiceNo[0];
+        _userOrder?.paymentType = OptionConstants.billing;
+        firestoreResponse = await serviceLocatorInstance<UserOrderRepository>()
+            .submitUserOrder(_userOrder!.toJson(TaxNameConstants.easyTax));
       }
 
       SendMailModel? sendMailResponse = await EmailRepository().sendMail(
-          _easyTaxDataCollectorWrapper!.userInfo!.email!,
+          _userOrder!.userInfo!.email!,
           EmailInvoiceConstants.orderSubject,
           EmailInvoiceConstants.steuerEASY,
-          salutation: _easyTaxDataCollectorWrapper!.userInfo!.gender,
-          lastName: _easyTaxDataCollectorWrapper!.userInfo!.lastName,
-          orderNumber: _easyTaxDataCollectorWrapper!.orderNumber,
-          taxYear: _easyTaxDataCollectorWrapper!.taxYear,
-          totalPrice: _easyTaxDataCollectorWrapper!.subscriptionPrice,
+          salutation: _userOrder!.userInfo!.gender,
+          lastName: _userOrder!.userInfo!.lastName,
+          orderNumber: _userOrder!.orderNumber,
+          taxYear: _userOrder!.taxYear,
+          totalPrice: _userOrder!.subscriptionPrice,
           sendInvoice: true,
           invoiceTemplate: EmailInvoiceConstants.steuerEASY,
           templatePdf: EmailInvoiceConstants.steuerEasyPdf);
 
       await EmailRepository().sendMail("dialog@steuermachen.de",
           EmailInvoiceConstants.orderSubject, EmailInvoiceConstants.steuerEASY,
-          salutation: _easyTaxDataCollectorWrapper!.userInfo!.gender,
-          lastName: _easyTaxDataCollectorWrapper!.userInfo!.lastName,
-          orderNumber: _easyTaxDataCollectorWrapper!.orderNumber,
-          taxYear: _easyTaxDataCollectorWrapper!.taxYear,
-          totalPrice: _easyTaxDataCollectorWrapper!.subscriptionPrice,
+          salutation: _userOrder!.userInfo!.gender,
+          lastName: _userOrder!.userInfo!.lastName,
+          orderNumber: _userOrder!.orderNumber,
+          taxYear: _userOrder!.taxYear,
+          totalPrice: _userOrder!.subscriptionPrice,
           sendInvoice: true,
           invoiceTemplate: EmailInvoiceConstants.steuerEASY,
           templatePdf: EmailInvoiceConstants.steuerEasyPdf);

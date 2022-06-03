@@ -273,6 +273,7 @@ class CodegenLoader extends AssetLoader{
   "taxYear": "Steuerjahr",
   "viewFile": "Datei ansehen",
   "downloadCompleted": "Download abgeschlossen",
+  "comingSoon": "Demnächst",
   "logout": "Ausloggen"
 };
 static const Map<String,dynamic> en = {
@@ -532,6 +533,7 @@ static const Map<String,dynamic> en = {
   "taxYear": "tax year",
   "viewFile": "view file",
   "downloadCompleted": "view file",
+  "comingSoon": "Coming soon",
   "logout": "Logout"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"de": de, "en": en};

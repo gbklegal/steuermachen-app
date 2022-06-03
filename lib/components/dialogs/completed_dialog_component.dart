@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:steuermachen/components/button_component.dart';
 import 'package:steuermachen/components/text_component.dart';
+import 'package:steuermachen/components/toast_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
@@ -67,12 +69,13 @@ class CompletedDialogComponent extends StatelessWidget {
                           fontSize: 14, color: ColorConstants.black),
                       onPressed: () {
                         if (showChatBtn) {
-                          Navigator.pushNamedAndRemoveUntil(
-                              context,
-                              RouteConstants.bottomNavBarScreen,
-                              (val) => false);
-                          Navigator.pushNamed(
-                              context, RouteConstants.chatScreen);
+                          ToastComponent.showToast(LocaleKeys.comingSoon.tr());
+                          // Navigator.pushNamedAndRemoveUntil(
+                          //     context,
+                          //     RouteConstants.bottomNavBarScreen,
+                          //     (val) => false);
+                          // Navigator.pushNamed(
+                          //     context, RouteConstants.chatScreen);
                         } else {
                           Navigator.pushNamedAndRemoveUntil(
                               context,

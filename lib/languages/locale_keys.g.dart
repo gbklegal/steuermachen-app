@@ -259,6 +259,7 @@ abstract class  LocaleKeys {
   static const taxYear = 'taxYear';
   static const viewFile = 'viewFile';
   static const downloadCompleted = 'downloadCompleted';
+  static const comingSoon = 'comingSoon';
   static const logout = 'logout';
 
 }

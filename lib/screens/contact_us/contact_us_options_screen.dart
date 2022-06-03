@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:steuermachen/components/app_bar/appbar_with_side_corner_circle_and_body.dart';
 import 'package:steuermachen/components/text_component.dart';
+import 'package:steuermachen/components/toast_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
@@ -75,7 +76,8 @@ class _ContactUsOptionScreenState extends State<ContactUsOptionScreen> {
             ),
             InkWell(
               onTap: () {
-                Navigator.pushNamed(context, RouteConstants.chatScreen);
+                ToastComponent.showToast(LocaleKeys.comingSoon.tr());
+                // Navigator.pushNamed(context, RouteConstants.chatScreen);
               },
               child: _contactOptions(
                   context, AssetConstants.icChat, LocaleKeys.chatWithExpert),

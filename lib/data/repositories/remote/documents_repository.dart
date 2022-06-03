@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:steuermachen/json/document_upload_options.dart';
 import 'package:steuermachen/main.dart';
 import 'package:steuermachen/wrappers/declaration_tax/user_orders_data_model.dart';
@@ -28,14 +27,10 @@ class DocumentsRepository {
 
   Future<dynamic> addUserTaxDocuments(UserOrdersDataModel _selectedTax) async {
     try {
-      User? user = FirebaseAuth.instance.currentUser;
       await firestore
           .collection("user_orders")
-          .doc("${user?.uid}")
-          .collection("safe_and_declaration_tax")
           .doc(_selectedTax.keyId)
-          .update(_selectedTax.toJson(_selectedTax.taxName!,
-              steps: _selectedTax.steps!));
+          .update({"documents_path": _selectedTax.documentsPath?.map((e) => e.toJson()).toList()});
     } catch (e) {
       rethrow;
     }

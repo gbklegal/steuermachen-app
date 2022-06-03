@@ -80,8 +80,8 @@ class _DocumentUploadComponentState extends State<DocumentUploadComponent> {
     if (res.status!) {
       await declarationTaxViewModel.fetchTaxFiledYears();
     }
-    PopupLoader.hideLoadingDialog(context);
     ToastComponent.showToast(res.message!);
+    // PopupLoader.hideLoadingDialog(context);
   }
 
   @override

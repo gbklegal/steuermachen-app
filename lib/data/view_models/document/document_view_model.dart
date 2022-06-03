@@ -1,13 +1,9 @@
 import 'dart:io';
-import 'dart:math';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:path/path.dart';
 import 'package:flutter/material.dart';
 import 'package:steuermachen/components/toast_component.dart';
-import 'package:steuermachen/constants/strings/error_messages_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/data/repositories/remote/documents_repository.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
@@ -42,7 +38,6 @@ class DocumentsViewModel extends ChangeNotifier {
           _url.add(DocumentsWrapper(documentTitle: documentTitle, url: url));
         }
       }
-      User? user = FirebaseAuth.instance.currentUser;
       if (_url.isNotEmpty) {
         _selectedTax.documentsPath?.addAll(_url);
         await serviceLocatorInstance<DocumentsRepository>()
@@ -60,7 +55,7 @@ class DocumentsViewModel extends ChangeNotifier {
 
   Future<String> _uploadToFirebaseStorage(String _file) async {
     File file = File(_file);
-    String fileName = basename(file.path);
+    // String fileName = basename(file.path);
     var snapshot = FirebaseStorage.instance.ref().child("files/");
     var uploadedFile = await snapshot.child(Utils.generateRandomString(10)).putFile(file);
     String url = await uploadedFile.ref.getDownloadURL();

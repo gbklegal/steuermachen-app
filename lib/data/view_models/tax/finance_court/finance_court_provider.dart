@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/constants/strings/email_constants.dart';
 import 'package:steuermachen/constants/strings/process_constants.dart';
+import 'package:steuermachen/constants/strings/tax_name_constants.dart';
 import 'package:steuermachen/data/repositories/remote/email_repository.dart';
+import 'package:steuermachen/data/repositories/remote/user_order_repository.dart';
 import 'package:steuermachen/data/view_models/payment_gateway/payment_gateway_provider.dart';
 import 'package:steuermachen/data/view_models/profile/profile_provider.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
@@ -14,6 +16,7 @@ import 'package:steuermachen/data/view_models/signature/signature_provider.dart'
 import 'package:steuermachen/data/view_models/terms_and_condition_provider.dart';
 import 'package:steuermachen/utils/utils.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
+import 'package:steuermachen/wrappers/declaration_tax/user_orders_data_model.dart';
 import 'package:steuermachen/wrappers/finance/finance_court_view_wrapper.dart';
 import 'package:steuermachen/wrappers/finance/finance_law_view_wrapper.dart';
 import 'package:steuermachen/wrappers/send_mail_model.dart';
@@ -124,39 +127,39 @@ class FinanceCourtProvider extends ChangeNotifier {
     var checkedValue = _termsAndContition.getCommissionCheckedValue();
     String signaturePath = await Utils.uploadToFirebaseStorage(
         await _signature.getSignaturePath());
-    List<String> orderAndInvoiceNumber = await _paymentProvider.generateOrderNumber();
+    List<String> orderAndInvoiceNumber =
+        await _paymentProvider.generateOrderNumber();
     try {
-      User? user = FirebaseAuth.instance.currentUser;
+      UserOrdersDataModel _userOrder = UserOrdersDataModel();
+      _userOrder.subjectLawChecks = financeLawWrapper;
+      _userOrder.selectedAppealDate = selectedDate;
+      _userOrder.signaturePath = signaturePath;
+      _userOrder.checkedCommission = checkedValue!.title.tr();
+      _userOrder.userInfo = _profile.userData;
+      _userOrder.termsAndConditionChecked = true;
+
       DocumentReference<Map<String, dynamic>> firestoreResponse =
-          await firestore
-              .collection("user_orders")
-              .doc("${user?.uid}")
-              .collection("finance_court")
-              .add({
-        "subject_law_checks":
-            financeLawWrapper.en.options.map((e) => e.toJson()).toList(),
-        "selected_appeal_date": selectedDate,
-        "signature_path": signaturePath,
-        "checked_commission": checkedValue!.title.tr(),
-      });
+          await serviceLocatorInstance<UserOrderRepository>()
+              .submitUserOrder(_userOrder.toJson(
+        TaxNameConstants.financeCourt,
+      ));
       SendMailModel? sendMailResponse = await EmailRepository().sendMail(
-         _profile.userData!.email!,
+          _profile.userData!.email!,
           EmailInvoiceConstants.orderSubject,
           EmailInvoiceConstants.objection,
           templatePdf: EmailInvoiceConstants.objection,
-          salutation:_profile.userData?.gender,
-          lastName:_profile.userData?.lastName,
+          salutation: _profile.userData?.gender,
+          lastName: _profile.userData?.lastName,
           orderNumber: orderAndInvoiceNumber[0],
           invoiceNumber: orderAndInvoiceNumber[1],
           orderDate: DateTime.now().toString(),
           firstName: _profile.userData?.firstName,
-          street:_profile.userData?.street,
-          houseNumber:
-             _profile.userData?.houseNumber,
-          postcode:_profile.userData?.plz,
-          city:_profile.userData?.location,
-          email:_profile.userData?.email!,
-          phone:_profile.userData?.phone!,
+          street: _profile.userData?.street,
+          houseNumber: _profile.userData?.houseNumber,
+          postcode: _profile.userData?.plz,
+          city: _profile.userData?.location,
+          email: _profile.userData?.email!,
+          phone: _profile.userData?.phone!,
           taxYear: DateTime.now().year.toString(),
           invoiceTemplate: EmailInvoiceConstants.objectionInvoice);
       if (sendMailResponse != null) {

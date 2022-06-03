@@ -118,7 +118,7 @@ class UserOrdersDataModel {
     _data['payment_type'] = paymentType;
     _data['payment_info'] = paymentInfo?.toJson();
     _data['subscription_price'] = subscriptionPrice;
-    _data['subject_law_checks'] = subjectLawChecks?.toJson();
+    _data['subject_law_checks'] = subjectLawChecks?.en.options.map((e) => e.toJson()).toList();
     _data['selected_appeal_date'] = selectedAppealDate;
     _data['checked_commission'] = checkedCommission;
 

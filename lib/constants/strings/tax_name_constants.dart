@@ -3,4 +3,5 @@ class TaxNameConstants {
   static const String currentYear = "currentYear";
   static const String safeTax = "safeTax";
   static const String easyTax = "easyTax";
+  static const String financeCourt = "financeCourt";
 }

@@ -4,7 +4,7 @@ import 'package:steuermachen/main.dart';
 import 'package:steuermachen/services/networks/api_response_states.dart';
 import 'package:steuermachen/services/networks/dio_api_services.dart';
 import 'package:steuermachen/services/networks/dio_client_network.dart';
-import 'package:steuermachen/wrappers/faq_wp_wrapper.dart';
+import 'package:steuermachen/wrappers/tax_tips_wp_wrapper.dart';
 
 class TaxTipsProvider extends ChangeNotifier {
   ApiResponse _taxTips = ApiResponse.loading();
@@ -15,7 +15,7 @@ class TaxTipsProvider extends ChangeNotifier {
     _taxTips = taxTips;
   }
 
-  Future<void> fetchTaxTips() async {
+  Future<void> fetchTaxTips({int page = 1}) async {
     try {
       setTaxTipsWrapper = ApiResponse.loading();
       notifyListeners();
@@ -23,7 +23,7 @@ class TaxTipsProvider extends ChangeNotifier {
           HTTPConstants.baseUrl;
       var response = await serviceLocatorInstance<DioApiServices>()
           .getRequest(HTTPConstants.taxTips, queryParameters: {
-        'page': '1',
+        'page': page,
         '_embed': null,
         '_fields': 'id,date,link,title,content,_links,_embedded',
       });

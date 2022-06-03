@@ -8,13 +8,19 @@ import 'package:steuermachen/data/view_models/tax_tips_provider.dart';
 import 'package:steuermachen/screens/tax_tips/tax_tips_detail_screen.dart';
 import 'package:steuermachen/screens/tax_tips/tax_tips_top_component.dart';
 import 'package:steuermachen/utils/utils.dart';
-import 'package:steuermachen/wrappers/faq_wp_wrapper.dart';
+import 'package:steuermachen/wrappers/tax_tips_wp_wrapper.dart';
 
 import '../../services/networks/api_response_states.dart';
 
-class TaxTipsScreen extends StatelessWidget {
+class TaxTipsScreen extends StatefulWidget {
   const TaxTipsScreen({Key? key}) : super(key: key);
 
+  @override
+  State<TaxTipsScreen> createState() => _TaxTipsScreenState();
+}
+
+class _TaxTipsScreenState extends State<TaxTipsScreen> {
+  bool pagingLoader= false;
   @override
   Widget build(BuildContext context) {
     return AppBarWithSideCornerCircleAndRoundBody(
@@ -30,17 +36,69 @@ class TaxTipsScreen extends StatelessWidget {
             );
           } else {
             List<TaxTipsWrapper>? tips = consumer.taxTips.data;
-            return ListView.builder(
-                itemCount: tips!.length,
-                itemBuilder: (context, i) {
-                  if (i == 0) {
-                    return InkWell(
-                      onTap: () {
-                        _navigateToDetail(context, tips[i]);
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 30),
-                        child: TaxTipTopComponent(
+            return NotificationListener<ScrollEndNotification>(
+                 onNotification: (scrollEnd) {
+                      var metrics = scrollEnd.metrics;
+                      if (metrics.atEdge) {
+                        if (metrics.pixels == 0)
+                          print('At top');
+                        else {
+                          // print('At bottom');
+                          // if (!pagingLoader &&
+                          //     (studios.paging.currentPage! <
+                          //         studios.paging.totalPages!)) {
+                          //   consumer.pagingLoader = true;
+                          //   consumer.changeState();
+                          //   consumer
+                          //       .fetchPublicStudioList(
+                          //           city: consumer.searchStudioModel.city,
+                          //           country: consumer.searchStudioModel.country,
+                          //           state: consumer.searchStudioModel.state,
+                          //           categoryId: consumer.selectedTypeId,
+                          //           page: studios.paging.currentPage! + 1,
+                          //           pageLimit: studios.paging.limit,
+                          //           isNotifier: false,
+                          //           isPaging: true)
+                          //       .then((value) => consumer.pagingLoader = false);
+
+                          //   consumer.changeState();
+                          // }
+                        }
+                      }
+                      return true;
+                    },
+              child: ListView.builder(
+                  itemCount: tips!.length,
+                  itemBuilder: (context, i) {
+                    if (i == 0) {
+                      return InkWell(
+                        onTap: () {
+                          _navigateToDetail(context, tips[i]);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 30),
+                          child: TaxTipTopComponent(
+                            title: tips[i].title!.rendered,
+                            subtitle:
+                                tips[i].embedded!.wpFeaturedmedia![0].altText,
+                            publishedDate: tips[i]
+                                .embedded!
+                                .wpFeaturedmedia![0]
+                                .date
+                                .toString(),
+                            articleBy: tips[i].embedded!.author![0].name,
+                            image:
+                                tips[i].embedded!.wpFeaturedmedia![0].sourceUrl,
+                            readTime: "",
+                          ),
+                        ),
+                      );
+                    } else {
+                      return InkWell(
+                        onTap: () {
+                          _navigateToDetail(context, tips[i]);
+                        },
+                        child: _ListItems(
                           title: tips[i].title!.rendered,
                           subtitle:
                               tips[i].embedded!.wpFeaturedmedia![0].altText,
@@ -54,28 +112,10 @@ class TaxTipsScreen extends StatelessWidget {
                               tips[i].embedded!.wpFeaturedmedia![0].sourceUrl,
                           readTime: "",
                         ),
-                      ),
-                    );
-                  } else {
-                    return InkWell(
-                      onTap: () {
-                        _navigateToDetail(context, tips[i]);
-                      },
-                      child: _ListItems(
-                        title: tips[i].title!.rendered,
-                        subtitle: tips[i].embedded!.wpFeaturedmedia![0].altText,
-                        publishedDate: tips[i]
-                            .embedded!
-                            .wpFeaturedmedia![0]
-                            .date
-                            .toString(),
-                        articleBy: tips[i].embedded!.author![0].name,
-                        image: tips[i].embedded!.wpFeaturedmedia![0].sourceUrl,
-                        readTime: "",
-                      ),
-                    );
-                  }
-                });
+                      );
+                    }
+                  }),
+            );
           }
         },
       ),

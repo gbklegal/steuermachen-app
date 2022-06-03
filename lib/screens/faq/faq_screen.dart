@@ -63,17 +63,24 @@ class _FaqScreenState extends State<FaqScreen> {
                   child: ListView.builder(
                       itemCount: tips!.length,
                       itemBuilder: (context, i) {
-                        return InkWell(
-                          onTap: () {
-                            setState(() {
-                              if (tips[i].isActive!) {
-                                tips[i].isActive = false;
-                              } else {
-                                tips[i].isActive = true;
-                              }
-                            });
-                          },
-                          child: questionListTile(tips[i], divider),
+                        return Column(
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                setState(() {
+                                  if (tips[i].isActive!) {
+                                    tips[i].isActive = false;
+                                  } else {
+                                    tips[i].isActive = true;
+                                  }
+                                });
+                              },
+                              child: questionListTile(tips[i], divider),
+                            ),
+                            SizedBox(
+                              height: tips.length - 1 == i ? 60 : 0,
+                            ),
+                          ],
                         );
                       }),
                 ),

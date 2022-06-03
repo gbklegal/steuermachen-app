@@ -6,7 +6,7 @@ import 'package:steuermachen/components/loading_component.dart';
 import 'package:steuermachen/constants/app_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
-import 'package:steuermachen/wrappers/faq_wp_wrapper.dart';
+import 'package:steuermachen/wrappers/tax_tips_wp_wrapper.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class TaxTipsDetailScreen extends StatefulWidget {

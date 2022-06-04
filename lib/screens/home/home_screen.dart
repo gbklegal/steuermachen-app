@@ -61,7 +61,7 @@ class HomeScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 25),
                     child: InkWell(
                       onTap: () async{
-                        print(await PaymentGateWayProvider().generateOrderNumber());
+                        // print(await PaymentGateWayProvider().generateOrderNumber());
                       },
                       child: Image.asset(
                         AssetConstants.tax,

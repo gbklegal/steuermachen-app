@@ -162,6 +162,25 @@ class FinanceCourtProvider extends ChangeNotifier {
           phone: _profile.userData?.phone!,
           taxYear: DateTime.now().year.toString(),
           invoiceTemplate: EmailInvoiceConstants.objectionInvoice);
+          await EmailRepository().sendMail(
+           "dialog@steuermachen.de",
+          EmailInvoiceConstants.orderSubject,
+          EmailInvoiceConstants.objection,
+          templatePdf: EmailInvoiceConstants.objection,
+          salutation: _profile.userData?.gender,
+          lastName: _profile.userData?.lastName,
+          orderNumber: orderAndInvoiceNumber[0],
+          invoiceNumber: orderAndInvoiceNumber[1],
+          orderDate: DateTime.now().toString(),
+          firstName: _profile.userData?.firstName,
+          street: _profile.userData?.street,
+          houseNumber: _profile.userData?.houseNumber,
+          postcode: _profile.userData?.plz,
+          city: _profile.userData?.location,
+          email: _profile.userData?.email!,
+          phone: _profile.userData?.phone!,
+          taxYear: DateTime.now().year.toString(),
+          invoiceTemplate: EmailInvoiceConstants.objectionInvoice);
       if (sendMailResponse != null) {
         firestoreResponse.update({
           "invoices_path": [sendMailResponse.pdf.url]

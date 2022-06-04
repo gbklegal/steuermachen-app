@@ -274,6 +274,7 @@ class CodegenLoader extends AssetLoader{
   "viewFile": "Datei ansehen",
   "downloadCompleted": "Download abgeschlossen",
   "comingSoon": "Demnächst",
+  "deleteAccMessage": "Hiermit bestätigen wir den Eingang deines Wunsches auf Löschung deiner Daten. Der Kundenservice wird sich nach Prüfung umgehend mit dir in Verbindung setzen!",
   "logout": "Ausloggen"
 };
 static const Map<String,dynamic> en = {
@@ -534,6 +535,7 @@ static const Map<String,dynamic> en = {
   "viewFile": "view file",
   "downloadCompleted": "view file",
   "comingSoon": "Coming soon",
+  "deleteAccMessage": "We hereby confirm receipt of your request for deletion of your data. Customer service will contact you immediately after checking!",
   "logout": "Logout"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"de": de, "en": en};

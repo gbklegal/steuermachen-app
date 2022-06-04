@@ -260,6 +260,7 @@ abstract class  LocaleKeys {
   static const viewFile = 'viewFile';
   static const downloadCompleted = 'downloadCompleted';
   static const comingSoon = 'comingSoon';
+  static const deleteAccMessage = 'deleteAccMessage';
   static const logout = 'logout';
 
 }

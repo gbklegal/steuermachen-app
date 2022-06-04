@@ -12,7 +12,6 @@ import 'package:steuermachen/components/toast_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
-import 'package:steuermachen/constants/strings/error_messages_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:steuermachen/data/view_models/auth/auth_provider.dart';
 import 'package:steuermachen/data/view_models/profile/profile_provider.dart';
@@ -183,25 +182,26 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
     Widget okButton = TextButton(
       child: Text(LocaleKeys.deleteAcc.tr()),
       onPressed: () async {
-        AuthProvider _auth = Provider.of<AuthProvider>(context, listen: false);
-        PopupLoader.showLoadingDialog(context);
-        ApiResponse res = await _auth.deleteAccount();
-        PopupLoader.hideLoadingDialog(context);
+        // AuthProvider _auth = Provider.of<AuthProvider>(context, listen: false);
+        // PopupLoader.showLoadingDialog(context);
+        // ApiResponse res = await _auth.deleteAccount();
+        // PopupLoader.hideLoadingDialog(context);
+        // Navigator.pop(context);
+        // if (res.status == Status.completed) {
+        //   ProfileProvider profileProvider =
+        //       Provider.of<ProfileProvider>(context, listen: false);
+        //   profileProvider.clearControllers();
+        //   profileProvider.userData = UserWrapper();
+        //   Navigator.pushNamedAndRemoveUntil(
+        //       context, RouteConstants.splashScreen, (val) => false);
+        // } else {
+        //   if (res.message == "requires-recent-login") {
         Navigator.pop(context);
-        if (res.status == Status.completed) {
-          ProfileProvider profileProvider =
-              Provider.of<ProfileProvider>(context, listen: false);
-          profileProvider.clearControllers();
-          profileProvider.userData = UserWrapper();
-          Navigator.pushNamedAndRemoveUntil(
-              context, RouteConstants.splashScreen, (val) => false);
-        } else {
-          if (res.message == "requires-recent-login") {
-            ToastComponent.showToast(LocaleKeys.deleteAccReloginWarning.tr());
-          } else {
-            ToastComponent.showToast(LocaleKeys.somethingWentWrong.tr());
-          }
-        }
+        ToastComponent.showToast(LocaleKeys.deleteAccMessage.tr(), long: true);
+        // } else {
+        //   ToastComponent.showToast(LocaleKeys.somethingWentWrong.tr());
+        // }
+        // }
       },
     );
     Widget cancelButton = TextButton(

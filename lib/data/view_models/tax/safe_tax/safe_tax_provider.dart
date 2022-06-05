@@ -143,19 +143,8 @@ class SafeTaxProvider extends ChangeNotifier {
 
   Future<CommonResponseWrapper?> checkTaxIsAlreadySubmit() async {
     try {
-      User? user = FirebaseAuth.instance.currentUser;
-      var res = await firestore
-          .collection("user_orders")
-          .where(
-            'tax_name',
-            whereIn: [
-              TaxNameConstants.declarationTax,
-              TaxNameConstants.safeTax,
-              TaxNameConstants.currentYear,
-            ],
-          )
-          .where('user_info.user_id', isEqualTo: user?.uid)
-          .get();
+      var res = await serviceLocatorInstance<UserOrderRepository>()
+          .fetchTaxFiledYears();
       if (res.docs.isNotEmpty) {
         return CommonResponseWrapper(
           status: true,

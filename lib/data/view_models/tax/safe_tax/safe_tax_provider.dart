@@ -96,7 +96,8 @@ class SafeTaxProvider extends ChangeNotifier {
           salutation: _userOrder!.userInfo!.gender,
           lastName: _userOrder!.userInfo!.lastName,
           orderNumber: _userOrder?.orderNumber,
-          orderDate: _userOrder!.createdAt.toString(),
+          invoiceNumber: _userOrder?.invoiceNumber,
+          orderDate: Utils.dateFormatDDMMYY(DateTime.now().toString()),
           firstName: _userOrder!.userInfo!.firstName,
           street: _userOrder!.userInfo!.street,
           houseNumber: _userOrder!.userInfo!.houseNumber,
@@ -114,7 +115,8 @@ class SafeTaxProvider extends ChangeNotifier {
           salutation: _userOrder!.userInfo!.gender,
           lastName: _userOrder!.userInfo!.lastName,
           orderNumber: _userOrder?.orderNumber,
-          orderDate: _userOrder!.createdAt.toString(),
+          invoiceNumber: _userOrder?.invoiceNumber,
+          orderDate: Utils.dateFormatDDMMYY(DateTime.now().toString()),
           firstName: _userOrder!.userInfo!.firstName,
           street: _userOrder!.userInfo!.street,
           houseNumber: _userOrder!.userInfo!.houseNumber,
@@ -144,8 +146,15 @@ class SafeTaxProvider extends ChangeNotifier {
       User? user = FirebaseAuth.instance.currentUser;
       var res = await firestore
           .collection("user_orders")
-          .doc("${user?.uid}")
-          .collection("safe_and_declaration_tax")
+          .where(
+            'tax_name',
+            whereIn: [
+              TaxNameConstants.declarationTax,
+              TaxNameConstants.safeTax,
+              TaxNameConstants.currentYear,
+            ],
+          )
+          .where('user_info.user_id', isEqualTo: user?.uid)
           .get();
       if (res.docs.isNotEmpty) {
         return CommonResponseWrapper(

@@ -14,6 +14,7 @@ import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/main.dart';
 import 'package:steuermachen/data/view_models/profile/profile_provider.dart';
 import 'package:steuermachen/services/networks/api_response_states.dart';
+import 'package:steuermachen/utils/utils.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 import 'package:steuermachen/wrappers/declaration_tax/user_orders_data_model.dart';
 import 'package:steuermachen/wrappers/easy_tax/easy_tax_wrapper.dart';
@@ -126,9 +127,11 @@ class EasyTaxProvider extends ChangeNotifier {
           EmailInvoiceConstants.steuerEASY,
           salutation: _userOrder!.userInfo!.gender,
           lastName: _userOrder!.userInfo!.lastName,
-          orderNumber: _userOrder!.orderNumber,
-          taxYear: _userOrder!.taxYear,
-          totalPrice: _userOrder!.subscriptionPrice,
+          orderNumber: _userOrder?.orderNumber,
+          invoiceNumber: _userOrder?.invoiceNumber,
+          orderDate: Utils.dateFormatDDMMYY(DateTime.now().toString()),
+          taxYear: _userOrder?.taxYear,
+          totalPrice: _userOrder?.subscriptionPrice,
           sendInvoice: true,
           invoiceTemplate: EmailInvoiceConstants.steuerEASY,
           templatePdf: EmailInvoiceConstants.steuerEasyPdf);
@@ -138,7 +141,9 @@ class EasyTaxProvider extends ChangeNotifier {
           salutation: _userOrder!.userInfo!.gender,
           lastName: _userOrder!.userInfo!.lastName,
           orderNumber: _userOrder!.orderNumber,
+          invoiceNumber: _userOrder?.invoiceNumber,
           taxYear: _userOrder!.taxYear,
+          orderDate: Utils.dateFormatDDMMYY(DateTime.now().toString()),
           totalPrice: _userOrder!.subscriptionPrice,
           sendInvoice: true,
           invoiceTemplate: EmailInvoiceConstants.steuerEASY,

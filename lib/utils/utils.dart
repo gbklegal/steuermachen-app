@@ -30,6 +30,12 @@ class Utils {
     var formattedDate = DateFormat.yMMMd().format(DateTime.parse(dateTime));
     return formattedDate;
   }
+  static String dateFormatDDMMYY(String dateTime) {
+    final f =  DateFormat('dd-MM-yyyy');
+    var formattedDate = f.format(DateTime.parse(dateTime));
+    return formattedDate;
+  }
+
 
   static String generateRandomString(int length) {
     final _random = Random();

@@ -25,7 +25,8 @@ class UserOrderRepository {
             'tax_name',
             whereIn: [
               TaxNameConstants.declarationTax,
-              TaxNameConstants.safeTax
+              TaxNameConstants.safeTax,
+              TaxNameConstants.currentYear,
             ],
           )
           .where('user_info.user_id', isEqualTo: user?.uid)

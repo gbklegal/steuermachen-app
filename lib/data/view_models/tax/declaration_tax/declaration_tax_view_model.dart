@@ -105,8 +105,10 @@ class DeclarationTaxViewModel extends ChangeNotifier {
           firestoreResponse =
               await serviceLocatorInstance<UserOrderRepository>()
                   .submitUserOrder(_userOrder!.toJson(
-                      isCurrentYear ? TaxNameConstants.currentYear : TaxNameConstants.declarationTax,
-                     steps: taxSteps));
+                      isCurrentYear
+                          ? TaxNameConstants.currentYear
+                          : TaxNameConstants.declarationTax,
+                      steps: taxSteps));
           _paymentProvider.isCardPayment = false;
         } else {
           return CommonResponseWrapper(
@@ -118,61 +120,74 @@ class DeclarationTaxViewModel extends ChangeNotifier {
         _userOrder?.invoiceNumber = orderAndInvoiceNo[1];
         _userOrder?.orderNumber = orderAndInvoiceNo[0];
         _userOrder?.paymentType = OptionConstants.billing;
-        firestoreResponse =
-            await serviceLocatorInstance<UserOrderRepository>()
-                .submitUserOrder(_userOrder!.toJson(
-                    isCurrentYear ? TaxNameConstants.currentYear : TaxNameConstants.declarationTax,
-                  steps:  taxSteps));
+        firestoreResponse = await serviceLocatorInstance<UserOrderRepository>()
+            .submitUserOrder(_userOrder!.toJson(
+                isCurrentYear
+                    ? TaxNameConstants.currentYear
+                    : TaxNameConstants.declarationTax,
+                steps: taxSteps));
       }
-      if (!isCurrentYear) {
-        SendMailModel? sendMailResponse = await EmailRepository().sendMail(
-            _userOrder!.userInfo!.email!,
-            EmailInvoiceConstants.orderSubject,
-            EmailInvoiceConstants.declarationTax,
-            templatePdf: EmailInvoiceConstants.declarationPdf,
-            salutation: _userOrder!.userInfo!.gender,
-            lastName: _userOrder!.userInfo!.lastName,
-            orderNumber: _userOrder?.orderNumber,
-            invoiceNumber: _userOrder?.invoiceNumber,
-            orderDate: _userOrder!.createdAt.toString(),
-            firstName: _userOrder!.userInfo!.firstName,
-            street: _userOrder!.userInfo!.street,
-            houseNumber: _userOrder!.userInfo!.houseNumber,
-            postcode: _userOrder!.userInfo!.plz,
-            city: _userOrder!.userInfo!.location,
-            email: _userOrder!.userInfo!.email!,
-            phone: _userOrder!.userInfo!.phone!,
-            maritalStatus: _userOrder!.martialStatus,
-            taxYear: _userOrder!.taxYear,
-            totalPrice: _userOrder!.taxPrice,
-            invoiceTemplate: EmailInvoiceConstants.declarationTaxInvoice);
-        await EmailRepository().sendMail(
-            "dialog@steuermachen.de",
-            EmailInvoiceConstants.orderSubject,
-            EmailInvoiceConstants.declarationTax,
-            templatePdf: EmailInvoiceConstants.declarationPdf,
-            salutation: _userOrder!.userInfo!.gender,
-            lastName: _userOrder!.userInfo!.lastName,
-            orderNumber: _userOrder?.orderNumber,
-            invoiceNumber: _userOrder?.invoiceNumber,
-            orderDate: _userOrder!.createdAt.toString(),
-            firstName: _userOrder!.userInfo!.firstName,
-            street: _userOrder!.userInfo!.street,
-            houseNumber: _userOrder!.userInfo!.houseNumber,
-            postcode: _userOrder!.userInfo!.plz,
-            city: _userOrder!.userInfo!.location,
-            email: _userOrder!.userInfo!.email!,
-            phone: _userOrder!.userInfo!.phone!,
-            maritalStatus: _userOrder!.martialStatus,
-            taxYear: _userOrder!.taxYear,
-            totalPrice: _userOrder!.taxPrice,
-            invoiceTemplate: EmailInvoiceConstants.declarationTaxInvoice);
-        if (sendMailResponse != null) {
-          firestoreResponse.update({
-            "invoices_path": [sendMailResponse.pdf.url]
-          });
-        }
+
+      SendMailModel? sendMailResponse = await EmailRepository().sendMail(
+          _userOrder!.userInfo!.email!,
+          EmailInvoiceConstants.orderSubject,
+          isCurrentYear
+              ? EmailInvoiceConstants.currentYearTax
+              : EmailInvoiceConstants.declarationTax,
+          templatePdf: isCurrentYear
+              ? EmailInvoiceConstants.currentYearTax
+              : EmailInvoiceConstants.declarationPdf,
+          salutation: _userOrder!.userInfo!.gender,
+          lastName: _userOrder!.userInfo!.lastName,
+          orderNumber: _userOrder?.orderNumber,
+          invoiceNumber: _userOrder?.invoiceNumber,
+          orderDate: Utils.dateFormatDDMMYY(DateTime.now().toString()),
+          firstName: _userOrder!.userInfo!.firstName,
+          street: _userOrder!.userInfo!.street,
+          houseNumber: _userOrder!.userInfo!.houseNumber,
+          postcode: _userOrder!.userInfo!.plz,
+          city: _userOrder!.userInfo!.location,
+          email: _userOrder!.userInfo!.email!,
+          phone: _userOrder!.userInfo!.phone!,
+          maritalStatus: _userOrder!.martialStatus,
+          taxYear: _userOrder!.taxYear,
+          totalPrice: _userOrder!.taxPrice,
+          invoiceTemplate: isCurrentYear
+              ? EmailInvoiceConstants.currentYearTax
+              : EmailInvoiceConstants.declarationTaxInvoice);
+      await EmailRepository().sendMail(
+          "dialog@steuermachen.de",
+          EmailInvoiceConstants.orderSubject,
+          isCurrentYear
+              ? EmailInvoiceConstants.currentYearTax
+              : EmailInvoiceConstants.declarationTax,
+          templatePdf: isCurrentYear
+              ? EmailInvoiceConstants.currentYearTax
+              : EmailInvoiceConstants.declarationPdf,
+          salutation: _userOrder!.userInfo!.gender,
+          lastName: _userOrder!.userInfo!.lastName,
+          orderNumber: _userOrder?.orderNumber,
+          invoiceNumber: _userOrder?.invoiceNumber,
+          orderDate: Utils.dateFormatDDMMYY(DateTime.now().toString()),
+          firstName: _userOrder!.userInfo!.firstName,
+          street: _userOrder!.userInfo!.street,
+          houseNumber: _userOrder!.userInfo!.houseNumber,
+          postcode: _userOrder!.userInfo!.plz,
+          city: _userOrder!.userInfo!.location,
+          email: _userOrder!.userInfo!.email!,
+          phone: _userOrder!.userInfo!.phone!,
+          maritalStatus: _userOrder!.martialStatus,
+          taxYear: _userOrder!.taxYear,
+          totalPrice: _userOrder!.taxPrice,
+          invoiceTemplate: isCurrentYear
+              ? EmailInvoiceConstants.currentYearTax
+              : EmailInvoiceConstants.declarationTaxInvoice);
+      if (sendMailResponse != null) {
+        firestoreResponse.update({
+          "invoices_path": [sendMailResponse.pdf.url]
+        });
       }
+
       return CommonResponseWrapper(
           status: true, message: StringConstants.thankYouForOrder);
     } catch (e) {
@@ -203,7 +218,7 @@ class DeclarationTaxViewModel extends ChangeNotifier {
     _userOrder?.userInfo = _user.userData;
     _userOrder?.userAddress = _user.getSelectedAddress;
     _userOrder?.termsAndConditionChecked = true;
-    _userOrder?.grossIncome = taxPrice;
+    _userOrder?.subscriptionPrice = double.parse(taxPrice);
   }
 
   Future<void> fetchTaxFiledYears({bool isNotifify = true}) async {

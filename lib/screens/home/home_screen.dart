@@ -12,6 +12,7 @@ import 'package:steuermachen/data/view_models/payment_gateway/payment_gateway_pr
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/data/view_models/profile/profile_provider.dart';
 import 'package:steuermachen/utils/string_utils.dart';
+import 'package:steuermachen/utils/utils.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);

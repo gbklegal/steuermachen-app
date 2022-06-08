@@ -7,6 +7,22 @@ import 'package:steuermachen/services/networks/dio_client_network.dart';
 import 'package:steuermachen/wrappers/tax_tips_wp_wrapper.dart';
 
 class TaxTipsProvider extends ChangeNotifier {
+  int _currentPage = 1;
+
+  int get currentPage => _currentPage;
+
+  set setCurrentPage(int currentPage) {
+    _currentPage = currentPage;
+  }
+
+  bool _isAllRecordFetched = false;
+
+  bool get isAllRecordFetched => _isAllRecordFetched;
+
+  set setIsAllRecordFetched(bool isAllRecordFetched) {
+    _isAllRecordFetched = isAllRecordFetched;
+  }
+
   ApiResponse _taxTips = ApiResponse.loading();
 
   ApiResponse get taxTips => _taxTips;
@@ -15,10 +31,12 @@ class TaxTipsProvider extends ChangeNotifier {
     _taxTips = taxTips;
   }
 
-  Future<void> fetchTaxTips({int page = 1}) async {
+  Future<void> fetchTaxTips({required int page, bool isLoader = true}) async {
     try {
-      setTaxTipsWrapper = ApiResponse.loading();
-      notifyListeners();
+      if (isLoader) {
+        setTaxTipsWrapper = ApiResponse.loading();
+        notifyListeners();
+      }
       serviceLocatorInstance<DioClientNetwork>().dio.options.baseUrl =
           HTTPConstants.baseUrl;
       var response = await serviceLocatorInstance<DioApiServices>()
@@ -31,9 +49,21 @@ class TaxTipsProvider extends ChangeNotifier {
       for (var e in response as List<dynamic>) {
         _tips.add(TaxTipsWrapper.fromJson(e));
       }
-      setTaxTipsWrapper = ApiResponse.completed(_tips);
+      if (_currentPage > 1) {
+        List<TaxTipsWrapper> _temp = [..._taxTips.data, ..._tips];
+        setTaxTipsWrapper = ApiResponse.completed(_temp);
+      } else {
+        setTaxTipsWrapper = ApiResponse.completed(_tips);
+      }
     } catch (e) {
-      setTaxTipsWrapper = ApiResponse.error(e.toString());
+      if (e.toString() == "Bad Request") {
+        setIsAllRecordFetched = true;
+        if (isAllRecordFetched) {
+          setTaxTipsWrapper = ApiResponse.completed(_taxTips.data);
+        }
+      } else {
+        setTaxTipsWrapper = ApiResponse.error(e.toString());
+      }
     }
     notifyListeners();
   }

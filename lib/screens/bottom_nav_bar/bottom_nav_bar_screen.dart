@@ -27,7 +27,7 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
   @override
   void initState() {
     WidgetsBinding.instance?.addPostFrameCallback((_) {
-      context.read<TaxTipsProvider>().fetchTaxTips();
+      context.read<TaxTipsProvider>().fetchTaxTips(page: 1);
       context.read<ProfileProvider>().getUserProfile();
       context.read<FaqProvider>().fetchFaqs();
       context.read<DeclarationTaxViewModel>().fetchTaxFiledYears();

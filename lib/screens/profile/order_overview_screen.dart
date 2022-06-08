@@ -1,6 +1,4 @@
 import 'dart:io';
-import 'dart:math';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
@@ -19,9 +17,7 @@ import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:steuermachen/data/view_models/document/document_view_model.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/data/view_models/tax/declaration_tax/declaration_tax_view_model.dart';
-import 'package:steuermachen/main.dart';
 import 'package:steuermachen/services/networks/api_response_states.dart';
-import 'package:steuermachen/services/networks/dio_client_network.dart';
 import 'package:steuermachen/utils/utils.dart';
 import 'package:steuermachen/wrappers/declaration_tax/user_orders_data_model.dart';
 import 'package:steuermachen/wrappers/tax_steps_wrapper.dart';

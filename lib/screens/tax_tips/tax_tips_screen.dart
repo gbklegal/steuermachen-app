@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/components/app_bar/appbar_with_side_corner_circle_and_body.dart';
 import 'package:steuermachen/components/error_component.dart';
@@ -20,104 +21,129 @@ class TaxTipsScreen extends StatefulWidget {
 }
 
 class _TaxTipsScreenState extends State<TaxTipsScreen> {
-  bool pagingLoader= false;
+  bool pagingLoader = false;
   @override
   Widget build(BuildContext context) {
     return AppBarWithSideCornerCircleAndRoundBody(
       showBackButton: false,
-      body: Consumer<TaxTipsProvider>(
-        builder: (context, consumer, child) {
-          if (consumer.taxTips.status == Status.loading) {
-            return const LoadingComponent();
-          } else if (consumer.taxTips.status == Status.error) {
-            return ErrorComponent(
-              onTap: () async => await consumer.fetchTaxTips(),
-              message: consumer.taxTips.message!,
-            );
-          } else {
-            List<TaxTipsWrapper>? tips = consumer.taxTips.data;
-            return NotificationListener<ScrollEndNotification>(
-                 onNotification: (scrollEnd) {
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Flexible(
+            child: Consumer<TaxTipsProvider>(
+              builder: (context, consumer, child) {
+                if (consumer.taxTips.status == Status.loading &&
+                    !pagingLoader) {
+                  return const LoadingComponent();
+                } else if (consumer.taxTips.status == Status.error) {
+                  return ErrorComponent(
+                    onTap: () async =>
+                        await consumer.fetchTaxTips(page: consumer.currentPage),
+                    message: consumer.taxTips.message!,
+                  );
+                } else {
+                  List<TaxTipsWrapper>? tips = consumer.taxTips.data;
+                  return NotificationListener<ScrollEndNotification>(
+                    onNotification: (scrollEnd) {
                       var metrics = scrollEnd.metrics;
                       if (metrics.atEdge) {
-                        if (metrics.pixels == 0)
-                          print('At top');
-                        else {
-                          // print('At bottom');
-                          // if (!pagingLoader &&
-                          //     (studios.paging.currentPage! <
-                          //         studios.paging.totalPages!)) {
-                          //   consumer.pagingLoader = true;
-                          //   consumer.changeState();
-                          //   consumer
-                          //       .fetchPublicStudioList(
-                          //           city: consumer.searchStudioModel.city,
-                          //           country: consumer.searchStudioModel.country,
-                          //           state: consumer.searchStudioModel.state,
-                          //           categoryId: consumer.selectedTypeId,
-                          //           page: studios.paging.currentPage! + 1,
-                          //           pageLimit: studios.paging.limit,
-                          //           isNotifier: false,
-                          //           isPaging: true)
-                          //       .then((value) => consumer.pagingLoader = false);
-
-                          //   consumer.changeState();
-                          // }
+                        if (metrics.pixels == 0) {
+                        } else {
+                          print('At bottom');
+                          if (!pagingLoader && !consumer.isAllRecordFetched) {
+                            setState(() {
+                              pagingLoader = true;
+                            });
+                            consumer.setCurrentPage = consumer.currentPage + 1;
+                            consumer
+                                .fetchTaxTips(page: consumer.currentPage, isLoader: false)
+                                .then((value) => setState(() {
+                                      pagingLoader = false;
+                                    }));
+                          }
                         }
                       }
                       return true;
                     },
-              child: ListView.builder(
-                  itemCount: tips!.length,
-                  itemBuilder: (context, i) {
-                    if (i == 0) {
-                      return InkWell(
-                        onTap: () {
-                          _navigateToDetail(context, tips[i]);
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 30),
-                          child: TaxTipTopComponent(
-                            title: tips[i].title!.rendered,
-                            subtitle:
-                                tips[i].embedded!.wpFeaturedmedia![0].altText,
-                            publishedDate: tips[i]
-                                .embedded!
-                                .wpFeaturedmedia![0]
-                                .date
-                                .toString(),
-                            articleBy: tips[i].embedded!.author![0].name,
-                            image:
-                                tips[i].embedded!.wpFeaturedmedia![0].sourceUrl,
-                            readTime: "",
-                          ),
-                        ),
-                      );
-                    } else {
-                      return InkWell(
-                        onTap: () {
-                          _navigateToDetail(context, tips[i]);
-                        },
-                        child: _ListItems(
-                          title: tips[i].title!.rendered,
-                          subtitle:
-                              tips[i].embedded!.wpFeaturedmedia![0].altText,
-                          publishedDate: tips[i]
-                              .embedded!
-                              .wpFeaturedmedia![0]
-                              .date
-                              .toString(),
-                          articleBy: tips[i].embedded!.author![0].name,
-                          image:
-                              tips[i].embedded!.wpFeaturedmedia![0].sourceUrl,
-                          readTime: "",
-                        ),
-                      );
-                    }
-                  }),
-            );
-          }
-        },
+                    child: RefreshIndicator(
+                      onRefresh: () async {
+                        consumer.setCurrentPage = 1;
+                        consumer.setIsAllRecordFetched = false;
+                        consumer.fetchTaxTips(page: consumer.currentPage);
+                      },
+                      child: ListView.builder(
+                          itemCount: tips!.length,
+                          itemBuilder: (context, i) {
+                            if (i == 0) {
+                              return InkWell(
+                                onTap: () {
+                                  _navigateToDetail(context, tips[i]);
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.only(top: 30),
+                                  child: TaxTipTopComponent(
+                                    title: tips[i].title!.rendered,
+                                    subtitle: tips[i]
+                                        .embedded!
+                                        .wpFeaturedmedia![0]
+                                        .altText,
+                                    publishedDate: tips[i]
+                                        .embedded!
+                                        .wpFeaturedmedia![0]
+                                        .date
+                                        .toString(),
+                                    articleBy:
+                                        tips[i].embedded!.author![0].name,
+                                    image: tips[i]
+                                        .embedded!
+                                        .wpFeaturedmedia![0]
+                                        .sourceUrl,
+                                    readTime: "",
+                                  ),
+                                ),
+                              );
+                            } else {
+                              return InkWell(
+                                onTap: () {
+                                  _navigateToDetail(context, tips[i]);
+                                },
+                                child: _ListItems(
+                                  title: tips[i].title!.rendered,
+                                  subtitle: tips[i]
+                                      .embedded!
+                                      .wpFeaturedmedia![0]
+                                      .altText,
+                                  publishedDate: tips[i]
+                                      .embedded!
+                                      .wpFeaturedmedia![0]
+                                      .date
+                                      .toString(),
+                                  articleBy: tips[i].embedded!.author![0].name,
+                                  image: tips[i]
+                                      .embedded!
+                                      .wpFeaturedmedia![0]
+                                      .sourceUrl,
+                                  readTime: "",
+                                ),
+                              );
+                            }
+                          }),
+                    ),
+                  );
+                }
+              },
+            ),
+          ),
+          Visibility(
+            visible: pagingLoader,
+            child: const SpinKitWave(
+              color: ColorConstants.primary,
+              size: 25,
+              itemCount: 6,
+              duration: Duration(milliseconds: 700),
+            ),
+          )
+        ],
       ),
     );
   }

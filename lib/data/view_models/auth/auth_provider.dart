@@ -5,7 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
-import 'package:steuermachen/constants/strings/error_messages_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/main.dart';
 import 'package:steuermachen/services/networks/api_response_states.dart';
@@ -60,11 +59,11 @@ class AuthProvider extends ChangeNotifier {
       );
       UserCredential user =
           await FirebaseAuth.instance.signInWithCredential(oauthCredential);
-      await checkUserFirstTimeLoggedIn(
-          appleCredential.email!, user.additionalUserInfo!.isNewUser);
+      await checkUserFirstTimeLoggedIn(user.user!.email!, user.additionalUserInfo!.isNewUser);
       return CommonResponseWrapper(
           status: true, message: "Signin successfully");
     } catch (e) {
+      print(e);
       return CommonResponseWrapper(status: false, message: e.toString());
     }
   }

@@ -90,12 +90,12 @@ class _SafeTaxQuestionsComponentState extends State<SafeTaxQuestionsComponent> {
                           else if (widget.safeTaxData[i].optionType ==
                               OptionConstants.userForm)
                             const UserFormComponent()
-                          else if (widget.safeTaxData[i].optionType ==
-                              OptionConstants.signature)
-                            Transform.translate(
-                              offset: const Offset(0, -20),
-                              child: const SignatureComponent(),
-                            )
+                          // else if (widget.safeTaxData[i].optionType ==
+                          //     OptionConstants.signature)
+                          //   Transform.translate(
+                          //     offset: const Offset(0, -20),
+                          //     child: const SignatureComponent(),
+                          //   )
                           else if (widget.safeTaxData[i].optionType ==
                               OptionConstants.termsCondition)
                             Transform.translate(

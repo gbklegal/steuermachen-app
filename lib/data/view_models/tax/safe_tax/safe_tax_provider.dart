@@ -67,17 +67,17 @@ class SafeTaxProvider extends ChangeNotifier {
   }
 
   Future<CommonResponseWrapper> submitSafeTaxData(BuildContext context) async {
-    SignatureProvider _signature =
-        Provider.of<SignatureProvider>(context, listen: false);
+    // SignatureProvider _signature =
+    //     Provider.of<SignatureProvider>(context, listen: false);
     ProfileProvider _user =
         Provider.of<ProfileProvider>(context, listen: false);
     PaymentGateWayProvider _paymentProvider =
         Provider.of<PaymentGateWayProvider>(context, listen: false);
-    String signaturePath = await Utils.uploadToFirebaseStorage(
-        await _signature.getSignaturePath());
+    // String signaturePath = await Utils.uploadToFirebaseStorage(
+    //     await _signature.getSignaturePath());
     List<String> orderAndInvoiceNumber =
         await _paymentProvider.generateOrderNumber();
-    _userOrder?.signaturePath = signaturePath;
+    // _userOrder?.signaturePath = signaturePath;
     _userOrder?.userInfo = _user.getUserFromControllers();
     _userOrder?.userAddress = _user.getSelectedAddress;
     _userOrder?.termsAndConditionChecked = true;
@@ -92,6 +92,7 @@ class SafeTaxProvider extends ChangeNotifier {
           _userOrder!.userInfo!.email!,
           EmailInvoiceConstants.orderSubject,
           EmailInvoiceConstants.safeTax,
+          sendInvoice: false,
           templatePdf: EmailInvoiceConstants.safeTax,
           salutation: _userOrder!.userInfo!.gender,
           lastName: _userOrder!.userInfo!.lastName,
@@ -111,6 +112,7 @@ class SafeTaxProvider extends ChangeNotifier {
           invoiceTemplate: EmailInvoiceConstants.safeTax);
       await EmailRepository().sendMail("dialog@steuermachen.de",
           EmailInvoiceConstants.orderSubject, EmailInvoiceConstants.safeTax,
+          sendInvoice: false,
           templatePdf: EmailInvoiceConstants.safeTax,
           salutation: _userOrder!.userInfo!.gender,
           lastName: _userOrder!.userInfo!.lastName,

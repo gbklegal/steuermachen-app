@@ -56,7 +56,8 @@ class _TaxTipsScreenState extends State<TaxTipsScreen> {
                             });
                             consumer.setCurrentPage = consumer.currentPage + 1;
                             consumer
-                                .fetchTaxTips(page: consumer.currentPage, isLoader: false)
+                                .fetchTaxTips(
+                                    page: consumer.currentPage, isLoader: false)
                                 .then((value) => setState(() {
                                       pagingLoader = false;
                                     }));
@@ -73,6 +74,7 @@ class _TaxTipsScreenState extends State<TaxTipsScreen> {
                       },
                       child: ListView.builder(
                           itemCount: tips!.length,
+                          cacheExtent: 500,
                           itemBuilder: (context, i) {
                             if (i == 0) {
                               return InkWell(
@@ -94,8 +96,7 @@ class _TaxTipsScreenState extends State<TaxTipsScreen> {
                                         .toString(),
                                     articleBy:
                                         tips[i].embedded!.author![0].name,
-                                    image: tips[i]
-                                        .embedded!
+                                    image: tips[i].embedded!
                                         .wpFeaturedmedia![0]
                                         .sourceUrl,
                                     readTime: "",
@@ -189,6 +190,7 @@ class _ListItems extends StatelessWidget {
                 height: 50,
                 width: 71,
                 fit: BoxFit.cover,
+                filterQuality: FilterQuality.low,
               ),
             ),
             Flexible(

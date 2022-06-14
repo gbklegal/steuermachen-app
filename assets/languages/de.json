@@ -259,5 +259,6 @@
     "downloadCompleted": "Download abgeschlossen",
     "comingSoon": "Demnächst",
     "deleteAccMessage": "Hiermit bestätigen wir den Eingang deines Wunsches auf Löschung deiner Daten. Der Kundenservice wird sich nach Prüfung umgehend mit dir in Verbindung setzen!",
+    "formSubMessage": "Formular erfolgreich eingereicht",
     "logout": "Ausloggen"
 }

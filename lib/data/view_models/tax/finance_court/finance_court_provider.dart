@@ -134,6 +134,8 @@ class FinanceCourtProvider extends ChangeNotifier {
       _userOrder.subjectLawChecks = financeLawWrapper;
       _userOrder.selectedAppealDate = selectedDate;
       _userOrder.signaturePath = signaturePath;
+      _userOrder.orderNumber = orderAndInvoiceNumber[0];
+      _userOrder.invoiceNumber = orderAndInvoiceNumber[1];
       _userOrder.checkedCommission = checkedValue!.title.tr();
       _userOrder.userInfo = _profile.userData;
       _userOrder.termsAndConditionChecked = true;

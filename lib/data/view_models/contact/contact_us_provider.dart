@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:steuermachen/constants/strings/process_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/main.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
@@ -10,13 +11,10 @@ class ContactUsProvider extends ChangeNotifier {
       ContactUsFormDataCollector formData) async {
     try {
       User? user = FirebaseAuth.instance.currentUser;
-      await firestore
-          .collection("forms_data")
-          .doc("contact_us")
-          .collection("${user?.uid}")
-          .add(formData.toJson());
+      formData.userId = user?.uid;
+      await firestore.collection("contact_us").add(formData.toJson());
       return CommonResponseWrapper(
-          status: true, message: "Form submitted successfully");
+          status: true, message: LocaleKeys.formSubMessage.tr());
     } catch (e) {
       return CommonResponseWrapper(
           status: true, message: LocaleKeys.somethingWentWrong.tr());
@@ -25,17 +23,26 @@ class ContactUsProvider extends ChangeNotifier {
 }
 
 class ContactUsFormDataCollector {
-  final String? lastName, firstName, email, reference, phoneNo, news;
+  String? userId, lastName, firstName, email, reference, phoneNo, news;
 
-  ContactUsFormDataCollector(this.lastName, this.firstName, this.email,
-      this.reference, this.phoneNo, this.news);
+  ContactUsFormDataCollector(
+      {this.userId,
+      this.lastName,
+      this.firstName,
+      this.email,
+      this.reference,
+      this.phoneNo,
+      this.news});
 
   Map<String, dynamic> toJson() => {
+        "userId": userId,
         "firstName": firstName,
         "lastName": lastName,
         "email": email,
         "reference": reference,
         "phone": phoneNo,
         "news": news,
+        "createdDate": DateTime.now(),
+        "status": ProcessConstants.pending
       };
 }

@@ -257,5 +257,6 @@
     "downloadCompleted": "view file",
     "comingSoon": "Coming soon",
     "deleteAccMessage": "We hereby confirm receipt of your request for deletion of your data. Customer service will contact you immediately after checking!",
+    "formSubMessage": "form submitted successfully",
     "logout": "Logout"
 }

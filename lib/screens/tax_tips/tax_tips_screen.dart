@@ -74,6 +74,7 @@ class _TaxTipsScreenState extends State<TaxTipsScreen> {
                       },
                       child: ListView.builder(
                           itemCount: tips!.length,
+                          
                           cacheExtent: 500,
                           itemBuilder: (context, i) {
                             if (i == 0) {

@@ -42,7 +42,7 @@ class _ContactUsFormScreenState extends State<ContactUsFormScreen>
       context: context,
       builder: (BuildContext context) {
         return const CompletedDialogComponent(
-          showBackBtn: true,
+          showBackBtn: false,
         );
       },
     );
@@ -148,12 +148,12 @@ class _ContactUsFormScreenState extends State<ContactUsFormScreen>
               PopupLoader.showLoadingDialog(context);
               CommonResponseWrapper res = await _contactUsProvider
                   .submitContactUsForm(ContactUsFormDataCollector(
-                      _lastNameController.text,
-                      _firstNameController.text,
-                      _emailController.text,
-                      _referenceController.text,
-                      _phoneNoController.text,
-                      _newsController.text));
+                      lastName: _lastNameController.text,
+                      firstName: _firstNameController.text,
+                      email: _emailController.text,
+                      reference: _referenceController.text,
+                      phoneNo: _phoneNoController.text,
+                      news: _newsController.text));
               PopupLoader.hideLoadingDialog(context);
               if (res.status!) {
                 _dialog();

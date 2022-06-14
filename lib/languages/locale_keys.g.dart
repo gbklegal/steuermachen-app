@@ -261,6 +261,7 @@ abstract class  LocaleKeys {
   static const downloadCompleted = 'downloadCompleted';
   static const comingSoon = 'comingSoon';
   static const deleteAccMessage = 'deleteAccMessage';
+  static const formSubMessage = 'formSubMessage';
   static const logout = 'logout';
 
 }

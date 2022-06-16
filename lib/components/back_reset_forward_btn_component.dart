@@ -37,8 +37,8 @@ class BackResetForwardBtnComponent extends StatelessWidget {
     );
   }
 
-  GestureDetector _iconText(String iconName, String btnName, void Function()? onTap,
-      BuildContext context) {
+  GestureDetector _iconText(String iconName, String btnName,
+      void Function()? onTap, BuildContext context) {
     return GestureDetector(
       onTap: onTap,
       child: Column(
@@ -47,7 +47,7 @@ class BackResetForwardBtnComponent extends StatelessWidget {
             height: 48,
             child: SvgPicture.asset(
               iconName,
-              height: AssetConstants.icReset == iconName ? 48 : 25,
+              height: AssetConstants.icReset == iconName ? 40 : 33,
             ),
           ),
           Text(

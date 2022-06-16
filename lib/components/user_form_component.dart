@@ -2,6 +2,7 @@ import 'package:country_picker/country_picker.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/components/error_component.dart';
 import 'package:steuermachen/components/loading_component.dart';
@@ -67,217 +68,252 @@ class _UserFormComponentState extends State<UserFormComponent>
     );
   }
 
-  Column _mainBody(ProfileProvider consumer, BuildContext context) {
+  GestureDetector _mainBody(ProfileProvider consumer, BuildContext context) {
     final List<String> gender = [
       LocaleKeys.mister.tr(),
       LocaleKeys.mrs.tr(),
       LocaleKeys.others.tr(),
     ];
-    return Column(
-      children: [
-        Visibility(
-          visible: !widget.isAddNewAddress!,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                LocaleKeys.salutation.tr(),
-                textAlign: TextAlign.left,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyText1!
-                    .copyWith(fontWeight: FontWeight.w600, fontSize: 16),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  for (var item in gender)
-                    InkWell(
-                      onTap: () {
-                        consumer.setGender(item);
-                      },
-                      child: Row(
-                        children: [
-                          Container(
-                            height: 15,
-                            width: 15,
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  width: 0.7,
-                                )),
-                            padding: const EdgeInsets.all(2),
-                            child: Container(
-                              height: 12,
-                              width: 12,
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+
+        if (!currentFocus.hasPrimaryFocus &&
+            currentFocus.focusedChild != null) {
+          FocusManager.instance.primaryFocus!.unfocus();
+        }
+      },
+      child: Column(
+        children: [
+          Visibility(
+            visible: !widget.isAddNewAddress!,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  LocaleKeys.salutation.tr(),
+                  textAlign: TextAlign.left,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText1!
+                      .copyWith(fontWeight: FontWeight.w600, fontSize: 16),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    for (var item in gender)
+                      InkWell(
+                        onTap: () {
+                          consumer.setGender(item);
+                        },
+                        child: Row(
+                          children: [
+                            Container(
+                              height: 15,
+                              width: 15,
                               decoration: BoxDecoration(
-                                color: item == consumer.genderController.text
-                                    ? ColorConstants.primary
-                                    : null,
-                                shape: BoxShape.circle,
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    width: 0.7,
+                                  )),
+                              padding: const EdgeInsets.all(2),
+                              child: Container(
+                                height: 12,
+                                width: 12,
+                                decoration: BoxDecoration(
+                                  color: item == consumer.genderController.text
+                                      ? ColorConstants.primary
+                                      : null,
+                                  shape: BoxShape.circle,
+                                ),
                               ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 5, right: 10),
-                            child: _title(
-                              item,
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 5, right: 10),
+                              child: _title(
+                                item,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    )
-                ],
-              ),
-            ],
-          ),
-        ),
-        Form(
-          key: consumer.userFormKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              TextFormField(
-                controller: consumer.firstNameController,
-                decoration: InputDecoration(
-                  labelText: LocaleKeys.firstName.tr() + "*",
-                  hintStyle: fontStyle,
-                ),
-                validator: validateName,
-              ),
-              sizedBox6,
-              TextFormField(
-                controller: consumer.lastNameController,
-                decoration: InputDecoration(
-                  labelText: LocaleKeys.lastName.tr() + "*",
-                  hintStyle: fontStyle,
-                ),
-                validator: validateName,
-              ),
-              sizedBox6,
-              Row(
-                children: [
-                  Flexible(
-                    child: TextFormField(
-                      controller: consumer.streetController,
-                      decoration: InputDecoration(
-                        labelText: LocaleKeys.street.tr() + "*",
-                        hintStyle: fontStyle,
-                      ),
-                      validator: validateFieldEmpty,
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 25,
-                  ),
-                  Flexible(
-                    child: TextFormField(
-                      controller: consumer.houseNumberController,
-                      decoration: InputDecoration(
-                        labelText: LocaleKeys.houseNo.tr() + "*",
-                        hintStyle: fontStyle,
-                      ),
-                      validator: validateFieldEmpty,
-                    ),
-                  ),
-                ],
-              ),
-              sizedBox4,
-              TextFormField(
-                controller: consumer.postCodeController,
-                decoration: InputDecoration(
-                  labelText: LocaleKeys.postcode.tr() + "*",
-                  hintStyle: fontStyle,
-                ),
-                validator: validateFieldEmpty,
-              ),
-              sizedBox4,
-              TextFormField(
-                controller: consumer.locationController,
-                decoration: InputDecoration(
-                  labelText: LocaleKeys.location.tr() + "*",
-                  hintStyle: fontStyle,
-                ),
-                validator: validateFieldEmpty,
-              ),
-              sizedBox4,
-              TextFormField(
-                controller: consumer.phoneController,
-                decoration: InputDecoration(
-                    labelText: LocaleKeys.phone.tr() + "*",
-                    hintStyle: fontStyle,
-                    hintText: "+4912341234567"),
-                validator: validatePhone,
-              ),
-              sizedBox4,
-              !widget.isAddNewAddress!
-                  ? TextFormField(
-                      controller: consumer.emailController,
-                      enabled: false,
-                      decoration: InputDecoration(
-                        labelText: LocaleKeys.emailAddress.tr() + "*",
-                        hintStyle: fontStyle,
-                      ),
-                      validator: validateEmail,
-                    )
-                  : const SizedBox(),
-              sizedBox4,
-              InkWell(
-                onTap: () {
-                  showCountryPicker(
-                    context: context,
-                    showPhoneCode:
-                        true, // optional. Shows phone code before the country name.
-                    onSelect: (Country country) {
-                      consumer.countryController.text =
-                          country.displayNameNoCountryCode;
-                    },
-                  );
-                },
-                child: TextFormField(
-                  enabled: false,
-                  controller: consumer.countryController,
-                  decoration: InputDecoration(
-                      labelText: LocaleKeys.country.tr() + "*",
-                      hintStyle: fontStyle,
-                      suffixIcon: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: SvgPicture.asset(
-                          AssetConstants.icDown,
-                          color: ColorConstants.black,
+                          ],
                         ),
-                      )),
-                  validator: validateFieldEmpty,
+                      )
+                  ],
                 ),
-              ),
-              sizedBox4,
-            ],
-          ),
-        ),
-        Visibility(
-          visible: widget.showSaveBtn,
-          child: Padding(
-            padding: const EdgeInsets.only(top: 30),
-            child: ButtonComponent(
-              btnHeight: 56,
-              buttonText: LocaleKeys.save.tr(),
-              onPressed: () async {
-                if (consumer.userFormKey.currentState!.validate()) {
-                  PopupLoader.showLoadingDialog(context);
-                  CommonResponseWrapper res =
-                      await consumer.submitUserProfile();
-                  PopupLoader.hideLoadingDialog(context);
-                  ToastComponent.showToast(res.message!, long: true);
-                }
-              },
+              ],
             ),
           ),
-        ),
-      ],
+          Form(
+            key: consumer.userFormKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                TextFormField(
+                  controller: consumer.firstNameController,
+                  decoration: InputDecoration(
+                    labelText: LocaleKeys.firstName.tr() + "*",
+                    hintStyle: fontStyle,
+                  ),
+                  validator: validateName,
+                  onSaved: (val) {
+                    consumer.firstNameController.text = val!.trim();
+                  },
+                ),
+                sizedBox6,
+                TextFormField(
+                  controller: consumer.lastNameController,
+                  decoration: InputDecoration(
+                    labelText: LocaleKeys.lastName.tr() + "*",
+                    hintStyle: fontStyle,
+                  ),
+                  validator: validateName,
+                  onSaved: (val) {
+                    consumer.lastNameController.text = val!.trim();
+                  },
+                ),
+                sizedBox6,
+                Row(
+                  children: [
+                    Flexible(
+                      child: TextFormField(
+                        controller: consumer.streetController,
+                        decoration: InputDecoration(
+                          labelText: LocaleKeys.street.tr() + "*",
+                          hintStyle: fontStyle,
+                        ),
+                        validator: validateFieldEmpty,
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 25,
+                    ),
+                    Flexible(
+                      child: TextFormField(
+                        controller: consumer.houseNumberController,
+                        decoration: InputDecoration(
+                          labelText: LocaleKeys.houseNo.tr() + "*",
+                          hintStyle: fontStyle,
+                        ),
+                        validator: validateFieldEmpty,
+                      ),
+                    ),
+                  ],
+                ),
+                sizedBox4,
+                TextFormField(
+                  controller: consumer.postCodeController,
+                  decoration: InputDecoration(
+                    labelText: LocaleKeys.postcode.tr() + "*",
+                    hintStyle: fontStyle,
+                  ),
+                  validator: validateFieldEmpty,
+                ),
+                sizedBox4,
+                TextFormField(
+                  controller: consumer.locationController,
+                  decoration: InputDecoration(
+                    labelText: LocaleKeys.location.tr() + "*",
+                    hintStyle: fontStyle,
+                  ),
+                  validator: validateFieldEmpty,
+                ),
+                sizedBox4,
+                TextFormField(
+                  controller: consumer.phoneController,
+                  keyboardType: TextInputType.phone,
+                  decoration: InputDecoration(
+                      labelText: LocaleKeys.phone.tr() + "*",
+                      hintStyle: fontStyle,
+                      hintText: "+4912341234567/012341234567"),
+                  validator: validatePhone,
+                ),
+                // IntlPhoneField(
+                //   controller: consumer.phoneController,
+                //   initialCountryCode: 'DE',
+                //   showDropdownIcon: false,
+                //   decoration: InputDecoration(
+                //     labelText: LocaleKeys.phone.tr() + "*",
+                //   ),
+                //   onChanged: (phone) {
+                //     print(phone.completeNumber);
+                //   },
+                //   onCountryChanged: (country) {
+                //     print('Country changed to: ' + country.name);
+                //   },
+                //   // validator: (val) async => validatePhone(val!.completeNumber),
+                // ),
+                sizedBox4,
+                !widget.isAddNewAddress!
+                    ? TextFormField(
+                        controller: consumer.emailController,
+                        enabled: false,
+                        decoration: InputDecoration(
+                          labelText: LocaleKeys.emailAddress.tr() + "*",
+                          hintStyle: fontStyle,
+                        ),
+                        validator: validateEmail,
+                      )
+                    : const SizedBox(),
+                sizedBox4,
+                InkWell(
+                  onTap: () {
+                    showCountryPicker(
+                      context: context,
+                      showPhoneCode:
+                          true, // optional. Shows phone code before the country name.
+                      onSelect: (Country country) {
+                        consumer.countryController.text =
+                            country.displayNameNoCountryCode;
+                      },
+                    );
+                  },
+                  child: TextFormField(
+                    enabled: false,
+                    controller: consumer.countryController,
+                    decoration: InputDecoration(
+                        labelText: LocaleKeys.country.tr() + "*",
+                        hintStyle: fontStyle,
+                        suffixIcon: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: SvgPicture.asset(
+                            AssetConstants.icDown,
+                            color: ColorConstants.black,
+                          ),
+                        )),
+                    validator: validateFieldEmpty,
+                  ),
+                ),
+                sizedBox4,
+              ],
+            ),
+          ),
+          Visibility(
+            visible: widget.showSaveBtn,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 30),
+              child: ButtonComponent(
+                btnHeight: 56,
+                buttonText: LocaleKeys.save.tr(),
+                onPressed: () async {
+                  consumer.userFormKey.currentState!.save();
+                  if (consumer.userFormKey.currentState!.validate()) {
+                    PopupLoader.showLoadingDialog(context);
+                    CommonResponseWrapper res =
+                        await consumer.submitUserProfile();
+                    PopupLoader.hideLoadingDialog(context);
+                    ToastComponent.showToast(res.message!, long: true);
+                  }
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 

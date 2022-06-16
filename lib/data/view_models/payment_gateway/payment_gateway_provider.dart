@@ -27,6 +27,10 @@ class PaymentGateWayProvider extends ChangeNotifier {
     try {
       serviceLocatorInstance<DioClientNetwork>().dio.options.baseUrl =
           HTTPConstants.sumpBaseUrl;
+      serviceLocatorInstance<DioClientNetwork>()
+          .dio
+          .options
+          .headers["Authorization"] = null;
       var response = await serviceLocatorInstance<DioApiServices>().postRequest(
           HTTPConstants.sumupAccessToken,
           options: Options(contentType: 'application/x-www-form-urlencoded'),
@@ -70,8 +74,8 @@ class PaymentGateWayProvider extends ChangeNotifier {
         "pay_to_email": "dialog@steuermachen.de",
         "description": "Sample one-time payment"
       });
-      checkoutWrapper?.orderNumber = checkOutReferenceNo[0];
       checkoutWrapper = SumpupCheckoutWrapper.fromJson(response);
+      checkoutWrapper?.orderNumber = checkOutReferenceNo[0];
       return ApiResponse.completed(checkoutWrapper);
     } catch (e) {
       return ApiResponse.error(e.toString());

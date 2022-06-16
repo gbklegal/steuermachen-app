@@ -103,11 +103,9 @@ class _OrderOverviewScreenState extends State<OrderOverviewScreen> {
   }
 
   _getMainBody(var submittedTaxYears) {
-    List<UserOrdersDataModel> data =
-        List<UserOrdersDataModel>.from(
+    List<UserOrdersDataModel> data = List<UserOrdersDataModel>.from(
       submittedTaxYears.map(
-        (e) =>
-            UserOrdersDataModel.fromJson(e.data(), e.id),
+        (e) => UserOrdersDataModel.fromJson(e.data(), e.id),
       ),
     );
     return RefreshIndicator(
@@ -116,6 +114,7 @@ class _OrderOverviewScreenState extends State<OrderOverviewScreen> {
         itemCount: data.length,
         itemBuilder: (context, index) {
           if (data[index].taxYear != DateTime.now().year.toString()) {
+            data.sort((a, b) => a.taxYear!.compareTo(b.taxYear!));
             return _OrderCards(data: data[index]);
           } else {
             return const SizedBox();
@@ -194,61 +193,61 @@ class _OrderCards extends StatelessWidget {
                   ),
                 ),
                 data.invoices != null
-                    ? ListTile(
-                        contentPadding: EdgeInsets.zero,
-                        leading: Image.asset(
-                          AssetConstants.icPdf,
-                          height: 18,
-                        ),
-                        horizontalTitleGap: 0,
-                        title: Padding(
-                          padding: const EdgeInsets.only(bottom: 10),
-                          child: TextComponent(
-                            "${LocaleKeys.invoice.tr()} #${data.invoiceNumber!}",
-                            style: FontStyles.fontMedium(
-                                fontSize: 15, fontWeight: FontWeight.w600),
+                    ? InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => WebViewComponent(
+                                url: data.invoices![0],
+                              ),
+                            ),
+                          );
+                        },
+                        child: ListTile(
+                          contentPadding: EdgeInsets.zero,
+                          leading: Image.asset(
+                            AssetConstants.icPdf,
+                            height: 18,
                           ),
-                        ),
-                        trailing: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => WebViewComponent(
-                                      url: data.invoices![0],
-                                    ),
-                                  ),
-                                );
-                              },
-                              child: const Icon(
+                          horizontalTitleGap: 0,
+                          title: Padding(
+                            padding: const EdgeInsets.only(bottom: 10),
+                            child: TextComponent(
+                              "${LocaleKeys.invoice.tr()} #${data.invoiceNumber!}",
+                              style: FontStyles.fontMedium(
+                                  fontSize: 15, fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                          trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: const [
+                              Icon(
                                 Icons.visibility_sharp,
                                 color: ColorConstants.black,
                               ),
-                            ),
-                            const SizedBox(width: 5),
-                            // InkWell(
-                            //   onTap: () async {
-                            //     String savePath = await getFilePath(Random(10).nextInt(20));
-                            //     serviceLocatorInstance<DioClientNetwork>()
-                            //         .dio
-                            //         .download(data.invoices![0], savePath,
-                            //             onReceiveProgress: (received, total) {
-                            //       if (total != -1) {
-                            //         print((received / total * 100)
-                            //                 .toStringAsFixed(0) +
-                            //             "%");
-                            //       }
-                            //     });
-                            //   },
-                            //   child: const Icon(
-                            //     Icons.download,
-                            //     color: ColorConstants.black,
-                            //   ),
-                            // )
-                          ],
+                              SizedBox(width: 5),
+                              // InkWell(
+                              //   onTap: () async {
+                              //     String savePath = await getFilePath(Random(10).nextInt(20));
+                              //     serviceLocatorInstance<DioClientNetwork>()
+                              //         .dio
+                              //         .download(data.invoices![0], savePath,
+                              //             onReceiveProgress: (received, total) {
+                              //       if (total != -1) {
+                              //         print((received / total * 100)
+                              //                 .toStringAsFixed(0) +
+                              //             "%");
+                              //       }
+                              //     });
+                              //   },
+                              //   child: const Icon(
+                              //     Icons.download,
+                              //     color: ColorConstants.black,
+                              //   ),
+                              // )
+                            ],
+                          ),
                         ),
                       )
                     : const SizedBox()

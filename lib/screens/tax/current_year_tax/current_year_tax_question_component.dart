@@ -49,10 +49,10 @@ class _CurrentYearTaxViewState extends State<CurrentYearTaxViewComponent> {
             Utils.animateToNextPage(pageController, pageIndex);
           },
         ),
-        ConfirmBillingComponent(
-          amount: "${widget.currentYearTaxData.price}0 euro",
-          onTapOrder: () => Utils.animateToNextPage(pageController, pageIndex),
-        ),
+        // ConfirmBillingComponent(
+        //   amount: "${widget.currentYearTaxData.price}0 euro",
+        //   onTapOrder: () => Utils.animateToNextPage(pageController, pageIndex),
+        // ),
         Consumer<DeclarationTaxViewModel>(builder: (context, consumer, child) {
           return TermsAndConditionComponent(
             onPressedOrderNow: (value) async {

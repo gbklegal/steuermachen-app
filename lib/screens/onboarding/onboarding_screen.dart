@@ -44,7 +44,12 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   ];
   @override
   void initState() {
-    timer = Timer.periodic(const Duration(seconds: 2), (val) {
+    timer = _timer();
+    super.initState();
+  }
+
+  Timer _timer() {
+    return Timer.periodic(const Duration(seconds: 3), (val) {
       setState(() {
         int? currentPage = int.parse(pageController.page!.toStringAsFixed(0));
         pageController.nextPage(
@@ -55,7 +60,6 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         }
       });
     });
-    super.initState();
   }
 
   @override
@@ -69,83 +73,93 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     return Scaffold(
       backgroundColor: ColorConstants.white,
       body: SafeArea(
-        child: SizedBox(
-          height: MediaQuery.of(context).size.height,
-          child:
-              Consumer<LanguageProvider>(builder: (context, consumer, child) {
-            return Column(
-              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Padding(
-                  padding:
-                      const EdgeInsets.only(left: 18, right: 18, bottom: 39),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    // ignore: prefer_const_literals_to_create_immutables
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          Navigator.pushNamedAndRemoveUntil(context,
-                              RouteConstants.getStartedScreen, (val) => false);
-                        },
-                        child: const TextComponent(
-                          LocaleKeys.skip,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              color: ColorConstants.black,
-                              fontStyle: FontStyle.normal,
-                              letterSpacing: 1,
-                              fontSize: 17),
-                        ),
-                      ),
-                      const LogoComponent(
-                        fontSize: 17,
-                      ),
-                      const LanguageDropdownComponent(),
-                    ],
-                  ),
-                ),
-                Flexible(
-                  child: PageView(
-                    controller: pageController,
-                    scrollDirection: Axis.horizontal,
-                    onPageChanged: (index) {
-                      setState(() {
-                        pageIndex = index;
-                      });
-                    },
-                    children: [
-                      for (var item in onboardingData)
-                        _bottomTitleAndText(
-                            title: item.text1,
-                            text: item.text2,
-                            assetName: item.imagePath),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    bottom: 20,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      for (int i = 0; i < onboardingData.length; i++)
-                        Padding(
-                          padding: const EdgeInsets.all(6.0),
-                          child: _indicatorDotsWidget(
-                            color: pageIndex == i
-                                ? ColorConstants.primary
-                                : ColorConstants.mediumGrey,
+        child: GestureDetector(
+          onTapDown: (val) {
+            timer.cancel();
+          },
+          onTapUp: (val) {
+            timer = _timer();
+          },
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height,
+            child:
+                Consumer<LanguageProvider>(builder: (context, consumer, child) {
+              return Column(
+                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(left: 18, right: 18, bottom: 39),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      // ignore: prefer_const_literals_to_create_immutables
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            Navigator.pushNamedAndRemoveUntil(
+                                context,
+                                RouteConstants.getStartedScreen,
+                                (val) => false);
+                          },
+                          child: const TextComponent(
+                            LocaleKeys.skip,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: ColorConstants.black,
+                                fontStyle: FontStyle.normal,
+                                letterSpacing: 1,
+                                fontSize: 17),
                           ),
                         ),
-                    ],
+                        const LogoComponent(
+                          fontSize: 17,
+                        ),
+                        const LanguageDropdownComponent(),
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            );
-          }),
+                  Flexible(
+                    child: PageView(
+                      controller: pageController,
+                      scrollDirection: Axis.horizontal,
+                      onPageChanged: (index) {
+                        setState(() {
+                          pageIndex = index;
+                        });
+                      },
+                      children: [
+                        for (var item in onboardingData)
+                          _bottomTitleAndText(
+                              title: item.text1,
+                              text: item.text2,
+                              assetName: item.imagePath),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      bottom: 20,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        for (int i = 0; i < onboardingData.length; i++)
+                          Padding(
+                            padding: const EdgeInsets.all(6.0),
+                            child: _indicatorDotsWidget(
+                              color: pageIndex == i
+                                  ? ColorConstants.primary
+                                  : ColorConstants.mediumGrey,
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+                ],
+              );
+            }),
+          ),
         ),
       ),
     );

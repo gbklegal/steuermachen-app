@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -59,7 +60,8 @@ class AuthProvider extends ChangeNotifier {
       );
       UserCredential user =
           await FirebaseAuth.instance.signInWithCredential(oauthCredential);
-      await checkUserFirstTimeLoggedIn(user.user!.email!, user.additionalUserInfo!.isNewUser);
+      await checkUserFirstTimeLoggedIn(
+          user.user!.email!, user.additionalUserInfo!.isNewUser);
       return CommonResponseWrapper(
           status: true, message: "Signin successfully");
     } catch (e) {
@@ -250,7 +252,13 @@ class AuthProvider extends ChangeNotifier {
     try {
       User? user = FirebaseAuth.instance.currentUser;
       await FirebaseAuth.instance.currentUser?.delete();
-      await firestore.collection("user_orders").doc("${user?.uid}").delete();
+      QuerySnapshot<Map<String, dynamic>> userOrder = await firestore
+          .collection("user_orders")
+          .where('user_info.user_id', isEqualTo: user?.uid)
+          .get();
+      for (var element in userOrder.docs) {
+        await firestore.collection("user_orders").doc(element.id).delete();
+      }
       await firestore.collection("user_profile").doc("${user?.uid}").delete();
       await firestore.collection("user_address").doc("${user?.uid}").delete();
       return ApiResponse.completed("");

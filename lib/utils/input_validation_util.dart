@@ -6,7 +6,8 @@ class InputValidationUtil {
   //     r"^\s*([A-Za-z]{1,}([\.,] |[-']| ))+[A-Za-z]+\.?\s*$";
   static const patternName =
       r"^(?=.{1,40}$)[a-zA-Z]+(?:[-'\s][a-zA-Z]+)*$";
-  static const patternPhone = r'^\+(?:[0-9]●?){6,14}[0-9]$';
+  // static const patternPhone = r'^\+(?:[0-9]●?){6,14}[0-9]$';
+  static const patternPhone = r'^(?:[+0][1-9])?[0-9]{10,12}$';
   static const patternDigits = r'^[0-9]*$';
   static const Pattern passwordMinLen8withLowerCaseAndSpecialChar =
       r'^((?=.*\d)(?=.*[a-z])(?=.*[\W_]).{8,20})';

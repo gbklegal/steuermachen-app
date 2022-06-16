@@ -1,10 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:steuermachen/constants/strings/email_constants.dart';
-import 'package:steuermachen/constants/strings/process_constants.dart';
 import 'package:steuermachen/constants/strings/tax_name_constants.dart';
 import 'package:steuermachen/data/repositories/remote/email_repository.dart';
 import 'package:steuermachen/data/repositories/remote/user_order_repository.dart';
@@ -141,10 +139,8 @@ class FinanceCourtProvider extends ChangeNotifier {
       _userOrder.termsAndConditionChecked = true;
 
       DocumentReference<Map<String, dynamic>> firestoreResponse =
-          await serviceLocatorInstance<UserOrderRepository>()
-              .submitUserOrder(_userOrder.toJson(
-        TaxNameConstants.financeCourt,
-      ));
+          await serviceLocatorInstance<UserOrderRepository>().submitUserOrder(
+              _userOrder.toJson(TaxNameConstants.financeCourt));
       SendMailModel? sendMailResponse = await EmailRepository().sendMail(
           _profile.userData!.email!,
           EmailInvoiceConstants.orderSubject,

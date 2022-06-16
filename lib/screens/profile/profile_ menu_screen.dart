@@ -182,26 +182,26 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
     Widget okButton = TextButton(
       child: Text(LocaleKeys.deleteAcc.tr()),
       onPressed: () async {
-        // AuthProvider _auth = Provider.of<AuthProvider>(context, listen: false);
-        // PopupLoader.showLoadingDialog(context);
-        // ApiResponse res = await _auth.deleteAccount();
-        // PopupLoader.hideLoadingDialog(context);
-        // Navigator.pop(context);
-        // if (res.status == Status.completed) {
-        //   ProfileProvider profileProvider =
-        //       Provider.of<ProfileProvider>(context, listen: false);
-        //   profileProvider.clearControllers();
-        //   profileProvider.userData = UserWrapper();
-        //   Navigator.pushNamedAndRemoveUntil(
-        //       context, RouteConstants.splashScreen, (val) => false);
-        // } else {
-        //   if (res.message == "requires-recent-login") {
+        AuthProvider _auth = Provider.of<AuthProvider>(context, listen: false);
+        PopupLoader.showLoadingDialog(context);
+        ApiResponse res = await _auth.deleteAccount();
+        PopupLoader.hideLoadingDialog(context);
         Navigator.pop(context);
-        ToastComponent.showToast(LocaleKeys.deleteAccMessage.tr(), long: true);
-        // } else {
-        //   ToastComponent.showToast(LocaleKeys.somethingWentWrong.tr());
-        // }
-        // }
+        if (res.status == Status.completed) {
+          ProfileProvider profileProvider =
+              Provider.of<ProfileProvider>(context, listen: false);
+          profileProvider.clearControllers();
+          profileProvider.userData = UserWrapper();
+          Navigator.pushNamedAndRemoveUntil(
+              context, RouteConstants.splashScreen, (val) => false);
+        } else {
+          if (res.message == "requires-recent-login") {
+        // Navigator.pop(context);
+        // ToastComponent.showToast(LocaleKeys.deleteAccMessage.tr(), long: true);
+        } else {
+          ToastComponent.showToast(LocaleKeys.somethingWentWrong.tr());
+        }
+        }
       },
     );
     Widget cancelButton = TextButton(

@@ -104,6 +104,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen>
             ToastComponent.showToast(ErrorMessagesConstants.selectGender,
                 long: true);
           }
+          consumer.userFormKey.currentState!.save();
           if (consumer.userFormKey.currentState!.validate()) {
             PopupLoader.showLoadingDialog(context);
             CommonResponseWrapper res = await consumer.submitUserProfile();

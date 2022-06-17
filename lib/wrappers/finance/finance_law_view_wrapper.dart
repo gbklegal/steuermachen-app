@@ -36,8 +36,7 @@ class FinanceViewData {
   FinanceViewData.fromJson(Map<String, dynamic> json) {
     title = json['title'];
     subtitle = json['subtitle'];
-    options =
-        List.from(json['options']).map((e) => Options.fromJson(e)).toList();
+    options = List.from(json['options']).map((e) => Options.fromJson(e)).toList();
     thirdTitle = json['thirdTitle'];
     showBottomNav = json['show_bottom_nav'];
   }

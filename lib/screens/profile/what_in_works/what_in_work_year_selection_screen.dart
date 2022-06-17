@@ -6,6 +6,7 @@ import 'package:steuermachen/components/no_order_component.dart';
 import 'package:steuermachen/components/tax_year_component.dart';
 import 'package:steuermachen/components/text_component.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
+import 'package:steuermachen/constants/strings/tax_name_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/data/view_models/tax/declaration_tax/declaration_tax_view_model.dart';
@@ -92,11 +93,9 @@ class _WhatInWorkYearSelectionScreenState
   }
 
   _getMainBody(var submittedTaxYears) {
-    List<UserOrdersDataModel> data =
-        List<UserOrdersDataModel>.from(
+    List<UserOrdersDataModel> data = List<UserOrdersDataModel>.from(
       submittedTaxYears.map(
-        (e) =>
-            UserOrdersDataModel.fromJson(e.data(), e.id),
+        (e) => UserOrdersDataModel.fromJson(e.data(), e.id),
       ),
     );
     return Padding(
@@ -106,22 +105,29 @@ class _WhatInWorkYearSelectionScreenState
         child: ListView.builder(
           itemCount: data.length,
           itemBuilder: (context, index) {
-            data.sort(((a, b) => a.taxYear!.compareTo(b.taxYear!)));
+            // data.sort(((a, b) => a.taxYear!.compareTo(b.taxYear!)));
             if (data[index].taxYear != DateTime.now().year.toString()) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: TaxYearComponent(
-                  year: data[index].taxYear!,
-                  onTap: () {
-                    Utils.customDialog(
-                      context,
-                      WhatInWorkStepsComponent(
-                        submittedTaxYears: data[index],
-                      ),
-                    );
-                  },
-                ),
-              );
+              if (data[index].taxName != TaxNameConstants.easyTax &&
+                  data[index].taxName != TaxNameConstants.financeCourt &&
+                  data[index].taxName != TaxNameConstants.currentYear) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: TaxYearComponent(
+                    name: data[index].taxName!,
+                    year: data[index].taxYear,
+                    onTap: () {
+                      Utils.customDialog(
+                        context,
+                        WhatInWorkStepsComponent(
+                          submittedTaxYears: data[index],
+                        ),
+                      );
+                    },
+                  ),
+                );
+              } else {
+                return const SizedBox();
+              }
             } else {
               return const SizedBox();
             }

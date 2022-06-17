@@ -27,6 +27,30 @@ class UserOrderRepository {
               TaxNameConstants.declarationTax,
               TaxNameConstants.safeTax,
               TaxNameConstants.currentYear,
+              TaxNameConstants.financeCourt,
+              TaxNameConstants.easyTax,
+            ],
+          )
+          .where('user_info.user_id', isEqualTo: user?.uid)
+          .get();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<dynamic> fetchUserOrders() async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      return await firestore
+          .collection("user_orders")
+          .where(
+            'tax_name',
+            whereIn: [
+              TaxNameConstants.declarationTax,
+              TaxNameConstants.safeTax,
+              TaxNameConstants.currentYear,
+              TaxNameConstants.financeCourt,
+              TaxNameConstants.easyTax,
             ],
           )
           .where('user_info.user_id', isEqualTo: user?.uid)

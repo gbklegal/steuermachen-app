@@ -13,6 +13,7 @@ import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/process_constants.dart';
+import 'package:steuermachen/constants/strings/tax_name_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:steuermachen/data/view_models/document/document_view_model.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
@@ -21,6 +22,7 @@ import 'package:steuermachen/services/networks/api_response_states.dart';
 import 'package:steuermachen/utils/utils.dart';
 import 'package:steuermachen/wrappers/declaration_tax/user_orders_data_model.dart';
 import 'package:steuermachen/wrappers/tax_steps_wrapper.dart';
+import 'package:collection/collection.dart';
 
 class OrderOverviewScreen extends StatefulWidget {
   const OrderOverviewScreen({Key? key}) : super(key: key);
@@ -108,17 +110,26 @@ class _OrderOverviewScreenState extends State<OrderOverviewScreen> {
         (e) => UserOrdersDataModel.fromJson(e.data(), e.id),
       ),
     );
+    Iterable<UserOrdersDataModel?> temp =
+        data.where((e) => e.taxName == TaxNameConstants.financeCourt);
+    for (var item in temp) {
+      if (item != null) {
+        data.removeWhere((element) => element.keyId == item.keyId);
+        data.add(item);
+      }
+    }
+
     return RefreshIndicator(
       onRefresh: () => provider.fetchTaxFiledYears(),
       child: ListView.builder(
         itemCount: data.length,
         itemBuilder: (context, index) {
-          if (data[index].taxYear != DateTime.now().year.toString()) {
-            data.sort((a, b) => a.taxYear!.compareTo(b.taxYear!));
-            return _OrderCards(data: data[index]);
-          } else {
-            return const SizedBox();
-          }
+          // if (data[index].taxYear != DateTime.now().year.toString()) {
+          //   data.sort((a, b) => a.taxYear!.compareTo(b.taxYear!));
+          return _OrderCards(data: data[index]);
+          // } else {
+          //   return const SizedBox();
+          // }
         },
       ),
     );
@@ -153,7 +164,7 @@ class _OrderCards extends StatelessWidget {
             child: Column(
               children: [
                 _rowTitleAndText(LocaleKeys.product.tr(),
-                    getTaxName(data.taxName!) + " " + data.taxYear!),
+                    getTaxName(data.taxName!) + " " + (data.taxYear ?? "")),
                 _rowTitleAndText(
                     LocaleKeys.price.tr(),
                     data.taxPrice != null
@@ -162,36 +173,39 @@ class _OrderCards extends StatelessWidget {
                 _rowTitleAndText(LocaleKeys.orderDate.tr(),
                     Utils.dateFormatter(data.createdAt.toString())),
                 const Divider(),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  child: Row(
-                    children: [
-                      TextComponent(
-                        "${LocaleKeys.status.tr()}: ",
-                        style: FontStyles.fontMedium(
-                            fontSize: 15, fontWeight: FontWeight.w600),
-                      ),
-                      Flexible(
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 8, left: 10),
-                          child: LinearPercentIndicator(
-                            animation: true,
-                            lineHeight: 20.0,
-                            animationDuration: 2000,
-                            percent: calculatePercent(data.steps!),
-                            center: TextComponent(
-                              "${(calculatePercent(data.steps!) * 100).toStringAsFixed(0)}%",
-                              style: FontStyles.fontRegular(
-                                  color: ColorConstants.white),
+                data.steps != null
+                    ? SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        child: Row(
+                          children: [
+                            TextComponent(
+                              "${LocaleKeys.status.tr()}: ",
+                              style: FontStyles.fontMedium(
+                                  fontSize: 15, fontWeight: FontWeight.w600),
                             ),
-                            linearStrokeCap: LinearStrokeCap.roundAll,
-                            progressColor: ColorConstants.toxicGreen,
-                          ),
+                            Flexible(
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 8, left: 10),
+                                child: LinearPercentIndicator(
+                                  animation: true,
+                                  lineHeight: 20.0,
+                                  animationDuration: 2000,
+                                  percent: calculatePercent(data.steps!),
+                                  center: TextComponent(
+                                    "${(calculatePercent(data.steps!) * 100).toStringAsFixed(0)}%",
+                                    style: FontStyles.fontRegular(
+                                        color: ColorConstants.white),
+                                  ),
+                                  linearStrokeCap: LinearStrokeCap.roundAll,
+                                  progressColor: ColorConstants.toxicGreen,
+                                ),
+                              ),
+                            )
+                          ],
                         ),
                       )
-                    ],
-                  ),
-                ),
+                    : const SizedBox(),
                 data.invoices != null
                     ? InkWell(
                         onTap: () {
@@ -273,10 +287,16 @@ class _OrderCards extends StatelessWidget {
   }
 
   String getTaxName(String taxName) {
-    if (taxName == "declarationTax") {
+    if (taxName == TaxNameConstants.declarationTax) {
       return "Steuererklärung";
-    } else if (taxName == "safeTax") {
+    } else if (taxName == TaxNameConstants.safeTax) {
       return "safeTAX";
+    } else if (taxName == TaxNameConstants.easyTax) {
+      return "steuerEasy";
+    } else if (taxName == TaxNameConstants.financeCourt) {
+      return "Objection";
+    } else if (taxName == TaxNameConstants.currentYear) {
+      return "Erstberatung-Flat";
     }
     return "";
   }

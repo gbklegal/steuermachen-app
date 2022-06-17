@@ -9,6 +9,7 @@ import 'package:steuermachen/components/text_component.dart';
 import 'package:steuermachen/constants/assets/asset_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
+import 'package:steuermachen/constants/strings/tax_name_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
 import 'package:steuermachen/data/view_models/tax/declaration_tax/declaration_tax_view_model.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
@@ -82,13 +83,19 @@ class _DocumentOverviewScreenState extends State<DocumentOverviewScreen> {
   }
 
   SizedBox _mainBody(var submittedTaxYears) {
-    List<UserOrdersDataModel> data =
-        List<UserOrdersDataModel>.from(
+    List<UserOrdersDataModel> data = List<UserOrdersDataModel>.from(
       submittedTaxYears.map(
-        (e) =>
-            UserOrdersDataModel.fromJson(e.data(), e.id),
+        (e) => UserOrdersDataModel.fromJson(e.data(), e.id),
       ),
     );
+    Iterable<UserOrdersDataModel?> temp =
+        data.where((e) => e.taxName == TaxNameConstants.financeCourt);
+    for (var item in temp) {
+      if (item != null) {
+        data.removeWhere((element) => element.keyId == item.keyId);
+        data.add(item);
+      }
+    }
     return SizedBox(
       height: MediaQuery.of(context).size.height,
       child: Padding(
@@ -113,9 +120,10 @@ class _DocumentOverviewScreenState extends State<DocumentOverviewScreen> {
                 child: ListView.builder(
                   itemCount: data.length,
                   itemBuilder: (context, index) {
-                    data.sort(((a, b) => a.taxYear!.compareTo(b.taxYear!)));
+                    // data.sort(((a, b) => a.taxYear!.compareTo(b.taxYear!)));
                     return TaxYearComponent(
-                      year: data[index].taxYear!,
+                      name: getTaxName(data[index].taxName!),
+                      year: data[index].taxYear,
                       onTap: () {
                         documentViewModel.selectedTax = data[index];
                         Navigator.pushNamed(context,
@@ -130,5 +138,20 @@ class _DocumentOverviewScreenState extends State<DocumentOverviewScreen> {
         ),
       ),
     );
+  }
+
+  String getTaxName(String taxName) {
+    if (taxName == TaxNameConstants.declarationTax) {
+      return "Steuererklärung";
+    } else if (taxName == TaxNameConstants.safeTax) {
+      return "safeTAX";
+    } else if (taxName == TaxNameConstants.easyTax) {
+      return "steuerEasy";
+    } else if (taxName == TaxNameConstants.financeCourt) {
+      return "Objection";
+    } else if (taxName == TaxNameConstants.currentYear) {
+      return "Erstberatung-Flat";
+    }
+    return "";
   }
 }

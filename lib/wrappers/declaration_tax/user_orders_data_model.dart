@@ -87,10 +87,18 @@ class UserOrdersDataModel {
     invoiceNumber = json["invoice_number"];
     orderNumber = json["order_number"];
     paymentType = json["payment_type"];
-    paymentInfo = json["payment_info"];
+    paymentInfo = json["payment_info"] != null
+        ? SumpupCheckoutWrapper.fromJson(json["payment_info"])
+        : null;
     subscriptionPrice = json["subscription_price"];
-    subjectLawChecks = json["subject_law_checks"];
-    selectedAppealDate = json["selected_appeal_date"];
+    // subjectLawChecks = json["subject_law_checks"] != null
+    //     ? FinanceLawViewWrapper.fromJson(json["subject_law_checks"])
+    //     : null;
+    if (json["selected_appeal_date"] != null) {
+      selectedAppealDate = json["selected_appeal_date"].toDate();
+    } else {
+      selectedAppealDate = null;
+    }
     checkedCommission = json['checked_commission'];
   }
 
@@ -118,7 +126,8 @@ class UserOrdersDataModel {
     _data['payment_type'] = paymentType;
     _data['payment_info'] = paymentInfo?.toJson();
     _data['subscription_price'] = subscriptionPrice;
-    _data['subject_law_checks'] = subjectLawChecks?.en.options.map((e) => e.toJson()).toList();
+    _data['subject_law_checks'] =
+        subjectLawChecks?.en.options.map((e) => e.toJson()).toList();
     _data['selected_appeal_date'] = selectedAppealDate;
     _data['checked_commission'] = checkedCommission;
 

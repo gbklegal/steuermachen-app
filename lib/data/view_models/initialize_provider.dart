@@ -18,6 +18,7 @@ import 'package:steuermachen/data/view_models/tax_calculator_provider.dart';
 import 'package:steuermachen/data/view_models/tax_file_provider.dart';
 import 'package:steuermachen/data/view_models/tax_tips_provider.dart';
 import 'package:steuermachen/data/view_models/terms_and_condition_provider.dart';
+import 'package:steuermachen/data/view_models/user_orders_view_model.dart';
 import 'payment_gateway/payment_gateway_provider.dart';
 
 providerList(context) {
@@ -81,6 +82,9 @@ providerList(context) {
     ),
     ChangeNotifierProvider(
       create: (context) => PaymentGateWayProvider(),
+    ),
+    ChangeNotifierProvider(
+      create: (context) => UserOrdersViewModel(),
     ),
   ];
 }

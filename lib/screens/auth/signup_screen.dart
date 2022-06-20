@@ -12,6 +12,7 @@ import 'package:steuermachen/constants/colors/color_constants.dart';
 import 'package:steuermachen/constants/routes/route_constants.dart';
 import 'package:steuermachen/constants/strings/string_constants.dart';
 import 'package:steuermachen/constants/styles/font_styles_constants.dart';
+import 'package:steuermachen/data/view_models/language_provider.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/data/view_models/auth/auth_provider.dart';
 import 'package:steuermachen/screens/auth/auth_components/button_auth_component.dart';
@@ -117,89 +118,96 @@ class _SignupScreenState extends State<SignupScreen> with InputValidationUtil {
         showBottomLine: false,
         showPersonIcon: false,
       ),
-      body: SingleChildScrollView(
-        child: SizedBox(
-          height: MediaQuery.of(context).size.height * 0.9,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Column(
-              children: [
-                const SizedBox(height: 35),
-                TitleTextAuthComponent(title: LocaleKeys.toRegister.tr()),
-                const SizedBox(height: 35),
-                _authFields(),
-                CheckboxListTile(
-                    controlAffinity: ListTileControlAffinity.leading,
-                    value: isConditionChecked,
-                    contentPadding: EdgeInsets.zero,
-                    title: Transform.translate(
-                      offset: const Offset(0, 11),
-                      child: RichText(
-                        textAlign: TextAlign.left,
-                        textScaleFactor: 0.9,
-                        text: TextSpan(
-                          text: LocaleKeys.conditionCheck.tr(),
-                          style: FontStyles.fontMedium(
-                              fontSize: 14,
-                              lineSpacing: 1.2,
-                              color: ColorConstants.black),
-                          children: <TextSpan>[
-                            textSpan(LocaleKeys.conditionCheck1.tr()),
-                            textSpan(LocaleKeys.conditionCheck2.tr(),
-                                isBold: false),
-                            textSpan(
-                              LocaleKeys.conditionCheck3.tr(),
-                            ),
-                            textSpan(LocaleKeys.conditionCheck4.tr(),
-                                isBold: false),
-                          ],
+      body: Consumer<LanguageProvider>(builder: (context, consumer, child) {
+        return SingleChildScrollView(
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height * 0.9,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                children: [
+                  const SizedBox(height: 35),
+                  TitleTextAuthComponent(title: LocaleKeys.toRegister.tr()),
+                  const SizedBox(height: 35),
+                  _authFields(),
+                  CheckboxListTile(
+                      controlAffinity: ListTileControlAffinity.leading,
+                      value: isConditionChecked,
+                      contentPadding: EdgeInsets.zero,
+                      title: Transform.translate(
+                        offset: const Offset(0, 11),
+                        child: RichText(
+                          textAlign: TextAlign.left,
+                          textScaleFactor: 0.9,
+                          text: TextSpan(
+                            text: LocaleKeys.conditionCheck.tr(),
+                            style: FontStyles.fontMedium(
+                                fontSize: 14,
+                                lineSpacing: 1.2,
+                                color: ColorConstants.black),
+                            children: <TextSpan>[
+                              textSpan(LocaleKeys.conditionCheck1.tr()),
+                              textSpan(LocaleKeys.conditionCheck2.tr(),
+                                  isBold: false),
+                              textSpan(
+                                LocaleKeys.conditionCheck3.tr(),
+                              ),
+                              textSpan(LocaleKeys.conditionCheck4.tr(),
+                                  isBold: false),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    onChanged: (val) {
-                      setState(() {
-                        isConditionChecked = !isConditionChecked;
-                      });
-                    }),
-                const SizedBox(height: 25),
-                ButtonAuthComponent(
-                    btnText: LocaleKeys.toRegister.tr(),
-                    onPressed: _signupWithEmailAndPass),
-                const SizedBox(height: 22),
-                RichTextAuthComponent(
-                  textSpan1: LocaleKeys.already.tr() + " ",
-                  textSpan2: LocaleKeys.registered.tr(),
-                  textSpan2Color: const Color(0xffFF0000),
-                  onTap: () {
-                    Navigator.pushReplacementNamed(
-                        context, RouteConstants.signInScreen);
-                  },
-                ),
-                const SizedBox(height: 8,),
-                const ChoiceTextAuthComponent(text: LocaleKeys.signinWith, isOrText: false,),
-                _signInWithApple(),
-                const SizedBox(height: 22),
-                InkWell(
-                  onTap: _googleSignIn,
-                  child: SignInOptionsAuthComponent(
-                      assetName: AssetConstants.icGoogle,
-                      btnText: LocaleKeys.googleSignIn.tr(),
-                      textColor: Colors.blueAccent),
-                ),
-                const SizedBox(height: 50),
-                const ImprintPrivacyConditionsComponent(),
-                const Flexible(child: SizedBox(height: 180)),
-              ],
+                      onChanged: (val) {
+                        setState(() {
+                          isConditionChecked = !isConditionChecked;
+                        });
+                      }),
+                  const SizedBox(height: 25),
+                  ButtonAuthComponent(
+                      btnText: LocaleKeys.toRegister.tr(),
+                      onPressed: _signupWithEmailAndPass),
+                  const SizedBox(height: 22),
+                  RichTextAuthComponent(
+                    textSpan1: LocaleKeys.already.tr() + "",
+                    textSpan2: LocaleKeys.registered.tr(),
+                    textSpan2Color: const Color(0xffFF0000),
+                    onTap: () {
+                      Navigator.pushReplacementNamed(
+                          context, RouteConstants.signInScreen);
+                    },
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  const ChoiceTextAuthComponent(
+                    text: LocaleKeys.signinWith,
+                    isOrText: false,
+                  ),
+                  _signInWithApple(),
+                  const SizedBox(height: 22),
+                  InkWell(
+                    onTap: _googleSignIn,
+                    child: SignInOptionsAuthComponent(
+                        assetName: AssetConstants.icGoogle,
+                        btnText: LocaleKeys.googleSignIn.tr(),
+                        textColor: Colors.blueAccent),
+                  ),
+                  const SizedBox(height: 50),
+                  const ImprintPrivacyConditionsComponent(),
+                  const Flexible(child: SizedBox(height: 180)),
+                ],
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      }),
     );
   }
 
   TextSpan textSpan(String text, {void Function()? onTap, bool isBold = true}) {
     return TextSpan(
-        text: text,
+        text: text.tr(),
         style: FontStyles.fontMedium(
             fontSize: 14,
             color: ColorConstants.black,

@@ -144,6 +144,7 @@ abstract class  LocaleKeys {
   static const onlyForInitialTax = 'onlyForInitialTax';
   static const getStarted = 'getStarted';
   static const alreadyHaveAnAccount = 'alreadyHaveAnAccount';
+  static const youAlreadyHaveAnAccount = 'youAlreadyHaveAnAccount';
   static const signIn = 'signIn';
   static const clear = 'clear';
   static const pay = 'pay';
@@ -186,6 +187,7 @@ abstract class  LocaleKeys {
   static const confirmNewPassword = 'confirmNewPassword';
   static const confirmPassword = 'confirmPassword';
   static const signinWith = 'signinWith';
+  static const loginWith = 'loginWith';
   static const dontHaveAnAccount = 'dontHaveAnAccount';
   static const signupNow = 'signupNow';
   static const street = 'street';

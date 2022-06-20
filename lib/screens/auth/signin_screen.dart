@@ -131,7 +131,7 @@ class _SignInScreenState extends State<SignInScreen> with InputValidationUtil {
                         context, RouteConstants.signupScreen);
                   },
                 ),
-                const ChoiceTextAuthComponent(text: LocaleKeys.signinWith),
+                const ChoiceTextAuthComponent(text: LocaleKeys.loginWith),
                 const SizedBox(height: 25),
                 _signInWithApple(),
                 const SizedBox(height: 22),

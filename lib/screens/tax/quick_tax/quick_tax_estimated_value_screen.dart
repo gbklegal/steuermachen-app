@@ -33,7 +33,7 @@ class QuickTaxEstimatedValueScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(
               height: 40,
@@ -90,15 +90,16 @@ class QuickTaxEstimatedValueScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  TextComponent(
-                    LocaleKeys.alreadyHaveAnAccount
-                        .tr()
-                        .replaceAll("Sign in here", ""),
-                    textAlign: TextAlign.start,
-                    style: FontStyles.fontMedium(fontSize: 16),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: TextComponent(
+                      LocaleKeys.youAlreadyHaveAnAccount,
+                      textAlign: TextAlign.start,
+                      style: FontStyles.fontMedium(fontSize: 16),
+                    ),
                   ),
                   const SizedBox(height: 12),
-                  _button(context, LocaleKeys.loginHere, () {
+                  _button(context, LocaleKeys.signIn, () {
                     Navigator.pushNamed(context, RouteConstants.signInScreen);
                   }),
                 ],

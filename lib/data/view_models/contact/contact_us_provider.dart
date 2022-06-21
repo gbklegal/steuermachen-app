@@ -23,25 +23,25 @@ class ContactUsProvider extends ChangeNotifier {
 }
 
 class ContactUsFormDataCollector {
-  String? userId, lastName, firstName, email, reference, phoneNo, news;
+  String? userId, lastName, firstName, email, subject, phoneNo, message;
 
   ContactUsFormDataCollector(
       {this.userId,
       this.lastName,
       this.firstName,
       this.email,
-      this.reference,
+      this.subject,
       this.phoneNo,
-      this.news});
+      this.message});
 
   Map<String, dynamic> toJson() => {
         "userId": userId,
         "firstName": firstName,
         "lastName": lastName,
         "email": email,
-        "reference": reference,
+        "subject": subject,
         "phone": phoneNo,
-        "news": news,
+        "message": message,
         "createdDate": DateTime.now(),
         "status": ProcessConstants.pending
       };

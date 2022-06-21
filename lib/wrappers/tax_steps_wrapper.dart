@@ -13,12 +13,12 @@ List<TaxStepsWrapper> taxSteps = [
       status: ProcessConstants.pending,
       createdAt: DateTime.now()),
   TaxStepsWrapper(
-      titleEn: 'documents received',
+      titleEn: 'Documents received',
       titleDe: 'Unterlagen eingegangen',
       status: ProcessConstants.pending,
       createdAt: DateTime.now()),
   TaxStepsWrapper(
-      titleEn: 'Document review',
+      titleEn: 'Review of the documents',
       titleDe: 'Prüfung der Unterlagen',
       status: ProcessConstants.pending,
       createdAt: DateTime.now()),
@@ -28,7 +28,7 @@ List<TaxStepsWrapper> taxSteps = [
       status: ProcessConstants.pending,
       createdAt: DateTime.now()),
   TaxStepsWrapper(
-      titleEn: 'tax assessment pending ',
+      titleEn: 'Tax assessment pending ',
       titleDe: 'Steuerbescheid ausstehend ',
       status: ProcessConstants.pending,
       createdAt: DateTime.now()),

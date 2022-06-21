@@ -25,9 +25,9 @@ class _ContactUsFormScreenState extends State<ContactUsFormScreen>
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _referenceController = TextEditingController();
+  final TextEditingController _subjectController = TextEditingController();
   final TextEditingController _phoneNoController = TextEditingController();
-  final TextEditingController _newsController = TextEditingController();
+  final TextEditingController _messageController = TextEditingController();
   final GlobalKey<FormState> _contactFormKey = GlobalKey<FormState>();
 
   late ContactUsProvider _contactUsProvider;
@@ -70,7 +70,7 @@ class _ContactUsFormScreenState extends State<ContactUsFormScreen>
                   const SizedBox(
                     height: 35,
                   ),
-                  Text(LocaleKeys.makeContact.tr(),
+                  Text(LocaleKeys.contactUs.tr(),
                       style: Theme.of(context)
                           .textTheme
                           .bodyText1!
@@ -98,17 +98,15 @@ class _ContactUsFormScreenState extends State<ContactUsFormScreen>
                   TextFormField(
                       controller: _emailController,
                       decoration: InputDecoration(
-                        labelText: LocaleKeys.emailAddress
-                            .tr()
-                            .replaceAll("address", ""),
+                        labelText: LocaleKeys.emailAddress.tr(),
                         hintStyle: fontStyle,
                       ),
                       validator: validateEmail),
                   sizedBox15,
                   TextFormField(
-                      controller: _referenceController,
+                      controller: _subjectController,
                       decoration: InputDecoration(
-                        labelText: LocaleKeys.reference.tr(),
+                        labelText: LocaleKeys.subject.tr(),
                         hintStyle: fontStyle,
                       ),
                       validator: validateFieldEmpty),
@@ -116,7 +114,7 @@ class _ContactUsFormScreenState extends State<ContactUsFormScreen>
                   TextFormField(
                       controller: _phoneNoController,
                       decoration: InputDecoration(
-                        labelText: LocaleKeys.phoneNo.tr(),
+                        labelText: LocaleKeys.phoneNo.tr().replaceAll("No", ""),
                         hintStyle: fontStyle,
                       ),
                       validator: validatePhone),
@@ -124,9 +122,9 @@ class _ContactUsFormScreenState extends State<ContactUsFormScreen>
                   SizedBox(
                     height: 5 * 24.0,
                     child: TextFormField(
-                        controller: _newsController,
+                        controller: _messageController,
                         decoration: InputDecoration(
-                            labelText: LocaleKeys.news.tr(),
+                            labelText: LocaleKeys.message.tr(),
                             hintStyle: fontStyle,
                             isDense: true),
                         validator: validateFieldEmpty),
@@ -151,9 +149,9 @@ class _ContactUsFormScreenState extends State<ContactUsFormScreen>
                       lastName: _lastNameController.text,
                       firstName: _firstNameController.text,
                       email: _emailController.text,
-                      reference: _referenceController.text,
+                      subject: _subjectController.text,
                       phoneNo: _phoneNoController.text,
-                      news: _newsController.text));
+                      message: _messageController.text));
               PopupLoader.hideLoadingDialog(context);
               if (res.status!) {
                 _dialog();

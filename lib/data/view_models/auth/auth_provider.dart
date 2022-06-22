@@ -6,9 +6,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
+import 'package:steuermachen/constants/strings/http_constants.dart';
 import 'package:steuermachen/languages/locale_keys.g.dart';
 import 'package:steuermachen/main.dart';
 import 'package:steuermachen/services/networks/api_response_states.dart';
+import 'package:steuermachen/services/networks/dio_api_services.dart';
+import 'package:steuermachen/services/networks/dio_client_network.dart';
 import 'package:steuermachen/wrappers/common_response_wrapper.dart';
 
 class AuthProvider extends ChangeNotifier {
@@ -186,23 +189,24 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  sendVerificationEmail() async {
-    User? user = FirebaseAuth.instance.currentUser;
-    if (user != null && !user.emailVerified) {
-      await user.sendEmailVerification();
-    }
-  }
-  //   sendVerificationEmail() async {
+  // sendVerificationEmail() async {
   //   User? user = FirebaseAuth.instance.currentUser;
   //   if (user != null && !user.emailVerified) {
-  //     serviceLocatorInstance<DioClientNetwork>().dio.options.baseUrl =
-  //         HTTPConstants.baseUrlApi;
-  //     var response = await serviceLocatorInstance<DioApiServices>().postRequest(
-  //         HTTPConstants.verifyEmail,
-  //         data: {"email": user.email});
-  //     print(response);
+  //     await user.sendEmailVerification();
   //   }
   // }
+
+    sendVerificationEmail() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null && !user.emailVerified) {
+      serviceLocatorInstance<DioClientNetwork>().dio.options.baseUrl =
+          HTTPConstants.baseUrlApi;
+      var response = await serviceLocatorInstance<DioApiServices>().postRequest(
+          HTTPConstants.verifyEmail,
+          data: {"email": user.email});
+      print(response);
+    }
+  }
 
   checkUserFirstTimeLoggedIn(String email, bool isNewUser) async {
     // var methods = await FirebaseAuth.instance.fetchSignInMethodsForEmail(email);

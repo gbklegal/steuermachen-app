@@ -1,6 +1,6 @@
 class EmailInvoiceConstants {
   static String orderSubject =
-      "Bestätigen Sie bitte Ihre Bestellung bei steuermachen";
+      "Vielen Dann für Ihre Bestellung über steuermachen";
   static String invoiceSubject =
       "Ihre steuermachen - Rechnung für die Rechnungsnummer";
   static String currentYearTax = "beratung-flat";

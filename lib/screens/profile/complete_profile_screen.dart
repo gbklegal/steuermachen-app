@@ -108,6 +108,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen>
           if (consumer.userFormKey.currentState!.validate()) {
             PopupLoader.showLoadingDialog(context);
             CommonResponseWrapper res = await consumer.submitUserProfile();
+            await consumer.addUserAddresss();
             PopupLoader.hideLoadingDialog(context);
             if (res.status!) {
               _profileProvider.getUserProfile();
